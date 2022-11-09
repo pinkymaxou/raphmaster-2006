@@ -123,7 +123,7 @@ static esp_err_t file_get_handler(httpd_req_t *req)
         ESP_LOGW(TAG, "Redirect URI: '%s', to '%s'", req->uri, DEFAULT_RELATIVE_URI);
         // Redirect to default page
         httpd_resp_set_type(req, "text/html");
-        httpd_resp_set_status(req, "301 Moved Permanently");
+        httpd_resp_set_status(req, "307 Temporary Redirect");
         httpd_resp_set_hdr(req, "Location", DEFAULT_RELATIVE_URI);
         httpd_resp_send(req, NULL, 0);
         return ESP_OK;
@@ -447,10 +447,10 @@ static const char* GetSysInfo()
     // Memory
     cJSON* pEntryJSON8 = cJSON_CreateObject();
     cJSON_AddItemToObject(pEntryJSON8, "name", cJSON_CreateString("Memory"));
-    const int freeSize = heap_caps_get_free_size(MALLOC_CAP_8BIT);
     const int totalSize = heap_caps_get_total_size(MALLOC_CAP_8BIT);
+    const int usedSize = totalSize - heap_caps_get_free_size(MALLOC_CAP_8BIT);
     
-    sprintf(buff, "%d / %d", /*0*/freeSize, /*1*/totalSize);
+    sprintf(buff, "%d / %d", /*0*/usedSize, /*1*/totalSize);
     cJSON_AddItemToObject(pEntryJSON8, "value", cJSON_CreateString(buff));
     cJSON_AddItemToArray(pEntries, pEntryJSON8);
 
