@@ -1,1 +1,1 @@
-python ..\tools\embeddedgen.py -i ".\main\www" -o ".\main\assets"
+..\..\tools\embeddedgen\embeddedgen.exe -i ".\www" -o ".\main\assets"
