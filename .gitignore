@@ -50,3 +50,5 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+/source/rm2k6-fw/build
+/source/main-fw/build
