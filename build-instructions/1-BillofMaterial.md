@@ -12,3 +12,6 @@
 | HX711 Capteur de poids pour cellule de charge  kg | 1 | 8.86 | https://www.amazon.ca/-/fr/Capteur-cellule-%C3%A9lectronique-daluminium-pression/dp/B09L724WXM/
 | Lot de 4 connecteurs d'accouplement à bride de 8 mm | 4 | 13.99 | https://www.amazon.ca/connecteurs-daccouplement-accessoire-coupleur-mod%C3%A9lisme/dp/B08335MYGW/
 | Zeelo GT2 Poulie de distribution 8 pièces 5 mm  | 1 | 17.99 | https://www.amazon.ca/-/fr/Poulie-distribution-Caoutchouc-Largeur-imprimante/dp/B089FV8R3Q/
+| RuiLing 4PCS 1.5M 59 Inch | 1 | 8.99 | https://www.amazon.com/RuiLing-Stepper-Motor-Cables-HX2-54/dp/B07QHTG82K/
+| HiLetgo 10pcs Micro Limit Switch | 10 | 5.99 | https://www.amazon.com/HiLetgo-KW12-3-Roller-Switch-Normally/dp/B07X142VGC/
+| ALITOVE AC 100-240V to DC 12V 10A | 1 | 20.99 | https://www.amazon.com/ALITOVE-100-240V-Converter-Transformer-5-5x2-1mm/dp/B07MXXXBV8
