@@ -18,6 +18,6 @@ jobs:
     - name: Build (main-fw)
       uses: espressif/esp-idf-ci-action@v1
       with:
-        esp_idf_version: v4.3
+        esp_idf_version: v4.4
         path: ./source/main-fw
         target: esp32
