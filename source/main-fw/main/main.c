@@ -12,7 +12,7 @@
 #include "esp_netif.h"
 #include "esp_wifi.h"
 #include "esp_log.h"
-#include "driver/GPIO.h"
+#include "driver/gpio.h"
 #include "HardwareGPIO.h"
 #include "mdns.h"
 #include "lwip/apps/netbiosns.h"
