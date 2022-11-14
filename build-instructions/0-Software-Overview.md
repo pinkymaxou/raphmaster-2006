@@ -71,7 +71,9 @@ It must contains a list of already existing ingredient but it should also allow 
 - Volumic mass (an helper can help calculate it)
     - It could also help to find it based on existing datas
 
-# Cocktails
+# Prepare drink
+
+## Cocktails
 
 Cocktail shall be stored on the device or SD card.
 
@@ -79,8 +81,6 @@ Cocktail shall be stored on the device or SD card.
 - Should be able to automatically find what recipe can be done with loaded bottle
 - Should take account quantities and display an error if the incredient isn't available
 - Should be able to activate/deactivate recipe
-
-# Prepare drink
 
 ## Expected functions
 
@@ -90,11 +90,10 @@ Cocktail shall be stored on the device or SD card.
 - Allows to choose quantity (ml)
 - Allows to queue drinks?
 
-## Process
+## Unit of measure
 
-- User can order a drink
-- Wait until the glass is in place
-- Move the glass to each required slots and pour the liquid
-- Go back to home position
-- Wait until the glass is removed before declaring the process done.
+Accepted units of measures:
 
+- oz
+- ml
+- unit
