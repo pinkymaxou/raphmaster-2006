@@ -14,6 +14,7 @@ The project is still in pre-development.
 - Use only one ESP32 to do everything except display
 - Support over the air updates
 - Get recipe from SD Card
+- Be able to keep track of bottle quantities
 
 ### Longest term goal
 
