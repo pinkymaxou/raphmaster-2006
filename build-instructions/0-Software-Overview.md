@@ -47,7 +47,7 @@ Required functions:
 - Calibrate the scale
 - Set minimum weight (for glass detection)
 
-## Alcohol global settings
+## Ingredients global settings
 
 - Default volumic mass
 
@@ -57,13 +57,13 @@ There will be at least 14 available slots, we need to be able to assign bottle i
 Each slots shall be configurable:
 
 - Assign a bottle to a slot
-- Alcohol product, matched to existing values (example: Tequila)
-    - Volumic mass is matched to alcohol product
+- Ingredients, matched to existing values (example: Tequila)
+    - Volumic mass is matched to ingredient
 - Quantity in ml
 
-## Alcohol product
+## Ingredient
 
-It must contains a list of already existing alcohol product but it should also allow to easily add new one
+It must contains a list of already existing ingredient but it should also allow to easily add new one
 
 - Alcohol percentage
 - Volumic mass (an helper can help calculate it)
