@@ -35,12 +35,12 @@ TO BE DEFINED.
 
 ## Calibration
 
-Must allows to calibrate the tray to be sure it go on the right location
+Must allows to calibrate the sleigh to be sure it go on the right location
 
 Required functions:
 
 - Allow to do homing manually
-- A mode to allow to freely move the tray manually
+- A mode to allow to freely move the sleigh manually
 - Save the coordinate for each bottle slots
 - Save the maximum allowed distance for the train
 - Calibrate pourer
