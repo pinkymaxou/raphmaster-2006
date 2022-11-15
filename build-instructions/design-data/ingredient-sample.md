@@ -1,14 +1,4 @@
-# Cocktail recipes
-
-## Unit of measure
-
-Accepted units of measures:
-
-- oz
-- ml
-- unit
-
-## Ingredients
+# Ingredient sample
 
 The database shall be small enough to be easily parsed and searched through by a microcontroller.
 Necessary informations:
@@ -122,15 +112,3 @@ Necessary informations:
 |  vanilla | 0 | 1.00 |
 |  vodka | 40 | 1.00 |
 |  whisky | 0 | 1.00 |
-
-## Recipes
-
-Example of recipes.
-
-| Name | Qty | Unit |
-|---|---|---|
-| 7-up | 300 | ml |
-| peach schnapps | 1 | oz |
-| vokda | 1.5 | oz |
-| orange juice | 2 | oz |
-| cranberry juice | 2 | oz |
