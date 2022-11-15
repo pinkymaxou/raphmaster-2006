@@ -12,52 +12,16 @@
 </head>
 <body>
 
-    <form class="pure-form">
-        <fieldset class="pure-group">
-            <input type="text" class="pure-input-1-2" placeholder="Username" />
-            <input type="text" class="pure-input-1-2" placeholder="Password" />
-            <input type="email" class="pure-input-1-2" placeholder="Email" />
-        </fieldset>
-        <fieldset class="pure-group">
-            <input type="text" class="pure-input-1-2" placeholder="A title" />
-            <textarea class="pure-input-1-2" placeholder="Textareas work too"></textarea>
-        </fieldset>
-        <button type="submit" class="pure-button pure-input-1-2 pure-button-primary">Sign in</button>
-    </form>
+    <nav class="nav">
+        <a href="/" class="nav__link" data-link>Index</a>
+        <a href="/settings" class="nav__link" data-link>Settings</a>
+        <a href="/about" class="nav__link" data-link>About</a>
+    </nav>
 
-    <table class="pure-table">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Make</th>
-                <th>Model</th>
-                <th>Year</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>1</td>
-                <td>Honda</td>
-                <td>Accord</td>
-                <td>2009</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>Toyota</td>
-                <td>Camry</td>
-                <td>2012</td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>Hyundai</td>
-                <td>Elantra</td>
-                <td>2010</td>
-            </tr>
-        </tbody>
-    </table>
+    <div id="app"></div>
 
     <!-- JS -->
     <script type="text/javascript" src="js/vue.min.js"></script>
-    <script type="text/javascript" src="js/app.js"></script>
+    <script type="module" src="js/app.js"></script>
 </body>
 </html>
