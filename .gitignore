@@ -52,6 +52,5 @@ Mkfile.old
 dkms.conf
 /source/rm2k6-fw/build
 /source/main-fw/build
-source/main-fw/main/assets/EmbeddedFiles.bin
-source/main-fw/main/assets/EmbeddedFiles.bin
-source/main-fw/main/assets/EmbeddedFiles.txt
+/source/main-fw/main/assets/EmbeddedFiles.bin
+/source/main-fw/main/assets/EmbeddedFiles.txt

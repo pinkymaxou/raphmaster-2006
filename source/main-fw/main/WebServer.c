@@ -117,7 +117,7 @@ void WEBSERVER_Init()
 static esp_err_t file_get_handler(httpd_req_t *req)
 {
     // Redirect root to index.html
-    if (strcmp(req->uri, "/") == 0)
+    if (strcmp(req->uri, "/") == 0 || strcmp(req->uri, "/about") == 0 || strcmp(req->uri, "/settings") == 0)
     {
         // Remember, browser keep 301 in cache so be careful
         ESP_LOGW(TAG, "Redirect URI: '%s', to '%s'", req->uri, DEFAULT_RELATIVE_URI);
