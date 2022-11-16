@@ -1,7 +1,5 @@
 ﻿index.html
-css/base-min.css
 css/content.css
-css/forms-min.css
 css/grids-responsive-min.css
 css/pure-min.css
 js/views/AboutPage.js
