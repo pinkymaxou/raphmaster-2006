@@ -6,6 +6,10 @@ export default class extends AbstractView {
         this.setTitle("Dashboard");
     }
 
+    async loaded() {
+
+    }
+
     async getHtml() {
         return `
 

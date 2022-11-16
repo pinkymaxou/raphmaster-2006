@@ -6,6 +6,10 @@ export default class extends AbstractView {
         this.setTitle("Settings");
     }
 
+    async loaded() {
+
+    }
+
     async getHtml() {
         return `
         <form class="pure-form">

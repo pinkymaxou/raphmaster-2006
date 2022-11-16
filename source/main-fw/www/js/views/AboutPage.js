@@ -6,14 +6,38 @@ export default class extends AbstractView {
         this.setTitle("About");
     }
 
-    async getHtml() {
+    async loaded() {
         const API_GETSYSINFO = '/api/getsysinfo';
 
+        let infoItems = null;
         await fetch(API_GETSYSINFO)
             .then((response) => response.json())
-            .then((data) => console.log(data))
+            .then((data) => infoItems = data.infos)
             .catch((ex) => console.error('getSysInfo', ex));
  
+        console.log("infoItems", infoItems);
+
+        let tbodySysInfo = document.querySelector("#tblBdSysInfo");
+
+        // 
+        infoItems.forEach(
+            (infoItem) =>
+            {
+                let newTr = tbodySysInfo.insertRow();
+
+                const tdName = newTr.insertCell(); // create td only
+                tdName.appendChild(document.createTextNode(infoItem.name));
+                
+                const tdValue = newTr.insertCell(); // create td only
+                tdValue.style["overflow-wrap"] = "anywhere";
+                tdValue.appendChild(document.createTextNode(infoItem.value));
+            }
+        );
+    }
+
+    async getHtml() {
+        // tblBdSysInfo
+
         return `
         <table class="pure-table">
             <thead>
@@ -22,11 +46,8 @@ export default class extends AbstractView {
                     <th>Value</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr v-for="sysinfo in sysinfos">
-                    <td>3</td>
-                    <td>Hyundai</td>
-                </tr>
+            <tbody id="tblBdSysInfo">
+                <!-- Space for table items -->
             </tbody>
         </table>
         `;

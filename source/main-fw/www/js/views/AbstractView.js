@@ -7,6 +7,10 @@ export default class {
         document.title = title;
     }
 
+    async loaded() {
+
+    }
+
     async getHtml() {
         return "test12345";
     }
