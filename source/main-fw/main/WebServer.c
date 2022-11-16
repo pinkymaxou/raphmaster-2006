@@ -116,22 +116,24 @@ void WEBSERVER_Init()
 /* An HTTP GET handler */
 static esp_err_t file_get_handler(httpd_req_t *req)
 {
-    // Redirect root to index.html
-    if (strcmp(req->uri, "/") == 0)
-    {
-        // Remember, browser keep 301 in cache so be careful
-        ESP_LOGW(TAG, "Redirect URI: '%s', to '%s'", req->uri, DEFAULT_RELATIVE_URI);
-        // Redirect to default page
-        httpd_resp_set_type(req, "text/html");
-        httpd_resp_set_status(req, "307 Temporary Redirect");
-        httpd_resp_set_hdr(req, "Location", DEFAULT_RELATIVE_URI);
-        httpd_resp_send(req, NULL, 0);
-        return ESP_OK;
-    }
+    const EF_SFile* pFile = NULL;
 
     ESP_LOGI(TAG, "Opening file uri: %s", req->uri);
 
-    const EF_SFile* pFile = GetFile(req->uri+1);
+    // Redirect root to index.html
+    if (strcmp(req->uri, "/") == 0 || 
+        strcmp(req->uri, "/about") == 0 || 
+        strcmp(req->uri, "/network") == 0 ||
+        strcmp(req->uri, "/settings") == 0 ||
+        strcmp(req->uri, "/calib") == 0 ||
+        strcmp(req->uri, "/about") == 0 )
+    {
+        pFile = GetFile(DEFAULT_RELATIVE_URI+1);
+    }
+    else {
+        pFile = GetFile(req->uri+1);
+    }
+
     if (pFile == NULL)
     {
         ESP_LOGE(TAG, "Failed to open file for reading");
