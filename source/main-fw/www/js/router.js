@@ -1,6 +1,8 @@
 import IndexPage from "./views/IndexPage.js";
 import SettingsPage from "./views/SettingsPage.js";
 import AboutPage from "./views/AboutPage.js";
+import NetworkPage from "./views/NetworkPage.js";
+import CalibPage from "./views/CalibPage.js";
 
 /* https://dcode.domenade.com/tutorials/build-a-single-page-app-with-javascript-no-frameworks */
 
@@ -23,7 +25,9 @@ const navigateTo = url => {
 const router = async () => {
     const routes = [
         { path: "/", view: IndexPage },
+        { path: "/network", view: NetworkPage },
         { path: "/settings", view: SettingsPage },
+        { path: "/calib", view: CalibPage },
         { path: "/about", view: AboutPage },
     ];
 

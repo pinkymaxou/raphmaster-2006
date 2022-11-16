@@ -3,7 +3,7 @@ import AbstractView from "./AbstractView.js";
 export default class extends AbstractView {
     constructor(params) {
         super(params);
-        this.setTitle("Settings");
+        this.setTitle("Calibration");
     }
 
     async loaded() {
@@ -12,7 +12,7 @@ export default class extends AbstractView {
 
     async getHtml() {
         return `
-            Settings
+            Calibration
         `;
     }
 }
