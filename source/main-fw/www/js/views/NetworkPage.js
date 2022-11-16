@@ -12,18 +12,30 @@ export default class extends AbstractView {
 
     async getHtml() {
         return `
-        
-        <form class="pure-form">
+        <form class="pure-form pure-form-stacked">
             <fieldset class="pure-group">
-                <input type="text" class="pure-input-1-2" placeholder="Username" />
-                <input type="text" class="pure-input-1-2" placeholder="Password" />
-                <input type="email" class="pure-input-1-2" placeholder="Email" />
+                <legend>Wi-Fi (soft access point)</legend>
+                <div class="pure-control-group">
+                    <label for="idWiFiSoAPPassword">Password</label>
+                    <input type="password" id="idWiFiSoAPPassword" class="pure-input-1-2" placeholder="Password" />
+                </div>
+
+                <legend>Wi-Fi (station mode)</legend>
+                <label for="idWifiSTAIsActive" class="pure-checkbox">
+                    <input type="checkbox" id="idWifiSTAIsActive" style="display: inline" /> Activate STA mode
+                </label>
+
+                <div class="pure-control-group">
+                    <label for="idWiFiSTASSID">SSID</label>
+                    <input type="text" id="idWiFiSTASSID" class="pure-input-1-2" placeholder="SSID" />
+                </div>
+                <div class="pure-control-group">
+                    <label for="idWiFiSTAPassword">Password</label>
+                    <input type="password" id="idWiFiSTAPassword" class="pure-input-1-2" placeholder="Password" />
+                </div>
             </fieldset>
-            <fieldset class="pure-group">
-                <input type="text" class="pure-input-1-2" placeholder="A title" />
-                <textarea class="pure-input-1-2" placeholder="Textareas work too"></textarea>
-            </fieldset>
-            <button type="submit" class="pure-button pure-input-1-2 pure-button-primary">Sign in</button>
+
+            <button class="pure-button pure-button-primary">Save and reboot</button>
         </form>
         `;
     }

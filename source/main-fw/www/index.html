@@ -17,8 +17,8 @@
         <a href="/" class="pure-menu-heading pure-menu-link" style="text-transform: none" data-link>Cocktails</a>
         <ul class="pure-menu-list">
             <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
-                <a href="#" class="pure-menu-link" data-link>Settings</a>
-                <ul class="pure-menu-children">
+                <a href="#" class="pure-menu-link">Settings</a>
+                <ul class="pure-menu-children" onclick="onClickMenu(this)">
                     <li class="pure-menu-item">
                         <a href="/network" class="pure-menu-link" data-link>Network</a>
                     </li>
@@ -37,7 +37,7 @@
         </ul>
     </div>
 
-    <div id="app"></div>
+    <div id="app" style="padding: 0.5rem"></div>
 
     <!-- JS -->
     <script type="text/javascript" src="js/app.js"></script>
