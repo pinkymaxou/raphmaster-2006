@@ -3,6 +3,7 @@ import SettingsPage from "./views/SettingsPage.js";
 import AboutPage from "./views/AboutPage.js";
 import NetworkPage from "./views/NetworkPage.js";
 import CalibPage from "./views/CalibPage.js";
+import SlotSettingsPage from "./views/SlotSettingsPage.js";
 
 /* https://dcode.domenade.com/tutorials/build-a-single-page-app-with-javascript-no-frameworks */
 
@@ -28,6 +29,7 @@ const router = async () => {
         { path: "/network", view: NetworkPage },
         { path: "/settings", view: SettingsPage },
         { path: "/calib", view: CalibPage },
+        { path: "/slotsettings", view: SlotSettingsPage },
         { path: "/about", view: AboutPage },
     ];
 
