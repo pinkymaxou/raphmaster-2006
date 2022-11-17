@@ -31,7 +31,7 @@ typedef enum
   EF_EFILE_JS_VIEWS_NETWORKPAGE_JS = 9,    /*!< @brief File: js/views/NetworkPage.js (size: 1.6 KB) */
   EF_EFILE_JS_ROUTER_JS = 10,    /*!< @brief File: js/router.js (size: 2.2 KB) */
   EF_EFILE_JS_VIEWS_SETTINGSPAGE_JS = 11,    /*!< @brief File: js/views/SettingsPage.js (size: 306 B) */
-  EF_EFILE_JS_VIEWS_SLOTSETTINGSPAGE_JS = 12,    /*!< @brief File: js/views/SlotSettingsPage.js (size: 4.3 KB) */
+  EF_EFILE_JS_VIEWS_SLOTSETTINGSPAGE_JS = 12,    /*!< @brief File: js/views/SlotSettingsPage.js (size: 4.5 KB) */
   EF_EFILE_COUNT = 13
 } EF_EFILE;
 

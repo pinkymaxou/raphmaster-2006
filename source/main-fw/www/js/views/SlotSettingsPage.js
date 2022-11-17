@@ -57,19 +57,21 @@ export default class extends AbstractView {
                     newTr.classList.add("pure-table-odd");
                 }
 
+                // =====================
                 const tdSlot = newTr.insertCell(); // create td only
                 tdSlot.appendChild(document.createTextNode(slotItem.id));
                 
+                // =====================
                 const tdValue = newTr.insertCell(); // create td only
+                // Add select
                 let cboSelectIngredient = document.createElement("select");
                 
                 // Ingredients
                 cboSelectIngredient.appendChild(this.addIngredient(0, "--- None ---"));
-                ingredients.forEach(
-                    (ingredient) => cboSelectIngredient.appendChild(this.addIngredient(ingredient.id, ingredient.name))
-                );                
+                ingredients.forEach( (ingredient) => cboSelectIngredient.appendChild(this.addIngredient(ingredient.id, ingredient.name)) );                
                 tdValue.appendChild(cboSelectIngredient);
  
+                // =====================
                 // Create textbox for total (qty)
                 const tdValueTotalQtyML = newTr.insertCell(); // create td only
                 let btnValueTotalQtyML = document.createElement("input");
@@ -79,6 +81,7 @@ export default class extends AbstractView {
                 btnValueTotalQtyML.setAttribute("value", slotItem.totalQtyml);
                 tdValueTotalQtyML.appendChild(btnValueTotalQtyML);
 
+                // =====================
                 // Create textbox for remaining (qty)
                 const tdValueRemainingQtyML = newTr.insertCell(); // create td only
                 let btnValueRemainingQtyML = document.createElement("input");
