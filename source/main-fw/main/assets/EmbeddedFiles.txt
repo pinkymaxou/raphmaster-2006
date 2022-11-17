@@ -10,3 +10,4 @@ js/views/IndexPage.js
 js/views/NetworkPage.js
 js/router.js
 js/views/SettingsPage.js
+js/views/SlotSettingsPage.js

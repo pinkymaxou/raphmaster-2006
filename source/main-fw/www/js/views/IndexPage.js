@@ -12,7 +12,6 @@ export default class extends AbstractView {
 
     async getHtml() {
         return `
-
         <table class="pure-table">
         <thead>
             <tr>
@@ -41,8 +40,8 @@ export default class extends AbstractView {
                 <td>Elantra</td>
                 <td>2010</td>
             </tr>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
         `;
     }
 }

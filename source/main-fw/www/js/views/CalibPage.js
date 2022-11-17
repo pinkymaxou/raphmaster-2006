@@ -8,11 +8,153 @@ export default class extends AbstractView {
 
     async loaded() {
 
+        let tbodySysInfo = document.querySelector("#tblBdSlots");
+
+        let slotItems = [
+            { id:  1, x: 0, y: 1},
+            { id:  2, x: 0, y: 1},
+            { id:  3, x: 0, y: 1},
+            { id:  4, x: 0, y: 1},
+ 
+            { id:  5, x: 0, y: 1},
+            { id:  6, x: 0, y: 1},
+            { id:  7, x: 0, y: 1},
+            { id:  8, x: 0, y: 1},
+ 
+            { id:  9, x: 0, y: 1},
+            { id: 10, x: 0, y: 1},
+            { id: 11, x: 0, y: 1},
+            { id: 12, x: 0, y: 1},
+
+            { id: 13, x: 0, y: 1},
+            { id: 14, x: 0, y: 1},
+            { id: 15, x: 0, y: 1},
+            { id: 16, x: 0, y: 1},
+        ];
+
+        // Add info items
+        let i = 0;
+
+        slotItems.forEach(
+            (slotItem) =>
+            {
+                let newTr = tbodySysInfo.insertRow();
+
+                // Alternate row
+                if (i % 2 == 0) {
+                    newTr.classList.add("pure-table-odd");
+                }
+
+                const tdName = newTr.insertCell(); // create td only
+                tdName.appendChild(document.createTextNode(slotItem.id));
+                
+                const tdValueX = newTr.insertCell(); // create td only
+                tdValueX.appendChild(document.createTextNode(slotItem.x));
+
+                const tdValueY = newTr.insertCell(); // create td only
+                tdValueY.appendChild(document.createTextNode(slotItem.y));
+
+                const tdValueAct = newTr.insertCell(); // create td only
+ 
+                // Save
+                let btnSave = document.createElement("button");
+                btnSave.classList.add("pure-button");
+                //btnSave.classList.add("pure-button-primary");
+                btnSave.classList.add("btMoving");
+                btnSave.appendChild(document.createTextNode("Set"));
+                tdValueAct.appendChild(btnSave);
+
+                // Goto
+                let btnGoto = document.createElement("button");
+                btnGoto.classList.add("pure-button");
+                //btnGoto.classList.add("pure-button-primary");
+                btnGoto.classList.add("btMoving");
+                btnGoto.appendChild(document.createTextNode("Goto"));
+                tdValueAct.appendChild(btnGoto);
+
+                i++;
+            });
     }
 
     async getHtml() {
         return `
-            Calibration
+            <legend>Calibrate all axis</legend>
+
+            <button class="pure-button pure-button-primary">Home all</button><br><br>
+
+            <br>
+            
+            <!-- Axis -->
+            <table class="pure-table">
+            <thead>
+                <tr>
+                    <th>Axis</th>
+                    <th>Value</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="pure-table-odd">
+                    <td>X</td>
+                    <td>0</td>
+                    <td>
+                        <div>
+                            <button class="pure-button btMoving">&lt;&lt;&lt;</button>
+                            <button class="pure-button btMoving">&lt;&lt;</button>
+                            <button class="pure-button btMoving">&lt;</button><br>
+                            <button class="pure-button btMoving">&gt;</button>
+                            <button class="pure-button btMoving">&gt;&gt;</button>
+                            <button class="pure-button btMoving">&gt;&gt;&gt;</button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Y</td>
+                    <td>0</td>
+                    <td>    
+                        <div>
+                            <button class="pure-button btMoving">&lt;&lt;&lt;</button>
+                            <button class="pure-button btMoving">&lt;&lt;</button>
+                            <button class="pure-button btMoving">&lt;</button><br>
+                            <button class="pure-button btMoving">&gt;</button>
+                            <button class="pure-button btMoving">&gt;&gt;</button>
+                            <button class="pure-button btMoving">&gt;&gt;&gt;</button>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="pure-table-odd">
+                    <td>Z</td>
+                    <td>0</td>
+                    <td>
+                    <div>
+                        <button class="pure-button btMoving">&lt;&lt;&lt;</button>
+                        <button class="pure-button btMoving">&lt;&lt;</button>
+                        <button class="pure-button btMoving">&lt;</button><br>
+                        <button class="pure-button btMoving">&gt;</button>
+                        <button class="pure-button btMoving">&gt;&gt;</button>
+                        <button class="pure-button btMoving">&gt;&gt;&gt;</button>
+                    </div>
+                    </td>
+                </tr>
+            </tbody>
+            </table>
+            <br>
+
+            <table class="pure-table">
+            <thead>
+                <tr>
+                    <th>Slot #</th>
+                    <th>X</th>
+                    <th>Y</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="tblBdSlots">
+                <!-- Space for table items -->
+            </tbody>
+            </table>
+            <br>
+            <button class="pure-button pure-button-primary">Save</button>
         `;
     }
 }
