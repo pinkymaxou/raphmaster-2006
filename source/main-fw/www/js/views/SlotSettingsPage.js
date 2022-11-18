@@ -76,20 +76,20 @@ export default class extends AbstractView {
                 const tdValueTotalQtyML = newTr.insertCell(); // create td only
                 let btnValueTotalQtyML = document.createElement("input");
                 btnValueTotalQtyML.setAttribute("type", "number");
-                btnValueTotalQtyML.setAttribute("min", 250);
-                btnValueTotalQtyML.setAttribute("max", 4500);
+                btnValueTotalQtyML.setAttribute("min", 0);
+                btnValueTotalQtyML.setAttribute("max", 6000);
                 btnValueTotalQtyML.setAttribute("value", slotItem.totalQtyml);
                 tdValueTotalQtyML.appendChild(btnValueTotalQtyML);
 
                 // =====================
-                // Create textbox for remaining (qty)
-                const tdValueRemainingQtyML = newTr.insertCell(); // create td only
-                let btnValueRemainingQtyML = document.createElement("input");
-                btnValueRemainingQtyML.setAttribute("type", "number");
-                btnValueRemainingQtyML.setAttribute("min", 250);
-                btnValueRemainingQtyML.setAttribute("max", 4500);
-                btnValueRemainingQtyML.setAttribute("value", slotItem.remainingQtyml);
-                tdValueRemainingQtyML.appendChild(btnValueRemainingQtyML);
+                // Create textbox for used (qty)
+                const tdValueUsedQtyML = newTr.insertCell(); // create td only
+                let enumUsedQtyText = document.createElement("input");
+                enumUsedQtyText.setAttribute("type", "number");
+                enumUsedQtyText.setAttribute("min", 0);
+                enumUsedQtyText.setAttribute("max", 6000);
+                enumUsedQtyText.setAttribute("value", slotItem.remainingQtyml);
+                tdValueUsedQtyML.appendChild(enumUsedQtyText);
 
                 i++;
             });

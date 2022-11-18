@@ -14,9 +14,12 @@ namespace generate_code
 
                 int slotCount = 16;
 
-                Func<int, string> enumPosXText              = (i) => $"SETTINGS_EENTRY_SLOT{i}_POS_X";
-                Func<int, string> enumPosYText              = (i) => $"SETTINGS_EENTRY_SLOT{i}_POS_Y";
-                Func<int, string> enumPosIngredientIDText   = (i) => $"SETTINGS_EENTRY_SLOT{i}_POS_INGREDIENTID";
+                Func<int, string> enumPosXText       = (i) => $"SETTINGS_EENTRY_SLOT{i}_POS_X";
+                Func<int, string> enumPosYText       = (i) => $"SETTINGS_EENTRY_SLOT{i}_POS_Y";
+                Func<int, string> enumLoadedIDText   = (i) => $"SETTINGS_EENTRY_SLOT{i}_LOADID";
+                
+                Func<int, string> enumTotalQtyText = (i) => $"SETTINGS_EENTRY_SLOT{i}_TOTALQTY";
+                Func<int, string> enumUsedQtyText = (i) => $"SETTINGS_EENTRY_SLOT{i}_USEDQTY";
 
                 string settingsMatrix1Txt = "settingmatrix1.txt";
 
@@ -26,7 +29,10 @@ namespace generate_code
                     {
                         fs.WriteLine($"{ enumPosXText(i) },");
                         fs.WriteLine($"{ enumPosYText(i) },");
-                        fs.WriteLine($"{ enumPosIngredientIDText(i) },");
+                        fs.WriteLine($"{ enumLoadedIDText(i) },");
+                        fs.WriteLine($"{ enumTotalQtyText(i) },");
+                        fs.WriteLine($"{ enumUsedQtyText(i) },");
+                        fs.WriteLine();
                     }
                 }
 
@@ -38,7 +44,10 @@ namespace generate_code
                     {
                         fs.WriteLine($"[{enumPosXText(i)}] = NVSJSON_INITINT32_RNG(\"S{i}.PosX\", \"Position X\", 0, 0, 100000, NVSJSON_EFLAGS_None),");
                         fs.WriteLine($"[{enumPosYText(i)}] = NVSJSON_INITINT32_RNG(\"S{i}.PosY\", \"Position Y\", 0, 0, 100000, NVSJSON_EFLAGS_None),");
-                        fs.WriteLine($"[{enumPosIngredientIDText(i)}] = NVSJSON_INITINT32_RNG(\"S{i}.IngreID\", \"Ingredient ID\", 0, 0, 100000, NVSJSON_EFLAGS_None),");
+                        fs.WriteLine($"[{enumLoadedIDText(i)}] = NVSJSON_INITINT32_RNG(\"S{i}.LoadID\", \"Ingredient ID, 0 = nothing\", 0, 0, 100000, NVSJSON_EFLAGS_None),");
+
+                        fs.WriteLine($"[{enumTotalQtyText(i)}] = NVSJSON_INITINT32_RNG(\"S{i}.TotalML\", \"Total Qty (ml)\", 0, 0, 6000, NVSJSON_EFLAGS_None),");
+                        fs.WriteLine($"[{enumUsedQtyText(i)}] = NVSJSON_INITINT32_RNG(\"S{i}.UsedML\", \"Used Qty (ml)\", 0, 0, 6000, NVSJSON_EFLAGS_None),");
                         fs.WriteLine();
                     }
                 }
