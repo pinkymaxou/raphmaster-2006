@@ -11,3 +11,10 @@ js/views/NetworkPage.js
 js/router.js
 js/views/SettingsPage.js
 js/views/SlotSettingsPage.js
+img/bloody-mary.jpg
+font/Orbitron-Bold.ttf
+font/Orbitron-Regular.ttf
+img/pornstar.jpg
+font/RobotoMono-Bold.ttf
+font/RobotoMono-Regular.ttf
+img/sex-on-the-beach.jpg
