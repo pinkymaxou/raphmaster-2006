@@ -20,7 +20,7 @@ typedef struct
 typedef enum
 {
   EF_EFILE_INDEX_HTML = 0,    /*!< @brief File: index.html (size: 1.9 KB) */
-  EF_EFILE_CSS_CONTENT_CSS = 1,    /*!< @brief File: css/content.css (size: 1.4 KB) */
+  EF_EFILE_CSS_CONTENT_CSS = 1,    /*!< @brief File: css/content.css (size: 1.5 KB) */
   EF_EFILE_CSS_GRIDS_RESPONSIVE_MIN_CSS = 2,    /*!< @brief File: css/grids-responsive-min.css (size: 14.0 KB) */
   EF_EFILE_CSS_PURE_MIN_CSS = 3,    /*!< @brief File: css/pure-min.css (size: 15.4 KB) */
   EF_EFILE_JS_VIEWS_ABOUTPAGE_JS = 4,    /*!< @brief File: js/views/AboutPage.js (size: 1.6 KB) */
