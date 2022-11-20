@@ -80,6 +80,8 @@
 .cocktail_ingredient_container {
     display: grid;
     grid-template-columns: auto auto;
+
+    margin-top: 1rem;
 }
 
 .cocktail_ingredient_item {
