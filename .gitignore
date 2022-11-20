@@ -54,3 +54,6 @@ dkms.conf
 /source/main-fw/build
 /source/main-fw/main/assets/EmbeddedFiles.bin
 /source/main-fw/main/assets/EmbeddedFiles.txt
+/tools/generate-code/.vs
+/tools/generate-code/src/obj
+/tools/generate-code/src/bin

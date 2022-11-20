@@ -39,7 +39,7 @@ static esp_err_t file_otauploadpost_handler(httpd_req_t *req);
 
 static const EF_SFile* GetFile(const char* strFilename);
 
-static const char* GetSysInfo();
+static char* GetSysInfo();
 static void ToHexString(char *dstHexString, const uint8_t* data, uint8_t len);
 static const char* GetESPChipId(esp_chip_model_t eChipid);
 
@@ -356,6 +356,8 @@ static esp_err_t set_content_type_from_file(httpd_req_t *req, const char *filena
         return httpd_resp_set_type(req, "text/css");
     } else if (IS_FILE_EXT(filename, ".js")) {
         return httpd_resp_set_type(req, "text/javascript");
+    } else if (IS_FILE_EXT(filename, ".json")) {
+        return httpd_resp_set_type(req, "application/json");
     }
     /* This is a limited set only */
     /* For any other type always set as plain text */
@@ -374,7 +376,7 @@ static const EF_SFile* GetFile(const char* strFilename)
     return NULL;
 }
 
-static const char* GetSysInfo()
+static char* GetSysInfo()
 {
     cJSON* pRoot = NULL;
 
@@ -475,7 +477,7 @@ static const char* GetSysInfo()
     cJSON_AddItemToObject(pEntryJSON10, "value", cJSON_CreateString(buff));
     cJSON_AddItemToArray(pEntries, pEntryJSON10);
 
-    const char* pStr =  cJSON_PrintUnformatted(pRoot);
+    char* pStr =  cJSON_PrintUnformatted(pRoot);
     cJSON_Delete(pRoot);
     return pStr;
     ERROR:

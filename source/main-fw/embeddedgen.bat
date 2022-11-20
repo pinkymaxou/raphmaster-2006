@@ -1,1 +1,1 @@
-..\..\tools\embeddedgen\embeddedgen.exe -i ".\www" -o ".\main\assets"
+..\..\tools\embeddedgen\embeddedgen.exe --outbin -i ".\www" -o ".\main\assets" 

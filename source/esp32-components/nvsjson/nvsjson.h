@@ -59,8 +59,8 @@ typedef union
 
 typedef struct _NVSJSON_SSettingEntry
 {
-    const char* szKey;
-    const char* szDesc;
+    char* szKey;
+    char* szDesc;
     NVSJSON_ETYPE eType;
     NVSJSON_UConfig uConfig;
     NVSJSON_EFLAGS eFlags;
