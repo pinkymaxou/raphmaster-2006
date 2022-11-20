@@ -27,7 +27,7 @@ typedef enum
   EF_EFILE_JS_VIEWS_ABSTRACTVIEW_JS = 5,    /*!< @brief File: js/views/AbstractView.js (size: 249 B) */
   EF_EFILE_JS_APP_JS = 6,    /*!< @brief File: js/app.js (size: 145 B) */
   EF_EFILE_JS_VIEWS_CALIBPAGE_JS = 7,    /*!< @brief File: js/views/CalibPage.js (size: 5.7 KB) */
-  EF_EFILE_JS_VIEWS_INDEXPAGE_JS = 8,    /*!< @brief File: js/views/IndexPage.js (size: 5.3 KB) */
+  EF_EFILE_JS_VIEWS_CHOOSECOCKTAILPAGE_JS = 8,    /*!< @brief File: js/views/ChooseCocktailPage.js (size: 5.3 KB) */
   EF_EFILE_JS_VIEWS_NETWORKPAGE_JS = 9,    /*!< @brief File: js/views/NetworkPage.js (size: 1.6 KB) */
   EF_EFILE_JS_ROUTER_JS = 10,    /*!< @brief File: js/router.js (size: 2.2 KB) */
   EF_EFILE_JS_VIEWS_SETTINGSPAGE_JS = 11,    /*!< @brief File: js/views/SettingsPage.js (size: 306 B) */

@@ -1,4 +1,4 @@
-import IndexPage from "./views/IndexPage.js";
+import ChooseCocktailPage from "./views/ChooseCocktailPage.js";
 import SettingsPage from "./views/SettingsPage.js";
 import AboutPage from "./views/AboutPage.js";
 import NetworkPage from "./views/NetworkPage.js";
@@ -25,7 +25,7 @@ const navigateTo = url => {
 
 const router = async () => {
     const routes = [
-        { path: "/", view: IndexPage },
+        { path: "/", view: ChooseCocktailPage },
         { path: "/network", view: NetworkPage },
         { path: "/settings", view: SettingsPage },
         { path: "/calib", view: CalibPage },
