@@ -51,6 +51,10 @@
     margin-bottom: 0.2rem;
 }
 
+.cocktail_item:hover {
+    background-color: #FF1493;
+}
+
 .cocktail_item img {
     float: left; 
     margin: 0.2rem;
@@ -67,8 +71,34 @@
     font-family: 'orbitron';
 }
 
-.cocktail_item ul li {
+.cocktail_item ol li {
     color: black;
     font-family: 'robotomono';
     list-style-type: decimal;
+}
+
+.cocktail_ingredient_container {
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
+.cocktail_ingredient_item {
+    padding: 5px;
+}
+
+.colingre_name {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    
+    font-family: 'robotomono';
+    color: black;
+}
+
+.colingre_qty {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    
+    font-family: 'robotomono';
+    font-weight: bold;
+    color: black;
 }
