@@ -5,6 +5,10 @@ export default class extends AbstractView {
         super(params);
 
         this.setTitle("Custom cocktail");
+
+        this.mIngredients = [
+            { slotid: 1, name: "Vokda", remainqty: 1500, totalqty: 2000 }
+        ];
     }
 
     async loaded() {
@@ -13,7 +17,35 @@ export default class extends AbstractView {
 
     async getHtml() {
         return `
-        Custom Cocktail Page
+        <div id="idCustomIngredientList" class="customingredient_container">
+            <div class="customingredient_item">
+                <div class="customingredient_item_name">Vokda</div>
+                <div class="customingredient_item_qty_container">
+                    <div class="customingredient_item_qty_item">1 ounces</div>
+                    <div class="customingredient_item_qty_item">1.5 ounces</div>
+                    <div class="customingredient_item_qty_item">2 ounces</div>
+                    <div class="customingredient_item_qty_item">3 ounces</div>
+                </div>
+            </div>
+            <div class="customingredient_item">
+                <div class="customingredient_item_name">Clamato</div>
+                <div class="customingredient_item_qty_container">
+                    <div class="customingredient_item_qty_item">1 ounces</div>
+                    <div class="customingredient_item_qty_item">1.5 ounces</div>
+                    <div class="customingredient_item_qty_item">2 ounces</div>
+                    <div class="customingredient_item_qty_item">3 ounces</div>
+                </div>
+            </div>
+            <div class="customingredient_item">
+                <div class="customingredient_item_name">Grenadine</div>
+                <div class="customingredient_item_qty_container">
+                    <div class="customingredient_item_qty_item">1 ounces</div>
+                    <div class="customingredient_item_qty_item">1.5 ounces</div>
+                    <div class="customingredient_item_qty_item">2 ounces</div>
+                    <div class="customingredient_item_qty_item">3 ounces</div>
+                </div>
+            </div>
+        </div>
         `;
     }
 }
