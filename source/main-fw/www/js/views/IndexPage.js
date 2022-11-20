@@ -3,10 +3,7 @@ import AbstractView from "./AbstractView.js";
 export default class extends AbstractView {
     constructor(params) {
         super(params);
-        this.setTitle("Cocktails");
-    }
 
-    async loaded() {
         this.mCocktails = [
             { name: "Sex on the beach", img: "img/sex-on-the-beach.jpg", 
                 ingredients: [
@@ -46,6 +43,10 @@ export default class extends AbstractView {
             },
             ];
 
+        this.setTitle("Cocktails");
+    }
+
+    async loaded() {
         let idCocktailList = document.querySelector("#idCocktailList");
 
         // myself: That's stupid, why don't you use vueJS ?
@@ -53,13 +54,15 @@ export default class extends AbstractView {
         // <div class="pure-g cocktail_item">
         //     <img src="img/sex-on-the-beach.jpg" />
         //     <div>
-        //         <p>Sex on the beach</p>
-        //         <ul>
-        //             <li>ice</li>
-        //             <li>50ml vodka</li>
-        //         </ul>
+        //         <p>Test</p>
+        //         <div class="cocktail_ingredient_container">
+        //             <div class="colingre_name">Vodka</div>
+        //             <div class="colingre_qty">25ml</div>
+        //             <div class="colingre_name">Peach Snapps</div>
+        //             <div class="colingre_qty">50ml</div>
+        //         </div>
         //     </div>
-        // </div>    
+        // </div>   
         this.mCocktails.forEach(
             (cocktail) =>
             {
@@ -72,27 +75,41 @@ export default class extends AbstractView {
                 newImg.setAttribute("src", cocktail.img);
                 newCocktailItemDIV.appendChild(newImg);
 
+                let newTitleP = document.createElement("p");
+                newTitleP.appendChild(document.createTextNode(cocktail.name));
+                newCocktailItemDIV.appendChild(newTitleP);
+
                 // Ingredient items
                 let newIngredientDIV = document.createElement("div");
                 
-                let newTitleP = document.createElement("p");
-                newTitleP.appendChild(document.createTextNode(cocktail.name));
-                newIngredientDIV.appendChild(newTitleP);
-
-                // OL
-                let newOL = document.createElement("ol");
+                // Ingredient div
+                let newIngredientGridDIV = document.createElement("div");
+                newIngredientGridDIV.classList.add("cocktail_ingredient_container");
                 
                 // Add ingredients
+                let ingrIndex = 0;
                 cocktail.ingredients.forEach(
                     (ingredientItem) =>
                     {
-                        let newLI = document.createElement("li");
-                        // ingredientItem
-                        newLI.appendChild(document.createTextNode(ingredientItem.name));
-                        newOL.appendChild(newLI);
+                        let newNameDIV = document.createElement("div");
+                        newNameDIV.classList.add("colingre_name");
+                        newNameDIV.appendChild(document.createTextNode(ingredientItem.name));
+                        newIngredientGridDIV.appendChild(newNameDIV);
+
+                        let newQtyDIV = document.createElement("div");
+                        newQtyDIV.classList.add("colingre_qty");
+                        newQtyDIV.appendChild(document.createTextNode(ingredientItem.qty));
+                        newIngredientGridDIV.appendChild(newQtyDIV);
+
+                        // Add alternate row style
+                        if (ingrIndex % 2 == 0) {
+                            newNameDIV.classList.add("colingre_alternate");
+                            newQtyDIV.classList.add("colingre_alternate");
+                        }
+                        ingrIndex++;
                     });
                 
-                newIngredientDIV.appendChild(newOL);
+                newIngredientDIV.appendChild(newIngredientGridDIV);
 
                 newCocktailItemDIV.appendChild(newIngredientDIV);
 
@@ -104,18 +121,7 @@ export default class extends AbstractView {
     async getHtml() {
         return `
         <div id="idCocktailList" class="cocktail_container">
-            <div class="pure-g cocktail_item">
-                <img src="img/sex-on-the-beach.jpg" />
-                <div>
-                    <p>Test</p>
-                    <div class="cocktail_ingredient_container">
-                        <div class="colingre_name">Vodka</div>
-                        <div class="colingre_qty">25ml</div>
-                        <div class="colingre_name">Peach Snapps</div>
-                        <div class="colingre_qty">50ml</div>
-                    </div>
-                </div>
-            </div>    
+  
         </div>
         `;
     }
