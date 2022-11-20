@@ -6,7 +6,7 @@ export default class extends AbstractView {
 
         this.setTitle("Custom cocktail");
 
-        this.mIngredients = [
+        this.mSlots = [
             { slotid: 1, name: "Vokda", remainqty: 1500, totalqty: 2000 },
             { slotid: 2, name: "Clamato", remainqty: 1500, totalqty: 2000 },
             { slotid: 3, name: "Grenadine", remainqty: 1500, totalqty: 2000 },
@@ -26,53 +26,70 @@ export default class extends AbstractView {
         ];
     }
 
+    addIngredient(id, name) {
+        let cboNewIngredientOpt = document.createElement("option");
+        cboNewIngredientOpt.setAttribute("value", id);
+        cboNewIngredientOpt.text = name;
+        return cboNewIngredientOpt;
+    }
+
     async loaded() {
 
-        // <div class="customingredient_item_name">Vokda</div>
-        // <div class="customingredient_item_qty_container">
-        //     <select>
-        //         <option>None</option>
-        //         <option>1&nbsp;ounces</option>
-        //         <option>1.5&nbsp;ounces</option>
-        //         <option>2&nbsp;ounces</option>
-        //         <option>3&nbsp;ounces</option>
-        //     </select>
-        // </div>
-        let idCustomIngredientList = document.querySelector("#idCustomIngredientList");
+        let idTBodyCustomIngredientList = document.querySelector("#idTBodyCustomIngredientList");
 
-        this.mIngredients.forEach(
-            (ingredient) =>
+        let i = 0;
+        this.mSlots.forEach(
+            (slotItem) =>
             {
-                let newIngredientItemDIV = document.createElement("div");
-                newIngredientItemDIV.classList.add("customingredient_item_name");
-                newIngredientItemDIV.appendChild(document.createTextNode(ingredient.name));
+                let newTr = idTBodyCustomIngredientList.insertRow();
 
-                let newIngredientItemQtyContainerDIV = document.createElement("div");
-                newIngredientItemQtyContainerDIV.classList.add("customingredient_item_qty_container");
-
-                let newSelect = document.createElement("select");
-
-                for(let once = 0; once <= 3; once += 0.5) {
-                    let newOption = document.createElement("option");                   
-                    let text = document.createTextNode(once > 0 ? (once + " oz") : "---");
-
-                    newOption.appendChild(text);
-                    newSelect.appendChild(newOption);
+                // Alternate row
+                if (i % 2 == 0) {
+                    newTr.classList.add("pure-table-odd");
                 }
 
-                newIngredientItemQtyContainerDIV.appendChild(newSelect);
+                // =====================
+                const tdSlot = newTr.insertCell(); // create td only
+                tdSlot.appendChild(document.createTextNode(slotItem.slotid));
+                
+                // =====================
+                const tdIngredient = newTr.insertCell(); // create td only
+                tdIngredient.appendChild(document.createTextNode(slotItem.name));
+                
+                // =====================
+                const tdValue = newTr.insertCell(); // create td only
 
-                idCustomIngredientList.appendChild(newIngredientItemDIV);
-                idCustomIngredientList.appendChild(newIngredientItemQtyContainerDIV);
+                // Add select
+                let cboSelectQty = document.createElement("select");
+                
+                // Ingredients
+                cboSelectQty.appendChild(this.addIngredient(0, " --- "));                
+                for(let oz = 0.5; oz <= 3; oz += 0.5) {
+                    cboSelectQty.appendChild(this.addIngredient(oz, oz +" oz"));
+                }
+                tdValue.appendChild(cboSelectQty);
+
+                i++;
             });
 
     }
 
     async getHtml() {
         return `
-        <div id="idCustomIngredientList" class="customingredient_container">
-            <!-- Items -->
-        </div>
+        <table class="pure-table">
+            <thead>
+                <tr>
+                    <th>Slot #</th>
+                    <th>Ingredient</th>
+                    <th>Quantity</th>
+                </tr>
+            </thead>
+            <tbody id="idTBodyCustomIngredientList">
+                <!-- Space for table items -->
+            </tbody>
+        </table>
+        <br>
+        <button class="pure-button pure-button-primary">Save</button>
         `;
     }
 }
