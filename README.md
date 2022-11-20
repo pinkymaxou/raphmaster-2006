@@ -4,6 +4,11 @@ Basically we want to make an automated cocktail maker.
 
 The project is still in pre-development.
 
+## Copyright and thanks
+
+ - Orbitron (https://fonts.google.com/specimen/Orbitron/about) Matt McInerney (Open Font License)
+ - Roboto-Mono (https://fonts.google.com/specimen/Roboto+Mono/about) Christian Robertson (Apache License, Version 2.0)
+
 ## Goals
 
 - Support up to use 16 bottles
@@ -20,3 +25,4 @@ The project is still in pre-development.
 
 - Add mechanical multiplexer and peristaltic pumps for cola/juice etc ...
 - Support RFID for access
+
