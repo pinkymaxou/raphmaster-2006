@@ -27,10 +27,10 @@ export default class extends AbstractView {
                     { name: "Worcestershire sauce", qty: "2 dashes" },
                     { name: "Ground black pepper", qty: "1 pinch" },
                     { name: "Smoked paprika", qty: "1 pinch" },
-                    { name: "Garnish: parsley sprig", qty: "" },
-                    { name: "Garnish: green olives", qty: "" },
+                    { name: "Garnish: parsley sprig", qty: "1" },
+                    { name: "Garnish: green olives", qty: "1" },
                     { name: "Garnish: lime wedge", qty: "1" },
-                    { name: "Garnish: celery stalk", qty: "" }
+                    { name: "Garnish: celery stalk", qty: "1" }
                 ] 
             },
             { name: "Pornstar", img: "img/pornstar.jpg", 
