@@ -14,6 +14,7 @@ js/views/SettingsPage.js
 js/views/SlotSettingsPage.js
 favicon.ico
 img/bloody-mary.jpg
+img/grasshopper.jpg
 font/Orbitron-Bold.ttf
 font/Orbitron-Regular.ttf
 img/pornstar.jpg

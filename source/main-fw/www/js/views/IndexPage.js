@@ -41,6 +41,14 @@ export default class extends AbstractView {
                     { name: "7-up", qty: "" }
                 ] 
             },
+            { name: "Grasshopper", img: "img/grasshopper.jpg", 
+                ingredients: [
+                    { name: "Creme de menthe", qty: "3/4 ounce" },
+                    { name: "White creme de cacao", qty: "3/4 ounce" },
+                    { name: "Heavy cream", qty: "1/4 ounce" },
+                    { name: "Ice", qty: "1 cup" }
+                ] 
+            }
             ];
 
         this.setTitle("Cocktails");

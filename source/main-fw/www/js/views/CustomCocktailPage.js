@@ -12,17 +12,17 @@ export default class extends AbstractView {
             { slotid: 3, name: "Grenadine", remainqty: 1500, totalqty: 2000 },
             { slotid: 4, name: "White rhum", remainqty: 1500, totalqty: 2000 },
             { slotid: 5, name: "Brown rhum", remainqty: 1500, totalqty: 2000 },
-            { slotid: 6, name: "Vokda", remainqty: 1500, totalqty: 2000 },
-            { slotid: 7, name: "Vokda", remainqty: 1500, totalqty: 2000 },
-            { slotid: 8, name: "Vokda", remainqty: 1500, totalqty: 2000 },
-            { slotid: 9, name: "Vokda", remainqty: 1500, totalqty: 2000 },
-            { slotid:10, name: "Vokda", remainqty: 1500, totalqty: 2000 },
-            { slotid:11, name: "Vokda", remainqty: 1500, totalqty: 2000 },
-            { slotid:12, name: "Vokda", remainqty: 1500, totalqty: 2000 },
-            { slotid:13, name: "Vokda", remainqty: 1500, totalqty: 2000 },
-            { slotid:14, name: "Vokda", remainqty: 1500, totalqty: 2000 },
-            { slotid:15, name: "Vokda", remainqty: 1500, totalqty: 2000 },
-            { slotid:16, name: "Vokda", remainqty: 1500, totalqty: 2000 }
+            { slotid: 6, name: "Whiskey Sour", remainqty: 1500, totalqty: 2000 },
+            { slotid: 7, name: "Dry Martini", remainqty: 1500, totalqty: 2000 },
+            { slotid: 8, name: "Margarita", remainqty: 1500, totalqty: 2000 },
+            { slotid: 9, name: "Sour Puss", remainqty: 1500, totalqty: 2000 },
+            { slotid:10, name: "Gin", remainqty: 1500, totalqty: 2000 },
+            { slotid:11, name: "Bayleys", remainqty: 1500, totalqty: 2000 },
+            { slotid:12, name: "Cosmopolitan", remainqty: 1500, totalqty: 2000 },
+            { slotid:13, name: "Peach schnapps ", remainqty: 1500, totalqty: 2000 },
+            { slotid:14, name: "White mint cream", remainqty: 1500, totalqty: 2000 },
+            { slotid:15, name: "Tequila", remainqty: 1500, totalqty: 2000 },
+            { slotid:16, name: "Tia Maria", remainqty: 1500, totalqty: 2000 }
         ];
     }
 
@@ -89,7 +89,7 @@ export default class extends AbstractView {
             </tbody>
         </table>
         <br>
-        <button class="pure-button pure-button-primary">Save</button>
+        <button class="pure-button pure-button-primary">Make</button>
         `;
     }
 }
