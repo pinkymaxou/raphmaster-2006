@@ -45,7 +45,7 @@ export default class extends AbstractView {
 
                 // Alternate row
                 if (i % 2 == 0) {
-                    newTr.classList.add("pure-table-odd");
+                    newTr.classList.add("custom-table-row-odd");
                 }
 
                 // =====================
@@ -61,6 +61,7 @@ export default class extends AbstractView {
 
                 // Add select
                 let cboSelectQty = document.createElement("select");
+                cboSelectQty.setAttribute("width", "-webkit-fill-available");
                 
                 // Ingredients
                 cboSelectQty.appendChild(this.addQty(0, " --- "));                
@@ -76,14 +77,7 @@ export default class extends AbstractView {
 
     async getHtml() {
         return `
-        <table class="pure-table">
-            <thead>
-                <tr>
-                    <th>Slot #</th>
-                    <th>Ingredient</th>
-                    <th>Quantity</th>
-                </tr>
-            </thead>
+        <table class="custom-table">
             <tbody id="idTBodyCustomIngredientList">
                 <!-- Space for table items -->
             </tbody>

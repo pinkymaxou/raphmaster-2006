@@ -67,8 +67,8 @@ export default class extends AbstractView {
                 let cboSelectIngredient = document.createElement("select");
                 
                 // Ingredients
-                cboSelectIngredient.appendChild(this.addQty(0, "--- None ---"));
-                ingredients.forEach( (ingredient) => cboSelectIngredient.appendChild(this.addQty(ingredient.id, ingredient.name)) );                
+                cboSelectIngredient.appendChild(this.addIngredient(0, "--- None ---"));
+                ingredients.forEach( (ingredient) => cboSelectIngredient.appendChild(this.addIngredient(ingredient.id, ingredient.name)) );                
                 tdValue.appendChild(cboSelectIngredient);
  
                 // =====================
