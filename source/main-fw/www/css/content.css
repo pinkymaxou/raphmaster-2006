@@ -29,6 +29,9 @@
     margin: 0.1rem;
 }
 
+/* ===============================
+    Cocktails list
+   =============================== */
 .cocktail_container {
     display: flex;
     flex-direction: row;
@@ -40,22 +43,29 @@
     font-family: 'orbitron';
     
     min-width: 20rem;
+    max-width: 30rem;
     flex-grow: 1;
     flex: 1 1 0px;
+    
+    display: inline-block;
 
-    background-color: lightgray;
+    background-color: lightcyan;
     border-color: mintcream;
     border-style: solid;
-    border-width: 2px;
+    border-width: 3px;
     border-radius: 0.5rem;
     margin-bottom: 0.2rem;
+}
+
+.cocktail_item:hover {
+    border-color: lightsteelblue;
 }
 
 .cocktail_item img {
     float: left; 
     margin: 0.2rem;
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     object-fit: contain;
     background-color: white;
     border-radius: 20%;
@@ -65,10 +75,43 @@
     margin: 0.2rem;
     font-weight: bold;
     font-family: 'orbitron';
+    font-size: larger;
 }
 
-.cocktail_item ul li {
+.cocktail_item ol li {
     color: black;
     font-family: 'robotomono';
     list-style-type: decimal;
+}
+
+.cocktail_ingredient_container {
+    display: grid;
+    grid-template-columns: auto auto;
+
+    margin: 0.5rem;
+}
+
+.cocktail_ingredient_item {
+    padding: 5px;
+}
+
+.colingre_name {
+    padding: 0.1rem;
+
+    font-family: 'robotomono';
+    color: black;
+}
+
+.colingre_qty {
+    padding: 0.1rem;
+
+    white-space: nowrap; 
+
+    font-family: 'robotomono';
+    font-weight: bold;
+    color: black;
+}
+
+.colingre_alternate {
+    background-color: #aaffff;
 }

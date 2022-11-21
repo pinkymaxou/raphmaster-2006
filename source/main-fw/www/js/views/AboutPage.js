@@ -39,6 +39,21 @@ export default class extends AbstractView {
 
     async getHtml() {
         return `
+        <div class="pure-menu pure-menu-horizontal">
+            <li class="pure-menu-item">
+                <a href="/network" class="pure-menu-link" data-link>Network Settings</a>
+            </li>
+            <li class="pure-menu-item">
+                <a href="/slotsettings" class="pure-menu-link" data-link>Slots Settings</a>
+            </li>
+            <li class="pure-menu-item">
+                <a href="/settings" class="pure-menu-link" data-link>General Settings</a>
+            </li>
+            <li class="pure-menu-item">
+                <a href="/calib" class="pure-menu-link" data-link>Calibration</a>
+            </li>
+        </div>
+
         <table class="pure-table pure-table-bordered">
             <thead>
                 <tr>

@@ -6,12 +6,15 @@ js/views/AboutPage.js
 js/views/AbstractView.js
 js/app.js
 js/views/CalibPage.js
+js/views/CustomCocktailPage.js
 js/views/IndexPage.js
 js/views/NetworkPage.js
 js/router.js
 js/views/SettingsPage.js
 js/views/SlotSettingsPage.js
+favicon.ico
 img/bloody-mary.jpg
+img/grasshopper.jpg
 font/Orbitron-Bold.ttf
 font/Orbitron-Regular.ttf
 img/pornstar.jpg

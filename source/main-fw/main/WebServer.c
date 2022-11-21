@@ -127,7 +127,7 @@ static esp_err_t file_get_handler(httpd_req_t *req)
         strcmp(req->uri, "/settings") == 0 ||
         strcmp(req->uri, "/calib") == 0 ||
         strcmp(req->uri, "/slotsettings") == 0  ||
-        strcmp(req->uri, "/about") == 0)
+        strcmp(req->uri, "/customcocktail") == 0)
     {
         pFile = GetFile(DEFAULT_RELATIVE_URI+1);
     }

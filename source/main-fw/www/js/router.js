@@ -1,4 +1,5 @@
 import IndexPage from "./views/IndexPage.js";
+import CustomCocktailPage from "./views/CustomCocktailPage.js";
 import SettingsPage from "./views/SettingsPage.js";
 import AboutPage from "./views/AboutPage.js";
 import NetworkPage from "./views/NetworkPage.js";
@@ -30,6 +31,7 @@ const router = async () => {
         { path: "/settings", view: SettingsPage },
         { path: "/calib", view: CalibPage },
         { path: "/slotsettings", view: SlotSettingsPage },
+        { path: "/customcocktail", view: CustomCocktailPage },
         { path: "/about", view: AboutPage },
     ];
 
