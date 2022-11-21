@@ -6,7 +6,7 @@ export default class extends AbstractView {
         this.setTitle("Slot settings");
     }
 
-    addIngredient(id, name) {
+    addQty(id, name) {
         let cboNewIngredientOpt = document.createElement("option");
         cboNewIngredientOpt.setAttribute("value", id);
         cboNewIngredientOpt.text = name;
