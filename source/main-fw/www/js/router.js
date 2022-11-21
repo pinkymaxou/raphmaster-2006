@@ -1,9 +1,10 @@
-import IndexPage from "./views/IndexPage.js";
+import MakeCocktailPage from "./views/MakeCocktailPage.js";
 import CustomCocktailPage from "./views/CustomCocktailPage.js";
 import SettingsPage from "./views/SettingsPage.js";
 import AboutPage from "./views/AboutPage.js";
 import NetworkPage from "./views/NetworkPage.js";
 import CalibPage from "./views/CalibPage.js";
+import StatusPage from "./views/StatusPage.js";
 import SlotSettingsPage from "./views/SlotSettingsPage.js";
 
 /* https://dcode.domenade.com/tutorials/build-a-single-page-app-with-javascript-no-frameworks */
@@ -26,12 +27,14 @@ const navigateTo = url => {
 
 const router = async () => {
     const routes = [
-        { path: "/", view: IndexPage },
+        { path: "/", view: StatusPage },
+        { path: "/status", view: StatusPage },
         { path: "/network", view: NetworkPage },
         { path: "/settings", view: SettingsPage },
         { path: "/calib", view: CalibPage },
         { path: "/slotsettings", view: SlotSettingsPage },
         { path: "/customcocktail", view: CustomCocktailPage },
+        { path: "/makecocktail", view: MakeCocktailPage },
         { path: "/about", view: AboutPage },
     ];
 

@@ -26,7 +26,7 @@ export default class extends AbstractView {
         ];
     }
 
-    addIngredient(id, name) {
+    addQty(id, name) {
         let cboNewIngredientOpt = document.createElement("option");
         cboNewIngredientOpt.setAttribute("value", id);
         cboNewIngredientOpt.text = name;
@@ -63,9 +63,9 @@ export default class extends AbstractView {
                 let cboSelectQty = document.createElement("select");
                 
                 // Ingredients
-                cboSelectQty.appendChild(this.addIngredient(0, " --- "));                
+                cboSelectQty.appendChild(this.addQty(0, " --- "));                
                 for(let oz = 0.5; oz <= 3; oz += 0.5) {
-                    cboSelectQty.appendChild(this.addIngredient(oz, oz +" oz"));
+                    cboSelectQty.appendChild(this.addQty(oz, oz +" oz"));
                 }
                 tdValue.appendChild(cboSelectQty);
 

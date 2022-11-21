@@ -6,7 +6,7 @@ export default class extends AbstractView {
         this.setTitle("Slot settings");
     }
 
-    addIngredient(id, name) {
+    addQty(id, name) {
         let cboNewIngredientOpt = document.createElement("option");
         cboNewIngredientOpt.setAttribute("value", id);
         cboNewIngredientOpt.text = name;
@@ -67,8 +67,8 @@ export default class extends AbstractView {
                 let cboSelectIngredient = document.createElement("select");
                 
                 // Ingredients
-                cboSelectIngredient.appendChild(this.addIngredient(0, "--- None ---"));
-                ingredients.forEach( (ingredient) => cboSelectIngredient.appendChild(this.addIngredient(ingredient.id, ingredient.name)) );                
+                cboSelectIngredient.appendChild(this.addQty(0, "--- None ---"));
+                ingredients.forEach( (ingredient) => cboSelectIngredient.appendChild(this.addQty(ingredient.id, ingredient.name)) );                
                 tdValue.appendChild(cboSelectIngredient);
  
                 // =====================

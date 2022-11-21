@@ -7,11 +7,12 @@ js/views/AbstractView.js
 js/app.js
 js/views/CalibPage.js
 js/views/CustomCocktailPage.js
-js/views/IndexPage.js
+js/views/MakeCocktailPage.js
 js/views/NetworkPage.js
 js/router.js
 js/views/SettingsPage.js
 js/views/SlotSettingsPage.js
+js/views/StatusPage.js
 favicon.ico
 img/bloody-mary.jpg
 img/grasshopper.jpg
