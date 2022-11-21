@@ -37,13 +37,13 @@ export default class extends AbstractView {
             <!-- After the glass get removed. -->
             <div>
                 <div class="status_userinstruction">
-                    Remaining instructions to finish "Sex on the beach"
+                    Remaining instructions to finish<br>
+                    Sex on the beach
                 </div>
                 <ol>
                     <li>Ice</li>
                     <li>Oranges wedge (2)</li>
                     <li>Cranberry juice (50ml)</li>
-                    <li>Pour 7-up</li>
                 </ol>
             </div>
         </div>
