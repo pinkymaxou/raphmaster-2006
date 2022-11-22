@@ -36,11 +36,11 @@ typedef enum
   EF_EFILE_FAVICON_ICO = 14,    /*!< @brief File: favicon.ico (size: 15.0 KB) */
   EF_EFILE_IMG_BLOODY_MARY_JPG = 15,    /*!< @brief File: img/bloody-mary.jpg (size: 4.9 KB) */
   EF_EFILE_IMG_GRASSHOPPER_JPG = 16,    /*!< @brief File: img/grasshopper.jpg (size: 3.1 KB) */
-  EF_EFILE_FONT_ORBITRON_BOLD_TTF = 17,    /*!< @brief File: font/Orbitron-Bold.ttf (size: 23.7 KB) */
-  EF_EFILE_FONT_ORBITRON_REGULAR_TTF = 18,    /*!< @brief File: font/Orbitron-Regular.ttf (size: 23.8 KB) */
+  EF_EFILE_FONT_ORBITRON_BOLD_WOFF = 17,    /*!< @brief File: font/Orbitron-Bold.woff (size: 13.3 KB) */
+  EF_EFILE_FONT_ORBITRON_REGULAR_WOFF = 18,    /*!< @brief File: font/Orbitron-Regular.woff (size: 12.9 KB) */
   EF_EFILE_IMG_PORNSTAR_JPG = 19,    /*!< @brief File: img/pornstar.jpg (size: 4.8 KB) */
-  EF_EFILE_FONT_ROBOTOMONO_BOLD_TTF = 20,    /*!< @brief File: font/RobotoMono-Bold.ttf (size: 85.0 KB) */
-  EF_EFILE_FONT_ROBOTOMONO_REGULAR_TTF = 21,    /*!< @brief File: font/RobotoMono-Regular.ttf (size: 84.9 KB) */
+  EF_EFILE_FONT_ROBOTOMONO_BOLD_WOFF = 20,    /*!< @brief File: font/RobotoMono-Bold.woff (size: 52.4 KB) */
+  EF_EFILE_FONT_ROBOTOMONO_REGULAR_WOFF = 21,    /*!< @brief File: font/RobotoMono-Regular.woff (size: 52.1 KB) */
   EF_EFILE_IMG_SEX_ON_THE_BEACH_JPG = 22,    /*!< @brief File: img/sex-on-the-beach.jpg (size: 5.7 KB) */
   EF_EFILE_COUNT = 23
 } EF_EFILE;

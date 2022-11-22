@@ -1,22 +1,22 @@
 @font-face {
     font-family: 'orbitron'; /*a name to be used later*/
-    src: url('../font/Orbitron-Regular.ttf'); /*URL to font*/
+    src: url('../font/Orbitron-Regular.woff'); /*URL to font*/
   }
 
 @font-face {
     font-family: 'orbitron'; /*a name to be used later*/
-    src: url('../font/Orbitron-Bold.ttf'); /*URL to font*/
+    src: url('../font/Orbitron-Bold.woff'); /*URL to font*/
     font-weight: bold;
 }
 
 @font-face {
     font-family: 'robotomono'; /*a name to be used later*/
-    src: url('../font/RobotoMono-Regular.ttf'); /*URL to font*/
+    src: url('../font/RobotoMono-Regular.woff'); /*URL to font*/
 }
 
 @font-face {
     font-family: 'robotomono'; /*a name to be used later*/
-    src: url('../font/RobotoMono-Bold.ttf'); /*URL to font*/
+    src: url('../font/RobotoMono-Bold.woff'); /*URL to font*/
     font-weight: bold;
 }
 
