@@ -229,7 +229,7 @@
     }
 }
 
-[type=button], [type=reset], [type=submit], button, .cancelbutton {
+.btcancel {
     -webkit-appearance: button;
     border-style: dashed;
     background-color: orangered;
@@ -238,37 +238,30 @@
     border-collapse: collapse;
     font-size: large;
     font-weight: bold;
-    color: white;
     padding: 0.5rem;
+
+    color: white;
+    text-transform: uppercase;
+    text-align: center;
+    text-decoration: none;
+
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
 
-.info-table {
-    border-collapse: collapse;
-    border-spacing: 0;
-    empty-cells: show;
-    border: 1px solid #cbcbcb;
+.btcancel:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background-color: lightgray;
+    color: darkgray
 }
 
-.info-table-bordered td {
-    border-bottom: 1px solid #cbcbcb;
+.btcancel:hover {
+    background-color: white;
+    color: black;
 }
 
-.info-table thead {
-    background-color: #e0e0e0;
-    color: #000;
-    text-align: left;
-    vertical-align: bottom;
-}
-
-.info-table td, .info-table th {
-    border-left: 1px solid #cbcbcb;
-    border-width: 0 0 0 1px;
-    font-size: inherit;
-    margin: 0;
-    overflow: visible;
-    padding: 0.5em 1em;
-}
-
-.info-table-odd td {
-    background-color:#f2f2f2
+.btcancel:focus {
+    outline-color: transparent;
+    outline-style:solid;
+    box-shadow: 0 0 0 1px #5a01a7;
 }

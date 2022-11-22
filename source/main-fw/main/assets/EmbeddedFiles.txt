@@ -1,7 +1,6 @@
 ﻿index.html
 css/content.css
-css/grids-responsive-min.css
-css/pure-min.css
+css/general.css
 js/views/AboutPage.js
 js/views/AbstractView.js
 js/app.js
