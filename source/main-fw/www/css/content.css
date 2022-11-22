@@ -229,7 +229,7 @@
     }
 }
 
-[type=button], [type=reset], [type=submit], button {
+[type=button], [type=reset], [type=submit], button, .cancelbutton {
     -webkit-appearance: button;
     border-style: dashed;
     background-color: orangered;

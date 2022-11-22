@@ -24,7 +24,7 @@ export default class extends AbstractView {
                 <div class="progress-bar" style="margin-right: 0.5rem;">
                     <span class="progress-bar-fill" style="width: 70%;"></span>
                 </div>
-                <button>Cancel</button>
+                <button class="cancelbutton">Cancel</button>
             </div>
             <div style="max-width: 30rem;">
                 <p class="status_cocktailname">Sex on the beach</b></p>
