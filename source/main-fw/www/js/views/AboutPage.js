@@ -17,8 +17,6 @@ export default class extends AbstractView {
             .then((data) => infoItems = data.infos)
             .catch((ex) => console.error('getSysInfo', ex));
  
-        console.log("load", API_GETSYSINFO, " items: ", infoItems);
-
         let tbodySysInfo = document.querySelector("#tblBdSysInfo");
 
         if (infoItems) {
