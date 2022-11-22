@@ -126,7 +126,7 @@ static esp_err_t file_get_handler(httpd_req_t *req)
         strcmp(req->uri, "/network") == 0 ||
         strcmp(req->uri, "/settings") == 0 ||
         strcmp(req->uri, "/calib") == 0 ||
-        strcmp(req->uri, "/slotsettings") == 0 ||
+        strcmp(req->uri, "/stationsettings") == 0 ||
         strcmp(req->uri, "/makecocktail") == 0 ||
         strcmp(req->uri, "/customcocktail") == 0 ||
         strcmp(req->uri, "/status") == 0)
@@ -348,19 +348,31 @@ static esp_err_t set_content_type_from_file(httpd_req_t *req, const char *filena
 {
     if (IS_FILE_EXT(filename, ".pdf")) {
         return httpd_resp_set_type(req, "application/pdf");
-    } else if (IS_FILE_EXT(filename, ".html")) {
+    } else if (IS_FILE_EXT(filename, ".html") | IS_FILE_EXT(filename, ".htm")) {
         return httpd_resp_set_type(req, "text/html");
-    } else if (IS_FILE_EXT(filename, ".jpeg")) {
+    } else if (IS_FILE_EXT(filename, ".jpeg") || IS_FILE_EXT(filename, ".jpg")) {
         return httpd_resp_set_type(req, "image/jpeg");
     } else if (IS_FILE_EXT(filename, ".ico")) {
         return httpd_resp_set_type(req, "image/x-icon");
     } else if (IS_FILE_EXT(filename, ".css")) {
         return httpd_resp_set_type(req, "text/css");
+    } else if (IS_FILE_EXT(filename, ".txt")) {
+        return httpd_resp_set_type(req, "text/plain");
     } else if (IS_FILE_EXT(filename, ".js")) {
         return httpd_resp_set_type(req, "text/javascript");
     } else if (IS_FILE_EXT(filename, ".json")) {
         return httpd_resp_set_type(req, "application/json");
     }
+    else if (IS_FILE_EXT(filename, ".ttf")) {
+        return httpd_resp_set_type(req, "application/x-font-truetype");
+    }
+    else if (IS_FILE_EXT(filename, ".woff")) {
+        return httpd_resp_set_type(req, "application/font-woff");
+    }
+    else if (IS_FILE_EXT(filename, ".svg")) {
+        return httpd_resp_set_type(req, "image/svg+xml");
+    }
+    
     /* This is a limited set only */
     /* For any other type always set as plain text */
     return httpd_resp_set_type(req, "text/plain");

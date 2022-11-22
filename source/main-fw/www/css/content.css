@@ -85,7 +85,7 @@
 
 .cocktail_ingredient_container {
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: auto fit-content(40%);
 
     margin: 0.5rem;
 }
@@ -107,7 +107,7 @@
     color: black;
 }
 
-.colingre_alternate {
+.ingredient_row_odd {
     background-color: #aaffff;
 }
 
@@ -129,6 +129,23 @@
     font-weight: bold;
     font-size: larger;
     margin: 1rem;
+}
+
+.status_cocktailname {
+    margin: 0.5rem;
+    font-weight: bold;
+    font-family: 'orbitron';
+    font-size: larger;    
+}
+
+.status_ingredient_item {
+    padding: 0.5rem;
+}
+
+.status_infotitle {
+    font-weight: bolder;
+    text-transform: uppercase;
+    padding-left: 0.5rem;
 }
 
 /* ===============================

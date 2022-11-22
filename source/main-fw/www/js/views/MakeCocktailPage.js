@@ -17,11 +17,11 @@ export default class extends AbstractView {
             },
             { name: "Bloody Mary", img: "img/bloody-mary.jpg", 
                 ingredients: [
-                    { name: "Celery salt", qty: "" },
+                    { name: "Celery salt", qty: "1" },
                     { name: "Lemon wedge", qty: "1" },
                     { name: "Lime wedge", qty: "1" },
-                    { name: "Vodka", qty: "2 ounces" },
-                    { name: "Tomato Juice", qty: "4 ounces" },
+                    { name: "Vodka", qty: "2 oz" },
+                    { name: "Tomato Juice", qty: "4 oz" },
                     { name: "Prepared Horseradish", qty: "2 teaspoons" },
                     { name: "Tabasco sauce", qty: "2 dashes" },
                     { name: "Worcestershire sauce", qty: "2 dashes" },
@@ -36,16 +36,16 @@ export default class extends AbstractView {
             { name: "Pornstar", img: "img/pornstar.jpg", 
                 ingredients: [
                     { name: "Ice", qty: "" },
-                    { name: "Curaçao bleu", qty: "1/2 ounce" },
-                    { name: "Sour Puss", qty: "1/2 ounce" },
+                    { name: "Curaçao bleu", qty: "1/2 oz" },
+                    { name: "Sour Puss", qty: "1/2 oz" },
                     { name: "7-up", qty: "" }
                 ] 
             },
             { name: "Grasshopper", img: "img/grasshopper.jpg", 
                 ingredients: [
-                    { name: "Creme de menthe", qty: "3/4 ounce" },
-                    { name: "White creme de cacao", qty: "3/4 ounce" },
-                    { name: "Heavy cream", qty: "1/4 ounce" },
+                    { name: "Creme de menthe", qty: "3/4 oz" },
+                    { name: "White creme de cacao", qty: "3/4 oz" },
+                    { name: "Heavy cream", qty: "1/4 oz" },
                     { name: "Ice", qty: "1 cup" }
                 ] 
             }
@@ -111,8 +111,8 @@ export default class extends AbstractView {
 
                         // Add alternate row style
                         if (ingrIndex % 2 == 0) {
-                            newNameDIV.classList.add("colingre_alternate");
-                            newQtyDIV.classList.add("colingre_alternate");
+                            newNameDIV.classList.add("ingredient_row_odd");
+                            newQtyDIV.classList.add("ingredient_row_odd");
                         }
                         ingrIndex++;
                     });

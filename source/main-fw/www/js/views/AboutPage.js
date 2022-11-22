@@ -17,24 +17,24 @@ export default class extends AbstractView {
             .then((data) => infoItems = data.infos)
             .catch((ex) => console.error('getSysInfo', ex));
  
-        console.log("load", API_GETSYSINFO, " items: ", infoItems);
-
         let tbodySysInfo = document.querySelector("#tblBdSysInfo");
 
-        // Add info items
-        infoItems.forEach(
-            (infoItem) =>
-            {
-                let newTr = tbodySysInfo.insertRow();
-
-                const tdName = newTr.insertCell(); // create td only
-                tdName.appendChild(document.createTextNode(infoItem.name));
-                
-                const tdValue = newTr.insertCell(); // create td only
-                tdValue.style["overflow-wrap"] = "anywhere";
-                tdValue.appendChild(document.createTextNode(infoItem.value));
-            }
-        );
+        if (infoItems) {
+            // Add info items
+            infoItems.forEach(
+                (infoItem) =>
+                {
+                    let newTr = tbodySysInfo.insertRow();
+    
+                    const tdName = newTr.insertCell(); // create td only
+                    tdName.appendChild(document.createTextNode(infoItem.name));
+                    
+                    const tdValue = newTr.insertCell(); // create td only
+                    tdValue.style["overflow-wrap"] = "anywhere";
+                    tdValue.appendChild(document.createTextNode(infoItem.value));
+                }
+            );            
+        }
     }
 
     async getHtml() {
@@ -44,7 +44,7 @@ export default class extends AbstractView {
                 <a href="/network" class="pure-menu-link" data-link>Network Settings</a>
             </li>
             <li class="pure-menu-item">
-                <a href="/slotsettings" class="pure-menu-link" data-link>Slots Settings</a>
+                <a href="/stationsettings" class="pure-menu-link" data-link>Stations Settings</a>
             </li>
             <li class="pure-menu-item">
                 <a href="/settings" class="pure-menu-link" data-link>General Settings</a>

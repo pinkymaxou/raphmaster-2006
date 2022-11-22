@@ -17,33 +17,31 @@ export default class extends AbstractView {
             <div style="display: flex">
                 <div class="lds-dual-ring" style="margin-top: 10px;"></div>
                 <div class="status_userinstruction">
-                    Please put your glass on the sleigh
+                    Please put a glass on the sleigh
                 </div>
             </div>
-            <div class="progress-bar" style="max-width: 35rem;">
+            <div class="progress-bar">
                 <span class="progress-bar-fill" style="width: 70%;"></span>
             </div>
-            <div>
-                <p>Job: <b>Make Sex on the beach</b></p>
-                <ol>
-                    <li>Pour "White Rhum"</li>
-                    <li>Pour "Vokda"</li>
-                    <li>Pour "Grenadine"</li>
-                    <li>Moving back to home</li>
-                    <li>Waiting for user to take the glass</li>
-                </ol>
-            </div>
-
-            <!-- After the glass get removed. -->
-            <div>
-                <div class="status_userinstruction">
-                    Remaining instructions to finish<br>
-                    Sex on the beach
+            <div style="max-width: 30rem;">
+                <p class="status_cocktailname">Sex on the beach</b></p>
+                <p class="status_infotitle">Handled steps</b></p>
+                <div class="cocktail_ingredient_container">
+                    <div class="status_ingredient_item colingre_name">Vodka</div>
+                    <div class="status_ingredient_item colingre_qty">50ml</div>
+                    <div class="status_ingredient_item colingre_name ingredient_row_odd">Peach snapps</div>
+                    <div class="status_ingredient_item colingre_qty ingredient_row_odd">25ml</div>
                 </div>
-                <ol>
-                    <li>Ice</li>
-                    <li>Oranges wedge (2)</li>
-                    <li>Cranberry juice (50ml)</li>
+                <p class="status_infotitle">Remaining steps</b></p>
+                <div class="cocktail_ingredient_container">
+                    <div class="status_ingredient_item colingre_name ingredient_row_odd">Ice</div>
+                    <div class="status_ingredient_item colingre_qty ingredient_row_odd"></div>
+                    <div class="status_ingredient_item colingre_name">Oranges wedge</div>
+                    <div class="status_ingredient_item colingre_qty">2</div>
+                    <div class="status_ingredient_item colingre_name ingredient_row_odd">Cranberry juice</div>
+                    <div class="status_ingredient_item colingre_qty ingredient_row_odd">50ml</div>
+                    <div class="status_ingredient_item colingre_name">Grenadine Syrup</div>
+                    <div class="status_ingredient_item colingre_qty">25ml</div>
                 </ol>
             </div>
         </div>
