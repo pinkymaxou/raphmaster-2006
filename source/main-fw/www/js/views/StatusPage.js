@@ -25,18 +25,22 @@ export default class extends AbstractView {
             </div>
             <div style="max-width: 30rem;">
                 <p class="status_cocktailname">Sex on the beach</b></p>
+                <p class="status_infotitle">Handled steps</b></p>
                 <div class="cocktail_ingredient_container">
-                    <div class="status_ingredient_item colingre_name ingredient_row_odd"><input type="checkbox" class="status_ingredient_item_checkbox" readonly></input>Ice</div>
-                    <div class="status_ingredient_item colingre_qty ingredient_row_odd"></div>
-                    <div class="status_ingredient_item colingre_name"><input type="checkbox" class="status_ingredient_item_checkbox" readonly></input>Vodka</div>
+                    <div class="status_ingredient_item colingre_name">Vodka</div>
                     <div class="status_ingredient_item colingre_qty">50ml</div>
-                    <div class="status_ingredient_item colingre_name ingredient_row_odd"><input type="checkbox" class="status_ingredient_item_checkbox" readonly></input>Peach snapps</div>
+                    <div class="status_ingredient_item colingre_name ingredient_row_odd">Peach snapps</div>
                     <div class="status_ingredient_item colingre_qty ingredient_row_odd">25ml</div>
-                    <div class="status_ingredient_item colingre_name"><input type="checkbox" class="status_ingredient_item_checkbox" readonly></input>Oranges wedge</div>
+                </div>
+                <p class="status_infotitle">Remaining steps</b></p>
+                <div class="cocktail_ingredient_container">
+                    <div class="status_ingredient_item colingre_name ingredient_row_odd">Ice</div>
+                    <div class="status_ingredient_item colingre_qty ingredient_row_odd"></div>
+                    <div class="status_ingredient_item colingre_name">Oranges wedge</div>
                     <div class="status_ingredient_item colingre_qty">2</div>
-                    <div class="status_ingredient_item colingre_name ingredient_row_odd"><input type="checkbox" class="status_ingredient_item_checkbox" readonly></input>Cranberry juice</div>
+                    <div class="status_ingredient_item colingre_name ingredient_row_odd">Cranberry juice</div>
                     <div class="status_ingredient_item colingre_qty ingredient_row_odd">50ml</div>
-                    <div class="status_ingredient_item colingre_name"><input type="checkbox" class="status_ingredient_item_checkbox" readonly></input>Grenadine Syrup</div>
+                    <div class="status_ingredient_item colingre_name">Grenadine Syrup</div>
                     <div class="status_ingredient_item colingre_qty">25ml</div>
                 </ol>
             </div>

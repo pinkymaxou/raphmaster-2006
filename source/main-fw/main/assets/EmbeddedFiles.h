@@ -33,7 +33,7 @@ typedef enum
   EF_EFILE_JS_ROUTER_JS = 11,    /*!< @brief File: js/router.js (size: 2.5 KB) */
   EF_EFILE_JS_VIEWS_SETTINGSPAGE_JS = 12,    /*!< @brief File: js/views/SettingsPage.js (size: 306 B) */
   EF_EFILE_JS_VIEWS_STATIONSETTINGSPAGE_JS = 13,    /*!< @brief File: js/views/StationSettingsPage.js (size: 4.5 KB) */
-  EF_EFILE_JS_VIEWS_STATUSPAGE_JS = 14,    /*!< @brief File: js/views/StatusPage.js (size: 2.5 KB) */
+  EF_EFILE_JS_VIEWS_STATUSPAGE_JS = 14,    /*!< @brief File: js/views/StatusPage.js (size: 2.3 KB) */
   EF_EFILE_FAVICON_ICO = 15,    /*!< @brief File: favicon.ico (size: 15.0 KB) */
   EF_EFILE_IMG_BLOODY_MARY_JPG = 16,    /*!< @brief File: img/bloody-mary.jpg (size: 4.9 KB) */
   EF_EFILE_IMG_GRASSHOPPER_JPG = 17,    /*!< @brief File: img/grasshopper.jpg (size: 3.1 KB) */

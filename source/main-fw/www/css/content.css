@@ -85,7 +85,7 @@
 
 .cocktail_ingredient_container {
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: auto fit-content(40%);
 
     margin: 0.5rem;
 }
@@ -140,16 +140,12 @@
 
 .status_ingredient_item {
     padding: 0.5rem;
-    color: #00000088;
 }
 
-.status_ingredient_item_active {
-    padding: 0.5rem;
-    color: #000000;
-}
-
-.status_ingredient_item_checkbox {
-    margin-right: 0.5rem;
+.status_infotitle {
+    font-weight: bolder;
+    text-transform: uppercase;
+    padding-left: 0.5rem;
 }
 
 /* ===============================
