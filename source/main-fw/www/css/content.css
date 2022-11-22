@@ -148,6 +148,11 @@
     padding-left: 0.5rem;
 }
 
+.status_progress_container {
+    display: grid;
+    grid-template-columns: auto fit-content(40%);
+}
+
 /* ===============================
     Table
    =============================== */
@@ -181,7 +186,6 @@
     Progress bar
    =============================== */
 .progress-bar {
-    width: 100%;
     background-color: #e0e0e0;
     padding: 3px;
     border-radius: 3px;
@@ -190,7 +194,7 @@
 
 .progress-bar-fill {
     display: block;
-    height: 20px;
+    height: 100%;
     background-color: #659cef;
     border-radius: 3px;
     
@@ -225,3 +229,15 @@
     }
 }
 
+[type=button], [type=reset], [type=submit], button {
+    -webkit-appearance: button;
+    border-style: dashed;
+    background-color: orangered;
+    border: solid;
+    border-width: 0.1rem;
+    border-collapse: collapse;
+    font-size: large;
+    font-weight: bold;
+    color: white;
+    padding: 0.5rem;
+}

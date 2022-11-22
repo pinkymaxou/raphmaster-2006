@@ -14,14 +14,17 @@ export default class extends AbstractView {
     async getHtml() {
         return `
         <div class="status_container">
-            <div style="display: flex">
+            <div style="display: flex; flex-direction: row;">
                 <div class="lds-dual-ring" style="margin-top: 10px;"></div>
                 <div class="status_userinstruction">
                     Please put a glass on the sleigh
                 </div>
             </div>
-            <div class="progress-bar">
-                <span class="progress-bar-fill" style="width: 70%;"></span>
+            <div class="status_progress_container">
+                <div class="progress-bar" style="margin-right: 0.5rem;">
+                    <span class="progress-bar-fill" style="width: 70%;"></span>
+                </div>
+                <button>Cancel</button>
             </div>
             <div style="max-width: 30rem;">
                 <p class="status_cocktailname">Sex on the beach</b></p>
