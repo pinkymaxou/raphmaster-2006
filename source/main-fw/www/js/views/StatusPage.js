@@ -35,7 +35,7 @@ export default class extends AbstractView {
                     <div class="status_ingredient_item colingre_name ingredient_row_odd">Peach snapps</div>
                     <div class="status_ingredient_item colingre_qty ingredient_row_odd">25ml</div>
                 </div>
-                <p class="status_infotitle">Remaining steps</b></p>
+                <p class="status_infotitle">Not handled steps</b></p>
                 <div class="cocktail_ingredient_container">
                     <div class="status_ingredient_item colingre_name ingredient_row_odd">Ice</div>
                     <div class="status_ingredient_item colingre_qty ingredient_row_odd"></div>

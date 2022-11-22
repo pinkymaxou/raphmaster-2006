@@ -54,7 +54,7 @@ export default class extends AbstractView {
 
                 // Alternate row
                 if (i % 2 == 0) {
-                    newTr.classList.add("pure-table-odd");
+                    newTr.classList.add("info-table-odd");
                 }
 
                 // =====================
@@ -97,7 +97,7 @@ export default class extends AbstractView {
 
     async getHtml() {
         return `
-        <table class="pure-table">
+        <table class="info-table">
             <thead>
                 <tr>
                     <th>Station #</th>

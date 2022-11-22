@@ -54,7 +54,7 @@ export default class extends AbstractView {
             </li>
         </div>
 
-        <table class="pure-table pure-table-bordered">
+        <table class="info-table info-table-bordered">
             <thead>
                 <tr>
                     <th>Name</th>
