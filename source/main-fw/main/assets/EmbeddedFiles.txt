@@ -11,7 +11,7 @@ js/views/MakeCocktailPage.js
 js/views/NetworkPage.js
 js/router.js
 js/views/SettingsPage.js
-js/views/SlotSettingsPage.js
+js/views/StationSettingsPage.js
 js/views/StatusPage.js
 favicon.ico
 img/bloody-mary.jpg

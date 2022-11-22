@@ -3,10 +3,10 @@ import AbstractView from "./AbstractView.js";
 export default class extends AbstractView {
     constructor(params) {
         super(params);
-        this.setTitle("Slot settings");
+        this.setTitle("Station settings");
     }
 
-    addQty(id, name) {
+    addIngredient(id, name) {
         let cboNewIngredientOpt = document.createElement("option");
         cboNewIngredientOpt.setAttribute("value", id);
         cboNewIngredientOpt.text = name;
@@ -15,14 +15,14 @@ export default class extends AbstractView {
 
     async loaded() {
 
-        let tbodySysInfo = document.querySelector("#tblBdSlots");
+        let tbodySysInfo = document.querySelector("#tblBdStations");
 
         let ingredients = [
             { id:  1, name: "Vokda" },           
             { id:  2, name: "Peach Schnapps" },           
         ];
 
-        let slotItems = [
+        let stationItems = [
             { id:  1, totalQtyml: 0, remainingQtyml: 0 },
             { id:  2, totalQtyml: 0, remainingQtyml: 0 },
             { id:  3, totalQtyml: 0, remainingQtyml: 0 },
@@ -47,8 +47,8 @@ export default class extends AbstractView {
         // Add info items
         let i = 0;
 
-        slotItems.forEach(
-            (slotItem) =>
+        stationItems.forEach(
+            (stationItem) =>
             {
                 let newTr = tbodySysInfo.insertRow();
 
@@ -58,8 +58,8 @@ export default class extends AbstractView {
                 }
 
                 // =====================
-                const tdSlot = newTr.insertCell(); // create td only
-                tdSlot.appendChild(document.createTextNode(slotItem.id));
+                const tdStation = newTr.insertCell(); // create td only
+                tdStation.appendChild(document.createTextNode(stationItem.id));
                 
                 // =====================
                 const tdValue = newTr.insertCell(); // create td only
@@ -78,7 +78,7 @@ export default class extends AbstractView {
                 btnValueTotalQtyML.setAttribute("type", "number");
                 btnValueTotalQtyML.setAttribute("min", 0);
                 btnValueTotalQtyML.setAttribute("max", 6000);
-                btnValueTotalQtyML.setAttribute("value", slotItem.totalQtyml);
+                btnValueTotalQtyML.setAttribute("value", stationItem.totalQtyml);
                 tdValueTotalQtyML.appendChild(btnValueTotalQtyML);
 
                 // =====================
@@ -88,7 +88,7 @@ export default class extends AbstractView {
                 enumUsedQtyText.setAttribute("type", "number");
                 enumUsedQtyText.setAttribute("min", 0);
                 enumUsedQtyText.setAttribute("max", 6000);
-                enumUsedQtyText.setAttribute("value", slotItem.remainingQtyml);
+                enumUsedQtyText.setAttribute("value", stationItem.remainingQtyml);
                 tdValueUsedQtyML.appendChild(enumUsedQtyText);
 
                 i++;
@@ -100,13 +100,13 @@ export default class extends AbstractView {
         <table class="pure-table">
             <thead>
                 <tr>
-                    <th>Slot #</th>
+                    <th>Station #</th>
                     <th>Ingredient</th>
                     <th>Total Qty (ml)</th>
                     <th>Used Qty (ml)</th>
                 </tr>
             </thead>
-            <tbody id="tblBdSlots">
+            <tbody id="tblBdStations">
                 <!-- Space for table items -->
             </tbody>
         </table>

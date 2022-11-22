@@ -41,7 +41,7 @@ Required functions:
 
 - Allow to do homing manually
 - A mode to allow to freely move the sleigh manually
-- Save the coordinate for each bottle slots
+- Save the coordinate for each bottle stations
 - Save the maximum allowed distance for the train
 - Calibrate pourer
 - Calibrate the scale
@@ -53,12 +53,12 @@ Required functions:
 
 See reference: [volumic-mass-data](design-data/volumic-mass-data.md)
 
-## Bottle inventory and slots
+## Bottle inventory and stations
 
-There will be at least 14 available slots, we need to be able to assign bottle in each slots.
-Each slots shall be configurable:
+There will be at least 14 available stations, we need to be able to assign bottle in each stations.
+Each stations shall be configurable:
 
-- Assign a bottle to a slot
+- Assign a bottle to a station
 - Ingredients, matched to existing values (example: Tequila)
     - Volumic mass is matched to ingredient
 - Quantity in ml

@@ -8,9 +8,9 @@ export default class extends AbstractView {
 
     async loaded() {
 
-        let tbodySysInfo = document.querySelector("#tblBdSlots");
+        let tbodySysInfo = document.querySelector("#tblBdStations");
 
-        let slotItems = [
+        let stationItems = [
             { id:  1, x: 0, y: 1},
             { id:  2, x: 0, y: 1},
             { id:  3, x: 0, y: 1},
@@ -35,8 +35,8 @@ export default class extends AbstractView {
         // Add info items
         let i = 0;
 
-        slotItems.forEach(
-            (slotItem) =>
+        stationItems.forEach(
+            (stationItem) =>
             {
                 let newTr = tbodySysInfo.insertRow();
 
@@ -46,13 +46,13 @@ export default class extends AbstractView {
                 }
 
                 const tdName = newTr.insertCell(); // create td only
-                tdName.appendChild(document.createTextNode(slotItem.id));
+                tdName.appendChild(document.createTextNode(stationItem.id));
                 
                 const tdValueX = newTr.insertCell(); // create td only
-                tdValueX.appendChild(document.createTextNode(slotItem.x));
+                tdValueX.appendChild(document.createTextNode(stationItem.x));
 
                 const tdValueY = newTr.insertCell(); // create td only
-                tdValueY.appendChild(document.createTextNode(slotItem.y));
+                tdValueY.appendChild(document.createTextNode(stationItem.y));
 
                 const tdValueAct = newTr.insertCell(); // create td only
  
@@ -143,13 +143,13 @@ export default class extends AbstractView {
             <table class="pure-table">
             <thead>
                 <tr>
-                    <th>Slot #</th>
+                    <th>Station #</th>
                     <th>X</th>
                     <th>Y</th>
                     <th>Action</th>
                 </tr>
             </thead>
-            <tbody id="tblBdSlots">
+            <tbody id="tblBdStations">
                 <!-- Space for table items -->
             </tbody>
             </table>
