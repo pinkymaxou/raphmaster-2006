@@ -48,6 +48,71 @@ export default class extends AbstractView {
                     { name: "Heavy cream", qty: "1/4 oz" },
                     { name: "Ice", qty: "1 cup" }
                 ] 
+            },
+            { name: "Skittle", img: "img/skittle.jpg", 
+                ingredients: [
+                    { name: "Vodka", qty: "1 oz" },
+                    { name: "Sweet and sour mix", qty: "1 oz" },
+                    { name: "Melon liqueur", qty: "1 oz" },
+                    { name: "Southern Comfort", qty: "1 oz" },
+                    { name: "Pineapple juice", qty: "1 oz" },
+                ]
+            },
+            { name: "Aperol Spritz", img: "img/aperol_spritz.jpg", 
+                ingredients: [
+                    { name: "Sparkling Wine", qty: "3 oz" },
+                    { name: "Aperol", qty: "2 oz" },
+                    { name: "Soda club", qty: "3/4 oz" },
+                    { name: "Ice", qty: "1" },
+                    { name: "Orange wedge", qty: "1" },
+                ]
+            },
+            { name: "Martini", img: "img/martini.jpg", 
+                ingredients: [
+                    { name: "Gin", qty: "2 1/2 oz" },
+                    { name: "Dry vermouth", qty: "1/2 oz" },
+                    { name: "Orange", qty: "1 dash" },
+                    { name: "Garnish: Lemon twist", qty: "" },
+                ]
+            },
+            { name: "Daiquiri", img: "img/daiquiri.jpg", 
+                ingredients: [
+                    { name: "White rhum", qty: "2 oz" },
+                    { name: "Lime juice", qty: "1 oz" },
+                    { name: "Demerara sugar syrup", qty: "3/4 oz" },
+                    { name: "Garnish: Lime twist", qty: "" },
+                ]
+            },
+            { name: "Margarita", img: "img/margarita.jpg", 
+                ingredients: [
+                    { name: "Blanco tequila", qty: "2 oz" },
+                    { name: "Orange liquor", qty: "1/2 oz" },
+                    { name: "Lime juice", qty: "1 oz" },
+                    { name: "Agave syrup", qty: "1/2 oz" },
+                    { name: "Garnish: Lime wheel", qty: "" },
+                    { name: "Garnish: Kosher salt", qty: "" },
+                ]
+            },
+            { name: "Tom Collins", img: "img/tom-collins.jpg", 
+                ingredients: [
+                    { name: "Londo dry gin", qty: "2 oz" },
+                    { name: "Lemon juice", qty: "1 oz" },
+                    { name: "Syrup", qty: "1/2 oz" },
+                    { name: "Club soda", qty: "" },
+                    { name: "Garnish: Lemon wheel", qty: "" },
+                    { name: "Garnish: Maraschino cherry", qty: "" },
+                ]
+            },
+            { name: "Amaretto Sour", img: "img/amaretto-sour.jpg", 
+                ingredients: [
+                    { name: "Amaretto liquor", qty: "1 1/2 oz" },
+                    { name: "Cask-proof bourbon", qty: "3/4 oz" },
+                    { name: "Lemon juice", qty: "1 oz" },
+                    { name: "Rich simple syrup", qty: "1 tsp" },
+                    { name: "Egg white", qty: "1/2 oz" },
+                    { name: "Garnish: Lemon twist", qty: "" },
+                    { name: "Garnish: 2 brandied cherries", qty: "" },
+                ]
             }
             ];
 
