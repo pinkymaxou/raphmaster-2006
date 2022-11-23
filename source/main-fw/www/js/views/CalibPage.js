@@ -58,17 +58,15 @@ export default class extends AbstractView {
  
                 // Save
                 let btnSave = document.createElement("button");
-                btnSave.classList.add("pure-button");
-                //btnSave.classList.add("pure-button-primary");
-                btnSave.classList.add("btMoving");
+                btnSave.classList.add("button-normal");
+                //btnSave.classList.add("button-normal-primary");
                 btnSave.appendChild(document.createTextNode("Set"));
                 tdValueAct.appendChild(btnSave);
 
                 // Goto
                 let btnGoto = document.createElement("button");
-                btnGoto.classList.add("pure-button");
-                //btnGoto.classList.add("pure-button-primary");
-                btnGoto.classList.add("btMoving");
+                btnGoto.classList.add("button-normal");
+                //btnGoto.classList.add("button-normal-primary");
                 btnGoto.appendChild(document.createTextNode("Goto"));
                 tdValueAct.appendChild(btnGoto);
 
@@ -80,7 +78,7 @@ export default class extends AbstractView {
         return `
             <legend>Calibrate all axis</legend>
 
-            <button class="pure-button pure-button-primary">Home all</button><br><br>
+            <button class="button-normal button-normal-primary">Home all</button><br><br>
 
             <br>
             
@@ -99,12 +97,12 @@ export default class extends AbstractView {
                     <td>0</td>
                     <td>
                         <div>
-                            <button class="pure-button btMoving">&lt;&lt;&lt;</button>
-                            <button class="pure-button btMoving">&lt;&lt;</button>
-                            <button class="pure-button btMoving">&lt;</button><br>
-                            <button class="pure-button btMoving">&gt;</button>
-                            <button class="pure-button btMoving">&gt;&gt;</button>
-                            <button class="pure-button btMoving">&gt;&gt;&gt;</button>
+                            <button class="button-normal">&lt;&lt;&lt;</button>
+                            <button class="button-normal">&lt;&lt;</button>
+                            <button class="button-normal">&lt;</button><br>
+                            <button class="button-normal">&gt;</button>
+                            <button class="button-normal">&gt;&gt;</button>
+                            <button class="button-normal">&gt;&gt;&gt;</button>
                         </div>
                     </td>
                 </tr>
@@ -113,12 +111,12 @@ export default class extends AbstractView {
                     <td>0</td>
                     <td>    
                         <div>
-                            <button class="pure-button btMoving">&lt;&lt;&lt;</button>
-                            <button class="pure-button btMoving">&lt;&lt;</button>
-                            <button class="pure-button btMoving">&lt;</button><br>
-                            <button class="pure-button btMoving">&gt;</button>
-                            <button class="pure-button btMoving">&gt;&gt;</button>
-                            <button class="pure-button btMoving">&gt;&gt;&gt;</button>
+                            <button class="button-normal">&lt;&lt;&lt;</button>
+                            <button class="button-normal">&lt;&lt;</button>
+                            <button class="button-normal">&lt;</button><br>
+                            <button class="button-normal">&gt;</button>
+                            <button class="button-normal">&gt;&gt;</button>
+                            <button class="button-normal">&gt;&gt;&gt;</button>
                         </div>
                     </td>
                 </tr>
@@ -127,12 +125,12 @@ export default class extends AbstractView {
                     <td>0</td>
                     <td>
                     <div>
-                        <button class="pure-button btMoving">&lt;&lt;&lt;</button>
-                        <button class="pure-button btMoving">&lt;&lt;</button>
-                        <button class="pure-button btMoving">&lt;</button><br>
-                        <button class="pure-button btMoving">&gt;</button>
-                        <button class="pure-button btMoving">&gt;&gt;</button>
-                        <button class="pure-button btMoving">&gt;&gt;&gt;</button>
+                        <button class="button-normal">&lt;&lt;&lt;</button>
+                        <button class="button-normal">&lt;&lt;</button>
+                        <button class="button-normal">&lt;</button><br>
+                        <button class="button-normal">&gt;</button>
+                        <button class="button-normal">&gt;&gt;</button>
+                        <button class="button-normal">&gt;&gt;&gt;</button>
                     </div>
                     </td>
                 </tr>
@@ -154,7 +152,7 @@ export default class extends AbstractView {
             </tbody>
             </table>
             <br>
-            <button class="pure-button pure-button-primary">Save</button>
+            <button class="button-normal button-normal-primary">Save</button>
         `;
     }
 }
