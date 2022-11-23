@@ -132,9 +132,14 @@ static esp_err_t file_get_handler(httpd_req_t *req)
         strcmp(req->uri, "/status") == 0)
     {
         pFile = GetFile(DEFAULT_RELATIVE_URI+1);
+        // No cache
     }
     else {
         pFile = GetFile(req->uri+1);
+
+        if (pFile != NULL) {
+            httpd_resp_set_hdr(req, "Cache-Control", "public, max-age=3600");
+        }
     }
 
     if (pFile == NULL)
@@ -145,6 +150,7 @@ static esp_err_t file_get_handler(httpd_req_t *req)
     }
 
     set_content_type_from_file(req, pFile->strFilename);
+    // Fixed cache a 1h for now
 
     uint32_t u32Index = 0;
 
@@ -257,6 +263,9 @@ static esp_err_t api_post_handler(httpd_req_t *req)
 
 static esp_err_t file_otauploadpost_handler(httpd_req_t *req)
 {
+    // Temporarily deactivated for security reasons
+    goto ERROR;
+
     ESP_LOGI(TAG, "file_otauploadpost_handler / uri: %s", req->uri);
 
     const esp_partition_t *configured = esp_ota_get_boot_partition();

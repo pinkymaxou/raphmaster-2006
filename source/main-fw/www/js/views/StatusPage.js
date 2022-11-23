@@ -14,14 +14,17 @@ export default class extends AbstractView {
     async getHtml() {
         return `
         <div class="status_container">
-            <div style="display: flex">
+            <div style="display: flex; flex-direction: row;">
                 <div class="lds-dual-ring" style="margin-top: 10px;"></div>
                 <div class="status_userinstruction">
                     Please put a glass on the sleigh
                 </div>
             </div>
-            <div class="progress-bar">
-                <span class="progress-bar-fill" style="width: 70%;"></span>
+            <div class="status_progress_container">
+                <div class="progress-bar" style="margin-right: 0.5rem;">
+                    <span class="progress-bar-fill" style="width: 70%;"></span>
+                </div>
+                <button class="btcancel">Cancel</button>
             </div>
             <div style="max-width: 30rem;">
                 <p class="status_cocktailname">Sex on the beach</b></p>
@@ -32,7 +35,7 @@ export default class extends AbstractView {
                     <div class="status_ingredient_item colingre_name ingredient_row_odd">Peach snapps</div>
                     <div class="status_ingredient_item colingre_qty ingredient_row_odd">25ml</div>
                 </div>
-                <p class="status_infotitle">Remaining steps</b></p>
+                <p class="status_infotitle">Not handled steps</b></p>
                 <div class="cocktail_ingredient_container">
                     <div class="status_ingredient_item colingre_name ingredient_row_odd">Ice</div>
                     <div class="status_ingredient_item colingre_qty ingredient_row_odd"></div>

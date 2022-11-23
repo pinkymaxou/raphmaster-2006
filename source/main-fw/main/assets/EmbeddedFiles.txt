@@ -1,7 +1,6 @@
 ﻿index.html
 css/content.css
-css/grids-responsive-min.css
-css/pure-min.css
+css/general.css
 js/views/AboutPage.js
 js/views/AbstractView.js
 js/app.js
@@ -16,9 +15,9 @@ js/views/StatusPage.js
 favicon.ico
 img/bloody-mary.jpg
 img/grasshopper.jpg
-font/Orbitron-Bold.ttf
-font/Orbitron-Regular.ttf
+font/Orbitron-Bold.woff
+font/Orbitron-Regular.woff
 img/pornstar.jpg
-font/RobotoMono-Bold.ttf
-font/RobotoMono-Regular.ttf
+font/RobotoMono-Bold.woff
+font/RobotoMono-Regular.woff
 img/sex-on-the-beach.jpg

@@ -1,22 +1,22 @@
 @font-face {
     font-family: 'orbitron'; /*a name to be used later*/
-    src: url('../font/Orbitron-Regular.ttf'); /*URL to font*/
+    src: url('../font/Orbitron-Regular.woff'); /*URL to font*/
   }
 
 @font-face {
     font-family: 'orbitron'; /*a name to be used later*/
-    src: url('../font/Orbitron-Bold.ttf'); /*URL to font*/
+    src: url('../font/Orbitron-Bold.woff'); /*URL to font*/
     font-weight: bold;
 }
 
 @font-face {
     font-family: 'robotomono'; /*a name to be used later*/
-    src: url('../font/RobotoMono-Regular.ttf'); /*URL to font*/
+    src: url('../font/RobotoMono-Regular.woff'); /*URL to font*/
 }
 
 @font-face {
     font-family: 'robotomono'; /*a name to be used later*/
-    src: url('../font/RobotoMono-Bold.ttf'); /*URL to font*/
+    src: url('../font/RobotoMono-Bold.woff'); /*URL to font*/
     font-weight: bold;
 }
 
@@ -148,6 +148,11 @@
     padding-left: 0.5rem;
 }
 
+.status_progress_container {
+    display: grid;
+    grid-template-columns: auto fit-content(40%);
+}
+
 /* ===============================
     Table
    =============================== */
@@ -181,7 +186,6 @@
     Progress bar
    =============================== */
 .progress-bar {
-    width: 100%;
     background-color: #e0e0e0;
     padding: 3px;
     border-radius: 3px;
@@ -190,7 +194,7 @@
 
 .progress-bar-fill {
     display: block;
-    height: 20px;
+    height: 100%;
     background-color: #659cef;
     border-radius: 3px;
     
@@ -225,3 +229,39 @@
     }
 }
 
+.btcancel {
+    -webkit-appearance: button;
+    border-style: dashed;
+    background-color: orangered;
+    border: solid;
+    border-width: 0.1rem;
+    border-collapse: collapse;
+    font-size: large;
+    font-weight: bold;
+    padding: 0.5rem;
+
+    color: white;
+    text-transform: uppercase;
+    text-align: center;
+    text-decoration: none;
+
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+.btcancel:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background-color: lightgray;
+    color: darkgray
+}
+
+.btcancel:hover {
+    background-color: white;
+    color: black;
+}
+
+.btcancel:focus {
+    outline-color: transparent;
+    outline-style:solid;
+    box-shadow: 0 0 0 1px #5a01a7;
+}

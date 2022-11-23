@@ -61,7 +61,7 @@ export default class extends AbstractView {
 
                 // Add select
                 let cboSelectQty = document.createElement("select");
-                cboSelectQty.setAttribute("width", "-webkit-fill-available");
+                cboSelectQty.style["width"] = "-webkit-fill-available";
                 
                 // Ingredients
                 cboSelectQty.appendChild(this.addQty(0, " --- "));                

@@ -42,7 +42,7 @@ export default class extends AbstractView {
 
                 // Alternate row
                 if (i % 2 == 0) {
-                    newTr.classList.add("pure-table-odd");
+                    newTr.classList.add("info-table-odd");
                 }
 
                 const tdName = newTr.insertCell(); // create td only
@@ -85,7 +85,7 @@ export default class extends AbstractView {
             <br>
             
             <!-- Axis -->
-            <table class="pure-table">
+            <table class="info-table">
             <thead>
                 <tr>
                     <th>Axis</th>
@@ -94,7 +94,7 @@ export default class extends AbstractView {
                 </tr>
             </thead>
             <tbody>
-                <tr class="pure-table-odd">
+                <tr class="info-table-odd">
                     <td>X</td>
                     <td>0</td>
                     <td>
@@ -122,7 +122,7 @@ export default class extends AbstractView {
                         </div>
                     </td>
                 </tr>
-                <tr class="pure-table-odd">
+                <tr class="info-table-odd">
                     <td>Z</td>
                     <td>0</td>
                     <td>
@@ -140,7 +140,7 @@ export default class extends AbstractView {
             </table>
             <br>
 
-            <table class="pure-table">
+            <table class="info-table">
             <thead>
                 <tr>
                     <th>Station #</th>
