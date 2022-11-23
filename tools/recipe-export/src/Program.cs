@@ -3,24 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
 using System.Linq;
+using recipe_export.DB;
 
 namespace recipe_export
 {
     class Program
     {
-        class Ingredient
-        {
-            public string Name = "";
-            public string Qty = "";
-        }
-
-        class CocktailRecipe
-        {
-            public string Name = "";
-
-            public List<Ingredient> Ingredients = new List<Ingredient>();
-        }
-
         static void Main(string[] args)
         {
             try
@@ -29,13 +17,14 @@ namespace recipe_export
 
                 dynamic cocktails = JsonConvert.DeserializeObject(json);
 
-                List<CocktailRecipe> cocktailRecipes = new List<CocktailRecipe>();
+                List<Recipe> cocktailRecipes = new List<Recipe>();
 
                 foreach (dynamic cocktail in cocktails)
                 {
-                    CocktailRecipe newCR = new CocktailRecipe()
+                    Recipe newCR = new Recipe()
                     {
                         Name = Convert.ToString(cocktail.name),
+                        IsCocktail = Convert.ToBoolean(cocktail.is_cocktail)
                     };
 
                     foreach (dynamic ingredient in cocktail.ingredients)

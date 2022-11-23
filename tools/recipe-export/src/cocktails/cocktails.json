@@ -2,6 +2,7 @@
   {
     "name": "Sex on the beach",
     "img": "img/sex-on-the-beach.jpg",
+    "is_cocktail" : true,
     "ingredients": [
       {
         "name": "Ice",
@@ -9,11 +10,11 @@
       },
       {
         "name": "Vodka",
-        "qty": "50ml"
+        "qty": "50 ml"
       },
       {
         "name": "Peach snapps",
-        "qty": "25ml"
+        "qty": "25 ml"
       },
       {
         "name": "Orange wedge",
@@ -21,17 +22,18 @@
       },
       {
         "name": "Cranberry juice",
-        "qty": "50ml"
+        "qty": "50 ml"
       },
       {
         "name": "Grenadine Syrup",
-        "qty": "25ml"
+        "qty": "25 ml"
       }
     ]
   },
   {
     "name": "Bloody Mary",
     "img": "img/bloody-mary.jpg",
+    "is_cocktail": true,
     "ingredients": [
       {
         "name": "Celery salt",
@@ -94,6 +96,7 @@
   {
     "name": "Pornstar",
     "img": "img/pornstar.jpg",
+    "is_cocktail": true,
     "ingredients": [
       {
         "name": "Ice",
@@ -116,6 +119,7 @@
   {
     "name": "Grasshopper",
     "img": "img/grasshopper.jpg",
+    "is_cocktail": true,
     "ingredients": [
       {
         "name": "Creme de menthe",
@@ -138,6 +142,7 @@
   {
     "name": "Skittle",
     "img": "img/skittle.jpg",
+    "is_cocktail": true,
     "ingredients": [
       {
         "name": "Vodka",
@@ -164,6 +169,7 @@
   {
     "name": "Aperol Spritz",
     "img": "img/aperol_spritz.jpg",
+    "is_cocktail": true,
     "ingredients": [
       {
         "name": "Sparkling Wine",
@@ -190,6 +196,7 @@
   {
     "name": "Martini",
     "img": "img/martini.jpg",
+    "is_cocktail": true,
     "ingredients": [
       {
         "name": "Gin",
@@ -212,6 +219,7 @@
   {
     "name": "Daiquiri",
     "img": "img/daiquiri.jpg",
+    "is_cocktail": true,
     "ingredients": [
       {
         "name": "White rhum",
@@ -234,6 +242,7 @@
   {
     "name": "Margarita",
     "img": "img/margarita.jpg",
+    "is_cocktail": true,
     "ingredients": [
       {
         "name": "Blanco tequila",
@@ -264,6 +273,7 @@
   {
     "name": "Tom Collins",
     "img": "img/tom-collins.jpg",
+    "is_cocktail": true,
     "ingredients": [
       {
         "name": "Londo dry gin",
@@ -294,6 +304,7 @@
   {
     "name": "Amaretto Sour",
     "img": "img/amaretto-sour.jpg",
+    "is_cocktail": true,
     "ingredients": [
       {
         "name": "Amaretto liquor",
