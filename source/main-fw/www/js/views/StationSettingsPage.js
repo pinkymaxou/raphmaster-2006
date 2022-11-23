@@ -111,7 +111,7 @@ export default class extends AbstractView {
             </tbody>
         </table>
         <br>
-        <button class="pure-button pure-button-primary">Save</button>
+        <button class="button-normal button-normal-primary">Save</button>
         `;
     }
 }

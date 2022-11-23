@@ -24,11 +24,6 @@
     font-family: 'robotomono';
 }
 
-.btMoving {
-    font-size: 0.75rem;
-    margin: 0.1rem;
-}
-
 /* ===============================
     Cocktails list
    =============================== */
@@ -135,7 +130,7 @@
     margin: 0.5rem;
     font-weight: bold;
     font-family: 'orbitron';
-    font-size: larger;    
+    font-size: x-larger;    
 }
 
 .status_ingredient_item {
@@ -230,127 +225,3 @@
         transform: rotate(360deg);
     }
 }
-
-/* ===============================
-    Buttons
-   =============================== */
-.btcancel {
-    -webkit-appearance: button;
-    border-style: dashed;
-    background-color: orangered;
-    border: solid;
-    border-width: 0.1rem;
-    border-collapse: collapse;
-    font-size: large;
-    font-weight: bold;
-    padding: 0.5rem;
-
-    color: white;
-    text-transform: uppercase;
-    text-align: center;
-    text-decoration: none;
-
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-}
-
-.btcancel:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-    background-color: lightgray;
-    color: darkgray
-}
-
-.btcancel:hover {
-    background-color: white;
-    color: black;
-}
-
-.btcancel:focus {
-    outline-color: transparent;
-    outline-style:solid;
-}
-
-
-/* ================================================
-    Buttons 
-   ================================================ */
-/* Normal */
-.button-normal {
-  appearance: none;
-  background-color: #44ffffff;
-  border: 1px solid rgba(27, 31, 35, .9);
-  border-radius: 0.75rem;
-  box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
-  box-sizing: border-box;
-  color: black;
-  cursor: pointer;
-  display: inline-block;
-  padding: 0.5rem 1rem;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  vertical-align: middle;
-  white-space: nowrap;
-  text-transform: uppercase;
-}
-
-.button-normal:focus:not(:focus-visible):not(.focus-visible) {
-  box-shadow: none;
-  outline: none;
-}
-
-.button-normal:hover {
-  background-color: lightcyan;
-  color:rgba(0, 0, 0, 1);
-}
-
-.button-normal:disabled {
-  background-color: lightgray;
-  border-color: rgba(27, 31, 35, .1);
-  color: darkgray;
-  cursor: not-allowed;
-}
-
-/* Cancel */
-.button-cancel {
-    appearance: none;
-    background-color: red;
-    border: 1px solid darkred;
-    border-radius: 0.75rem;
-    box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
-    box-sizing: border-box;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    display: inline-block;
-    padding: 0.5rem 1rem;
-    position: relative;
-    text-align: center;
-    text-decoration: none;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-    vertical-align: middle;
-    white-space: nowrap;
-    text-transform: uppercase;
-  }
-  
-  .button-cancel:focus:not(:focus-visible):not(.focus-visible) {
-    box-shadow: none;
-    outline: none;
-  }
-  
-  .button-cancel:hover {
-    background-color: rgba(255,0,0,0.6);
-  }
-  
-  .button-cancel:disabled {
-    background-color: lightgray;
-    border-color: rgba(27, 31, 35, .1);
-    color: darkgray;
-    cursor: not-allowed;
-  }
-  

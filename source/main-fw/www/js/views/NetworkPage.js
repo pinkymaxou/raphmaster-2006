@@ -35,7 +35,7 @@ export default class extends AbstractView {
                 </div>
             </fieldset>
 
-            <button class="pure-button pure-button-primary">Save and reboot</button>
+            <button class="button-normal button-normal-primary">Save and reboot</button>
         </form>
         `;
     }
