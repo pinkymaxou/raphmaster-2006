@@ -4,14 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace recipe_export.DB
+namespace recipe_export.import
 {
-    class Recipe
+    class ImportIngredient
     {
         public string Name = "";
-
-        public bool IsCocktail = false;
-
-        public List<Ingredient> Ingredients = new List<Ingredient>();
+        public string Qty = "";
     }
+
 }

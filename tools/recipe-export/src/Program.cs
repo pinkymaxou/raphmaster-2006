@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
 using System.Linq;
-using recipe_export.DB;
+using recipe_export.import;
+using recipe_export.db;
 
 namespace recipe_export
 {
@@ -13,15 +14,15 @@ namespace recipe_export
         {
             try
             {
-                string json = File.ReadAllText("cocktails/cocktails.json");
+                string json = File.ReadAllText("import/cocktails-import.json");
 
                 dynamic cocktails = JsonConvert.DeserializeObject(json);
 
-                List<Recipe> cocktailRecipes = new List<Recipe>();
+                List<ImportRecipe> cocktailRecipes = new List<ImportRecipe>();
 
                 foreach (dynamic cocktail in cocktails)
                 {
-                    Recipe newCR = new Recipe()
+                    ImportRecipe newCR = new ImportRecipe()
                     {
                         Name = Convert.ToString(cocktail.name),
                         IsCocktail = Convert.ToBoolean(cocktail.is_cocktail)
@@ -29,7 +30,7 @@ namespace recipe_export
 
                     foreach (dynamic ingredient in cocktail.ingredients)
                     {
-                        newCR.Ingredients.Add(new Ingredient()
+                        newCR.Ingredients.Add(new ImportIngredient()
                         {
                             Name = ingredient.name,
                             Qty = ingredient.qty
@@ -46,6 +47,15 @@ namespace recipe_export
                     .OrderBy(p => p.Key)
                     .Select(p => new { Name = p.Key, Count = p.Count() })
                     .ToArray();
+
+                string ingredientAlls = String.Join("\r\n", ingreGroups.Select(p => p.Name));
+
+                long t = DateTime.Now.Ticks;
+
+
+                string dbJsonText = File.ReadAllText("db/database.json");
+
+                DbJSON dbJSON = JsonConvert.DeserializeObject<DbJSON>(dbJsonText);
 
 
             }
