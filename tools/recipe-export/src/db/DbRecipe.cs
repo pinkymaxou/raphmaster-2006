@@ -6,6 +6,13 @@ using System.Threading.Tasks;
 
 namespace recipe_export.db
 {
+    public class DbRecipeStep
+    {
+        public Guid ingredient_guid { get; set; }
+
+        public string qty = "";
+    }
+
     public class DbRecipe
     {
         public Guid guid { get; set; }
@@ -14,7 +21,7 @@ namespace recipe_export.db
 
         public bool is_cocktail = false;
 
-        public List<DbIngredient> ingredients = new List<DbIngredient>();
+        public List<DbRecipeStep> Steps { get; set; } = new List<DbRecipeStep>();
     }
 
 }

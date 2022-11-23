@@ -1,63 +1,623 @@
 ﻿{
-  "Ingredients": [
-    { "guid" : "9c616be4-a259-49a0-a7df-7f48acbafa6b", "name": "7-up" },
-		{ "guid" : "ea6faaac-a323-4a93-8797-810601defc46", "name": "Agave syrup" },
-		{ "guid" : "d0ec27d7-6f70-4380-8627-03947e2b863d", "name": "Amaretto liquor" },
-		{ "guid" : "72f282da-c381-4b7a-8dbb-4f127eba925f", "name": "Aperol" },
-		{ "guid" : "ff99b204-09c3-4909-81a8-1aa703a4153d", "name": "Blanco tequila" },
-		{ "guid" : "9a04a535-b63b-4ad7-9a2c-4d27c4532ccd", "name": "Cask-proof bourbon" },
-		{ "guid" : "59950d82-9ec7-4ba5-b730-31fad803c99a", "name": "Celery salt" },
-		{ "guid" : "79ddb816-d270-4b07-ad22-35ebf9b2816c", "name": "Club soda" },
-		{ "guid" : "3946be63-0f36-4067-8ec3-29090fa59dca", "name": "Cranberry juice" },
-		{ "guid" : "94c5ac2e-c252-475a-9b96-605191bbcab3", "name": "Creme de menthe" },
-		{ "guid" : "da01ba63-10d6-4b9d-bd86-f15ed927014d", "name": "Curaçao bleu" },
-		{ "guid" : "eb439303-01e7-4afe-a509-f9c6d9229125", "name": "Demerara sugar syrup" },
-		{ "guid" : "b229efdd-2c33-4aae-9b83-cc6cd0a4c395", "name": "Dry vermouth" },
-		{ "guid" : "6a427b4e-3dab-41e4-81e6-f4d7065cc715", "name": "Egg white" },
-		{ "guid" : "0a6ab778-74b8-42b6-9ae9-3ee28eb8523a", "name": "Garnish: 2 brandied cherries" },
-		{ "guid" : "91f668dc-4f6a-4345-b3c4-8d3389415cb3", "name": "Garnish: celery stalk" },
-		{ "guid" : "ff42643f-c4eb-4041-a255-0f55ef89f81f", "name": "Garnish: green olives" },
-		{ "guid" : "1e3e03e3-7816-43aa-ba5f-023b3c228138", "name": "Garnish: Kosher salt" },
-		{ "guid" : "3052c2c5-4f0f-40a0-b25c-df426d6c6f77", "name": "Garnish: Lemon twist" },
-		{ "guid" : "eace604b-96cd-483e-b3c7-8e02aaf2a722", "name": "Garnish: Lemon wheel" },
-		{ "guid" : "cb0295a5-c10c-43e6-92c8-c40c23f34105", "name": "Garnish: Lime twist" },
-		{ "guid" : "97ecafb9-749f-4b1e-b825-5a250ae658e7", "name": "Garnish: lime wedge" },
-		{ "guid" : "019e6c02-25b9-478e-9278-4cafb067ab81", "name": "Garnish: Lime wheel" },
-		{ "guid" : "bdbc492e-8360-4ace-a75a-74a212639505", "name": "Garnish: Maraschino cherry" },
-		{ "guid" : "c105557a-0db0-4134-94a5-17adf8fc3440", "name": "Garnish: parsley sprig" },
-		{ "guid" : "9ce2ea82-8ad1-466e-a2ce-844f89b07e53", "name": "Gin" },
-		{ "guid" : "e2489db0-aaa7-4d2a-93fc-4b8e16680729", "name": "Grenadine Syrup" },
-		{ "guid" : "08e093f9-f24a-471f-bd15-9de4ff72206b", "name": "Ground black pepper" },
-		{ "guid" : "94f66d8e-17a1-4d74-8372-f9de88e39566", "name": "Heavy cream" },
-		{ "guid" : "585520d1-0490-48bf-a59c-9921a5e2ef36", "name": "Ice" },
-		{ "guid" : "d6f9b0c8-0309-4cd9-8457-67379aaa8e03", "name": "Lemon juice" },
-		{ "guid" : "6177cf52-d950-44f3-a888-40f0d33d594f", "name": "Lemon wedge" },
-		{ "guid" : "5ba88ae8-deeb-4612-8f42-c19ea97f39f0", "name": "Lime juice" },
-		{ "guid" : "cb487216-32f0-45f7-92e8-d6d83726aae4", "name": "Lime wedge" },
-		{ "guid" : "97246bb1-f3a4-47e0-9936-cf7391b89141", "name": "Londo dry gin" },
-		{ "guid" : "36163d39-6b0d-49a1-b5bc-877e545e1387", "name": "Melon liqueur" },
-		{ "guid" : "8f7f3353-da1a-4124-bc9e-7676e673897d", "name": "Orange" },
-		{ "guid" : "9dd0873c-f7cb-4148-9c20-2438fdc935d0", "name": "Orange liquor" },
-		{ "guid" : "485d89d6-87ce-4a97-923e-d818259beabe", "name": "Orange wedge" },
-		{ "guid" : "1e99bd5c-69b2-4538-bd3d-dc61594994a5", "name": "Peach snapps" },
-		{ "guid" : "28f9f686-7928-41dd-afa5-21c35ebe20b7", "name": "Pineapple juice" },
-		{ "guid" : "81f4c15f-062a-4863-9399-294d53188d96", "name": "Prepared Horseradish" },
-		{ "guid" : "d31e54a7-77a9-44b5-a06a-69f7042e3f59", "name": "Rich simple syrup" },
-		{ "guid" : "786010c2-bceb-41dd-9943-19f2e6c6e245", "name": "Simple Syrup", "recipe_guid" : "" },
-		{ "guid" : "6c81cc91-c3bf-4c70-9172-62208f1805b6", "name": "Smoked paprika" },
-		{ "guid" : "2fb6d696-1cf9-4296-ab05-5d4516dab4a7", "name": "Soda club" },
-		{ "guid" : "66c869e3-d42d-4d9e-a140-fe30a38d2719", "name": "Sour Puss" },
-		{ "guid" : "d15e0095-7dee-4074-8eb2-3649462390a1", "name": "Southern Comfort" },
-		{ "guid" : "f127ab47-6716-41f9-8cc9-5719b740fb87", "name": "Sparkling Wine" },
-		{ "guid" : "16fab933-fdca-461e-91f9-947f1b4c96b7", "name": "Sweet and sour mix" },
-		{ "guid" : "318b4c59-97e7-4fa4-a1e7-1782238ac605", "name": "Tabasco sauce" },
-		{ "guid" : "49259b07-be4b-4f59-9ca8-84672bd0b67f", "name": "Tomato Juice" },
-		{ "guid" : "da607939-bc6e-4e20-b4dc-5637ef6d9cc9", "name": "Vodka" },
-		{ "guid" : "01a923cd-c6ce-4a81-b90b-a0c803151bdf", "name": "White creme de cacao" },
-		{ "guid" : "f6a2bc06-1bf3-4fb1-8a08-a72dca786162", "name": "White rhum" },
-		{ "guid" : "cf6a3a03-5a0d-4d49-9d92-e71e3b735852", "name": "Worcestershire sauce" }
-  ],
-  "Recipes": [
-		{ "guid" : "", "name" : "patate", "is_cocktail" : true, "ingredients": [{ "guid" : "", "qty" : "" }] }
-  ]
+	"Ingredients": [
+		{
+			"name": "7-up",
+			"guid": "5cde74b2-a626-4fe6-9313-0277e618d42b",
+			"recipe_guid": null
+		},
+		{
+			"name": "Agave syrup",
+			"guid": "4377eaac-71da-4854-aebd-767ba067f8c6",
+			"recipe_guid": null
+		},
+		{
+			"name": "Amaretto liquor",
+			"guid": "a77ed9ee-11fd-48b4-b71f-5e9ddefbac2e",
+			"recipe_guid": null
+		},
+		{
+			"name": "Aperol",
+			"guid": "f2d230ea-5b1e-4f89-9e98-fd5e5e398399",
+			"recipe_guid": null
+		},
+		{
+			"name": "Blanco tequila",
+			"guid": "d35595a4-2471-4c30-bfdf-adf762af0a8a",
+			"recipe_guid": null
+		},
+		{
+			"name": "Cask-proof bourbon",
+			"guid": "8db4de31-df7e-4e67-81a6-63e3d2ab518e",
+			"recipe_guid": null
+		},
+		{
+			"name": "Celery salt",
+			"guid": "7bed73c7-1d98-4fa2-bb01-a73bccf72888",
+			"recipe_guid": null
+		},
+		{
+			"name": "Club soda",
+			"guid": "cedacc27-a49c-4d1a-ab24-9dacc5d46a0d",
+			"recipe_guid": null
+		},
+		{
+			"name": "Cranberry juice",
+			"guid": "34a8a331-ec6f-4d68-b3eb-6d57b79be78d",
+			"recipe_guid": null
+		},
+		{
+			"name": "Creme de menthe",
+			"guid": "c0f86c9c-0b4d-4717-91de-59b6ee157048",
+			"recipe_guid": null
+		},
+		{
+			"name": "Curaçao bleu",
+			"guid": "29394d9e-9324-49cd-881a-389b3277ebbd",
+			"recipe_guid": null
+		},
+		{
+			"name": "Demerara sugar syrup",
+			"guid": "4aeed1f4-7aca-4d09-92a4-f78b451bffb6",
+			"recipe_guid": null
+		},
+		{
+			"name": "Dry vermouth",
+			"guid": "4980a50e-e453-4d60-a69f-0124ad967137",
+			"recipe_guid": null
+		},
+		{
+			"name": "Egg white",
+			"guid": "1d86dee4-0e03-4f7f-b17a-0b31f65ba698",
+			"recipe_guid": null
+		},
+		{
+			"name": "Garnish: 2 brandied cherries",
+			"guid": "9d5579ea-146c-4bdf-8d1c-de5b6b1582d8",
+			"recipe_guid": null
+		},
+		{
+			"name": "Garnish: celery stalk",
+			"guid": "82afb27e-52e3-4fa9-954f-d2aa8a7dafd4",
+			"recipe_guid": null
+		},
+		{
+			"name": "Garnish: green olives",
+			"guid": "e673ff60-11f3-4267-943b-6f06e6e47545",
+			"recipe_guid": null
+		},
+		{
+			"name": "Garnish: Kosher salt",
+			"guid": "e485eee6-093f-45ad-95d6-47d8fdc3ef61",
+			"recipe_guid": null
+		},
+		{
+			"name": "Garnish: Lemon twist",
+			"guid": "df6d4e67-c7ff-46b2-995f-56b96ae8aec9",
+			"recipe_guid": null
+		},
+		{
+			"name": "Garnish: Lemon wheel",
+			"guid": "2788a876-c652-4471-b8d4-19c7e78a0895",
+			"recipe_guid": null
+		},
+		{
+			"name": "Garnish: Lime twist",
+			"guid": "a530d5e3-1ef9-41c0-b792-dd26899a799b",
+			"recipe_guid": null
+		},
+		{
+			"name": "Garnish: lime wedge",
+			"guid": "20526934-d549-41f3-a51d-c8d5c8b05de1",
+			"recipe_guid": null
+		},
+		{
+			"name": "Garnish: Lime wheel",
+			"guid": "c9be4170-ae93-41a4-abb0-0ae867acf5d4",
+			"recipe_guid": null
+		},
+		{
+			"name": "Garnish: Maraschino cherry",
+			"guid": "2acec5dd-757c-4d6b-a06d-357fd2e59d47",
+			"recipe_guid": null
+		},
+		{
+			"name": "Garnish: parsley sprig",
+			"guid": "0a900e2f-2e9c-42d0-b20f-e99adc73fa1b",
+			"recipe_guid": null
+		},
+		{
+			"name": "Gin",
+			"guid": "b69b39a6-a260-4423-bbeb-af2dd6fe089c",
+			"recipe_guid": null
+		},
+		{
+			"name": "Grenadine Syrup",
+			"guid": "ef526c5b-c56c-4ad9-90ff-9dddf8152c34",
+			"recipe_guid": null
+		},
+		{
+			"name": "Ground black pepper",
+			"guid": "9b2f7d06-cb52-42d0-9c2b-dc0638a5a81f",
+			"recipe_guid": null
+		},
+		{
+			"name": "Heavy cream",
+			"guid": "2b3b2a10-f3b2-47de-b927-5280dba7fb51",
+			"recipe_guid": null
+		},
+		{
+			"name": "Ice",
+			"guid": "5da15c1b-68db-4587-a7ab-e68d88d8cf33",
+			"recipe_guid": null
+		},
+		{
+			"name": "Lemon juice",
+			"guid": "94ee501e-cdbd-49a0-8d14-62fd1b6a5833",
+			"recipe_guid": null
+		},
+		{
+			"name": "Lemon wedge",
+			"guid": "0be26ee5-43a9-4855-ac8e-1a716fd58978",
+			"recipe_guid": null
+		},
+		{
+			"name": "Lime juice",
+			"guid": "ef35eb42-4cf5-4008-9aad-9bd71c0b634c",
+			"recipe_guid": null
+		},
+		{
+			"name": "Lime wedge",
+			"guid": "320c1736-3fce-4b1f-b474-645c229d3e34",
+			"recipe_guid": null
+		},
+		{
+			"name": "Londo dry gin",
+			"guid": "8621b1d4-2d44-42e8-9adc-f7e8c36eda06",
+			"recipe_guid": null
+		},
+		{
+			"name": "Melon liqueur",
+			"guid": "7df10563-696c-48f8-963c-9f24d701af41",
+			"recipe_guid": null
+		},
+		{
+			"name": "Orange",
+			"guid": "691d2285-e80e-4ed5-a7ec-5455316a3692",
+			"recipe_guid": null
+		},
+		{
+			"name": "Orange liquor",
+			"guid": "c0ed3198-f4a2-471d-9b21-80eb15a6e31c",
+			"recipe_guid": null
+		},
+		{
+			"name": "Orange wedge",
+			"guid": "f2c02ffa-77c2-4d2e-81cd-5a90c1a0d681",
+			"recipe_guid": null
+		},
+		{
+			"name": "Peach snapps",
+			"guid": "9b835a6e-a3a3-4270-a1a5-344fc854fb27",
+			"recipe_guid": null
+		},
+		{
+			"name": "Pineapple juice",
+			"guid": "855f1fec-65d4-4b57-a05a-1984ea376498",
+			"recipe_guid": null
+		},
+		{
+			"name": "Prepared Horseradish",
+			"guid": "9e4fa52b-491a-4ec5-ad6a-b63bf5281027",
+			"recipe_guid": null
+		},
+		{
+			"name": "Rich simple syrup",
+			"guid": "5a9eda0a-3e39-41de-835f-8a29d88dc74e",
+			"recipe_guid": null
+		},
+		{
+			"name": "Simple Syrup",
+			"guid": "84051af5-26d0-4b0d-b930-3f3a8c75ab68",
+			"recipe_guid": null
+		},
+		{
+			"name": "Smoked paprika",
+			"guid": "5cdcface-58dd-4802-a043-76ca98fb64d3",
+			"recipe_guid": null
+		},
+		{
+			"name": "Soda club",
+			"guid": "4c5170d0-7811-4729-9475-ccb347b1a2fe",
+			"recipe_guid": null
+		},
+		{
+			"name": "Sour Puss",
+			"guid": "bcb8ee29-4142-41eb-9274-2db6a0689b51",
+			"recipe_guid": null
+		},
+		{
+			"name": "Southern Comfort",
+			"guid": "493304ee-4020-48e2-8f87-08aec02a7d65",
+			"recipe_guid": null
+		},
+		{
+			"name": "Sparkling Wine",
+			"guid": "976d4df1-6cce-4e39-97f2-c9f151874b1a",
+			"recipe_guid": null
+		},
+		{
+			"name": "Sweet and sour mix",
+			"guid": "70bb5845-0583-46e4-87b5-9f7fae24a0c1",
+			"recipe_guid": null
+		},
+		{
+			"name": "Tabasco sauce",
+			"guid": "acd07582-bed2-42c4-b917-7d8ab43bd58b",
+			"recipe_guid": null
+		},
+		{
+			"name": "Tomato Juice",
+			"guid": "44acf699-b846-47d5-8fe2-6975e453a872",
+			"recipe_guid": null
+		},
+		{
+			"name": "Vodka",
+			"guid": "55358bd7-1d8e-4ece-a7d6-95f155a49021",
+			"recipe_guid": null
+		},
+		{
+			"name": "White creme de cacao",
+			"guid": "3fc9430c-2f97-4e3b-a097-f6495d38fe2f",
+			"recipe_guid": null
+		},
+		{
+			"name": "White rhum",
+			"guid": "ba4a9115-fb02-429d-8141-c0405fe85529",
+			"recipe_guid": null
+		},
+		{
+			"name": "Worcestershire sauce",
+			"guid": "8da3982a-81c4-4c2e-8ca1-017315a8c955",
+			"recipe_guid": null
+		}
+	],
+	"Recipes": [
+		{
+			"name": "Sex on the beach",
+			"is_cocktail": true,
+			"guid": "e0b0a0be-15ba-40df-999f-e1460d1696f1",
+			"Steps": [
+				{
+					"qty": "",
+					"ingredient_guid": "5da15c1b-68db-4587-a7ab-e68d88d8cf33"
+				},
+				{
+					"qty": "50 ml",
+					"ingredient_guid": "55358bd7-1d8e-4ece-a7d6-95f155a49021"
+				},
+				{
+					"qty": "25 ml",
+					"ingredient_guid": "9b835a6e-a3a3-4270-a1a5-344fc854fb27"
+				},
+				{
+					"qty": "2",
+					"ingredient_guid": "f2c02ffa-77c2-4d2e-81cd-5a90c1a0d681"
+				},
+				{
+					"qty": "50 ml",
+					"ingredient_guid": "34a8a331-ec6f-4d68-b3eb-6d57b79be78d"
+				},
+				{
+					"qty": "25 ml",
+					"ingredient_guid": "ef526c5b-c56c-4ad9-90ff-9dddf8152c34"
+				}
+			]
+		},
+		{
+			"name": "Bloody Mary",
+			"is_cocktail": true,
+			"guid": "0e4ac562-0d03-427c-bd08-321540650247",
+			"Steps": [
+				{
+					"qty": "1",
+					"ingredient_guid": "7bed73c7-1d98-4fa2-bb01-a73bccf72888"
+				},
+				{
+					"qty": "1",
+					"ingredient_guid": "0be26ee5-43a9-4855-ac8e-1a716fd58978"
+				},
+				{
+					"qty": "1",
+					"ingredient_guid": "320c1736-3fce-4b1f-b474-645c229d3e34"
+				},
+				{
+					"qty": "2 oz",
+					"ingredient_guid": "55358bd7-1d8e-4ece-a7d6-95f155a49021"
+				},
+				{
+					"qty": "4 oz",
+					"ingredient_guid": "44acf699-b846-47d5-8fe2-6975e453a872"
+				},
+				{
+					"qty": "2 tsp",
+					"ingredient_guid": "9e4fa52b-491a-4ec5-ad6a-b63bf5281027"
+				},
+				{
+					"qty": "2 dashes",
+					"ingredient_guid": "acd07582-bed2-42c4-b917-7d8ab43bd58b"
+				},
+				{
+					"qty": "2 dashes",
+					"ingredient_guid": "8da3982a-81c4-4c2e-8ca1-017315a8c955"
+				},
+				{
+					"qty": "1 pinch",
+					"ingredient_guid": "9b2f7d06-cb52-42d0-9c2b-dc0638a5a81f"
+				},
+				{
+					"qty": "1 pinch",
+					"ingredient_guid": "5cdcface-58dd-4802-a043-76ca98fb64d3"
+				},
+				{
+					"qty": "1",
+					"ingredient_guid": "0a900e2f-2e9c-42d0-b20f-e99adc73fa1b"
+				},
+				{
+					"qty": "1",
+					"ingredient_guid": "e673ff60-11f3-4267-943b-6f06e6e47545"
+				},
+				{
+					"qty": "1",
+					"ingredient_guid": "20526934-d549-41f3-a51d-c8d5c8b05de1"
+				},
+				{
+					"qty": "1",
+					"ingredient_guid": "82afb27e-52e3-4fa9-954f-d2aa8a7dafd4"
+				}
+			]
+		},
+		{
+			"name": "Pornstar",
+			"is_cocktail": true,
+			"guid": "e30f2dd3-c930-4651-87fd-eac783b4d20e",
+			"Steps": [
+				{
+					"qty": "",
+					"ingredient_guid": "5da15c1b-68db-4587-a7ab-e68d88d8cf33"
+				},
+				{
+					"qty": "1/2 oz",
+					"ingredient_guid": "29394d9e-9324-49cd-881a-389b3277ebbd"
+				},
+				{
+					"qty": "1/2 oz",
+					"ingredient_guid": "bcb8ee29-4142-41eb-9274-2db6a0689b51"
+				},
+				{
+					"qty": "",
+					"ingredient_guid": "5cde74b2-a626-4fe6-9313-0277e618d42b"
+				}
+			]
+		},
+		{
+			"name": "Grasshopper",
+			"is_cocktail": true,
+			"guid": "d7f00993-8d9f-49ed-b426-9cb24c3e990f",
+			"Steps": [
+				{
+					"qty": "3/4 oz",
+					"ingredient_guid": "c0f86c9c-0b4d-4717-91de-59b6ee157048"
+				},
+				{
+					"qty": "3/4 oz",
+					"ingredient_guid": "3fc9430c-2f97-4e3b-a097-f6495d38fe2f"
+				},
+				{
+					"qty": "1/4 oz",
+					"ingredient_guid": "2b3b2a10-f3b2-47de-b927-5280dba7fb51"
+				},
+				{
+					"qty": "1 cup",
+					"ingredient_guid": "5da15c1b-68db-4587-a7ab-e68d88d8cf33"
+				}
+			]
+		},
+		{
+			"name": "Skittle",
+			"is_cocktail": true,
+			"guid": "6a67dbc6-be9e-47c9-9381-ce4ca04712eb",
+			"Steps": [
+				{
+					"qty": "1 oz",
+					"ingredient_guid": "55358bd7-1d8e-4ece-a7d6-95f155a49021"
+				},
+				{
+					"qty": "1 oz",
+					"ingredient_guid": "70bb5845-0583-46e4-87b5-9f7fae24a0c1"
+				},
+				{
+					"qty": "1 oz",
+					"ingredient_guid": "7df10563-696c-48f8-963c-9f24d701af41"
+				},
+				{
+					"qty": "1 oz",
+					"ingredient_guid": "493304ee-4020-48e2-8f87-08aec02a7d65"
+				},
+				{
+					"qty": "1 oz",
+					"ingredient_guid": "855f1fec-65d4-4b57-a05a-1984ea376498"
+				}
+			]
+		},
+		{
+			"name": "Aperol Spritz",
+			"is_cocktail": true,
+			"guid": "2339a8d5-9542-4902-a3d4-be749e667d48",
+			"Steps": [
+				{
+					"qty": "3 oz",
+					"ingredient_guid": "976d4df1-6cce-4e39-97f2-c9f151874b1a"
+				},
+				{
+					"qty": "2 oz",
+					"ingredient_guid": "f2d230ea-5b1e-4f89-9e98-fd5e5e398399"
+				},
+				{
+					"qty": "3/4 oz",
+					"ingredient_guid": "4c5170d0-7811-4729-9475-ccb347b1a2fe"
+				},
+				{
+					"qty": "1",
+					"ingredient_guid": "5da15c1b-68db-4587-a7ab-e68d88d8cf33"
+				},
+				{
+					"qty": "1",
+					"ingredient_guid": "f2c02ffa-77c2-4d2e-81cd-5a90c1a0d681"
+				}
+			]
+		},
+		{
+			"name": "Martini",
+			"is_cocktail": true,
+			"guid": "4c5f2ee8-cf33-4282-b723-70dbde553fbd",
+			"Steps": [
+				{
+					"qty": "2 1/2 oz",
+					"ingredient_guid": "b69b39a6-a260-4423-bbeb-af2dd6fe089c"
+				},
+				{
+					"qty": "1/2 oz",
+					"ingredient_guid": "4980a50e-e453-4d60-a69f-0124ad967137"
+				},
+				{
+					"qty": "1 dash",
+					"ingredient_guid": "691d2285-e80e-4ed5-a7ec-5455316a3692"
+				},
+				{
+					"qty": "",
+					"ingredient_guid": "df6d4e67-c7ff-46b2-995f-56b96ae8aec9"
+				}
+			]
+		},
+		{
+			"name": "Daiquiri",
+			"is_cocktail": true,
+			"guid": "d4050ca1-47d1-42a7-a971-43aaf5f27c14",
+			"Steps": [
+				{
+					"qty": "2 oz",
+					"ingredient_guid": "ba4a9115-fb02-429d-8141-c0405fe85529"
+				},
+				{
+					"qty": "1 oz",
+					"ingredient_guid": "ef35eb42-4cf5-4008-9aad-9bd71c0b634c"
+				},
+				{
+					"qty": "3/4 oz",
+					"ingredient_guid": "4aeed1f4-7aca-4d09-92a4-f78b451bffb6"
+				},
+				{
+					"qty": "",
+					"ingredient_guid": "a530d5e3-1ef9-41c0-b792-dd26899a799b"
+				}
+			]
+		},
+		{
+			"name": "Margarita",
+			"is_cocktail": true,
+			"guid": "d7e3b5d3-8f05-4970-b4c2-c964ed49c5d6",
+			"Steps": [
+				{
+					"qty": "2 oz",
+					"ingredient_guid": "d35595a4-2471-4c30-bfdf-adf762af0a8a"
+				},
+				{
+					"qty": "1/2 oz",
+					"ingredient_guid": "c0ed3198-f4a2-471d-9b21-80eb15a6e31c"
+				},
+				{
+					"qty": "1 oz",
+					"ingredient_guid": "ef35eb42-4cf5-4008-9aad-9bd71c0b634c"
+				},
+				{
+					"qty": "1/2 oz",
+					"ingredient_guid": "4377eaac-71da-4854-aebd-767ba067f8c6"
+				},
+				{
+					"qty": "",
+					"ingredient_guid": "c9be4170-ae93-41a4-abb0-0ae867acf5d4"
+				},
+				{
+					"qty": "",
+					"ingredient_guid": "e485eee6-093f-45ad-95d6-47d8fdc3ef61"
+				}
+			]
+		},
+		{
+			"name": "Tom Collins",
+			"is_cocktail": true,
+			"guid": "7c7c5714-34c9-489d-a5fd-63dd8690793c",
+			"Steps": [
+				{
+					"qty": "2 oz",
+					"ingredient_guid": "8621b1d4-2d44-42e8-9adc-f7e8c36eda06"
+				},
+				{
+					"qty": "1 oz",
+					"ingredient_guid": "94ee501e-cdbd-49a0-8d14-62fd1b6a5833"
+				},
+				{
+					"qty": "1/2 oz",
+					"ingredient_guid": "84051af5-26d0-4b0d-b930-3f3a8c75ab68"
+				},
+				{
+					"qty": "",
+					"ingredient_guid": "cedacc27-a49c-4d1a-ab24-9dacc5d46a0d"
+				},
+				{
+					"qty": "",
+					"ingredient_guid": "2788a876-c652-4471-b8d4-19c7e78a0895"
+				},
+				{
+					"qty": "",
+					"ingredient_guid": "2acec5dd-757c-4d6b-a06d-357fd2e59d47"
+				}
+			]
+		},
+		{
+			"name": "Amaretto Sour",
+			"is_cocktail": true,
+			"guid": "a22ae7a7-2bb6-42a9-be1e-aa4aaae52006",
+			"Steps": [
+				{
+					"qty": "1 1/2 oz",
+					"ingredient_guid": "a77ed9ee-11fd-48b4-b71f-5e9ddefbac2e"
+				},
+				{
+					"qty": "3/4 oz",
+					"ingredient_guid": "8db4de31-df7e-4e67-81a6-63e3d2ab518e"
+				},
+				{
+					"qty": "1 oz",
+					"ingredient_guid": "94ee501e-cdbd-49a0-8d14-62fd1b6a5833"
+				},
+				{
+					"qty": "1 tsp",
+					"ingredient_guid": "5a9eda0a-3e39-41de-835f-8a29d88dc74e"
+				},
+				{
+					"qty": "1/2 oz",
+					"ingredient_guid": "1d86dee4-0e03-4f7f-b17a-0b31f65ba698"
+				},
+				{
+					"qty": "",
+					"ingredient_guid": "df6d4e67-c7ff-46b2-995f-56b96ae8aec9"
+				},
+				{
+					"qty": "",
+					"ingredient_guid": "9d5579ea-146c-4bdf-8d1c-de5b6b1582d8"
+				}
+			]
+		}
+	]
 }

@@ -57,7 +57,44 @@ namespace recipe_export
 
                 DbJSON dbJSON = JsonConvert.DeserializeObject<DbJSON>(dbJsonText);
 
+                // Add unknown ingredients
+                foreach (ImportRecipe importRecipe in cocktailRecipes)
+                {
+                    DbRecipe dbRecipe = dbJSON.Recipes.FirstOrDefault(p => p.name == importRecipe.Name);
+                    if (dbRecipe != null)
+                        continue;
 
+                    // Match ingredients
+                    dbRecipe = new DbRecipe()
+                    {
+                        guid = Guid.NewGuid(),
+                        name = importRecipe.Name,
+                        is_cocktail = importRecipe.IsCocktail,
+                    };
+
+                    foreach (ImportIngredient importIngredient in importRecipe.Ingredients)
+                    {
+                        DbIngredient dbIngredient = dbJSON.Ingredients.FirstOrDefault(p => p.name == importIngredient.Name);
+                        if (dbIngredient == null)
+                            continue;
+
+                        DbRecipeStep dbRecipeStep = new DbRecipeStep()
+                        {
+                            ingredient_guid = dbIngredient.guid,
+                            qty = importIngredient.Qty,
+                        };
+
+                        dbRecipe.Steps.Add(dbRecipeStep);
+                    }
+
+                    dbJSON.Recipes.Add(dbRecipe);
+                }
+
+
+                using (StreamWriter sw = new StreamWriter("db/database.json", false))
+                {
+                    sw.WriteLine(JsonConvert.SerializeObject(dbJSON, Formatting.Indented));
+                }
             }
             catch (Exception ex)
             {

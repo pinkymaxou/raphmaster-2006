@@ -11,9 +11,8 @@ namespace recipe_export.db
         public Guid guid { get; set; }
 
         public string name = "";
-        public string qty = "";
 
-        public Guid? ingredient_guid { get; set; } = null;
+        public Guid? recipe_guid { get; set; } = null;
     }
 
 }
