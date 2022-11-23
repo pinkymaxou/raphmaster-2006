@@ -57,3 +57,6 @@ dkms.conf
 /tools/generate-code/.vs
 /tools/generate-code/src/obj
 /tools/generate-code/src/bin
+/tools/recipe-export/.vs
+/tools/recipe-export/src/obj
+/tools/recipe-export/src/bin
