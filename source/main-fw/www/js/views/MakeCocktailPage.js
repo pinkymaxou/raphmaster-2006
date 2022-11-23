@@ -22,7 +22,7 @@ export default class extends AbstractView {
                     { name: "Lime wedge", qty: "1" },
                     { name: "Vodka", qty: "2 oz" },
                     { name: "Tomato Juice", qty: "4 oz" },
-                    { name: "Prepared Horseradish", qty: "2 teaspoons" },
+                    { name: "Prepared Horseradish", qty: "2 tsp" },
                     { name: "Tabasco sauce", qty: "2 dashes" },
                     { name: "Worcestershire sauce", qty: "2 dashes" },
                     { name: "Ground black pepper", qty: "1 pinch" },
