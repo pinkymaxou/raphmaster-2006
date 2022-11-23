@@ -21,17 +21,25 @@ export default class extends AbstractView {
 
         if (infoItems) {
             // Add info items
+            let i = 0;
             infoItems.forEach(
                 (infoItem) =>
                 {
                     let newTr = tbodySysInfo.insertRow();
-    
+        
+                    // Alternate row
+                    if (i % 2 == 0) {
+                        newTr.classList.add("info-table-odd");
+                    }
+
                     const tdName = newTr.insertCell(); // create td only
                     tdName.appendChild(document.createTextNode(infoItem.name));
                     
                     const tdValue = newTr.insertCell(); // create td only
                     tdValue.style["overflow-wrap"] = "anywhere";
                     tdValue.appendChild(document.createTextNode(infoItem.value));
+
+                    i++;
                 }
             );            
         }
