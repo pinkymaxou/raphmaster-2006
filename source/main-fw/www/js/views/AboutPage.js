@@ -63,12 +63,6 @@ export default class extends AbstractView {
         </div>
 
         <table class="info-table info-table-bordered">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Value</th>
-                </tr>
-            </thead>
             <tbody id="tblBdSysInfo">
                 <!-- Space for table items -->
             </tbody>
