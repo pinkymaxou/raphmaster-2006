@@ -25,7 +25,7 @@ typedef enum _cocktaildb_EQtyType {
 
 /* Struct definitions */
 typedef struct _cocktaildb_ProductCode {
-    char upc_code[13];
+    char upc_code[18];
 } cocktaildb_ProductCode;
 
 typedef struct _cocktaildb_Ingredient {
@@ -226,10 +226,10 @@ extern const pb_msgdesc_t cocktaildb_MetaDataFile_msg;
 /* cocktaildb_Recipe_size depends on runtime parameters */
 /* cocktaildb_RecipeFile_size depends on runtime parameters */
 #define cocktaildb_Equivalence_size              125
-#define cocktaildb_IngredientFile_size           31750
-#define cocktaildb_Ingredient_size               125
+#define cocktaildb_IngredientFile_size           37000
+#define cocktaildb_Ingredient_size               145
 #define cocktaildb_MetaDataFile_size             6350
-#define cocktaildb_ProductCode_size              14
+#define cocktaildb_ProductCode_size              19
 #define cocktaildb_Qty_size                      7
 #define cocktaildb_RecipeStep_size               15
 

@@ -10,6 +10,7 @@
       },
       {
         "name": "Vodka",
+        "upc_code": "00627987202564",
         "qty": "50 ml"
       },
       {
@@ -105,11 +106,13 @@
       },
       {
         "name": "Curaçao bleu",
-        "qty": "1/2 oz"
+        "qty": "1/2 oz",
+        "upc_code": "03041311026096"
       },
       {
         "name": "Sour Puss",
-        "qty": "1/2 oz"
+        "qty": "1/2 oz",
+        "upc_code": "00087116035003"
       },
       {
         "name": "7-up",
@@ -124,11 +127,13 @@
     "ingredients": [
       {
         "name": "Creme de menthe",
-        "qty": "3/4 oz"
+        "qty": "3/4 oz",
+        "upc_code": "00854745000920"
       },
       {
         "name": "White creme de cacao",
-        "qty": "3/4 oz"
+        "qty": "3/4 oz",
+        "upc_code": "03292543720218"
       },
       {
         "name": "Heavy cream",
@@ -154,12 +159,14 @@
         "qty": "1 oz"
       },
       {
-        "name": "Melon liqueur",
-        "qty": "1 oz"
+        "name": "Midori",
+        "qty": "1 oz",
+        "upc_code": "00088857035628"
       },
       {
         "name": "Southern Comfort",
-        "qty": "1 oz"
+        "qty": "1 oz",
+        "upc_code": "00088544016770"
       },
       {
         "name": "Pineapple juice",
@@ -178,7 +185,8 @@
       },
       {
         "name": "Aperol",
-        "qty": "2 oz"
+        "qty": "2 oz",
+        "upc_code": "00086785900001"
       },
       {
         "name": "Soda club",
@@ -309,7 +317,8 @@
     "ingredients": [
       {
         "name": "Amaretto liquor",
-        "qty": "1 1/2 oz"
+        "qty": "1 1/2 oz",
+        "upc_code": "06279871658144"
       },
       {
         "name": "Cask-proof bourbon",

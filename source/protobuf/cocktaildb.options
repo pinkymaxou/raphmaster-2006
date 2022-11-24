@@ -2,7 +2,7 @@
 cocktaildb.Ingredient.name  	max_size:48
 cocktaildb.Ingredient.product_codes	max_count:4
 
-cocktaildb.ProductCode.upc_code		max_size:13
+cocktaildb.ProductCode.upc_code		max_size:18
 
 cocktaildb.Recipe.name      	max_size:48
 cocktaildb.Recipe.recipe_steps  max_count:15
