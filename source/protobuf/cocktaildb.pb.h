@@ -20,7 +20,8 @@ typedef enum _cocktaildb_EQtyType {
     cocktaildb_EQtyType_Wheel = 7, /* Basically a slice of a fruit */
     cocktaildb_EQtyType_Teaspoon = 8, /* 4.5 ml (1/6 oz) */
     cocktaildb_EQtyType_Tablespoon = 9, /* 14 ml (1/2 oz) */
-    cocktaildb_EQtyType_Dash = 10 /* 1 ml */
+    cocktaildb_EQtyType_Dash = 10, /* 1 ml */
+    cocktaildb_EQtyType_Drop = 11 /* One drop */
 } cocktaildb_EQtyType;
 
 /* Struct definitions */
@@ -80,8 +81,8 @@ typedef struct _cocktaildb_MetaDataFile {
 
 /* Helper constants for enums */
 #define _cocktaildb_EQtyType_MIN cocktaildb_EQtyType_None
-#define _cocktaildb_EQtyType_MAX cocktaildb_EQtyType_Dash
-#define _cocktaildb_EQtyType_ARRAYSIZE ((cocktaildb_EQtyType)(cocktaildb_EQtyType_Dash+1))
+#define _cocktaildb_EQtyType_MAX cocktaildb_EQtyType_Drop
+#define _cocktaildb_EQtyType_ARRAYSIZE ((cocktaildb_EQtyType)(cocktaildb_EQtyType_Drop+1))
 
 
 

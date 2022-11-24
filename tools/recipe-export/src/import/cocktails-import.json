@@ -442,5 +442,48 @@
         "qty": ""
       }
     ]
+  },
+  {
+    "name": "Mai Tai",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Ice",
+        "qty": ""
+      },
+      {
+        "name": "Dark rum",
+        "qty": "1 oz"
+      },
+      {
+        "name": "Amber rum",
+        "qty": "1 oz"
+      },
+      {
+        "name": "Orange juice",
+        "qty": "2 tbsp"
+      },
+      {
+        "name": "Cointreau",
+        "qty": "1/2 oz"
+      },
+      {
+        "name": "Lime juice",
+        "qty": "1 tbsp"
+      },
+      {
+        "name": "Almond Extract",
+        "qty": "1 drop"
+      },
+      {
+        "name": "Granulated sugar",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Grenadine",
+        "qty": "1 dash"
+      }
+    ]
   }
 ]

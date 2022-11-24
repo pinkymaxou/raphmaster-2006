@@ -122,8 +122,6 @@ namespace recipe_export
                                 .FirstOrDefault(p => p.Name == importIngredient.Name);
 
 
-                            Regex regex = new Regex(@"^(?<scal>((\d+\s+\d+\/\d+)|(\d+\/\d+)|(\d+)))\s*(?<unit>(oz|dash|cup|pinch|tsp|ml))?", RegexOptions.ExplicitCapture);
-
                             Cocktaildb.Qty newQty = new Cocktaildb.Qty()
                             {
                                 Value = 0,
@@ -132,6 +130,8 @@ namespace recipe_export
 
                             if (!String.IsNullOrEmpty(importIngredient.Qty))
                             {
+                                Regex regex = new Regex(@"^(?<scal>((\d+\s+\d+\/\d+)|(\d+\/\d+)|(\d+)))\s*(?<unit>(oz|dash|drop|cup|pinch|tsp|tbsp|ml))?", RegexOptions.ExplicitCapture);
+
                                 Match m = regex.Match(importIngredient.Qty);
                                 if (!m.Success)
                                     throw new Exception("No match");
@@ -188,6 +188,10 @@ namespace recipe_export
                                 else if (unitText == "cup")
                                 {
                                     newQty.Type = Cocktaildb.EQtyType.Cup;
+                                }
+                                else if (unitText == "drop")
+                                {
+                                    newQty.Type = Cocktaildb.EQtyType.Drop;
                                 }
                                 else if (unitText == "")
                                 {

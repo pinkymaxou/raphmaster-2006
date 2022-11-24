@@ -38,6 +38,7 @@ enum EQtyType
 	Teaspoon = 8;	// 4.5 ml (1/6 oz)
 	Tablespoon = 9;	// 14 ml (1/2 oz)
 	Dash = 10;		// 1 ml
+	Drop = 11;		// One drop
 }
 
 message Qty

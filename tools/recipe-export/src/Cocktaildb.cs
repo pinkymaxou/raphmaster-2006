@@ -38,10 +38,10 @@ namespace Cocktaildb {
             "cmllcxgBIAMoCzISLmNvY2t0YWlsZGIuUmVjaXBlIjoKC0VxdWl2YWxlbmNl",
             "EhYKDmluZ3JlZGllbnRfaWRzGAEgAygNEhMKC2VxdWl2YWxlbmNlGAIgASgC",
             "Ij0KDE1ldGFEYXRhRmlsZRItCgxlcXVpdmFsZW5jZXMYASADKAsyFy5jb2Nr",
-            "dGFpbGRiLkVxdWl2YWxlbmNlKn4KCEVRdHlUeXBlEggKBE5vbmUQABILCgdV",
-            "bml0YXJ5EAESDAoITGlxdWlkTUwQAhIGCgJPehADEgcKA0N1cBAEEgkKBVBp",
-            "bmNoEAYSCQoFV2hlZWwQBxIMCghUZWFzcG9vbhAIEg4KClRhYmxlc3Bvb24Q",
-            "CRIICgREYXNoEApiBnByb3RvMw=="));
+            "dGFpbGRiLkVxdWl2YWxlbmNlKogBCghFUXR5VHlwZRIICgROb25lEAASCwoH",
+            "VW5pdGFyeRABEgwKCExpcXVpZE1MEAISBgoCT3oQAxIHCgNDdXAQBBIJCgVQ",
+            "aW5jaBAGEgkKBVdoZWVsEAcSDAoIVGVhc3Bvb24QCBIOCgpUYWJsZXNwb29u",
+            "EAkSCAoERGFzaBAKEggKBERyb3AQC2IGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Cocktaildb.EQtyType), }, new pbr::GeneratedClrTypeInfo[] {
@@ -61,6 +61,9 @@ namespace Cocktaildb {
   }
   #region Enums
   public enum EQtyType {
+    /// <summary>
+    /// When unit doesn't apply
+    /// </summary>
     [pbr::OriginalName("None")] None = 0,
     /// <summary>
     /// Counter by round number
@@ -98,6 +101,10 @@ namespace Cocktaildb {
     /// 1 ml
     /// </summary>
     [pbr::OriginalName("Dash")] Dash = 10,
+    /// <summary>
+    /// One drop
+    /// </summary>
+    [pbr::OriginalName("Drop")] Drop = 11,
   }
 
   #endregion
