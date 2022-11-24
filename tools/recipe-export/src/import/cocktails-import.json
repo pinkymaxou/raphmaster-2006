@@ -2,7 +2,7 @@
   {
     "name": "Sex on the beach",
     "img": "sex-on-the-beach.jpg",
-    "is_cocktail" : true,
+    "is_cocktail": true,
     "ingredients": [
       {
         "name": "Ice",
@@ -254,7 +254,7 @@
     "is_cocktail": true,
     "ingredients": [
       {
-        "name": "Blanco tequila",
+        "name": "Tequila",
         "qty": "2 oz"
       },
       {
@@ -342,6 +342,103 @@
       },
       {
         "name": "Garnish: 2 brandied cherries",
+        "qty": ""
+      }
+    ]
+  },
+  {
+    "name": "Negroni",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Gin",
+        "qty": "1 oz"
+      },
+      {
+        "name": "Campari",
+        "qty": "1 oz"
+      },
+      {
+        "name": "Sweet red vermouth",
+        "qty": "1 oz"
+      },
+      {
+        "name": "Garnish: Orange",
+        "qty": ""
+      }
+    ]
+  },
+  {
+    "name": "Mojito",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "White rum",
+        "qty": "2 oz"
+      },
+      {
+        "name": "Lime juice",
+        "qty": "1/2 oz"
+      },
+      {
+        "name": "Sugar",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Mint leaves",
+        "qty": "3"
+      },
+      {
+        "name": "Ice",
+        "qty": ""
+      },
+      {
+        "name": "Club Soda",
+        "qty": ""
+      },
+      {
+        "name": "Simple Syrup",
+        "qty": "1/2 oz"
+      },
+      {
+        "name": "Garnish: Lime wedge",
+        "qty": ""
+      },
+      {
+        "name": "Garnish: Sprig of mint",
+        "qty": ""
+      }
+    ]
+  },
+  {
+    "name": "Whiskey Sour",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Bourbon",
+        "qty": "2 oz"
+      },
+      {
+        "name": "Lemon Juice",
+        "qty": "3/4 oz"
+      },
+      {
+        "name": "Simple syrup",
+        "qty": "3/4 oz"
+      },
+      {
+        "name": "Egg white",
+        "qty": "1/2"
+      },
+      {
+        "name": "Garnish: Orange slice",
+        "qty": ""
+      },
+      {
+        "name": "Garnish: Cherry",
         "qty": ""
       }
     ]
