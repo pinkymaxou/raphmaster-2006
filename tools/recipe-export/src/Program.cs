@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using System.Linq;
 using recipe_export.import;
 using Google.Protobuf;
+using System.Text.RegularExpressions;
 
 namespace recipe_export
 {
@@ -49,6 +50,17 @@ namespace recipe_export
                     .Select(p => new { Name = p.Key, Count = p.Count() })
                     .ToArray();
                 //string ingredientAlls = String.Join("\r\n", ingreGroups.Select(p => p.Name));
+
+                var allQtyGroups = cocktailRecipes
+                    .SelectMany(p => p.Ingredients)
+                    .GroupBy(p => p.Qty)
+                    .OrderBy(p => p.Key)
+                    .Select(p => new { Name = p.Key })
+                    .ToArray();
+
+                string allQtys = String.Join("\r\n", allQtyGroups.Select(p => p.Name));
+
+
                 long t = DateTime.Now.Ticks;
 
                 Cocktaildb.IngredientFile dbIngredientFile = new Cocktaildb.IngredientFile();
@@ -98,14 +110,87 @@ namespace recipe_export
                             Cocktaildb.Ingredient dbIngredient = dbIngredientFile.Entries
                                 .FirstOrDefault(p => p.Name == importIngredient.Name);
 
+
+                            Regex regex = new Regex(@"^(?<scal>((\d+\s+\d+\/\d+)|(\d+\/\d+)|(\d+)))\s*(?<unit>(oz|dash|cup|pinch|tsp|ml))?", RegexOptions.ExplicitCapture);
+
+                            Cocktaildb.Qty newQty = new Cocktaildb.Qty()
+                            {
+                                Value = 0,
+                                Type = Cocktaildb.EQtyType.None
+                            };
+
+                            if (!String.IsNullOrEmpty(importIngredient.Qty))
+                            {
+                                Match m = regex.Match(importIngredient.Qty);
+                                if (!m.Success)
+                                    throw new Exception("Fuck you");
+
+                                string valueText = m.Groups["scal"].Value.Trim();
+                                if (!float.TryParse(valueText, out float value))
+                                {
+                                    Regex fraction = new Regex(@"^((((?<int>\d+)\s(?<a>\d+)\/(?<b>\d+)))|(?<a>\d+)\/(?<b>\d+)|(?<int>\d+))", RegexOptions.ExplicitCapture);
+                                    Match mFrac = fraction.Match(valueText);
+                                    if (mFrac.Success)
+                                    {
+                                        string intText = mFrac.Groups["int"].Value;
+                                        int intPart = 0;
+                                        int.TryParse(intText, out intPart);
+
+                                        value = intPart;
+                                        if (int.TryParse(mFrac.Groups["a"].Value, out int intPartA) &&
+                                            int.TryParse(mFrac.Groups["b"].Value, out int intPartB))
+                                        {
+                                            value += (float)intPartA / (float)intPartB;
+                                        }
+                                    }
+                                    else
+                                        throw new Exception("Invalid scal");
+                                }
+
+                                newQty.Value = value;
+
+                                string unitText = m.Groups["unit"].Value.Trim();
+                                if (unitText == "ml")
+                                {
+                                    newQty.Type = Cocktaildb.EQtyType.LiquidMl;
+                                }
+                                else if (unitText == "oz")
+                                {
+                                    newQty.Type = Cocktaildb.EQtyType.Oz;
+                                }
+                                else if (unitText == "tsp")
+                                {
+                                    newQty.Type = Cocktaildb.EQtyType.Teaspoon;
+                                }
+                                else if (unitText == "tbsp")
+                                {
+                                    newQty.Type = Cocktaildb.EQtyType.Tablespoon;
+                                }
+                                else if (unitText == "dash")
+                                {
+                                    newQty.Type = Cocktaildb.EQtyType.Dash;
+                                }
+                                else if (unitText == "pinch")
+                                {
+                                    newQty.Type = Cocktaildb.EQtyType.Pinch;
+                                }
+                                else if (unitText == "cup")
+                                {
+                                    newQty.Type = Cocktaildb.EQtyType.Cup;
+                                }
+                                else if (unitText == "")
+                                {
+                                    newQty.Value = 0;
+                                    newQty.Type = Cocktaildb.EQtyType.None;
+                                }
+                                else
+                                    throw new Exception("Unknown unit");
+                            }
+
                             newRecipe.RecipeSteps.Add(new Cocktaildb.RecipeStep()
                             {
                                 IngredientId = dbIngredient.Id,
-                                Qty = new Cocktaildb.Qty()
-                                {
-                                    Value = 1,
-                                    Type = Cocktaildb.EQtyType.Pinch
-                                }
+                                Qty = newQty
                             });
                         }
 

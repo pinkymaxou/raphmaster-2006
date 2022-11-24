@@ -33,10 +33,10 @@ namespace Cocktaildb {
             "ClJlY2lwZVN0ZXASFQoNaW5ncmVkaWVudF9pZBgCIAEoDRIcCgNxdHkYAyAB",
             "KAsyDy5jb2NrdGFpbGRiLlF0eSI5Cg5JbmdyZWRpZW50RmlsZRInCgdlbnRy",
             "aWVzGAEgAygLMhYuY29ja3RhaWxkYi5JbmdyZWRpZW50IjEKClJlY2lwZUZp",
-            "bGUSIwoHZW50cmllcxgBIAMoCzISLmNvY2t0YWlsZGIuUmVjaXBlKmMKCEVR",
-            "dHlUeXBlEggKBE5vbmUQABILCgdVbml0YXJ5EAESDAoITGlxdWlkTUwQAhIJ",
-            "CgVQaW5jaBADEgkKBVdoZWVsEAQSDAoIVGVhc3Bvb24QBRIOCgpUYWJsZXNw",
-            "b29uEAZiBnByb3RvMw=="));
+            "bGUSIwoHZW50cmllcxgBIAMoCzISLmNvY2t0YWlsZGIuUmVjaXBlKn4KCEVR",
+            "dHlUeXBlEggKBE5vbmUQABILCgdVbml0YXJ5EAESDAoITGlxdWlkTUwQAhIG",
+            "CgJPehADEgcKA0N1cBAEEgkKBVBpbmNoEAYSCQoFV2hlZWwQBxIMCghUZWFz",
+            "cG9vbhAIEg4KClRhYmxlc3Bvb24QCRIICgREYXNoEApiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Cocktaildb.EQtyType), }, new pbr::GeneratedClrTypeInfo[] {
@@ -63,21 +63,33 @@ namespace Cocktaildb {
     /// </summary>
     [pbr::OriginalName("LiquidML")] LiquidMl = 2,
     /// <summary>
+    /// Ounce
+    /// </summary>
+    [pbr::OriginalName("Oz")] Oz = 3,
+    /// <summary>
+    /// Cup
+    /// </summary>
+    [pbr::OriginalName("Cup")] Cup = 4,
+    /// <summary>
     /// Fingertip quantity
     /// </summary>
-    [pbr::OriginalName("Pinch")] Pinch = 3,
+    [pbr::OriginalName("Pinch")] Pinch = 6,
     /// <summary>
     /// Basically a slice of a fruit
     /// </summary>
-    [pbr::OriginalName("Wheel")] Wheel = 4,
+    [pbr::OriginalName("Wheel")] Wheel = 7,
     /// <summary>
     /// 4.5 ml (1/6 oz)
     /// </summary>
-    [pbr::OriginalName("Teaspoon")] Teaspoon = 5,
+    [pbr::OriginalName("Teaspoon")] Teaspoon = 8,
     /// <summary>
     /// 14 ml (1/2 oz)
     /// </summary>
-    [pbr::OriginalName("Tablespoon")] Tablespoon = 6,
+    [pbr::OriginalName("Tablespoon")] Tablespoon = 9,
+    /// <summary>
+    /// 1 ml
+    /// </summary>
+    [pbr::OriginalName("Dash")] Dash = 10,
   }
 
   #endregion

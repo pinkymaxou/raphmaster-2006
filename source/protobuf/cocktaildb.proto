@@ -24,11 +24,14 @@ enum EQtyType
 	Unitary = 1; 	// Counter by round number
 	
 	LiquidML = 2;	// Milliliter
+	Oz = 3;			// Ounce
+	Cup = 4;		// Cup
 	
-	Pinch = 3;		// Fingertip quantity
-	Wheel = 4;		// Basically a slice of a fruit
-	Teaspoon = 5;	// 4.5 ml (1/6 oz)
-	Tablespoon = 6;	// 14 ml (1/2 oz)
+	Pinch = 6;		// Fingertip quantity
+	Wheel = 7;		// Basically a slice of a fruit
+	Teaspoon = 8;	// 4.5 ml (1/6 oz)
+	Tablespoon = 9;	// 14 ml (1/2 oz)
+	Dash = 10;		// 1 ml
 }
 
 message Qty

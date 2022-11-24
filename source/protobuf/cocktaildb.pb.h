@@ -14,10 +14,13 @@ typedef enum _cocktaildb_EQtyType {
     cocktaildb_EQtyType_None = 0,
     cocktaildb_EQtyType_Unitary = 1, /* Counter by round number */
     cocktaildb_EQtyType_LiquidML = 2, /* Milliliter */
-    cocktaildb_EQtyType_Pinch = 3, /* Fingertip quantity */
-    cocktaildb_EQtyType_Wheel = 4, /* Basically a slice of a fruit */
-    cocktaildb_EQtyType_Teaspoon = 5, /* 4.5 ml (1/6 oz) */
-    cocktaildb_EQtyType_Tablespoon = 6 /* 14 ml (1/2 oz) */
+    cocktaildb_EQtyType_Oz = 3, /* Ounce */
+    cocktaildb_EQtyType_Cup = 4, /* Cup */
+    cocktaildb_EQtyType_Pinch = 6, /* Fingertip quantity */
+    cocktaildb_EQtyType_Wheel = 7, /* Basically a slice of a fruit */
+    cocktaildb_EQtyType_Teaspoon = 8, /* 4.5 ml (1/6 oz) */
+    cocktaildb_EQtyType_Tablespoon = 9, /* 14 ml (1/2 oz) */
+    cocktaildb_EQtyType_Dash = 10 /* 1 ml */
 } cocktaildb_EQtyType;
 
 /* Struct definitions */
@@ -61,8 +64,8 @@ typedef struct _cocktaildb_RecipeFile {
 
 /* Helper constants for enums */
 #define _cocktaildb_EQtyType_MIN cocktaildb_EQtyType_None
-#define _cocktaildb_EQtyType_MAX cocktaildb_EQtyType_Tablespoon
-#define _cocktaildb_EQtyType_ARRAYSIZE ((cocktaildb_EQtyType)(cocktaildb_EQtyType_Tablespoon+1))
+#define _cocktaildb_EQtyType_MAX cocktaildb_EQtyType_Dash
+#define _cocktaildb_EQtyType_ARRAYSIZE ((cocktaildb_EQtyType)(cocktaildb_EQtyType_Dash+1))
 
 
 
