@@ -11,7 +11,7 @@
 
 /* Enum definitions */
 typedef enum _cocktaildb_EQtyType {
-    cocktaildb_EQtyType_None = 0,
+    cocktaildb_EQtyType_None = 0, /* When unit doesn't apply */
     cocktaildb_EQtyType_Unitary = 1, /* Counter by round number */
     cocktaildb_EQtyType_LiquidML = 2, /* Milliliter */
     cocktaildb_EQtyType_Oz = 3, /* Ounce */
