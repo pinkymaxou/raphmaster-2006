@@ -2,11 +2,17 @@ syntax = "proto3";
 
 package cocktaildb;
 
+message ProductCode
+{
+	string upc_code = 1;
+}
+
 message Ingredient
 {
 	uint32 id = 1;			// do not accept 0 as ID
 	string name = 2;
-	uint32 recipe_id = 3;	// 0 = null
+	repeated ProductCode product_codes = 3;
+	uint32 recipe_id = 4;	// 0 = null
 }
 
 message Recipe
@@ -42,11 +48,9 @@ message Qty
 
 message RecipeStep
 {
-	// uint32 id = 1;
 	uint32 ingredient_id = 2;			// do not accept 0 as ID
 	Qty	qty = 3;
 }
-
 
 message IngredientFile
 {
@@ -56,4 +60,15 @@ message IngredientFile
 message RecipeFile
 {
 	repeated Recipe entries = 1;
+}
+
+message Equivalence
+{
+	repeated uint32 ingredient_ids = 1;
+	float equivalence = 2; // 0 = not so much, 1 = perfectly switchable
+}
+
+message MetaDataFile
+{
+	repeated Equivalence equivalences = 1;
 }

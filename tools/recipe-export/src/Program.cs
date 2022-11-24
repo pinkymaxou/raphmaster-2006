@@ -25,7 +25,7 @@ namespace recipe_export
                 {
                     ImportRecipe newCR = new ImportRecipe()
                     {
-                        Name = Convert.ToString(cocktail.name),
+                        Name = Convert.ToString(cocktail.name ?? ""),
                         IsCocktail = Convert.ToBoolean(cocktail.is_cocktail),
                         ImgSrc = Convert.ToString(cocktail.img)
                     };
@@ -34,7 +34,8 @@ namespace recipe_export
                     {
                         newCR.Ingredients.Add(new ImportIngredient()
                         {
-                            Name = ingredient.name,
+                            Name = Convert.ToString(ingredient.name ?? ""),
+                            UPCCode = Convert.ToString(ingredient.upc_code ?? ""),
                             Qty = ingredient.qty
                         });
                     }
@@ -47,7 +48,7 @@ namespace recipe_export
                     .SelectMany(p => p.Ingredients)
                     .GroupBy(p => p.Name)
                     .OrderBy(p => p.Key)
-                    .Select(p => new { Name = p.Key, Count = p.Count() })
+                    .Select(p => new { Name = p.Key, UPCCode = p.FirstOrDefault(p => p.UPCCode != "")?.UPCCode ?? "", Count = p.Count() })
                     .ToArray();
                 //string ingredientAlls = String.Join("\r\n", ingreGroups.Select(p => p.Name));
 
@@ -73,11 +74,21 @@ namespace recipe_export
 
                     foreach (var ingreGroup in allIngredientGroups)
                     {
-                        dbIngredientFile.Entries.Add(new Cocktaildb.Ingredient()
+                        var newDbIngredient = new Cocktaildb.Ingredient()
                         {
                             Id = ingredientID,
                             Name = ingreGroup.Name,
-                        });
+                        };
+
+                        if (!String.IsNullOrEmpty(ingreGroup.UPCCode))
+                        {
+                            newDbIngredient.ProductCodes.Add(new Cocktaildb.ProductCode()
+                            {
+                                UpcCode = ingreGroup.UPCCode
+                            });
+                        }
+
+                        dbIngredientFile.Entries.Add(newDbIngredient);
 
                         ingredientID++;
                     }
@@ -123,7 +134,7 @@ namespace recipe_export
                             {
                                 Match m = regex.Match(importIngredient.Qty);
                                 if (!m.Success)
-                                    throw new Exception("Fuck you");
+                                    throw new Exception("No match");
 
                                 string valueText = m.Groups["scal"].Value.Trim();
                                 if (!float.TryParse(valueText, out float value))
