@@ -1,7 +1,7 @@
 ﻿[
   {
     "name": "Sex on the beach",
-    "img": "img/sex-on-the-beach.jpg",
+    "img": "sex-on-the-beach.jpg",
     "is_cocktail" : true,
     "ingredients": [
       {
@@ -32,7 +32,7 @@
   },
   {
     "name": "Bloody Mary",
-    "img": "img/bloody-mary.jpg",
+    "img": "bloody-mary.jpg",
     "is_cocktail": true,
     "ingredients": [
       {
@@ -95,7 +95,7 @@
   },
   {
     "name": "Pornstar",
-    "img": "img/pornstar.jpg",
+    "img": "pornstar.jpg",
     "is_cocktail": true,
     "ingredients": [
       {
@@ -118,7 +118,7 @@
   },
   {
     "name": "Grasshopper",
-    "img": "img/grasshopper.jpg",
+    "img": "grasshopper.jpg",
     "is_cocktail": true,
     "ingredients": [
       {
@@ -141,7 +141,7 @@
   },
   {
     "name": "Skittle",
-    "img": "img/skittle.jpg",
+    "img": "skittle.jpg",
     "is_cocktail": true,
     "ingredients": [
       {
@@ -168,7 +168,7 @@
   },
   {
     "name": "Aperol Spritz",
-    "img": "img/aperol_spritz.jpg",
+    "img": "aperol_spritz.jpg",
     "is_cocktail": true,
     "ingredients": [
       {
@@ -195,7 +195,7 @@
   },
   {
     "name": "Martini",
-    "img": "img/martini.jpg",
+    "img": "martini.jpg",
     "is_cocktail": true,
     "ingredients": [
       {
@@ -218,7 +218,7 @@
   },
   {
     "name": "Daiquiri",
-    "img": "img/daiquiri.jpg",
+    "img": "daiquiri.jpg",
     "is_cocktail": true,
     "ingredients": [
       {
@@ -241,7 +241,7 @@
   },
   {
     "name": "Margarita",
-    "img": "img/margarita.jpg",
+    "img": "margarita.jpg",
     "is_cocktail": true,
     "ingredients": [
       {
@@ -272,7 +272,7 @@
   },
   {
     "name": "Tom Collins",
-    "img": "img/tom-collins.jpg",
+    "img": "tom-collins.jpg",
     "is_cocktail": true,
     "ingredients": [
       {
@@ -303,7 +303,7 @@
   },
   {
     "name": "Amaretto Sour",
-    "img": "img/amaretto-sour.jpg",
+    "img": "amaretto-sour.jpg",
     "is_cocktail": true,
     "ingredients": [
       {

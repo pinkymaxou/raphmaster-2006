@@ -1,0 +1,7 @@
+# recipes.options
+cocktaildb.Ingredient.name  	max_size:48
+cocktaildb.Recipe.name      	max_size:48
+cocktaildb.Recipe.recipe_steps  max_count:15
+
+cocktaildb.IngredientFile.entries  max_count:250
+cocktaildb.RecipeFile.entries      max_count:100

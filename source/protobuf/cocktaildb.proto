@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+package cocktaildb;
+
+message Ingredient
+{
+	uint32 id = 1;			// do not accept 0 as ID
+	string name = 2;
+	uint32 recipe_id = 3;	// 0 = null
+}
+
+message Recipe
+{
+	uint32 ID = 1;
+	string name = 2;
+	string imgfile = 3;
+	bool is_cocktail = 5;
+	repeated RecipeStep recipe_steps = 6;
+}
+
+enum EQtyType
+{
+	None = 0;
+	Unitary = 1; 	// Counter by round number
+	
+	LiquidML = 2;	// Milliliter
+	
+	Pinch = 3;		// Fingertip quantity
+	Wheel = 4;		// Basically a slice of a fruit
+	Teaspoon = 5;	// 4.5 ml (1/6 oz)
+	Tablespoon = 6;	// 14 ml (1/2 oz)
+}
+
+message Qty
+{
+	float value = 1;
+	EQtyType type = 2;
+}
+
+message RecipeStep
+{
+	// uint32 id = 1;
+	uint32 ingredient_id = 2;			// do not accept 0 as ID
+	Qty	qty = 3;
+}
+
+
+message IngredientFile
+{
+	repeated Ingredient entries = 1;
+}
+
+message RecipeFile
+{
+	repeated Recipe entries = 1;
+}

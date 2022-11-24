@@ -9,6 +9,7 @@ namespace recipe_export.import
     class ImportRecipe
     {
         public string Name = "";
+        public string ImgSrc = "";
 
         public bool IsCocktail = false;
 
