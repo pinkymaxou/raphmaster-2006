@@ -231,7 +231,7 @@
     "is_cocktail": true,
     "ingredients": [
       {
-        "name": "White rhum",
+        "name": "White rum",
         "qty": "2 oz"
       },
       {
@@ -293,7 +293,7 @@
         "qty": "1 oz"
       },
       {
-        "name": "Simple Syrup",
+        "name": "Simple syrup",
         "qty": "1/2 oz"
       },
       {
@@ -329,7 +329,7 @@
         "qty": "1 oz"
       },
       {
-        "name": "Rich simple syrup",
+        "name": "Simple syrup",
         "qty": "1 tsp"
       },
       {
@@ -364,7 +364,7 @@
         "qty": "1 oz"
       },
       {
-        "name": "Garnish: Orange",
+        "name": "Garnish: Orange slice",
         "qty": ""
       }
     ]
@@ -395,15 +395,15 @@
         "qty": ""
       },
       {
-        "name": "Club Soda",
+        "name": "Club soda",
         "qty": ""
       },
       {
-        "name": "Simple Syrup",
+        "name": "Simple syrup",
         "qty": "1/2 oz"
       },
       {
-        "name": "Garnish: Lime wedge",
+        "name": "Garnish: lime wedge",
         "qty": ""
       },
       {
@@ -422,7 +422,7 @@
         "qty": "2 oz"
       },
       {
-        "name": "Lemon Juice",
+        "name": "Lemon juice",
         "qty": "3/4 oz"
       },
       {
@@ -481,8 +481,35 @@
         "qty": "1 tsp"
       },
       {
-        "name": "Grenadine",
+        "name": "Grenadine syrup",
         "qty": "1 dash"
+      }
+    ]
+  },
+  {
+    "name": "Manhattan",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Rye whiskey",
+        "qty": "2 oz"
+      },
+      {
+        "name": "Ice",
+        "qty": ""
+      },
+      {
+        "name": "Italian vermouth",
+        "qty": "1 oz"
+      },
+      {
+        "name": "Angostura bitters",
+        "qty": "2 dashes"
+      },
+      {
+        "name": "Garnish: Cherry",
+        "qty": "2 dashes"
       }
     ]
   }

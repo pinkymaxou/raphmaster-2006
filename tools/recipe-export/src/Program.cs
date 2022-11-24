@@ -50,7 +50,7 @@ namespace recipe_export
                     .OrderBy(p => p.Key)
                     .Select(p => new { Name = p.Key, UPCCode = p.FirstOrDefault(p => p.UPCCode != "")?.UPCCode ?? "", Count = p.Count() })
                     .ToArray();
-                //string ingredientAlls = String.Join("\r\n", ingreGroups.Select(p => p.Name));
+                string ingredientAlls = String.Join("\r\n", allIngredientGroups.Select(p => p.Name));
 
                 var allQtyGroups = cocktailRecipes
                     .SelectMany(p => p.Ingredients)
@@ -60,7 +60,6 @@ namespace recipe_export
                     .ToArray();
 
                 string allQtys = String.Join("\r\n", allQtyGroups.Select(p => p.Name));
-
 
                 long t = DateTime.Now.Ticks;
 
