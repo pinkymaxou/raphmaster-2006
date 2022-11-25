@@ -530,5 +530,28 @@
         "is_garnish": true
       }
     ]
+  },
+  {
+    "name": "Boulevardier",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Bourbon",
+        "qty": "1 1/4 oz"
+      },
+      {
+        "name": "Campari",
+        "qty": "1 oz"
+      },
+      {
+        "name": "Sweet vermouth",
+        "qty": "1 oz"
+      },
+      {
+        "name": "orange twist",
+        "qty": "1"
+      }
+    ]
   }
 ]

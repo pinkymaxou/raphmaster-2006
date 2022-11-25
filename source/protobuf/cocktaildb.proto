@@ -32,7 +32,7 @@ message Recipe
 {
 	uint32 ID = 1;
 	string name = 2;
-	string imgfile = 3;
+	string imgfile = 7;
 	bool is_cocktail = 5;
 	repeated RecipeStep recipe_steps = 6;
 }
