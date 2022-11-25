@@ -10,18 +10,28 @@
 #endif
 
 /* Enum definitions */
+typedef enum _cocktaildb_EIngredientType {
+    cocktaildb_EIngredientType_alcohol = 0,
+    cocktaildb_EIngredientType_garnish = 1
+} cocktaildb_EIngredientType;
+
+typedef enum _cocktaildb_ELanguage {
+    cocktaildb_ELanguage_english = 0,
+    cocktaildb_ELanguage_french = 1
+} cocktaildb_ELanguage;
+
 typedef enum _cocktaildb_EQtyType {
-    cocktaildb_EQtyType_None = 0, /* When unit doesn't apply */
-    cocktaildb_EQtyType_Unitary = 1, /* Counter by round number */
-    cocktaildb_EQtyType_LiquidML = 2, /* Milliliter */
-    cocktaildb_EQtyType_Oz = 3, /* Ounce */
-    cocktaildb_EQtyType_Cup = 4, /* Cup */
-    cocktaildb_EQtyType_Pinch = 6, /* Fingertip quantity */
-    cocktaildb_EQtyType_Wheel = 7, /* Basically a slice of a fruit */
-    cocktaildb_EQtyType_Teaspoon = 8, /* 4.5 ml (1/6 oz) */
-    cocktaildb_EQtyType_Tablespoon = 9, /* 14 ml (1/2 oz) */
-    cocktaildb_EQtyType_Dash = 10, /* 1 ml */
-    cocktaildb_EQtyType_Drop = 11 /* One drop */
+    cocktaildb_EQtyType_none = 0, /* When unit doesn't apply */
+    cocktaildb_EQtyType_unitary = 1, /* Counter by round number */
+    cocktaildb_EQtyType_liquidML = 2, /* Milliliter */
+    cocktaildb_EQtyType_oz = 3, /* Ounce */
+    cocktaildb_EQtyType_cup = 4, /* Cup */
+    cocktaildb_EQtyType_pinch = 6, /* Fingertip quantity */
+    cocktaildb_EQtyType_wheel = 7, /* Basically a slice of a fruit */
+    cocktaildb_EQtyType_teaspoon = 8, /* 4.5 ml (1/6 oz) */
+    cocktaildb_EQtyType_tablespoon = 9, /* 14 ml (1/2 oz) */
+    cocktaildb_EQtyType_dash = 10, /* 1 ml */
+    cocktaildb_EQtyType_drop = 11 /* One drop */
 } cocktaildb_EQtyType;
 
 /* Struct definitions */
@@ -35,6 +45,7 @@ typedef struct _cocktaildb_Ingredient {
     pb_size_t product_codes_count;
     cocktaildb_ProductCode product_codes[4];
     uint32_t recipe_id; /* 0 = null */
+    cocktaildb_EIngredientType ingredient_type;
 } cocktaildb_Ingredient;
 
 typedef struct _cocktaildb_Qty {
@@ -80,11 +91,20 @@ typedef struct _cocktaildb_MetaDataFile {
 
 
 /* Helper constants for enums */
-#define _cocktaildb_EQtyType_MIN cocktaildb_EQtyType_None
-#define _cocktaildb_EQtyType_MAX cocktaildb_EQtyType_Drop
-#define _cocktaildb_EQtyType_ARRAYSIZE ((cocktaildb_EQtyType)(cocktaildb_EQtyType_Drop+1))
+#define _cocktaildb_EIngredientType_MIN cocktaildb_EIngredientType_alcohol
+#define _cocktaildb_EIngredientType_MAX cocktaildb_EIngredientType_garnish
+#define _cocktaildb_EIngredientType_ARRAYSIZE ((cocktaildb_EIngredientType)(cocktaildb_EIngredientType_garnish+1))
+
+#define _cocktaildb_ELanguage_MIN cocktaildb_ELanguage_english
+#define _cocktaildb_ELanguage_MAX cocktaildb_ELanguage_french
+#define _cocktaildb_ELanguage_ARRAYSIZE ((cocktaildb_ELanguage)(cocktaildb_ELanguage_french+1))
+
+#define _cocktaildb_EQtyType_MIN cocktaildb_EQtyType_none
+#define _cocktaildb_EQtyType_MAX cocktaildb_EQtyType_drop
+#define _cocktaildb_EQtyType_ARRAYSIZE ((cocktaildb_EQtyType)(cocktaildb_EQtyType_drop+1))
 
 
+#define cocktaildb_Ingredient_ingredient_type_ENUMTYPE cocktaildb_EIngredientType
 
 
 #define cocktaildb_Qty_type_ENUMTYPE cocktaildb_EQtyType
@@ -101,7 +121,7 @@ extern "C" {
 
 /* Initializer values for message structs */
 #define cocktaildb_ProductCode_init_default      {""}
-#define cocktaildb_Ingredient_init_default       {0, "", 0, {cocktaildb_ProductCode_init_default, cocktaildb_ProductCode_init_default, cocktaildb_ProductCode_init_default, cocktaildb_ProductCode_init_default}, 0}
+#define cocktaildb_Ingredient_init_default       {0, "", 0, {cocktaildb_ProductCode_init_default, cocktaildb_ProductCode_init_default, cocktaildb_ProductCode_init_default, cocktaildb_ProductCode_init_default}, 0, _cocktaildb_EIngredientType_MIN}
 #define cocktaildb_Recipe_init_default           {0, "", {{NULL}, NULL}, 0, 0, {cocktaildb_RecipeStep_init_default, cocktaildb_RecipeStep_init_default, cocktaildb_RecipeStep_init_default, cocktaildb_RecipeStep_init_default, cocktaildb_RecipeStep_init_default, cocktaildb_RecipeStep_init_default, cocktaildb_RecipeStep_init_default, cocktaildb_RecipeStep_init_default, cocktaildb_RecipeStep_init_default, cocktaildb_RecipeStep_init_default, cocktaildb_RecipeStep_init_default, cocktaildb_RecipeStep_init_default, cocktaildb_RecipeStep_init_default, cocktaildb_RecipeStep_init_default, cocktaildb_RecipeStep_init_default}}
 #define cocktaildb_Qty_init_default              {0, _cocktaildb_EQtyType_MIN}
 #define cocktaildb_RecipeStep_init_default       {0, false, cocktaildb_Qty_init_default}
@@ -110,7 +130,7 @@ extern "C" {
 #define cocktaildb_Equivalence_init_default      {0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 0}
 #define cocktaildb_MetaDataFile_init_default     {0, {cocktaildb_Equivalence_init_default, cocktaildb_Equivalence_init_default, cocktaildb_Equivalence_init_default, cocktaildb_Equivalence_init_default, cocktaildb_Equivalence_init_default, cocktaildb_Equivalence_init_default, cocktaildb_Equivalence_init_default, cocktaildb_Equivalence_init_default, cocktaildb_Equivalence_init_default, cocktaildb_Equivalence_init_default, cocktaildb_Equivalence_init_default, cocktaildb_Equivalence_init_default, cocktaildb_Equivalence_init_default, cocktaildb_Equivalence_init_default, cocktaildb_Equivalence_init_default, cocktaildb_Equivalence_init_default, cocktaildb_Equivalence_init_default, cocktaildb_Equivalence_init_default, cocktaildb_Equivalence_init_default, cocktaildb_Equivalence_init_default, cocktaildb_Equivalence_init_default, cocktaildb_Equivalence_init_default, cocktaildb_Equivalence_init_default, cocktaildb_Equivalence_init_default, cocktaildb_Equivalence_init_default, cocktaildb_Equivalence_init_default, cocktaildb_Equivalence_init_default, cocktaildb_Equivalence_init_default, cocktaildb_Equivalence_init_default, cocktaildb_Equivalence_init_default, cocktaildb_Equivalence_init_default, cocktaildb_Equivalence_init_default, cocktaildb_Equivalence_init_default, cocktaildb_Equivalence_init_default, cocktaildb_Equivalence_init_default, cocktaildb_Equivalence_init_default, cocktaildb_Equivalence_init_default, cocktaildb_Equivalence_init_default, cocktaildb_Equivalence_init_default, cocktaildb_Equivalence_init_default, cocktaildb_Equivalence_init_default, cocktaildb_Equivalence_init_default, cocktaildb_Equivalence_init_default, cocktaildb_Equivalence_init_default, cocktaildb_Equivalence_init_default, cocktaildb_Equivalence_init_default, cocktaildb_Equivalence_init_default, cocktaildb_Equivalence_init_default, cocktaildb_Equivalence_init_default, cocktaildb_Equivalence_init_default}}
 #define cocktaildb_ProductCode_init_zero         {""}
-#define cocktaildb_Ingredient_init_zero          {0, "", 0, {cocktaildb_ProductCode_init_zero, cocktaildb_ProductCode_init_zero, cocktaildb_ProductCode_init_zero, cocktaildb_ProductCode_init_zero}, 0}
+#define cocktaildb_Ingredient_init_zero          {0, "", 0, {cocktaildb_ProductCode_init_zero, cocktaildb_ProductCode_init_zero, cocktaildb_ProductCode_init_zero, cocktaildb_ProductCode_init_zero}, 0, _cocktaildb_EIngredientType_MIN}
 #define cocktaildb_Recipe_init_zero              {0, "", {{NULL}, NULL}, 0, 0, {cocktaildb_RecipeStep_init_zero, cocktaildb_RecipeStep_init_zero, cocktaildb_RecipeStep_init_zero, cocktaildb_RecipeStep_init_zero, cocktaildb_RecipeStep_init_zero, cocktaildb_RecipeStep_init_zero, cocktaildb_RecipeStep_init_zero, cocktaildb_RecipeStep_init_zero, cocktaildb_RecipeStep_init_zero, cocktaildb_RecipeStep_init_zero, cocktaildb_RecipeStep_init_zero, cocktaildb_RecipeStep_init_zero, cocktaildb_RecipeStep_init_zero, cocktaildb_RecipeStep_init_zero, cocktaildb_RecipeStep_init_zero}}
 #define cocktaildb_Qty_init_zero                 {0, _cocktaildb_EQtyType_MIN}
 #define cocktaildb_RecipeStep_init_zero          {0, false, cocktaildb_Qty_init_zero}
@@ -125,6 +145,7 @@ extern "C" {
 #define cocktaildb_Ingredient_name_tag           2
 #define cocktaildb_Ingredient_product_codes_tag  3
 #define cocktaildb_Ingredient_recipe_id_tag      4
+#define cocktaildb_Ingredient_ingredient_type_tag 5
 #define cocktaildb_Qty_value_tag                 1
 #define cocktaildb_Qty_type_tag                  2
 #define cocktaildb_RecipeStep_ingredient_id_tag  2
@@ -150,7 +171,8 @@ X(a, STATIC,   SINGULAR, STRING,   upc_code,          1)
 X(a, STATIC,   SINGULAR, UINT32,   id,                1) \
 X(a, STATIC,   SINGULAR, STRING,   name,              2) \
 X(a, STATIC,   REPEATED, MESSAGE,  product_codes,     3) \
-X(a, STATIC,   SINGULAR, UINT32,   recipe_id,         4)
+X(a, STATIC,   SINGULAR, UINT32,   recipe_id,         4) \
+X(a, STATIC,   SINGULAR, UENUM,    ingredient_type,   5)
 #define cocktaildb_Ingredient_CALLBACK NULL
 #define cocktaildb_Ingredient_DEFAULT NULL
 #define cocktaildb_Ingredient_product_codes_MSGTYPE cocktaildb_ProductCode
@@ -227,8 +249,8 @@ extern const pb_msgdesc_t cocktaildb_MetaDataFile_msg;
 /* cocktaildb_Recipe_size depends on runtime parameters */
 /* cocktaildb_RecipeFile_size depends on runtime parameters */
 #define cocktaildb_Equivalence_size              125
-#define cocktaildb_IngredientFile_size           37000
-#define cocktaildb_Ingredient_size               145
+#define cocktaildb_IngredientFile_size           37500
+#define cocktaildb_Ingredient_size               147
 #define cocktaildb_MetaDataFile_size             6350
 #define cocktaildb_ProductCode_size              19
 #define cocktaildb_Qty_size                      7

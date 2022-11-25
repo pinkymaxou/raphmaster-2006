@@ -7,7 +7,7 @@
 #include <sys/stat.h>
 #include <dirent.h>
 #include "esp_app_format.h"
-#include "assets/EmbeddedFiles.h"
+#include "assets/EmbedWWW.h"
 #include "esp_ota_ops.h"
 #include "cJSON.h"
 #include "Settings.h"
@@ -37,7 +37,7 @@ static esp_err_t set_content_type_from_file(httpd_req_t *req, const char *filena
 
 static esp_err_t file_otauploadpost_handler(httpd_req_t *req);
 
-static const EF_SFile* GetFile(const char* strFilename);
+static const EFEMBEDWWW_SFile* GetFile(const char* strFilename);
 
 static char* GetSysInfo();
 static void ToHexString(char *dstHexString, const uint8_t* data, uint8_t len);
@@ -116,7 +116,7 @@ void WEBSERVER_Init()
 /* An HTTP GET handler */
 static esp_err_t file_get_handler(httpd_req_t *req)
 {
-    const EF_SFile* pFile = NULL;
+    const EFEMBEDWWW_SFile* pFile = NULL;
 
     ESP_LOGI(TAG, "Opening file uri: %s", req->uri);
 
@@ -387,11 +387,11 @@ static esp_err_t set_content_type_from_file(httpd_req_t *req, const char *filena
     return httpd_resp_set_type(req, "text/plain");
 }
 
-static const EF_SFile* GetFile(const char* strFilename)
+static const EFEMBEDWWW_SFile* GetFile(const char* strFilename)
 {
-    for(int i = 0; i < EF_EFILE_COUNT; i++)
+    for(int i = 0; i < EFEMBEDWWW_EFILE_COUNT; i++)
     {
-        const EF_SFile* pFile = &EF_g_sFiles[i];
+        const EFEMBEDWWW_SFile* pFile = &EFEMBEDWWW_g_sFiles[i];
         if (strcmp(pFile->strFilename, strFilename) == 0)
             return pFile;
     }

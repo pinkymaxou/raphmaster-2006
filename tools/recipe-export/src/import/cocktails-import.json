@@ -27,7 +27,7 @@
         "qty": "50 ml"
       },
       {
-        "name": "Grenadine Syrup",
+        "name": "Grenadine syrup",
         "qty": "25 ml"
       }
     ]
@@ -78,20 +78,24 @@
         "qty": "1 pinch"
       },
       {
-        "name": "Garnish: parsley sprig",
-        "qty": "1"
+        "name": "parsley sprig",
+        "qty": "1",
+        "is_garnish": true
       },
       {
-        "name": "Garnish: green olives",
-        "qty": "1"
+        "name": "green olives",
+        "qty": "1",
+        "is_garnish": true
       },
       {
-        "name": "Garnish: lime wedge",
-        "qty": "1"
+        "name": "Lime wedge",
+        "qty": "1",
+        "is_garnish": true
       },
       {
-        "name": "Garnish: celery stalk",
-        "qty": "1"
+        "name": "celery stalk",
+        "qty": "1",
+        "is_garnish": true
       }
     ]
   },
@@ -220,8 +224,9 @@
         "qty": "1 dash"
       },
       {
-        "name": "Garnish: Lemon twist",
-        "qty": ""
+        "name": "Lemon twist",
+        "qty": "1",
+        "is_garnish": true
       }
     ]
   },
@@ -243,8 +248,9 @@
         "qty": "3/4 oz"
       },
       {
-        "name": "Garnish: Lime twist",
-        "qty": ""
+        "name": "Lime twist",
+        "qty": "1",
+        "is_garnish": true
       }
     ]
   },
@@ -270,12 +276,14 @@
         "qty": "1/2 oz"
       },
       {
-        "name": "Garnish: Lime wheel",
-        "qty": ""
+        "name": "Lime wheel",
+        "qty": "1",
+        "is_garnish": true
       },
       {
-        "name": "Garnish: Kosher salt",
-        "qty": ""
+        "name": "Kosher salt",
+        "qty": "1",
+        "is_garnish": true
       }
     ]
   },
@@ -301,12 +309,14 @@
         "qty": ""
       },
       {
-        "name": "Garnish: Lemon wheel",
-        "qty": ""
+        "name": "Lemon wheel",
+        "qty": "1",
+        "is_garnish": true
       },
       {
-        "name": "Garnish: Maraschino cherry",
-        "qty": ""
+        "name": "Maraschino cherry",
+        "qty": "1",
+        "is_garnish": true
       }
     ]
   },
@@ -337,12 +347,14 @@
         "qty": "1/2 oz"
       },
       {
-        "name": "Garnish: Lemon twist",
-        "qty": ""
+        "name": "Lemon twist",
+        "qty": "",
+        "is_garnish": true
       },
       {
-        "name": "Garnish: 2 brandied cherries",
-        "qty": ""
+        "name": "brandied cherries",
+        "qty": "2",
+        "is_garnish": true
       }
     ]
   },
@@ -364,8 +376,9 @@
         "qty": "1 oz"
       },
       {
-        "name": "Garnish: Orange slice",
-        "qty": ""
+        "name": "Orange slice",
+        "qty": "",
+        "is_garnish": true
       }
     ]
   },
@@ -403,12 +416,14 @@
         "qty": "1/2 oz"
       },
       {
-        "name": "Garnish: lime wedge",
-        "qty": ""
+        "name": "Lime wedge",
+        "qty": "1",
+        "is_garnish": true
       },
       {
-        "name": "Garnish: Sprig of mint",
-        "qty": ""
+        "name": "Sprig of mint",
+        "qty": "1",
+        "is_garnish": true
       }
     ]
   },
@@ -434,12 +449,14 @@
         "qty": "1/2"
       },
       {
-        "name": "Garnish: Orange slice",
-        "qty": ""
+        "name": "Orange slice",
+        "qty": "1",
+        "is_garnish": true
       },
       {
-        "name": "Garnish: Cherry",
-        "qty": ""
+        "name": "Cherry",
+        "qty": "1",
+        "is_garnish": true
       }
     ]
   },
@@ -508,8 +525,9 @@
         "qty": "2 dashes"
       },
       {
-        "name": "Garnish: Cherry",
-        "qty": "2 dashes"
+        "name": "Cherry",
+        "qty": "2 dashes",
+        "is_garnish": true
       }
     ]
   }

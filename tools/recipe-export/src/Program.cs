@@ -36,8 +36,9 @@ namespace recipe_export
                         {
                             Name = Convert.ToString(ingredient.name ?? ""),
                             UPCCode = Convert.ToString(ingredient.upc_code ?? ""),
+                            IsGarnish = Convert.ToBoolean(ingredient.is_garnish),
                             Qty = ingredient.qty
-                        });
+                        }); ;
                     }
 
                     cocktailRecipes.Add(newCR);
@@ -48,7 +49,7 @@ namespace recipe_export
                     .SelectMany(p => p.Ingredients)
                     .GroupBy(p => p.Name)
                     .OrderBy(p => p.Key)
-                    .Select(p => new { Name = p.Key, UPCCode = p.FirstOrDefault(p => p.UPCCode != "")?.UPCCode ?? "", Count = p.Count() })
+                    .Select(p => new { Name = p.Key, UPCCode = p.FirstOrDefault(p => p.UPCCode != "")?.UPCCode ?? "", IsGarnish = p.Any(p => p.IsGarnish), Count = p.Count() })
                     .ToArray();
                 string ingredientAlls = String.Join("\r\n", allIngredientGroups.Select(p => p.Name));
 
@@ -77,6 +78,7 @@ namespace recipe_export
                         {
                             Id = ingredientID,
                             Name = ingreGroup.Name,
+                            IngredientType = ingreGroup.IsGarnish ? Cocktaildb.EIngredientType.Garnish : Cocktaildb.EIngredientType.Alcohol
                         };
 
                         if (!String.IsNullOrEmpty(ingreGroup.UPCCode))

@@ -7,12 +7,25 @@ message ProductCode
 	string upc_code = 1;
 }
 
+enum EIngredientType
+{
+	alcohol = 0;
+	garnish = 1;
+}
+
+enum ELanguage
+{
+	english = 0;
+	french = 1;
+}
+
 message Ingredient
 {
 	uint32 id = 1;			// do not accept 0 as ID
 	string name = 2;
 	repeated ProductCode product_codes = 3;
 	uint32 recipe_id = 4;	// 0 = null
+	EIngredientType ingredient_type = 5;
 }
 
 message Recipe
@@ -26,19 +39,19 @@ message Recipe
 
 enum EQtyType
 {
-	None = 0;		// When unit doesn't apply
-	Unitary = 1; 	// Counter by round number
+	none = 0;		// When unit doesn't apply
+	unitary = 1; 	// Counter by round number
 	
-	LiquidML = 2;	// Milliliter
-	Oz = 3;			// Ounce
-	Cup = 4;		// Cup
+	liquidML = 2;	// Milliliter
+	oz = 3;			// Ounce
+	cup = 4;		// Cup
 	
-	Pinch = 6;		// Fingertip quantity
-	Wheel = 7;		// Basically a slice of a fruit
-	Teaspoon = 8;	// 4.5 ml (1/6 oz)
-	Tablespoon = 9;	// 14 ml (1/2 oz)
-	Dash = 10;		// 1 ml
-	Drop = 11;		// One drop
+	pinch = 6;		// Fingertip quantity
+	wheel = 7;		// Basically a slice of a fruit
+	teaspoon = 8;	// 4.5 ml (1/6 oz)
+	tablespoon = 9;	// 14 ml (1/2 oz)
+	dash = 10;		// 1 ml
+	drop = 11;		// One drop
 }
 
 message Qty
