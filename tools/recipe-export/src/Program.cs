@@ -196,8 +196,7 @@ namespace recipe_export
                                 }
                                 else if (unitText == "")
                                 {
-                                    newQty.Value = 0;
-                                    newQty.Type = Cocktaildb.EQtyType.None;
+                                    newQty.Type = Cocktaildb.EQtyType.Unitary;
                                 }
                                 else
                                     throw new Exception("Unknown unit");
