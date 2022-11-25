@@ -1,0 +1,559 @@
+﻿[
+  {
+    "name": "Sex on the beach",
+    "img": "sex-on-the-beach.jpg",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Ice",
+        "qty": ""
+      },
+      {
+        "name": "Vodka",
+        "upc_code": "00627987202564",
+        "qty": "50 ml"
+      },
+      {
+        "name": "Peach snapps",
+        "upc_code": "00088004400545",
+        "qty": "25 ml"
+      },
+      {
+        "name": "Orange wedge",
+        "qty": "2",
+        "is_garnish": true
+      },
+      {
+        "name": "Cranberry juice",
+        "qty": "50 ml"
+      },
+      {
+        "name": "Grenadine syrup",
+        "qty": "25 ml"
+      }
+    ]
+  },
+  {
+    "name": "Bloody Mary",
+    "img": "bloody-mary.jpg",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Celery salt",
+        "qty": "1",
+        "is_garnish": true
+      },
+      {
+        "name": "Lemon wedge",
+        "qty": "1",
+        "is_garnish": true
+      },
+      {
+        "name": "Lime wedge",
+        "qty": "1",
+        "is_garnish": true
+      },
+      {
+        "name": "Vodka",
+        "qty": "2 oz"
+      },
+      {
+        "name": "Tomato Juice",
+        "qty": "4 oz"
+      },
+      {
+        "name": "Prepared Horseradish",
+        "qty": "2 tsp"
+      },
+      {
+        "name": "Tabasco sauce",
+        "qty": "2 dashes"
+      },
+      {
+        "name": "Worcestershire sauce",
+        "qty": "2 dashes"
+      },
+      {
+        "name": "Ground black pepper",
+        "qty": "1 pinch"
+      },
+      {
+        "name": "Smoked paprika",
+        "qty": "1 pinch"
+      },
+      {
+        "name": "parsley sprig",
+        "qty": "1",
+        "is_garnish": true
+      },
+      {
+        "name": "green olives",
+        "qty": "1",
+        "is_garnish": true
+      },
+      {
+        "name": "celery stalk",
+        "qty": "1",
+        "is_garnish": true
+      }
+    ]
+  },
+  {
+    "name": "Pornstar",
+    "img": "pornstar.jpg",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Ice",
+        "qty": ""
+      },
+      {
+        "name": "Curaçao bleu",
+        "qty": "1/2 oz",
+        "upc_code": "03041311026096"
+      },
+      {
+        "name": "Sour Puss",
+        "qty": "1/2 oz",
+        "upc_code": "00087116035003"
+      },
+      {
+        "name": "7-up",
+        "qty": ""
+      }
+    ]
+  },
+  {
+    "name": "Grasshopper",
+    "img": "grasshopper.jpg",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Creme de menthe",
+        "qty": "3/4 oz",
+        "upc_code": "00854745000920"
+      },
+      {
+        "name": "White creme de cacao",
+        "qty": "3/4 oz",
+        "upc_code": "03292543720218"
+      },
+      {
+        "name": "Heavy cream",
+        "qty": "1/4 oz"
+      },
+      {
+        "name": "Ice",
+        "qty": "1 cup"
+      }
+    ]
+  },
+  {
+    "name": "Skittle",
+    "img": "skittle.jpg",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Vodka",
+        "qty": "1 oz"
+      },
+      {
+        "name": "Sweet and sour mix",
+        "qty": "1 oz"
+      },
+      {
+        "name": "Midori",
+        "qty": "1 oz",
+        "upc_code": "00088857035628"
+      },
+      {
+        "name": "Southern Comfort",
+        "qty": "1 oz",
+        "upc_code": "00088544016770"
+      },
+      {
+        "name": "Pineapple juice",
+        "qty": "1 oz"
+      }
+    ]
+  },
+  {
+    "name": "Aperol Spritz",
+    "img": "aperol_spritz.jpg",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Sparkling Wine",
+        "qty": "3 oz"
+      },
+      {
+        "name": "Aperol",
+        "qty": "2 oz",
+        "upc_code": "00086785900001"
+      },
+      {
+        "name": "Soda club",
+        "qty": "3/4 oz"
+      },
+      {
+        "name": "Ice",
+        "qty": "1"
+      },
+      {
+        "name": "Orange wedge",
+        "qty": "1",
+        "is_garnish": true
+      }
+    ]
+  },
+  {
+    "name": "Martini",
+    "img": "martini.jpg",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Gin",
+        "qty": "2 1/2 oz"
+      },
+      {
+        "name": "Dry vermouth",
+        "qty": "1/2 oz"
+      },
+      {
+        "name": "Orange",
+        "qty": "1 dash"
+      },
+      {
+        "name": "Lemon twist",
+        "qty": "1",
+        "is_garnish": true
+      }
+    ]
+  },
+  {
+    "name": "Daiquiri",
+    "img": "daiquiri.jpg",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "White rum",
+        "qty": "2 oz"
+      },
+      {
+        "name": "Lime juice",
+        "qty": "1 oz"
+      },
+      {
+        "name": "Demerara sugar syrup",
+        "qty": "3/4 oz"
+      },
+      {
+        "name": "Lime twist",
+        "qty": "1",
+        "is_garnish": true
+      }
+    ]
+  },
+  {
+    "name": "Margarita",
+    "img": "margarita.jpg",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Tequila",
+        "qty": "2 oz"
+      },
+      {
+        "name": "Orange liquor",
+        "qty": "1/2 oz"
+      },
+      {
+        "name": "Lime juice",
+        "qty": "1 oz"
+      },
+      {
+        "name": "Agave syrup",
+        "qty": "1/2 oz"
+      },
+      {
+        "name": "Lime wheel",
+        "qty": "1",
+        "is_garnish": true
+      },
+      {
+        "name": "Kosher salt",
+        "qty": "1",
+        "is_garnish": true
+      }
+    ]
+  },
+  {
+    "name": "Tom Collins",
+    "img": "tom-collins.jpg",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Londo dry gin",
+        "qty": "2 oz"
+      },
+      {
+        "name": "Lemon juice",
+        "qty": "1 oz"
+      },
+      {
+        "name": "Simple syrup",
+        "qty": "1/2 oz"
+      },
+      {
+        "name": "Club soda",
+        "qty": ""
+      },
+      {
+        "name": "Lemon wheel",
+        "qty": "1",
+        "is_garnish": true
+      },
+      {
+        "name": "Maraschino cherry",
+        "qty": "1",
+        "is_garnish": true
+      }
+    ]
+  },
+  {
+    "name": "Amaretto Sour",
+    "img": "amaretto-sour.jpg",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Amaretto liquor",
+        "qty": "1 1/2 oz",
+        "upc_code": "06279871658144"
+      },
+      {
+        "name": "Cask-proof bourbon",
+        "qty": "3/4 oz"
+      },
+      {
+        "name": "Lemon juice",
+        "qty": "1 oz"
+      },
+      {
+        "name": "Simple syrup",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Egg white",
+        "qty": "1/2"
+      },
+      {
+        "name": "Lemon twist",
+        "qty": "1",
+        "is_garnish": true
+      },
+      {
+        "name": "brandied cherries",
+        "qty": "2",
+        "is_garnish": true
+      }
+    ]
+  },
+  {
+    "name": "Negroni",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Gin",
+        "qty": "1 oz"
+      },
+      {
+        "name": "Campari",
+        "qty": "1 oz"
+      },
+      {
+        "name": "Sweet red vermouth",
+        "qty": "1 oz"
+      },
+      {
+        "name": "Orange slice",
+        "qty": "1",
+        "is_garnish": true
+      }
+    ]
+  },
+  {
+    "name": "Mojito",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "White rum",
+        "qty": "2 oz"
+      },
+      {
+        "name": "Lime juice",
+        "qty": "1/2 oz"
+      },
+      {
+        "name": "Sugar",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Mint leaves",
+        "qty": "3",
+        "is_garnish": true
+      },
+      {
+        "name": "Ice",
+        "qty": ""
+      },
+      {
+        "name": "Club soda",
+        "qty": ""
+      },
+      {
+        "name": "Simple syrup",
+        "qty": "1/2 oz"
+      },
+      {
+        "name": "Lime wedge",
+        "qty": "1",
+        "is_garnish": true
+      },
+      {
+        "name": "Sprig of mint",
+        "qty": "1",
+        "is_garnish": true
+      }
+    ]
+  },
+  {
+    "name": "Whiskey Sour",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Bourbon",
+        "qty": "2 oz"
+      },
+      {
+        "name": "Lemon juice",
+        "qty": "3/4 oz"
+      },
+      {
+        "name": "Simple syrup",
+        "qty": "3/4 oz"
+      },
+      {
+        "name": "Egg white",
+        "qty": "1/2"
+      },
+      {
+        "name": "Orange slice",
+        "qty": "1",
+        "is_garnish": true
+      },
+      {
+        "name": "Cherry",
+        "qty": "1",
+        "is_garnish": true
+      }
+    ]
+  },
+  {
+    "name": "Mai Tai",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Ice",
+        "qty": ""
+      },
+      {
+        "name": "Dark rum",
+        "qty": "1 oz"
+      },
+      {
+        "name": "Amber rum",
+        "qty": "1 oz"
+      },
+      {
+        "name": "Orange juice",
+        "qty": "2 tbsp"
+      },
+      {
+        "name": "Cointreau",
+        "qty": "1/2 oz"
+      },
+      {
+        "name": "Lime juice",
+        "qty": "1 tbsp"
+      },
+      {
+        "name": "Almond Extract",
+        "qty": "1 drop"
+      },
+      {
+        "name": "Granulated sugar",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Grenadine syrup",
+        "qty": "1 dash"
+      }
+    ]
+  },
+  {
+    "name": "Manhattan",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Rye whiskey",
+        "qty": "2 oz"
+      },
+      {
+        "name": "Ice",
+        "qty": ""
+      },
+      {
+        "name": "Italian vermouth",
+        "qty": "1 oz"
+      },
+      {
+        "name": "Angostura bitters",
+        "qty": "2 dashes"
+      },
+      {
+        "name": "Cherry",
+        "qty": "2 dashes",
+        "is_garnish": true
+      }
+    ]
+  },
+  {
+    "name": "Boulevardier",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Bourbon",
+        "qty": "1 1/4 oz"
+      },
+      {
+        "name": "Campari",
+        "qty": "1 oz"
+      },
+      {
+        "name": "Sweet vermouth",
+        "qty": "1 oz"
+      },
+      {
+        "name": "orange twist",
+        "qty": "1",
+        "is_garnish": true
+      }
+    ]
+  }
+]

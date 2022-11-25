@@ -1,5 +1,10 @@
 {
     "files.associations": {
-        "settings.h": "c"
+        "settings.h": "c",
+        "embedwww.h": "c",
+        "hardwaregpio.h": "c",
+        "cocktailexplorer.h": "c",
+        "cocktaildb.pb.h": "c",
+        "pb_decode.h": "c"
     }
 }

@@ -1,0 +1,15 @@
+# recipes.options
+cocktaildb.Ingredient.name  	max_size:48
+cocktaildb.Ingredient.product_codes	max_count:4
+
+cocktaildb.ProductCode.upc_code		max_size:18
+
+cocktaildb.Recipe.name      	max_size:50
+cocktaildb.Recipe.imgfile  		max_size:25
+cocktaildb.Recipe.recipe_steps  max_count:15
+
+cocktaildb.IngredientFile.entries  max_count:250
+cocktaildb.RecipeFile.entries      max_count:100
+
+cocktaildb.MetaDataFile.equivalences   max_count:50
+cocktaildb.Equivalence.ingredient_ids   max_count:20
