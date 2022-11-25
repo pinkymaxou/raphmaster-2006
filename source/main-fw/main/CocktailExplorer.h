@@ -1,0 +1,6 @@
+#ifndef _COCKTAILEXPLORER_H_
+#define _COCKTAILEXPLORER_H_
+
+void COCKTAILEXPLORER_Init();
+
+#endif

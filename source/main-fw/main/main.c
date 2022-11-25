@@ -20,6 +20,7 @@
 #include "FWConfig.h"
 #include "WebServer.h"
 #include "Settings.h"
+#include "CocktailExplorer.h"
 
 #define TAG "main"
 
@@ -182,6 +183,8 @@ void app_main(void)
     SETTINGS_Init();
     
     HARDWAREGPIO_Init();
+
+    COCKTAILEXPLORER_Init();
 
     wifi_init();
     

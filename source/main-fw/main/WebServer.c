@@ -24,6 +24,8 @@
 #define API_GETSETTINGSJSON_URI "/api/getsettingsjson"
 #define API_POSTSETTINGSJSON_URI "/api/setsettingsjson"
 
+#define API_GETCOCKTAILSJSON_URI "/api/getcocktails"
+
 #define API_GETSYSINFOJSON_URI "/api/getsysinfo"
 
 #define ACTION_POST_REBOOT "/action/reboot"
@@ -222,7 +224,15 @@ static esp_err_t api_get_handler(httpd_req_t *req)
             httpd_resp_send_err(req, HTTPD_500_INTERNAL_SERVER_ERROR, "Unable to send data");
             goto END;
         }
-    }
+    }/*
+    else if (strcmp(req->uri, API_GETCOCKTAILSJSON_URI) == 0)
+    {
+        if (pExportJSON == NULL || httpd_resp_send_chunk(req, pExportJSON, strlen(pExportJSON)) != ESP_OK)
+        {
+            httpd_resp_send_err(req, HTTPD_500_INTERNAL_SERVER_ERROR, "Unable to send data");
+            goto END;
+        }
+    }*/
     else
     {
         ESP_LOGE(TAG, "api_get_handler, url: %s", req->uri);
