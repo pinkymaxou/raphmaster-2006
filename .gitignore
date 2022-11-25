@@ -10,3 +10,5 @@
 /tools/recipe-export/src/bin
 source/main-fw/main/assets/EmbedCocktailDb.bin
 source/main-fw/main/assets/EmbedWWW.bin
+source/main-fw/main/assets/EmbedCocktailDb.txt
+source/main-fw/main/assets/EmbedWWW.txt
