@@ -31,30 +31,31 @@ namespace Cocktaildb {
             "ZGllbnRfdHlwZRgFIAEoDjIbLmNvY2t0YWlsZGIuRUluZ3JlZGllbnRUeXBl",
             "InYKBlJlY2lwZRIKCgJJRBgBIAEoDRIMCgRuYW1lGAIgASgJEg8KB2ltZ2Zp",
             "bGUYByABKAkSEwoLaXNfY29ja3RhaWwYBSABKAgSLAoMcmVjaXBlX3N0ZXBz",
-            "GAYgAygLMhYuY29ja3RhaWxkYi5SZWNpcGVTdGVwIjgKA1F0eRINCgV2YWx1",
-            "ZRgBIAEoAhIiCgR0eXBlGAIgASgOMhQuY29ja3RhaWxkYi5FUXR5VHlwZSJB",
-            "CgpSZWNpcGVTdGVwEhUKDWluZ3JlZGllbnRfaWQYAiABKA0SHAoDcXR5GAMg",
-            "ASgLMg8uY29ja3RhaWxkYi5RdHkiOQoOSW5ncmVkaWVudEZpbGUSJwoHZW50",
-            "cmllcxgBIAMoCzIWLmNvY2t0YWlsZGIuSW5ncmVkaWVudCIxCgpSZWNpcGVG",
-            "aWxlEiMKB2VudHJpZXMYASADKAsyEi5jb2NrdGFpbGRiLlJlY2lwZSI6CgtF",
-            "cXVpdmFsZW5jZRIWCg5pbmdyZWRpZW50X2lkcxgBIAMoDRITCgtlcXVpdmFs",
-            "ZW5jZRgCIAEoAiI9CgxNZXRhRGF0YUZpbGUSLQoMZXF1aXZhbGVuY2VzGAEg",
-            "AygLMhcuY29ja3RhaWxkYi5FcXVpdmFsZW5jZSp8Cg9FSW5ncmVkaWVudFR5",
-            "cGUSDwoLdW5zcGVjaWZpZWQQABISCg5saXF1aWRfYWxjb2hvbBABEgsKB2dh",
-            "cm5pc2gQAhIRCg1saXF1aWRfZmlsbGVyEAMSBwoDaWNlEAQSCgoGcG93ZGVy",
-            "EAUSDwoLZW11bHNpZnlpbmcQBiokCglFTGFuZ3VhZ2USCwoHZW5nbGlzaBAA",
-            "EgoKBmZyZW5jaBABKn0KCEVRdHlUeXBlEggKBG5vbmUQABILCgd1bml0YXJ5",
-            "EAESDAoIbGlxdWlkTUwQAhIGCgJvehADEgcKA2N1cBAEEgkKBXBpbmNoEAYS",
-            "DAoIdGVhc3Bvb24QCBIOCgp0YWJsZXNwb29uEAkSCAoEZGFzaBAKEggKBGRy",
-            "b3AQC2IGcHJvdG8z"));
+            "GAYgAygLMhYuY29ja3RhaWxkYi5SZWNpcGVTdGVwIjUKA1F0eRINCgV2YWx1",
+            "ZRgBIAEoAhIfCgR0eXBlGAIgASgOMhEuY29ja3RhaWxkYi5FVW5pdCJVCgpS",
+            "ZWNpcGVTdGVwEhUKDWluZ3JlZGllbnRfaWQYAiABKA0SHAoDcXR5GAMgASgL",
+            "Mg8uY29ja3RhaWxkYi5RdHkSEgoKaXNfZ2FybmlzaBgEIAEoCCI5Cg5Jbmdy",
+            "ZWRpZW50RmlsZRInCgdlbnRyaWVzGAEgAygLMhYuY29ja3RhaWxkYi5Jbmdy",
+            "ZWRpZW50IjEKClJlY2lwZUZpbGUSIwoHZW50cmllcxgBIAMoCzISLmNvY2t0",
+            "YWlsZGIuUmVjaXBlIjoKC0VxdWl2YWxlbmNlEhYKDmluZ3JlZGllbnRfaWRz",
+            "GAEgAygNEhMKC2VxdWl2YWxlbmNlGAIgASgCIj0KDE1ldGFEYXRhRmlsZRIt",
+            "CgxlcXVpdmFsZW5jZXMYASADKAsyFy5jb2NrdGFpbGRiLkVxdWl2YWxlbmNl",
+            "Kq0BCg9FSW5ncmVkaWVudFR5cGUSDwoLdW5zcGVjaWZpZWQQABISCg5saXF1",
+            "aWRfYWxjb2hvbBABEhEKDXJlc2VydmVkXzB4MDIQAhIRCg1saXF1aWRfZmls",
+            "bGVyEAMSBwoDaWNlEAQSCgoGcG93ZGVyEAUSDwoLZW11bHNpZnlpbmcQBhIW",
+            "ChJmcnVpdF9vcl92ZWdldGFibGUQBxIRCg1sZWFmX29yX3NwcmlnEAgqJAoJ",
+            "RUxhbmd1YWdlEgsKB2VuZ2xpc2gQABIKCgZmcmVuY2gQASqAAQoFRVVuaXQS",
+            "CAoEbm9uZRAAEgsKB3VuaXRhcnkQARIMCghsaXF1aWRNTBACEgwKCGxpcXVp",
+            "ZG96EAMSBwoDY3VwEAQSCQoFcGluY2gQBhIMCgh0ZWFzcG9vbhAIEg4KCnRh",
+            "Ymxlc3Bvb24QCRIICgRkYXNoEAoSCAoEZHJvcBALYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
-          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Cocktaildb.EIngredientType), typeof(global::Cocktaildb.ELanguage), typeof(global::Cocktaildb.EQtyType), }, new pbr::GeneratedClrTypeInfo[] {
+          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Cocktaildb.EIngredientType), typeof(global::Cocktaildb.ELanguage), typeof(global::Cocktaildb.EUnit), }, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Cocktaildb.ProductCode), global::Cocktaildb.ProductCode.Parser, new[]{ "UpcCode" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Cocktaildb.Ingredient), global::Cocktaildb.Ingredient.Parser, new[]{ "Id", "Name", "ProductCodes", "RecipeId", "IngredientType" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Cocktaildb.Recipe), global::Cocktaildb.Recipe.Parser, new[]{ "ID", "Name", "Imgfile", "IsCocktail", "RecipeSteps" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Cocktaildb.Qty), global::Cocktaildb.Qty.Parser, new[]{ "Value", "Type" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Cocktaildb.RecipeStep), global::Cocktaildb.RecipeStep.Parser, new[]{ "IngredientId", "Qty" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Cocktaildb.RecipeStep), global::Cocktaildb.RecipeStep.Parser, new[]{ "IngredientId", "Qty", "IsGarnish" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Cocktaildb.IngredientFile), global::Cocktaildb.IngredientFile.Parser, new[]{ "Entries" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Cocktaildb.RecipeFile), global::Cocktaildb.RecipeFile.Parser, new[]{ "Entries" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Cocktaildb.Equivalence), global::Cocktaildb.Equivalence.Parser, new[]{ "IngredientIds", "Equivalence_" }, null, null, null),
@@ -68,11 +69,13 @@ namespace Cocktaildb {
   public enum EIngredientType {
     [pbr::OriginalName("unspecified")] Unspecified = 0,
     [pbr::OriginalName("liquid_alcohol")] LiquidAlcohol = 1,
-    [pbr::OriginalName("garnish")] Garnish = 2,
+    [pbr::OriginalName("reserved_0x02")] Reserved0X02 = 2,
     [pbr::OriginalName("liquid_filler")] LiquidFiller = 3,
     [pbr::OriginalName("ice")] Ice = 4,
     [pbr::OriginalName("powder")] Powder = 5,
     [pbr::OriginalName("emulsifying")] Emulsifying = 6,
+    [pbr::OriginalName("fruit_or_vegetable")] FruitOrVegetable = 7,
+    [pbr::OriginalName("leaf_or_sprig")] LeafOrSprig = 8,
   }
 
   public enum ELanguage {
@@ -80,14 +83,11 @@ namespace Cocktaildb {
     [pbr::OriginalName("french")] French = 1,
   }
 
-  public enum EQtyType {
+  public enum EUnit {
     /// <summary>
     /// When unit doesn't apply
     /// </summary>
     [pbr::OriginalName("none")] None = 0,
-    /// <summary>
-    /// Counter by round number
-    /// </summary>
     [pbr::OriginalName("unitary")] Unitary = 1,
     /// <summary>
     /// Milliliter
@@ -96,7 +96,7 @@ namespace Cocktaildb {
     /// <summary>
     /// Ounce
     /// </summary>
-    [pbr::OriginalName("oz")] Oz = 3,
+    [pbr::OriginalName("liquidoz")] Liquidoz = 3,
     /// <summary>
     /// Cup
     /// </summary>
@@ -775,9 +775,9 @@ namespace Cocktaildb {
 
     /// <summary>Field number for the "type" field.</summary>
     public const int TypeFieldNumber = 2;
-    private global::Cocktaildb.EQtyType type_ = 0;
+    private global::Cocktaildb.EUnit type_ = 0;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Cocktaildb.EQtyType Type {
+    public global::Cocktaildb.EUnit Type {
       get { return type_; }
       set {
         type_ = value;
@@ -875,7 +875,7 @@ namespace Cocktaildb {
             break;
           }
           case 16: {
-            type_ = (global::Cocktaildb.EQtyType) input.ReadEnum();
+            type_ = (global::Cocktaildb.EUnit) input.ReadEnum();
             break;
           }
         }
@@ -911,6 +911,7 @@ namespace Cocktaildb {
     public RecipeStep(RecipeStep other) : this() {
       ingredientId_ = other.ingredientId_;
       qty_ = other.qty_ != null ? other.qty_.Clone() : null;
+      isGarnish_ = other.isGarnish_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -944,6 +945,17 @@ namespace Cocktaildb {
       }
     }
 
+    /// <summary>Field number for the "is_garnish" field.</summary>
+    public const int IsGarnishFieldNumber = 4;
+    private bool isGarnish_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool IsGarnish {
+      get { return isGarnish_; }
+      set {
+        isGarnish_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as RecipeStep);
@@ -959,6 +971,7 @@ namespace Cocktaildb {
       }
       if (IngredientId != other.IngredientId) return false;
       if (!object.Equals(Qty, other.Qty)) return false;
+      if (IsGarnish != other.IsGarnish) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -967,6 +980,7 @@ namespace Cocktaildb {
       int hash = 1;
       if (IngredientId != 0) hash ^= IngredientId.GetHashCode();
       if (qty_ != null) hash ^= Qty.GetHashCode();
+      if (IsGarnish != false) hash ^= IsGarnish.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -988,6 +1002,10 @@ namespace Cocktaildb {
         output.WriteRawTag(26);
         output.WriteMessage(Qty);
       }
+      if (IsGarnish != false) {
+        output.WriteRawTag(32);
+        output.WriteBool(IsGarnish);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -1001,6 +1019,9 @@ namespace Cocktaildb {
       }
       if (qty_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Qty);
+      }
+      if (IsGarnish != false) {
+        size += 1 + 1;
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -1022,6 +1043,9 @@ namespace Cocktaildb {
         }
         Qty.MergeFrom(other.Qty);
       }
+      if (other.IsGarnish != false) {
+        IsGarnish = other.IsGarnish;
+      }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
@@ -1042,6 +1066,10 @@ namespace Cocktaildb {
               qty_ = new global::Cocktaildb.Qty();
             }
             input.ReadMessage(qty_);
+            break;
+          }
+          case 32: {
+            IsGarnish = input.ReadBool();
             break;
           }
         }

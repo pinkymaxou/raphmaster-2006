@@ -71,6 +71,11 @@ export default class extends AbstractView {
                 cocktail.steps.sort(
                     function compareFn(a, b) 
                     { 
+                        if (!a.is_garnish && b.is_garnish)
+                            return -1;
+                        else if (a.is_garnish && !b.is_garnish)
+                            return 1;
+
                         // Garnish at the end
                         if (getIngredientTypeOrder(a.type) < getIngredientTypeOrder(b.type))
                             return -1;
@@ -85,7 +90,7 @@ export default class extends AbstractView {
                         let newNameDIV = document.createElement("div");
                         newNameDIV.classList.add("colingre_name");
                         let nameText = stepItem.name;
-                        if (stepItem.type == EIngredientType.garnish) {
+                        if (stepItem.is_garnish) {
                             nameText = "GARNISH: " + nameText;
                         }
                         newNameDIV.appendChild(document.createTextNode(nameText));

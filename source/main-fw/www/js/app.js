@@ -15,11 +15,13 @@ const EQtyType = Object.freeze({
 const EIngredientType = Object.freeze({
 	unspecified: 0,
 	liquid_alcohol: 1,
-	garnish: 2,
+	reserved_0x02: 2,
 	liquid_filler: 3,
 	ice: 4,
 	powder: 5,
-	emulsifying: 6
+	emulsifying: 6,
+	fruit_or_vegetable: 7,
+	leaf_or_sprig: 8
 });
 
 function getIngredientTypeOrder(ingredientType) {
@@ -29,11 +31,12 @@ function getIngredientTypeOrder(ingredientType) {
             return 1;
         case EIngredientType.ice:
             return 3;
+        case EIngredientType.fruit_or_vegetable:
         case EIngredientType.emulsifying:
         case EIngredientType.powder:
             return 4;
-        case EIngredientType.garnish:
-            return 50;
+        case EIngredientType.leaf_or_sprig:
+            return 5;
     }
     return 11;
 }

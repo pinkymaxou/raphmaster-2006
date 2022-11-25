@@ -67,6 +67,7 @@ namespace recipe_export
                             Name = Convert.ToString(ingredient.name ?? ""),
                             UPCCode = Convert.ToString(ingredient.upc_code ?? ""),
                             Type = ingredientType ?? Cocktaildb.EIngredientType.Unspecified,
+                            IsGarnish = Convert.ToBoolean(ingredient.is_garnish),
                             Qty = ingredient.qty
                         }); ;
                     }
@@ -79,7 +80,7 @@ namespace recipe_export
                     .SelectMany(p => p.Ingredients)
                     .GroupBy(p => p.Name)
                     .OrderBy(p => p.Key)
-                    .Select(p => new { Name = p.Key, UPCCode = p.FirstOrDefault(p => p.UPCCode != "")?.UPCCode ?? "", Type = p.First().Type, Count = p.Count() })
+                    .Select(p => new { Name = p.Key, UPCCode = p.FirstOrDefault(p => p.UPCCode != "")?.UPCCode ?? "", Type = p.First().Type, Is_Garnish = p.Any(p => p.IsGarnish), Count = p.Count() })
                     .ToArray();
                 string ingredientAlls = String.Join("\r\n", allIngredientGroups.Select(p => p.Name));
 
@@ -156,7 +157,7 @@ namespace recipe_export
                             Cocktaildb.Qty newQty = new Cocktaildb.Qty()
                             {
                                 Value = 0,
-                                Type = Cocktaildb.EQtyType.None
+                                Type = Cocktaildb.EUnit.None
                             };
 
                             if (!String.IsNullOrEmpty(importIngredient.Qty))
@@ -194,39 +195,39 @@ namespace recipe_export
                                 string unitText = m.Groups["unit"].Value.Trim();
                                 if (unitText == "ml")
                                 {
-                                    newQty.Type = Cocktaildb.EQtyType.LiquidMl;
+                                    newQty.Type = Cocktaildb.EUnit.LiquidMl;
                                 }
                                 else if (unitText == "oz")
                                 {
-                                    newQty.Type = Cocktaildb.EQtyType.Oz;
+                                    newQty.Type = Cocktaildb.EUnit.Liquidoz;
                                 }
                                 else if (unitText == "tsp")
                                 {
-                                    newQty.Type = Cocktaildb.EQtyType.Teaspoon;
+                                    newQty.Type = Cocktaildb.EUnit.Teaspoon;
                                 }
                                 else if (unitText == "tbsp")
                                 {
-                                    newQty.Type = Cocktaildb.EQtyType.Tablespoon;
+                                    newQty.Type = Cocktaildb.EUnit.Tablespoon;
                                 }
                                 else if (unitText == "dash")
                                 {
-                                    newQty.Type = Cocktaildb.EQtyType.Dash;
+                                    newQty.Type = Cocktaildb.EUnit.Dash;
                                 }
                                 else if (unitText == "pinch")
                                 {
-                                    newQty.Type = Cocktaildb.EQtyType.Pinch;
+                                    newQty.Type = Cocktaildb.EUnit.Pinch;
                                 }
                                 else if (unitText == "cup")
                                 {
-                                    newQty.Type = Cocktaildb.EQtyType.Cup;
+                                    newQty.Type = Cocktaildb.EUnit.Cup;
                                 }
                                 else if (unitText == "drop")
                                 {
-                                    newQty.Type = Cocktaildb.EQtyType.Drop;
+                                    newQty.Type = Cocktaildb.EUnit.Drop;
                                 }
                                 else if (unitText == "")
                                 {
-                                    newQty.Type = Cocktaildb.EQtyType.Unitary;
+                                    newQty.Type = Cocktaildb.EUnit.Unitary;
                                 }
                                 else
                                     throw new Exception("Unknown unit");
@@ -235,7 +236,8 @@ namespace recipe_export
                             newRecipe.RecipeSteps.Add(new Cocktaildb.RecipeStep()
                             {
                                 IngredientId = dbIngredient.Id,
-                                Qty = newQty
+                                Qty = newQty,
+                                IsGarnish = importIngredient.IsGarnish
                             });
                         }
 

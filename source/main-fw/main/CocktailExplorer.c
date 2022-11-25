@@ -102,6 +102,7 @@ char* COCKTAILEXPLORER_GetAllRecipes()
 
             cJSON_AddItemToObject(pNewStep, "name", cJSON_CreateString(pIngredient->name));
             cJSON_AddItemToObject(pNewStep, "type", cJSON_CreateNumber(pIngredient->ingredient_type));
+            cJSON_AddItemToObject(pNewStep, "is_garnish", cJSON_CreateBool(pRecipeStep->is_garnish));
 
             if (pRecipeStep->has_qty)
             {
