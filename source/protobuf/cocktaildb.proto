@@ -47,7 +47,7 @@ enum EQtyType
 	cup = 4;		// Cup
 	
 	pinch = 6;		// Fingertip quantity
-	wheel = 7;		// Basically a slice of a fruit
+	// wheel = 7;		// Basically a slice of a fruit
 	teaspoon = 8;	// 4.5 ml (1/6 oz)
 	tablespoon = 9;	// 14 ml (1/2 oz)
 	dash = 10;		// 1 ml

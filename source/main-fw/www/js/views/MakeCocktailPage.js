@@ -4,117 +4,7 @@ export default class extends AbstractView {
     constructor(params) {
         super(params);
 
-        this.mCocktails = [
-            { name: "Sex on the beach", img: "img/sex-on-the-beach.jpg", 
-                ingredients: [
-                    { name: "Ice", qty: "" },
-                    { name: "Vodka", qty: "50ml" },
-                    { name: "Peach snapps", qty: "25ml" },
-                    { name: "Oranges wedge", qty: "2" },
-                    { name: "Cranberry juice", qty: "50ml" },
-                    { name: "Grenadine Syrup", qty: "25ml" }
-                ] 
-            },
-            { name: "Bloody Mary", img: "img/bloody-mary.jpg", 
-                ingredients: [
-                    { name: "Celery salt", qty: "1" },
-                    { name: "Lemon wedge", qty: "1" },
-                    { name: "Lime wedge", qty: "1" },
-                    { name: "Vodka", qty: "2 oz" },
-                    { name: "Tomato Juice", qty: "4 oz" },
-                    { name: "Prepared Horseradish", qty: "2 tsp" },
-                    { name: "Tabasco sauce", qty: "2 dashes" },
-                    { name: "Worcestershire sauce", qty: "2 dashes" },
-                    { name: "Ground black pepper", qty: "1 pinch" },
-                    { name: "Smoked paprika", qty: "1 pinch" },
-                    { name: "Garnish: parsley sprig", qty: "1" },
-                    { name: "Garnish: green olives", qty: "1" },
-                    { name: "Garnish: lime wedge", qty: "1" },
-                    { name: "Garnish: celery stalk", qty: "1" }
-                ] 
-            },
-            { name: "Pornstar", img: "img/pornstar.jpg", 
-                ingredients: [
-                    { name: "Ice", qty: "" },
-                    { name: "Curaçao bleu", qty: "1/2 oz" },
-                    { name: "Sour Puss", qty: "1/2 oz" },
-                    { name: "7-up", qty: "" }
-                ] 
-            },
-            { name: "Grasshopper", img: "img/grasshopper.jpg", 
-                ingredients: [
-                    { name: "Creme de menthe", qty: "3/4 oz" },
-                    { name: "White creme de cacao", qty: "3/4 oz" },
-                    { name: "Heavy cream", qty: "1/4 oz" },
-                    { name: "Ice", qty: "1 cup" }
-                ] 
-            },
-            { name: "Skittle", img: "img/skittle.jpg", 
-                ingredients: [
-                    { name: "Vodka", qty: "1 oz" },
-                    { name: "Sweet and sour mix", qty: "1 oz" },
-                    { name: "Melon liqueur", qty: "1 oz" },
-                    { name: "Southern Comfort", qty: "1 oz" },
-                    { name: "Pineapple juice", qty: "1 oz" },
-                ]
-            },
-            { name: "Aperol Spritz", img: "img/aperol_spritz.jpg", 
-                ingredients: [
-                    { name: "Sparkling Wine", qty: "3 oz" },
-                    { name: "Aperol", qty: "2 oz" },
-                    { name: "Soda club", qty: "3/4 oz" },
-                    { name: "Ice", qty: "1" },
-                    { name: "Orange wedge", qty: "1" },
-                ]
-            },
-            { name: "Martini", img: "img/martini.jpg", 
-                ingredients: [
-                    { name: "Gin", qty: "2 1/2 oz" },
-                    { name: "Dry vermouth", qty: "1/2 oz" },
-                    { name: "Orange", qty: "1 dash" },
-                    { name: "Garnish: Lemon twist", qty: "" },
-                ]
-            },
-            { name: "Daiquiri", img: "img/daiquiri.jpg", 
-                ingredients: [
-                    { name: "White rhum", qty: "2 oz" },
-                    { name: "Lime juice", qty: "1 oz" },
-                    { name: "Demerara sugar syrup", qty: "3/4 oz" },
-                    { name: "Garnish: Lime twist", qty: "" },
-                ]
-            },
-            { name: "Margarita", img: "img/margarita.jpg", 
-                ingredients: [
-                    { name: "Blanco tequila", qty: "2 oz" },
-                    { name: "Orange liquor", qty: "1/2 oz" },
-                    { name: "Lime juice", qty: "1 oz" },
-                    { name: "Agave syrup", qty: "1/2 oz" },
-                    { name: "Garnish: Lime wheel", qty: "" },
-                    { name: "Garnish: Kosher salt", qty: "" },
-                ]
-            },
-            { name: "Tom Collins", img: "img/tom-collins.jpg", 
-                ingredients: [
-                    { name: "Londo dry gin", qty: "2 oz" },
-                    { name: "Lemon juice", qty: "1 oz" },
-                    { name: "Syrup", qty: "1/2 oz" },
-                    { name: "Club soda", qty: "" },
-                    { name: "Garnish: Lemon wheel", qty: "" },
-                    { name: "Garnish: Maraschino cherry", qty: "" },
-                ]
-            },
-            { name: "Amaretto Sour", img: "img/amaretto-sour.jpg", 
-                ingredients: [
-                    { name: "Amaretto liquor", qty: "1 1/2 oz" },
-                    { name: "Cask-proof bourbon", qty: "3/4 oz" },
-                    { name: "Lemon juice", qty: "1 oz" },
-                    { name: "Rich simple syrup", qty: "1 tsp" },
-                    { name: "Egg white", qty: "1/2 oz" },
-                    { name: "Garnish: Lemon twist", qty: "" },
-                    { name: "Garnish: 2 brandied cherries", qty: "" },
-                ]
-            }
-            ];
+        this.mCocktails = null;
 
         this.setTitle("Cocktails");
     }
@@ -122,6 +12,15 @@ export default class extends AbstractView {
     async loaded() {
         let idCocktailList = document.querySelector("#idCocktailList");
 
+        const API_GETCOCKTAILS = '/api/getcocktails';
+
+        if (this.mCocktails == null) {
+            // Get system informations
+            await fetch(API_GETCOCKTAILS)
+                .then((response) => response.json())
+                .then((data) => this.mCocktails = data)
+                .catch((ex) => console.error('getcocktails', ex));
+        }
         // myself: That's stupid, why don't you use vueJS ?
         // myself : Because I want to save some space :(
         // <div class="pure-g cocktail_item">
@@ -136,6 +35,12 @@ export default class extends AbstractView {
         //         </div>
         //     </div>
         // </div>   
+        this.mCocktails.sort(
+            function compareFn(a, b) 
+            { 
+                return a.name.localeCompare(b.name); 
+            });
+
         this.mCocktails.forEach(
             (cocktail) =>
             {
@@ -144,9 +49,11 @@ export default class extends AbstractView {
                 newCocktailItemDIV.classList.add("cocktail_item");
 
                 // Add img
-                let newImg = document.createElement("img");
-                newImg.setAttribute("src", cocktail.img);
-                newCocktailItemDIV.appendChild(newImg);
+                if (cocktail.img) {
+                    let newImg = document.createElement("img");
+                    newImg.setAttribute("src", cocktail.img);
+                    newCocktailItemDIV.appendChild(newImg);    
+                }
 
                 let newTitleP = document.createElement("p");
                 newTitleP.appendChild(document.createTextNode(cocktail.name));
@@ -161,17 +68,63 @@ export default class extends AbstractView {
                 
                 // Add ingredients
                 let ingrIndex = 0;
-                cocktail.ingredients.forEach(
-                    (ingredientItem) =>
+                cocktail.steps.sort(
+                    function compareFn(a, b) 
+                    { 
+                        // Garnish at the end
+                        if (a.type == 0 && b.type == 1)
+                            return -1;
+                        if (a.type == 1 && b.type == 0)
+                            return 1;
+
+                        return a.name.localeCompare(b.name); 
+                    });
+                cocktail.steps.forEach(
+                    (stepItem) =>
                     {
                         let newNameDIV = document.createElement("div");
                         newNameDIV.classList.add("colingre_name");
-                        newNameDIV.appendChild(document.createTextNode(ingredientItem.name));
+                        let nameText = stepItem.name;
+                        if (stepItem.type == 1) {
+                            nameText = "GARNISH: " + nameText;
+                        }
+                        newNameDIV.appendChild(document.createTextNode(nameText));
                         newIngredientGridDIV.appendChild(newNameDIV);
 
                         let newQtyDIV = document.createElement("div");
                         newQtyDIV.classList.add("colingre_qty");
-                        newQtyDIV.appendChild(document.createTextNode(ingredientItem.qty));
+                        let qtyText = "";
+                        if (stepItem.unit == 1) {
+                            qtyText = String(stepItem.qty);
+                        }
+                        else if (stepItem.unit == 2) {
+                            qtyText = String(stepItem.qty) + " ml";
+                        }
+                        else if (stepItem.unit == 3) {
+                            qtyText = String(stepItem.qty) + " oz";
+                        }
+                        else if (stepItem.unit == 4) {
+                            qtyText = String(stepItem.qty) + " cup";
+                        }
+                        else if (stepItem.unit == 6) {
+                            qtyText = String(stepItem.qty) + " pinch";
+                        }
+                        else if (stepItem.unit == 7) {
+                            qtyText = String(stepItem.qty) + " wheel";
+                        }
+                        else if (stepItem.unit == 8) {
+                            qtyText = String(stepItem.qty) + " tsp";
+                        }
+                        else if (stepItem.unit == 9) {
+                            qtyText = String(stepItem.qty) + " tbsp";
+                        }
+                        else if (stepItem.unit == 10) {
+                            qtyText = String(stepItem.qty) + " dash";
+                        }
+                        else if (stepItem.unit == 11) {
+                            qtyText = String(stepItem.qty) + " drop";
+                        }
+                        newQtyDIV.appendChild(document.createTextNode(qtyText));
                         newIngredientGridDIV.appendChild(newQtyDIV);
 
                         // Add alternate row style

@@ -228,7 +228,11 @@ static esp_err_t api_get_handler(httpd_req_t *req)
     }
     else if (strcmp(req->uri, API_GETCOCKTAILSJSON_URI) == 0)
     {
+        const int64_t u64Start = esp_timer_get_time();
+
         pExportJSON = COCKTAILEXPLORER_GetAllRecipes();
+
+        ESP_LOGI(TAG, "Get all recipe time: %d ms", (int)(esp_timer_get_time() - u64Start) / 1000 );
 
         if (pExportJSON == NULL || httpd_resp_send_chunk(req, pExportJSON, strlen(pExportJSON)) != ESP_OK)
         {

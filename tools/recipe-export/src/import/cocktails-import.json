@@ -20,7 +20,8 @@
       },
       {
         "name": "Orange wedge",
-        "qty": "2"
+        "qty": "2",
+        "is_garnish": true
       },
       {
         "name": "Cranberry juice",
@@ -39,15 +40,18 @@
     "ingredients": [
       {
         "name": "Celery salt",
-        "qty": "1"
+        "qty": "1",
+        "is_garnish": true
       },
       {
         "name": "Lemon wedge",
-        "qty": "1"
+        "qty": "1",
+        "is_garnish": true
       },
       {
         "name": "Lime wedge",
-        "qty": "1"
+        "qty": "1",
+        "is_garnish": true
       },
       {
         "name": "Vodka",
@@ -202,7 +206,8 @@
       },
       {
         "name": "Orange wedge",
-        "qty": "1"
+        "qty": "1",
+        "is_garnish": true
       }
     ]
   },
@@ -344,11 +349,11 @@
       },
       {
         "name": "Egg white",
-        "qty": "1/2 oz"
+        "qty": "1/2"
       },
       {
         "name": "Lemon twist",
-        "qty": "",
+        "qty": "1",
         "is_garnish": true
       },
       {
@@ -377,7 +382,7 @@
       },
       {
         "name": "Orange slice",
-        "qty": "",
+        "qty": "1",
         "is_garnish": true
       }
     ]
@@ -401,7 +406,8 @@
       },
       {
         "name": "Mint leaves",
-        "qty": "3"
+        "qty": "3",
+        "is_garnish": true
       },
       {
         "name": "Ice",
@@ -550,7 +556,8 @@
       },
       {
         "name": "orange twist",
-        "qty": "1"
+        "qty": "1",
+        "is_garnish": true
       }
     ]
   }

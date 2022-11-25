@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "esp_log.h"
 
 #include "CocktailExplorer.h" 
@@ -68,11 +69,11 @@ static const cocktaildb_Ingredient* GetIngredientFile(uint32_t u32ID)
 char* COCKTAILEXPLORER_GetAllRecipes()
 {
     cJSON* pRoot;
-    pRoot = cJSON_CreateObject();
+    pRoot = cJSON_CreateArray();
     if (pRoot == NULL)
         goto ERROR;
 
-    cJSON* pRecipes = cJSON_AddArrayToObject(pRoot, "recipes");
+    char tmp[100+1];
 
     for(int i = 0; i < m_sRecipeFile.entries_count; i++)
     {
@@ -80,9 +81,15 @@ char* COCKTAILEXPLORER_GetAllRecipes()
 
         cJSON* pNewRecipe = cJSON_CreateObject();
         cJSON_AddItemToObject(pNewRecipe, "name", cJSON_CreateString(pRecipe->name));
-        cJSON_AddItemToObject(pNewRecipe, "imgfile", cJSON_CreateString(pRecipe->imgfile));
+        
+        if (strlen(pRecipe->imgfile) > 0)
+        {
+            snprintf(tmp, sizeof(tmp) - 1, "img/%s", pRecipe->imgfile);
+            cJSON_AddItemToObject(pNewRecipe, "img", cJSON_CreateString(tmp));
+        }
 
         cJSON* pSteps = cJSON_AddArrayToObject(pNewRecipe, "steps");
+            
         for(int j = 0; j < pRecipe->recipe_steps_count; j++)
         {
             cocktaildb_RecipeStep* pRecipeStep = &pRecipe->recipe_steps[j];
@@ -92,11 +99,9 @@ char* COCKTAILEXPLORER_GetAllRecipes()
                 continue;
 
             cJSON* pNewStep = cJSON_CreateObject();
+
             cJSON_AddItemToObject(pNewStep, "name", cJSON_CreateString(pIngredient->name));
-            if (pIngredient->ingredient_type == cocktaildb_EIngredientType_alcohol)
-                cJSON_AddItemToObject(pNewStep, "type", cJSON_CreateString("alcohol"));
-            else if (pIngredient->ingredient_type == cocktaildb_EIngredientType_garnish)
-                cJSON_AddItemToObject(pNewStep, "type", cJSON_CreateString("garnish"));
+            cJSON_AddItemToObject(pNewStep, "type", cJSON_CreateNumber(pIngredient->ingredient_type));
 
             if (pRecipeStep->has_qty)
             {
@@ -107,7 +112,7 @@ char* COCKTAILEXPLORER_GetAllRecipes()
             cJSON_AddItemToArray(pSteps, pNewStep);
         }
 
-        cJSON_AddItemToArray(pRecipes, pNewRecipe);
+        cJSON_AddItemToArray(pRoot, pNewRecipe);
     }
 
     char* pStr =  cJSON_PrintUnformatted(pRoot);
