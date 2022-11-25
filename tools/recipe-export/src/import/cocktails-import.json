@@ -64,12 +64,12 @@
         "type": "liquid_alcohol"
       },
       {
-        "name": "Tomato Juice",
+        "name": "Tomato juice",
         "qty": "4 oz",
         "type": "liquid_filler"
       },
       {
-        "name": "Prepared Horseradish",
+        "name": "Prepared horseradish",
         "qty": "2 tsp"
       },
       {
@@ -89,17 +89,17 @@
         "qty": "1 pinch"
       },
       {
-        "name": "parsley sprig",
+        "name": "Parsley sprig",
         "qty": "1",
         "type": "garnish"
       },
       {
-        "name": "green olives",
+        "name": "Green olives",
         "qty": "1",
         "type": "garnish"
       },
       {
-        "name": "celery stalk",
+        "name": "Celery stalk",
         "qty": "1",
         "type": "garnish"
       }
@@ -185,7 +185,7 @@
         "type": "liquid_alcohol"
       },
       {
-        "name": "Southern Comfort",
+        "name": "Southern comfort",
         "qty": "1 oz",
         "upc_code": "00088544016770",
         "type": "liquid_alcohol"
@@ -203,7 +203,7 @@
     "is_cocktail": true,
     "ingredients": [
       {
-        "name": "Sparkling Wine",
+        "name": "Sparkling wine",
         "qty": "3 oz",
         "type": "liquid_alcohol"
       },
@@ -214,7 +214,7 @@
         "type": "liquid_alcohol"
       },
       {
-        "name": "Soda club",
+        "name": "Club soda",
         "qty": "3/4 oz",
         "type": "liquid_filler"
       },
@@ -394,7 +394,7 @@
         "type": "garnish"
       },
       {
-        "name": "brandied cherries",
+        "name": "Brandied cherries",
         "qty": "2",
         "type": "garnish"
       }
@@ -478,7 +478,7 @@
     ]
   },
   {
-    "name": "Whiskey Sour",
+    "name": "Whiskey sour",
     "img": "",
     "is_cocktail": true,
     "ingredients": [
@@ -550,7 +550,7 @@
         "type": "liquid_filler"
       },
       {
-        "name": "Almond Extract",
+        "name": "Almond extract",
         "qty": "1 drop"
       },
       {
@@ -616,9 +616,110 @@
         "type": "liquid_alcohol"
       },
       {
-        "name": "orange twist",
+        "name": "Orange twist",
         "qty": "1",
         "type": "garnish"
+      }
+    ]
+  },
+  {
+    "name": "Apricot Brandy Sour",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Ice",
+        "qty": "",
+        "type": "ice"
+      },
+      {
+        "name": "Apricot brandy",
+        "qty": "1 oz",
+        "type": "liquid_alcohol"
+      },
+      {
+        "name": "Lemon juice",
+        "qty": "1 oz",
+        "type": "liquid_filler"
+      },
+      {
+        "name": "Orange juice",
+        "qty": "1 oz",
+        "type": "liquid_filler"
+      },
+      {
+        "name": "Triple sec",
+        "qty": "1/2 oz",
+        "type": "liquid_alcohol"
+      },
+      {
+        "name": "Grenadine syrup",
+        "qty": "1 tsp",
+        "type": "liquid_filler"
+      }
+    ]
+  },
+  {
+    "name": "Blue Coconut",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Ice",
+        "qty": "",
+        "type": "ice"
+      },
+      {
+        "name": "Pineapple juice",
+        "qty": "1 cup",
+        "type": "liquid_filler"
+      },
+      {
+        "name": "Blue curaçao",
+        "qty": "1/2 cup",
+        "type": "liquid_alcohol"
+      },
+      {
+        "name": "Vodka",
+        "qty": "1/2 cup",
+        "type": "liquid_alcohol"
+      },
+      {
+        "name": "Coconut cream",
+        "qty": "1/2 cup",
+        "type": "liquid_filler"
+      },
+      {
+        "name": "Coconut flakes",
+        "qty": "1 pinch",
+        "type": "garnish"
+      }
+    ]
+  },
+  {
+    "name": "Rum and coke",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Ice",
+        "qty": "",
+        "type": "ice"
+      },
+      {
+        "name": "Lime wedge",
+        "qty": "1",
+        "type": "garnish"
+      },
+      {
+        "name": "Coca-Cola",
+        "qty": "6 oz",
+        "type": "liquid_alcohol"
+      },
+      {
+        "name": "Light rum or dark rum",
+        "qty": "2 oz",
+        "type": "liquid_alcohol"
       }
     ]
   }
