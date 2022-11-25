@@ -11,8 +11,13 @@
 
 /* Enum definitions */
 typedef enum _cocktaildb_EIngredientType {
-    cocktaildb_EIngredientType_alcohol = 0,
-    cocktaildb_EIngredientType_garnish = 1
+    cocktaildb_EIngredientType_unspecified = 0,
+    cocktaildb_EIngredientType_liquid_alcohol = 1,
+    cocktaildb_EIngredientType_garnish = 2,
+    cocktaildb_EIngredientType_liquid_filler = 3,
+    cocktaildb_EIngredientType_ice = 4,
+    cocktaildb_EIngredientType_powder = 5,
+    cocktaildb_EIngredientType_emulsifying = 6
 } cocktaildb_EIngredientType;
 
 typedef enum _cocktaildb_ELanguage {
@@ -27,7 +32,7 @@ typedef enum _cocktaildb_EQtyType {
     cocktaildb_EQtyType_oz = 3, /* Ounce */
     cocktaildb_EQtyType_cup = 4, /* Cup */
     cocktaildb_EQtyType_pinch = 6, /* Fingertip quantity */
-    cocktaildb_EQtyType_wheel = 7, /* Basically a slice of a fruit */
+    /* wheel = 7;		// Basically a slice of a fruit */
     cocktaildb_EQtyType_teaspoon = 8, /* 4.5 ml (1/6 oz) */
     cocktaildb_EQtyType_tablespoon = 9, /* 14 ml (1/2 oz) */
     cocktaildb_EQtyType_dash = 10, /* 1 ml */
@@ -91,9 +96,9 @@ typedef struct _cocktaildb_MetaDataFile {
 
 
 /* Helper constants for enums */
-#define _cocktaildb_EIngredientType_MIN cocktaildb_EIngredientType_alcohol
-#define _cocktaildb_EIngredientType_MAX cocktaildb_EIngredientType_garnish
-#define _cocktaildb_EIngredientType_ARRAYSIZE ((cocktaildb_EIngredientType)(cocktaildb_EIngredientType_garnish+1))
+#define _cocktaildb_EIngredientType_MIN cocktaildb_EIngredientType_unspecified
+#define _cocktaildb_EIngredientType_MAX cocktaildb_EIngredientType_emulsifying
+#define _cocktaildb_EIngredientType_ARRAYSIZE ((cocktaildb_EIngredientType)(cocktaildb_EIngredientType_emulsifying+1))
 
 #define _cocktaildb_ELanguage_MIN cocktaildb_ELanguage_english
 #define _cocktaildb_ELanguage_MAX cocktaildb_ELanguage_french

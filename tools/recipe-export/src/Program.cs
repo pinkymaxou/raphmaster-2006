@@ -6,11 +6,30 @@ using System.Linq;
 using recipe_export.import;
 using Google.Protobuf;
 using System.Text.RegularExpressions;
+using Cocktaildb;
+using pbr = global::Google.Protobuf.Reflection;
+using Google.Protobuf.Reflection;
+using System.Reflection;
 
 namespace recipe_export
 {
     class Program
     {
+        static string GetOriginalName(EIngredientType ingredientType)
+        {
+            OriginalNameAttribute originalNameAttr = (OriginalNameAttribute)Attribute
+                .GetCustomAttribute(ForValue(ingredientType), typeof(OriginalNameAttribute));
+
+            if (originalNameAttr != null)
+                return originalNameAttr.Name;
+            return "";
+        }
+
+        static MemberInfo ForValue(EIngredientType p)
+        {
+            return typeof(EIngredientType).GetField(Enum.GetName(typeof(EIngredientType), p));
+        }
+
         static void Main(string[] args)
         {
             try
@@ -32,11 +51,22 @@ namespace recipe_export
 
                     foreach (dynamic ingredient in cocktail.ingredients)
                     {
+                        Cocktaildb.EIngredientType? ingredientType = null;
+
+                        if (!String.IsNullOrEmpty(Convert.ToString(ingredient.type)))
+                        {
+                            ingredientType = Enum.GetValues(typeof(Cocktaildb.EIngredientType))
+                                .Cast<Cocktaildb.EIngredientType>()
+                                .FirstOrDefault(p => GetOriginalName(p).Equals(Convert.ToString(ingredient.type), StringComparison.CurrentCultureIgnoreCase));
+                            if (ingredientType == Cocktaildb.EIngredientType.Unspecified)
+                                throw new Exception("Unable to find type");
+                        }
+
                         newCR.Ingredients.Add(new ImportIngredient()
                         {
                             Name = Convert.ToString(ingredient.name ?? ""),
                             UPCCode = Convert.ToString(ingredient.upc_code ?? ""),
-                            IsGarnish = Convert.ToBoolean(ingredient.is_garnish),
+                            Type = ingredientType ?? Cocktaildb.EIngredientType.Unspecified,
                             Qty = ingredient.qty
                         }); ;
                     }
@@ -49,7 +79,7 @@ namespace recipe_export
                     .SelectMany(p => p.Ingredients)
                     .GroupBy(p => p.Name)
                     .OrderBy(p => p.Key)
-                    .Select(p => new { Name = p.Key, UPCCode = p.FirstOrDefault(p => p.UPCCode != "")?.UPCCode ?? "", IsGarnish = p.Any(p => p.IsGarnish), Count = p.Count() })
+                    .Select(p => new { Name = p.Key, UPCCode = p.FirstOrDefault(p => p.UPCCode != "")?.UPCCode ?? "", Type = p.First().Type, Count = p.Count() })
                     .ToArray();
                 string ingredientAlls = String.Join("\r\n", allIngredientGroups.Select(p => p.Name));
 
@@ -78,7 +108,7 @@ namespace recipe_export
                         {
                             Id = ingredientID,
                             Name = ingreGroup.Name,
-                            IngredientType = ingreGroup.IsGarnish ? Cocktaildb.EIngredientType.Garnish : Cocktaildb.EIngredientType.Alcohol
+                            IngredientType = ingreGroup.Type
                         };
 
                         if (!String.IsNullOrEmpty(ingreGroup.UPCCode))

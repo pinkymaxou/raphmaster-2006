@@ -11,7 +11,7 @@ namespace recipe_export.import
         public string Name = "";
         public string Qty = "";
         public string UPCCode = "";
-        public bool IsGarnish = false;
+        public Cocktaildb.EIngredientType Type { get; set; } = Cocktaildb.EIngredientType.Unspecified;
     }
 
 }

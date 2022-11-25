@@ -72,9 +72,9 @@ export default class extends AbstractView {
                     function compareFn(a, b) 
                     { 
                         // Garnish at the end
-                        if (a.type == 0 && b.type == 1)
+                        if (getIngredientTypeOrder(a.type) < getIngredientTypeOrder(b.type))
                             return -1;
-                        if (a.type == 1 && b.type == 0)
+                        if (getIngredientTypeOrder(a.type) > getIngredientTypeOrder(b.type))
                             return 1;
 
                         return a.name.localeCompare(b.name); 
@@ -85,7 +85,7 @@ export default class extends AbstractView {
                         let newNameDIV = document.createElement("div");
                         newNameDIV.classList.add("colingre_name");
                         let nameText = stepItem.name;
-                        if (stepItem.type == 1) {
+                        if (stepItem.type == EIngredientType.garnish) {
                             nameText = "GARNISH: " + nameText;
                         }
                         newNameDIV.appendChild(document.createTextNode(nameText));
@@ -93,37 +93,7 @@ export default class extends AbstractView {
 
                         let newQtyDIV = document.createElement("div");
                         newQtyDIV.classList.add("colingre_qty");
-                        let qtyText = "";
-                        if (stepItem.unit == 1) {
-                            qtyText = String(stepItem.qty);
-                        }
-                        else if (stepItem.unit == 2) {
-                            qtyText = String(stepItem.qty) + " ml";
-                        }
-                        else if (stepItem.unit == 3) {
-                            qtyText = String(stepItem.qty) + " oz";
-                        }
-                        else if (stepItem.unit == 4) {
-                            qtyText = String(stepItem.qty) + " cup";
-                        }
-                        else if (stepItem.unit == 6) {
-                            qtyText = String(stepItem.qty) + " pinch";
-                        }
-                        else if (stepItem.unit == 7) {
-                            qtyText = String(stepItem.qty) + " wheel";
-                        }
-                        else if (stepItem.unit == 8) {
-                            qtyText = String(stepItem.qty) + " tsp";
-                        }
-                        else if (stepItem.unit == 9) {
-                            qtyText = String(stepItem.qty) + " tbsp";
-                        }
-                        else if (stepItem.unit == 10) {
-                            qtyText = String(stepItem.qty) + " dash";
-                        }
-                        else if (stepItem.unit == 11) {
-                            qtyText = String(stepItem.qty) + " drop";
-                        }
+                        let qtyText = getPrettyQty(stepItem.qty, stepItem.unit);
                         newQtyDIV.appendChild(document.createTextNode(qtyText));
                         newIngredientGridDIV.appendChild(newQtyDIV);
 

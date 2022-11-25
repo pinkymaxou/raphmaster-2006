@@ -6,30 +6,35 @@
     "ingredients": [
       {
         "name": "Ice",
-        "qty": ""
+        "qty": "",
+        "type": "ice"
       },
       {
         "name": "Vodka",
         "upc_code": "00627987202564",
-        "qty": "50 ml"
+        "qty": "50 ml",
+        "type": "liquid_alcohol"
       },
       {
         "name": "Peach snapps",
         "upc_code": "00088004400545",
-        "qty": "25 ml"
+        "qty": "25 ml",
+        "type": "liquid_alcohol"
       },
       {
         "name": "Orange wedge",
         "qty": "2",
-        "is_garnish": true
+        "type": "garnish"
       },
       {
         "name": "Cranberry juice",
-        "qty": "50 ml"
+        "qty": "50 ml",
+        "type": "liquid_filler"
       },
       {
         "name": "Grenadine syrup",
-        "qty": "25 ml"
+        "qty": "25 ml",
+        "type": "liquid_filler"
       }
     ]
   },
@@ -41,25 +46,27 @@
       {
         "name": "Celery salt",
         "qty": "1",
-        "is_garnish": true
+        "type": "garnish"
       },
       {
         "name": "Lemon wedge",
         "qty": "1",
-        "is_garnish": true
+        "type": "garnish"
       },
       {
         "name": "Lime wedge",
         "qty": "1",
-        "is_garnish": true
+        "type": "garnish"
       },
       {
         "name": "Vodka",
-        "qty": "2 oz"
+        "qty": "2 oz",
+        "type": "liquid_alcohol"
       },
       {
         "name": "Tomato Juice",
-        "qty": "4 oz"
+        "qty": "4 oz",
+        "type": "liquid_filler"
       },
       {
         "name": "Prepared Horseradish",
@@ -84,17 +91,17 @@
       {
         "name": "parsley sprig",
         "qty": "1",
-        "is_garnish": true
+        "type": "garnish"
       },
       {
         "name": "green olives",
         "qty": "1",
-        "is_garnish": true
+        "type": "garnish"
       },
       {
         "name": "celery stalk",
         "qty": "1",
-        "is_garnish": true
+        "type": "garnish"
       }
     ]
   },
@@ -105,21 +112,25 @@
     "ingredients": [
       {
         "name": "Ice",
-        "qty": ""
+        "qty": "",
+        "type": "ice"
       },
       {
         "name": "Curaçao bleu",
         "qty": "1/2 oz",
-        "upc_code": "03041311026096"
+        "upc_code": "03041311026096",
+        "type": "liquid_alcohol"
       },
       {
         "name": "Sour Puss",
         "qty": "1/2 oz",
-        "upc_code": "00087116035003"
+        "upc_code": "00087116035003",
+        "type": "liquid_alcohol"
       },
       {
         "name": "7-up",
-        "qty": ""
+        "qty": "",
+        "type": "liquid_filler"
       }
     ]
   },
@@ -131,20 +142,24 @@
       {
         "name": "Creme de menthe",
         "qty": "3/4 oz",
-        "upc_code": "00854745000920"
+        "upc_code": "00854745000920",
+        "type": "liquid_alcohol"
       },
       {
         "name": "White creme de cacao",
         "qty": "3/4 oz",
-        "upc_code": "03292543720218"
+        "upc_code": "03292543720218",
+        "type": "liquid_alcohol"
       },
       {
         "name": "Heavy cream",
-        "qty": "1/4 oz"
+        "qty": "1/4 oz",
+        "type": "liquid_filler"
       },
       {
         "name": "Ice",
-        "qty": "1 cup"
+        "qty": "1 cup",
+        "type": "ice"
       }
     ]
   },
@@ -155,25 +170,30 @@
     "ingredients": [
       {
         "name": "Vodka",
-        "qty": "1 oz"
+        "qty": "1 oz",
+        "type": "liquid_alcohol"
       },
       {
         "name": "Sweet and sour mix",
-        "qty": "1 oz"
+        "qty": "1 oz",
+        "type": "liquid_alcohol"
       },
       {
         "name": "Midori",
         "qty": "1 oz",
-        "upc_code": "00088857035628"
+        "upc_code": "00088857035628",
+        "type": "liquid_alcohol"
       },
       {
         "name": "Southern Comfort",
         "qty": "1 oz",
-        "upc_code": "00088544016770"
+        "upc_code": "00088544016770",
+        "type": "liquid_alcohol"
       },
       {
         "name": "Pineapple juice",
-        "qty": "1 oz"
+        "qty": "1 oz",
+        "type": "liquid_filler"
       }
     ]
   },
@@ -184,25 +204,29 @@
     "ingredients": [
       {
         "name": "Sparkling Wine",
-        "qty": "3 oz"
+        "qty": "3 oz",
+        "type": "liquid_alcohol"
       },
       {
         "name": "Aperol",
         "qty": "2 oz",
-        "upc_code": "00086785900001"
+        "upc_code": "00086785900001",
+        "type": "liquid_alcohol"
       },
       {
         "name": "Soda club",
-        "qty": "3/4 oz"
+        "qty": "3/4 oz",
+        "type": "liquid_filler"
       },
       {
         "name": "Ice",
-        "qty": "1"
+        "qty": "1",
+        "type": "ice"
       },
       {
         "name": "Orange wedge",
         "qty": "1",
-        "is_garnish": true
+        "type": "garnish"
       }
     ]
   },
@@ -213,11 +237,13 @@
     "ingredients": [
       {
         "name": "Gin",
-        "qty": "2 1/2 oz"
+        "qty": "2 1/2 oz",
+        "type": "liquid_alcohol"
       },
       {
         "name": "Dry vermouth",
-        "qty": "1/2 oz"
+        "qty": "1/2 oz",
+        "type": "liquid_alcohol"
       },
       {
         "name": "Orange",
@@ -226,7 +252,7 @@
       {
         "name": "Lemon twist",
         "qty": "1",
-        "is_garnish": true
+        "type": "garnish"
       }
     ]
   },
@@ -237,20 +263,23 @@
     "ingredients": [
       {
         "name": "White rum",
-        "qty": "2 oz"
+        "qty": "2 oz",
+        "type": "liquid_alcohol"
       },
       {
         "name": "Lime juice",
-        "qty": "1 oz"
+        "qty": "1 oz",
+        "type": "liquid_filler"
       },
       {
         "name": "Demerara sugar syrup",
-        "qty": "3/4 oz"
+        "qty": "3/4 oz",
+        "type": "liquid_filler"
       },
       {
         "name": "Lime twist",
         "qty": "1",
-        "is_garnish": true
+        "type": "garnish"
       }
     ]
   },
@@ -261,29 +290,33 @@
     "ingredients": [
       {
         "name": "Tequila",
-        "qty": "2 oz"
+        "qty": "2 oz",
+        "type": "liquid_alcohol"
       },
       {
         "name": "Orange liquor",
-        "qty": "1/2 oz"
+        "qty": "1/2 oz",
+        "type": "liquid_alcohol"
       },
       {
         "name": "Lime juice",
-        "qty": "1 oz"
+        "qty": "1 oz",
+        "type": "liquid_filler"
       },
       {
         "name": "Agave syrup",
-        "qty": "1/2 oz"
+        "qty": "1/2 oz",
+        "type": "liquid_filler"
       },
       {
         "name": "Lime wheel",
         "qty": "1",
-        "is_garnish": true
+        "type": "garnish"
       },
       {
         "name": "Kosher salt",
         "qty": "1",
-        "is_garnish": true
+        "type": "garnish"
       }
     ]
   },
@@ -294,29 +327,33 @@
     "ingredients": [
       {
         "name": "Londo dry gin",
-        "qty": "2 oz"
+        "qty": "2 oz",
+        "type": "liquid_alcohol"
       },
       {
         "name": "Lemon juice",
-        "qty": "1 oz"
+        "qty": "1 oz",
+        "type": "liquid_filler"
       },
       {
         "name": "Simple syrup",
-        "qty": "1/2 oz"
+        "qty": "1/2 oz",
+        "type": "liquid_filler"
       },
       {
         "name": "Club soda",
-        "qty": ""
+        "qty": "",
+        "type": "liquid_filler"
       },
       {
         "name": "Lemon wheel",
         "qty": "1",
-        "is_garnish": true
+        "type": "garnish"
       },
       {
         "name": "Maraschino cherry",
         "qty": "1",
-        "is_garnish": true
+        "type": "garnish"
       }
     ]
   },
@@ -328,33 +365,38 @@
       {
         "name": "Amaretto liquor",
         "qty": "1 1/2 oz",
-        "upc_code": "06279871658144"
+        "upc_code": "06279871658144",
+        "type": "liquid_alcohol"
       },
       {
         "name": "Cask-proof bourbon",
-        "qty": "3/4 oz"
+        "qty": "3/4 oz",
+        "type": "liquid_alcohol"
       },
       {
         "name": "Lemon juice",
-        "qty": "1 oz"
+        "qty": "1 oz",
+        "type": "liquid_filler"
       },
       {
         "name": "Simple syrup",
-        "qty": "1 tsp"
+        "qty": "1 tsp",
+        "type": "liquid_filler"
       },
       {
         "name": "Egg white",
-        "qty": "1/2"
+        "qty": "1/2",
+        "type": "emulsifying"
       },
       {
         "name": "Lemon twist",
         "qty": "1",
-        "is_garnish": true
+        "type": "garnish"
       },
       {
         "name": "brandied cherries",
         "qty": "2",
-        "is_garnish": true
+        "type": "garnish"
       }
     ]
   },
@@ -365,20 +407,23 @@
     "ingredients": [
       {
         "name": "Gin",
-        "qty": "1 oz"
+        "qty": "1 oz",
+        "type": "liquid_alcohol"
       },
       {
         "name": "Campari",
-        "qty": "1 oz"
+        "qty": "1 oz",
+        "type": "liquid_alcohol"
       },
       {
         "name": "Sweet red vermouth",
-        "qty": "1 oz"
+        "qty": "1 oz",
+        "type": "liquid_alcohol"
       },
       {
         "name": "Orange slice",
         "qty": "1",
-        "is_garnish": true
+        "type": "garnish"
       }
     ]
   },
@@ -389,11 +434,13 @@
     "ingredients": [
       {
         "name": "White rum",
-        "qty": "2 oz"
+        "qty": "2 oz",
+        "type": "liquid_alcohol"
       },
       {
         "name": "Lime juice",
-        "qty": "1/2 oz"
+        "qty": "1/2 oz",
+        "type": "liquid_filler"
       },
       {
         "name": "Sugar",
@@ -402,15 +449,17 @@
       {
         "name": "Mint leaves",
         "qty": "3",
-        "is_garnish": true
+        "type": "garnish"
       },
       {
         "name": "Ice",
-        "qty": ""
+        "qty": "",
+        "type": "ice"
       },
       {
         "name": "Club soda",
-        "qty": ""
+        "qty": "",
+        "type": "liquid_filler"
       },
       {
         "name": "Simple syrup",
@@ -419,12 +468,12 @@
       {
         "name": "Lime wedge",
         "qty": "1",
-        "is_garnish": true
+        "type": "garnish"
       },
       {
         "name": "Sprig of mint",
         "qty": "1",
-        "is_garnish": true
+        "type": "garnish"
       }
     ]
   },
@@ -435,29 +484,33 @@
     "ingredients": [
       {
         "name": "Bourbon",
-        "qty": "2 oz"
+        "qty": "2 oz",
+        "type": "liquid_alcohol"
       },
       {
         "name": "Lemon juice",
-        "qty": "3/4 oz"
+        "qty": "3/4 oz",
+        "type": "liquid_filler"
       },
       {
         "name": "Simple syrup",
-        "qty": "3/4 oz"
+        "qty": "3/4 oz",
+        "type": "liquid_filler"
       },
       {
         "name": "Egg white",
-        "qty": "1/2"
+        "qty": "1/2",
+        "type": "emulsifying"
       },
       {
         "name": "Orange slice",
         "qty": "1",
-        "is_garnish": true
+        "type": "garnish"
       },
       {
         "name": "Cherry",
         "qty": "1",
-        "is_garnish": true
+        "type": "garnish"
       }
     ]
   },
@@ -468,27 +521,33 @@
     "ingredients": [
       {
         "name": "Ice",
-        "qty": ""
+        "qty": "",
+        "type": "ice"
       },
       {
         "name": "Dark rum",
-        "qty": "1 oz"
+        "qty": "1 oz",
+        "type": "liquid_alcohol"
       },
       {
         "name": "Amber rum",
-        "qty": "1 oz"
+        "qty": "1 oz",
+        "type": "liquid_alcohol"
       },
       {
         "name": "Orange juice",
-        "qty": "2 tbsp"
+        "qty": "2 tbsp",
+        "type": "liquid_filler"
       },
       {
         "name": "Cointreau",
-        "qty": "1/2 oz"
+        "qty": "1/2 oz",
+        "type": "liquid_alcohol"
       },
       {
         "name": "Lime juice",
-        "qty": "1 tbsp"
+        "qty": "1 tbsp",
+        "type": "liquid_filler"
       },
       {
         "name": "Almond Extract",
@@ -500,7 +559,8 @@
       },
       {
         "name": "Grenadine syrup",
-        "qty": "1 dash"
+        "qty": "1 dash",
+        "type": "liquid_filler"
       }
     ]
   },
@@ -511,15 +571,18 @@
     "ingredients": [
       {
         "name": "Rye whiskey",
-        "qty": "2 oz"
+        "qty": "2 oz",
+        "type": "liquid_alcohol"
       },
       {
         "name": "Ice",
-        "qty": ""
+        "qty": "",
+        "type": "ice"
       },
       {
         "name": "Italian vermouth",
-        "qty": "1 oz"
+        "qty": "1 oz",
+        "type": "liquid_alcohol"
       },
       {
         "name": "Angostura bitters",
@@ -528,7 +591,7 @@
       {
         "name": "Cherry",
         "qty": "2 dashes",
-        "is_garnish": true
+        "type": "garnish"
       }
     ]
   },
@@ -539,20 +602,23 @@
     "ingredients": [
       {
         "name": "Bourbon",
-        "qty": "1 1/4 oz"
+        "qty": "1 1/4 oz",
+        "type": "liquid_alcohol"
       },
       {
         "name": "Campari",
-        "qty": "1 oz"
+        "qty": "1 oz",
+        "type": "liquid_alcohol"
       },
       {
         "name": "Sweet vermouth",
-        "qty": "1 oz"
+        "qty": "1 oz",
+        "type": "liquid_alcohol"
       },
       {
         "name": "orange twist",
         "qty": "1",
-        "is_garnish": true
+        "type": "garnish"
       }
     ]
   }

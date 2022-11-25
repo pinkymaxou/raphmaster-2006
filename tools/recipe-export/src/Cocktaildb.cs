@@ -39,12 +39,14 @@ namespace Cocktaildb {
             "aWxlEiMKB2VudHJpZXMYASADKAsyEi5jb2NrdGFpbGRiLlJlY2lwZSI6CgtF",
             "cXVpdmFsZW5jZRIWCg5pbmdyZWRpZW50X2lkcxgBIAMoDRITCgtlcXVpdmFs",
             "ZW5jZRgCIAEoAiI9CgxNZXRhRGF0YUZpbGUSLQoMZXF1aXZhbGVuY2VzGAEg",
-            "AygLMhcuY29ja3RhaWxkYi5FcXVpdmFsZW5jZSorCg9FSW5ncmVkaWVudFR5",
-            "cGUSCwoHYWxjb2hvbBAAEgsKB2dhcm5pc2gQASokCglFTGFuZ3VhZ2USCwoH",
-            "ZW5nbGlzaBAAEgoKBmZyZW5jaBABKogBCghFUXR5VHlwZRIICgRub25lEAAS",
-            "CwoHdW5pdGFyeRABEgwKCGxpcXVpZE1MEAISBgoCb3oQAxIHCgNjdXAQBBIJ",
-            "CgVwaW5jaBAGEgkKBXdoZWVsEAcSDAoIdGVhc3Bvb24QCBIOCgp0YWJsZXNw",
-            "b29uEAkSCAoEZGFzaBAKEggKBGRyb3AQC2IGcHJvdG8z"));
+            "AygLMhcuY29ja3RhaWxkYi5FcXVpdmFsZW5jZSp8Cg9FSW5ncmVkaWVudFR5",
+            "cGUSDwoLdW5zcGVjaWZpZWQQABISCg5saXF1aWRfYWxjb2hvbBABEgsKB2dh",
+            "cm5pc2gQAhIRCg1saXF1aWRfZmlsbGVyEAMSBwoDaWNlEAQSCgoGcG93ZGVy",
+            "EAUSDwoLZW11bHNpZnlpbmcQBiokCglFTGFuZ3VhZ2USCwoHZW5nbGlzaBAA",
+            "EgoKBmZyZW5jaBABKn0KCEVRdHlUeXBlEggKBG5vbmUQABILCgd1bml0YXJ5",
+            "EAESDAoIbGlxdWlkTUwQAhIGCgJvehADEgcKA2N1cBAEEgkKBXBpbmNoEAYS",
+            "DAoIdGVhc3Bvb24QCBIOCgp0YWJsZXNwb29uEAkSCAoEZGFzaBAKEggKBGRy",
+            "b3AQC2IGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Cocktaildb.EIngredientType), typeof(global::Cocktaildb.ELanguage), typeof(global::Cocktaildb.EQtyType), }, new pbr::GeneratedClrTypeInfo[] {
@@ -64,8 +66,13 @@ namespace Cocktaildb {
   }
   #region Enums
   public enum EIngredientType {
-    [pbr::OriginalName("alcohol")] Alcohol = 0,
-    [pbr::OriginalName("garnish")] Garnish = 1,
+    [pbr::OriginalName("unspecified")] Unspecified = 0,
+    [pbr::OriginalName("liquid_alcohol")] LiquidAlcohol = 1,
+    [pbr::OriginalName("garnish")] Garnish = 2,
+    [pbr::OriginalName("liquid_filler")] LiquidFiller = 3,
+    [pbr::OriginalName("ice")] Ice = 4,
+    [pbr::OriginalName("powder")] Powder = 5,
+    [pbr::OriginalName("emulsifying")] Emulsifying = 6,
   }
 
   public enum ELanguage {
@@ -99,11 +106,7 @@ namespace Cocktaildb {
     /// </summary>
     [pbr::OriginalName("pinch")] Pinch = 6,
     /// <summary>
-    /// Basically a slice of a fruit
-    /// </summary>
-    [pbr::OriginalName("wheel")] Wheel = 7,
-    /// <summary>
-    /// 4.5 ml (1/6 oz)
+    /// wheel = 7;		// Basically a slice of a fruit
     /// </summary>
     [pbr::OriginalName("teaspoon")] Teaspoon = 8,
     /// <summary>

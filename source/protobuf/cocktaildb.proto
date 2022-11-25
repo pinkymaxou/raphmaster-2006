@@ -9,8 +9,13 @@ message ProductCode
 
 enum EIngredientType
 {
-	alcohol = 0;
-	garnish = 1;
+	unspecified = 0;
+	liquid_alcohol = 1;
+	garnish = 2;	
+	liquid_filler = 3;
+	ice = 4;
+	powder = 5;
+	emulsifying = 6;
 }
 
 enum ELanguage
