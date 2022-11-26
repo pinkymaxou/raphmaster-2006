@@ -7,8 +7,6 @@
 
 #define TAG "CocktailExplorer"
 
-static const cocktaildb_Ingredient* GetIngredientFile(uint32_t u32ID);
-
 // Load everything into memory, it's easier
 static cocktaildb_IngredientFile m_sIngredientFile;
 static cocktaildb_RecipeFile m_sRecipeFile;
@@ -44,7 +42,7 @@ void COCKTAILEXPLORER_Init()
     ESP_LOGI(TAG, "Loaded recipes, total: %d", m_sRecipeFile.entries_count);
 }
 
-static const cocktaildb_Ingredient* GetIngredientFile(uint32_t u32ID)
+const cocktaildb_Ingredient* COCKTAILEXPLORER_GetIngredientFile(uint32_t u32ID)
 {
     for(int i = 0; i < m_sIngredientFile.entries_count; i++)
     {
@@ -89,7 +87,7 @@ char* COCKTAILEXPLORER_GetAllRecipes()
             if (pRecipeStep->which_ingredient != cocktaildb_RecipeStep_ingredient_id_tag)
                 continue;
 
-            const cocktaildb_Ingredient* pIngredient = GetIngredientFile(pRecipeStep->ingredient.ingredient_id);
+            const cocktaildb_Ingredient* pIngredient = COCKTAILEXPLORER_GetIngredientFile(pRecipeStep->ingredient.ingredient_id);
             if (pIngredient == NULL)
                 continue;
 
@@ -139,6 +137,35 @@ char* COCKTAILEXPLORER_GetAllIngredients(bool bIsLiquidOnly)
 
         cJSON* pNewRecipe = cJSON_CreateObject();
         cJSON_AddItemToObject(pNewRecipe, "id", cJSON_CreateNumber(pIngredient->id));
+        cJSON_AddItemToObject(pNewRecipe, "name", cJSON_CreateString(pIngredient->name));
+        
+        cJSON_AddItemToArray(pRoot, pNewRecipe);
+    }
+
+    char* pStr =  cJSON_PrintUnformatted(pRoot);
+    cJSON_Delete(pRoot);
+    return pStr;
+    ERROR:
+    cJSON_Delete(pRoot);
+    return NULL;  
+}
+
+char* COCKTAILEXPLORER_GetAllAvailableIngredients()
+{
+    cJSON* pRoot;
+    pRoot = cJSON_CreateArray();
+    if (pRoot == NULL)
+        goto ERROR;
+
+    for(int i = 0; i < m_sIngredientFile.entries_count; i++)
+    {
+        const cocktaildb_Ingredient* pIngredient = COCKTAILEXPLORER_GetIngredientFile(0);
+        if (pIngredient == NULL)
+            continue;
+
+        cJSON* pNewRecipe = cJSON_CreateObject();
+        cJSON_AddItemToObject(pNewRecipe, "station_id", cJSON_CreateNumber(i+1));
+        cJSON_AddItemToObject(pNewRecipe, "ingredient_id", cJSON_CreateNumber(pIngredient->id));
         cJSON_AddItemToObject(pNewRecipe, "name", cJSON_CreateString(pIngredient->name));
         
         cJSON_AddItemToArray(pRoot, pNewRecipe);
