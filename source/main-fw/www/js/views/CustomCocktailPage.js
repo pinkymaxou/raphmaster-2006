@@ -67,7 +67,7 @@ export default class extends AbstractView {
         tdControlDIV.style["width"] = "max-content";
     
         let btDeleteOrder = document.createElement("button");
-        btDeleteOrder.classList.add("button-normal");
+        btDeleteOrder.classList.add("button-cancel");
         btDeleteOrder.appendChild(document.createTextNode("-"));
         btDeleteOrder.addEventListener('click', function() {
             
