@@ -28,7 +28,7 @@ typedef enum
   EFEMBEDWWW_EFILE_JS_APP_JS = 6,    /*!< @brief File: js/app.js (size: 3.1 KB) */
   EFEMBEDWWW_EFILE_JS_VIEWS_CALIBPAGE_JS = 7,    /*!< @brief File: js/views/CalibPage.js (size: 5.6 KB) */
   EFEMBEDWWW_EFILE_JS_VIEWS_CUSTOMCOCKTAILPAGE_JS = 8,    /*!< @brief File: js/views/CustomCocktailPage.js (size: 3.6 KB) */
-  EFEMBEDWWW_EFILE_JS_VIEWS_MAKECOCKTAILPAGE_JS = 9,    /*!< @brief File: js/views/MakeCocktailPage.js (size: 5.5 KB) */
+  EFEMBEDWWW_EFILE_JS_VIEWS_LISTCOCKTAILPAGE_JS = 9,    /*!< @brief File: js/views/ListCocktailPage.js (size: 5.5 KB) */
   EFEMBEDWWW_EFILE_JS_VIEWS_NETWORKPAGE_JS = 10,    /*!< @brief File: js/views/NetworkPage.js (size: 1.6 KB) */
   EFEMBEDWWW_EFILE_JS_ROUTER_JS = 11,    /*!< @brief File: js/router.js (size: 2.5 KB) */
   EFEMBEDWWW_EFILE_JS_VIEWS_SETTINGSPAGE_JS = 12,    /*!< @brief File: js/views/SettingsPage.js (size: 306 B) */

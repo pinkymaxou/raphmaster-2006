@@ -1,4 +1,4 @@
-import MakeCocktailPage from "./views/MakeCocktailPage.js";
+import ListCocktailPage from "./views/ListCocktailPage.js";
 import CustomCocktailPage from "./views/CustomCocktailPage.js";
 import SettingsPage from "./views/SettingsPage.js";
 import AboutPage from "./views/AboutPage.js";
@@ -34,7 +34,7 @@ const router = async () => {
         { path: "/calib", view: CalibPage },
         { path: "/stationsettings", view: StationSettingsPage },
         { path: "/customcocktail", view: CustomCocktailPage },
-        { path: "/makecocktail", view: MakeCocktailPage },
+        { path: "/listcocktailpage", view: ListCocktailPage },
         { path: "/about", view: AboutPage },
     ];
 
