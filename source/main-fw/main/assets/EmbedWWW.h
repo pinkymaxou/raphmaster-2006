@@ -21,8 +21,8 @@ typedef enum
 {
   EFEMBEDWWW_EFILE_INDEX_HTML = 0,    /*!< @brief File: index.html (size: 1.4 KB) */
   EFEMBEDWWW_EFILE_CSS_BUTTON_CSS = 1,    /*!< @brief File: css/button.css (size: 2.0 KB) */
-  EFEMBEDWWW_EFILE_CSS_CONTENT_CSS = 2,    /*!< @brief File: css/content.css (size: 4.5 KB) */
-  EFEMBEDWWW_EFILE_CSS_GENERAL_CSS = 3,    /*!< @brief File: css/general.css (size: 1.7 KB) */
+  EFEMBEDWWW_EFILE_CSS_CONTENT_CSS = 2,    /*!< @brief File: css/content.css (size: 4.8 KB) */
+  EFEMBEDWWW_EFILE_CSS_GENERAL_CSS = 3,    /*!< @brief File: css/general.css (size: 1.6 KB) */
   EFEMBEDWWW_EFILE_JS_VIEWS_ABOUTPAGE_JS = 4,    /*!< @brief File: js/views/AboutPage.js (size: 2.3 KB) */
   EFEMBEDWWW_EFILE_JS_VIEWS_ABSTRACTVIEW_JS = 5,    /*!< @brief File: js/views/AbstractView.js (size: 249 B) */
   EFEMBEDWWW_EFILE_JS_APP_JS = 6,    /*!< @brief File: js/app.js (size: 3.1 KB) */

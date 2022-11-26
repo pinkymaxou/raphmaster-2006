@@ -35,12 +35,12 @@
 .cocktail_item  {
     padding: 5px;
     font-family: 'orbitron';
-    
+
     min-width: 20rem;
     max-width: 30rem;
     flex-grow: 1;
     flex: 1 1 0px;
-    
+
     display: inline-block;
 
     background-color: lightcyan;
@@ -58,7 +58,7 @@
 }
 
 .cocktail_item img {
-    float: left; 
+    float: left;
     margin: 0.2rem;
     width: 80px;
     height: 80px;
@@ -98,7 +98,7 @@
 
 .colingre_qty {
     padding: 0.1rem;
-    white-space: nowrap; 
+    white-space: nowrap;
     font-weight: bold;
     color: black;
 }
@@ -137,7 +137,7 @@
     margin: 0.5rem;
     font-weight: bold;
     font-family: 'orbitron';
-    font-size: x-larger;    
+    font-size: x-larger;
 }
 
 .status_ingredient_item {
@@ -205,7 +205,7 @@
     height: 100%;
     background-color: #659cef;
     border-radius: 3px;
-    
+
     transition: width 500ms ease-in-out;
 }
 
@@ -226,6 +226,21 @@
     border: 6px solid #fff;
     border-color: steelblue transparent steelblue transparent;
     animation: lds-dual-ring 1.2s linear infinite;
+}
+
+/* ===============================
+    Network settings
+   =============================== */
+.networksetting-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px
+}
+
+.networksetting-2fields-container {
+    display: grid;
+    grid-template-columns: 150px 150px;
+    gap: 5px;
 }
 
 @keyframes lds-dual-ring {
