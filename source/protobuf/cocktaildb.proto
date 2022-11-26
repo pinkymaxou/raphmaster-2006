@@ -69,7 +69,10 @@ message Qty
 
 message RecipeStep
 {
-	uint32 ingredient_id = 2;			// do not accept 0 as ID
+	oneof ingredient {
+		uint32 ingredient_id = 1;			// do not accept 0 as ID
+		uint32 ingredient_group_id = 2;		// do not accept 0 as ID
+	}
 	Qty	qty = 3;
 	bool is_garnish = 4;
 }

@@ -94,7 +94,11 @@ char* COCKTAILEXPLORER_GetAllRecipes()
         {
             cocktaildb_RecipeStep* pRecipeStep = &pRecipe->recipe_steps[j];
 
-            const cocktaildb_Ingredient* pIngredient = GetIngredientFile(pRecipeStep->ingredient_id);
+            // We do not support group yet.
+            if (pRecipeStep->which_ingredient != cocktaildb_RecipeStep_ingredient_id_tag)
+                continue;
+
+            const cocktaildb_Ingredient* pIngredient = GetIngredientFile(pRecipeStep->ingredient.ingredient_id);
             if (pIngredient == NULL)
                 continue;
 

@@ -236,6 +236,7 @@ namespace recipe_export
                             newRecipe.RecipeSteps.Add(new Cocktaildb.RecipeStep()
                             {
                                 IngredientId = dbIngredient.Id,
+
                                 Qty = newQty,
                                 IsGarnish = importIngredient.IsGarnish
                             });
