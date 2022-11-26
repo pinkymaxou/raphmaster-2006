@@ -28,6 +28,8 @@
 #define API_GETCOCKTAILSJSON_URI "/api/getcocktails"
 #define API_GETINGREDIENTSLIQUIDSJSON_URI "/api/getingredients/liquids"
 
+#define API_GETSTATIONSETTINGSJSON_URI "/api/getstationsettings"
+
 #define API_GETSYSINFOJSON_URI "/api/getsysinfo"
 
 #define ACTION_POST_REBOOT "/action/reboot"
@@ -44,6 +46,8 @@ static esp_err_t file_otauploadpost_handler(httpd_req_t *req);
 static const EFEMBEDWWW_SFile* GetFile(const char* strFilename);
 
 static char* GetSysInfo();
+static char* GetStationSettings();
+
 static void ToHexString(char *dstHexString, const uint8_t* data, uint8_t len);
 static const char* GetESPChipId(esp_chip_model_t eChipid);
 
@@ -220,6 +224,12 @@ static esp_err_t api_get_handler(httpd_req_t *req)
         const int64_t u64Start = esp_timer_get_time();
         pExportJSON = COCKTAILEXPLORER_GetAllRecipes();
         ESP_LOGI(TAG, "Get all recipe time: %d ms", (int)(esp_timer_get_time() - u64Start) / 1000 );
+    }
+    else if (strcmp(req->uri, API_GETSTATIONSETTINGSJSON_URI) == 0)
+    {
+        const int64_t u64Start = esp_timer_get_time();
+        pExportJSON = GetStationSettings();
+        ESP_LOGI(TAG, "Get station settings time: %d ms", (int)(esp_timer_get_time() - u64Start) / 1000 );
     }
     else if (strcmp(req->uri, API_GETINGREDIENTSLIQUIDSJSON_URI) == 0) 
     {
@@ -408,6 +418,35 @@ static const EFEMBEDWWW_SFile* GetFile(const char* strFilename)
             return pFile;
     }
 
+    return NULL;
+}
+
+static char* GetStationSettings()
+{
+    cJSON* pRoot = NULL;
+    
+    char buff[100];
+    pRoot = cJSON_CreateArray();
+    if (pRoot == NULL)
+    {
+        goto ERROR;
+    }
+
+    for(int i = 0; i < 16; i++)
+    {
+        cJSON* pNewStation = cJSON_CreateObject();
+        cJSON_AddItemToObject(pNewStation, "id", cJSON_CreateNumber(i+1));    
+        cJSON_AddItemToObject(pNewStation, "ingredient_id", cJSON_CreateNumber(0));
+        cJSON_AddItemToObject(pNewStation, "total_ml", cJSON_CreateNumber(2000));
+        cJSON_AddItemToObject(pNewStation, "used_ml", cJSON_CreateNumber(500));
+        cJSON_AddItemToArray(pRoot, pNewStation);
+    }
+
+    char* pStr =  cJSON_PrintUnformatted(pRoot);
+    cJSON_Delete(pRoot);
+    return pStr;
+    ERROR:
+    cJSON_Delete(pRoot);
     return NULL;
 }
 
