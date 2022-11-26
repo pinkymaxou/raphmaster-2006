@@ -66,6 +66,7 @@ export default class extends AbstractView {
                 // Ingredients
                 cboSelectIngredient.appendChild(this.addIngredient(0, "--- None ---"));
                 this.mIngredients.forEach( (ingredient) => cboSelectIngredient.appendChild(this.addIngredient(ingredient.id, ingredient.name)) );
+                cboSelectIngredient.value = stationItem.ingredient_id;
                 tdValue.appendChild(cboSelectIngredient);
 
                 // =====================
@@ -111,16 +112,20 @@ export default class extends AbstractView {
 
                 let item = { id: Number(idStationId.value), ingredient_id: Number(idSelectIngredient.value), total_ml: Number(idValueTotalQty.value), used_ml : Number(idValueUsedQty.value) };
                 stationSettingItems.push(item);
-                console.log(item);
             }
-
             fetch('/api/setstationsettings', {
-                method: 'POST', // or 'PUT'
+                method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(stationSettingItems),
               })
+            .then((data) => {
+                console.log('Success:', data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
         });
     }
 
