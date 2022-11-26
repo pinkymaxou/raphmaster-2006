@@ -16,6 +16,9 @@ export default class extends AbstractView {
             <fieldset>
                 <legend>Wi-Fi (soft access point)</legend>
                 <div class="networksetting-2fields-container">
+                    <label for="idWiFiSTASSID">SSID</label>
+                    <p style="margin: 0; font-weight: bold;">SSID</p>
+
                     <label for="idWiFiSoAPPassword">Password</label>
                     <input type="password" id="idWiFiSoAPPassword" placeholder="Password" />
                 </div>
@@ -24,7 +27,7 @@ export default class extends AbstractView {
             <fieldset>
                 <legend>Wi-Fi (station mode)</legend>
                 <label for="idWifiSTAIsActive" class="pure-checkbox">
-                    <input type="checkbox" id="idWifiSTAIsActive" style="display: inline" /> Activate STA mode
+                    <input type="checkbox" id="idWifiSTAIsActive" style="display: inline; margin-bottom: 10px;" /> Activate STA mode
                 </label>
 
                 <div class="networksetting-2fields-container">
