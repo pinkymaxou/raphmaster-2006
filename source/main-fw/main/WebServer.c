@@ -18,7 +18,7 @@
 #define TAG "webserver"
 
 /* Max length a file path can have on storage */
-#define HTTPSERVER_BUFFERSIZE (1024*6)
+#define HTTPSERVER_BUFFERSIZE (1024*12)
 
 #define DEFAULT_RELATIVE_URI "/index.html"
 
@@ -27,6 +27,7 @@
 
 #define API_GETCOCKTAILSJSON_URI "/api/getcocktails"
 #define API_GETINGREDIENTSLIQUIDSJSON_URI "/api/getingredients/liquids"
+#define API_GETAVAILABLEINGREDIENTSJSON_URI "/api/getavailableingredients"
 
 #define API_GETSTATIONSETTINGSJSON_URI "/api/getstationsettings"
 
@@ -236,6 +237,12 @@ static esp_err_t api_get_handler(httpd_req_t *req)
         const int64_t u64Start = esp_timer_get_time();
         pExportJSON = COCKTAILEXPLORER_GetAllIngredients(true);
         ESP_LOGI(TAG, "Get all liquid ingredients time: %d ms", (int)(esp_timer_get_time() - u64Start) / 1000 );
+    }
+    else if (strcmp(req->uri, API_GETAVAILABLEINGREDIENTSJSON_URI) == 0) 
+    {
+        const int64_t u64Start = esp_timer_get_time();
+        pExportJSON = COCKTAILEXPLORER_GetAllAvailableIngredients();
+        ESP_LOGI(TAG, "Get all available ingredients time: %d ms", (int)(esp_timer_get_time() - u64Start) / 1000 );
     }
     else
     {
