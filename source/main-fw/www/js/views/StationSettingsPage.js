@@ -26,6 +26,7 @@ export default class extends AbstractView {
             .then((response) => response.json())
             .then((data) => this.mIngredients = data)
             .catch((ex) => console.error('getingredients', ex));
+        this.mIngredients.sort((a, b) => a.name.localeCompare(b.name));
 
         const API_GETSTATIONSETTINGS = '/api/getstationsettings';
 

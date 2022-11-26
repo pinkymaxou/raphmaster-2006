@@ -134,8 +134,8 @@ static esp_err_t file_get_handler(httpd_req_t *req)
     ESP_LOGI(TAG, "Opening file uri: %s", req->uri);
 
     // Redirect root to index.html
-    if (strcmp(req->uri, "/") == 0 || 
-        strcmp(req->uri, "/about") == 0 || 
+    if (strcmp(req->uri, "/") == 0 ||
+        strcmp(req->uri, "/about") == 0 ||
         strcmp(req->uri, "/network") == 0 ||
         strcmp(req->uri, "/settings") == 0 ||
         strcmp(req->uri, "/calib") == 0 ||
@@ -240,13 +240,13 @@ static esp_err_t api_get_handler(httpd_req_t *req)
         pExportJSON = COCKTAILEXPLORER_GetStationSettings();
         ESP_LOGI(TAG, "Get station settings time: %d ms", (int)(esp_timer_get_time() - u64Start) / 1000 );
     }
-    else if (strcmp(req->uri, API_GETINGREDIENTSLIQUIDSJSON_URI) == 0) 
+    else if (strcmp(req->uri, API_GETINGREDIENTSLIQUIDSJSON_URI) == 0)
     {
         const int64_t u64Start = esp_timer_get_time();
         pExportJSON = COCKTAILEXPLORER_GetAllIngredients(true);
         ESP_LOGI(TAG, "Get all liquid ingredients time: %d ms", (int)(esp_timer_get_time() - u64Start) / 1000 );
     }
-    else if (strcmp(req->uri, API_GETAVAILABLEINGREDIENTSJSON_URI) == 0) 
+    else if (strcmp(req->uri, API_GETAVAILABLEINGREDIENTSJSON_URI) == 0)
     {
         const int64_t u64Start = esp_timer_get_time();
         pExportJSON = COCKTAILEXPLORER_GetAllAvailableIngredients();
@@ -444,7 +444,7 @@ static esp_err_t set_content_type_from_file(httpd_req_t *req, const char *filena
     else if (IS_FILE_EXT(filename, ".svg")) {
         return httpd_resp_set_type(req, "image/svg+xml");
     }
-    
+
     /* This is a limited set only */
     /* For any other type always set as plain text */
     return httpd_resp_set_type(req, "text/plain");
@@ -540,7 +540,7 @@ static char* GetSysInfo()
     cJSON_AddItemToObject(pEntryJSON8, "name", cJSON_CreateString("Memory"));
     const int totalSize = heap_caps_get_total_size(MALLOC_CAP_8BIT);
     const int usedSize = totalSize - heap_caps_get_free_size(MALLOC_CAP_8BIT);
-    
+
     sprintf(buff, "%d / %d", /*0*/usedSize, /*1*/totalSize);
     cJSON_AddItemToObject(pEntryJSON8, "value", cJSON_CreateString(buff));
     cJSON_AddItemToArray(pEntries, pEntryJSON8);

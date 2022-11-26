@@ -41,7 +41,7 @@ export default class extends AbstractView {
         cboSelectIngredient.classList.add("custom-cocktail-grid-center-select");
         // Ingredients
         cboSelectIngredient.appendChild(this.addIngredient(0, "--- None ---"));
-        this.mIngredients.forEach( (ingredient) => cboSelectIngredient.appendChild(this.addIngredient(ingredient.id, ingredient.name)) );
+        this.mIngredients.forEach( (ingredient) => cboSelectIngredient.appendChild(this.addIngredient(ingredient.ingredient_id, ingredient.name)) );
         tdIngredientDIV.appendChild(cboSelectIngredient);
         idDivOrderList.appendChild(tdIngredientDIV);
 
@@ -84,7 +84,7 @@ export default class extends AbstractView {
 
     async loaded() {
 
-        const API_GETINGREDIENTS = '/api/getingredients/liquids';
+        const API_GETINGREDIENTS = '/api/getavailableingredients';
 
         this.mIngredients = [];
         this.mIndex = 0;
@@ -93,7 +93,8 @@ export default class extends AbstractView {
         await fetch(API_GETINGREDIENTS)
             .then((response) => response.json())
             .then((data) => this.mIngredients = data)
-            .catch((ex) => console.error('getingredients', ex));
+            .catch((ex) => console.error('getavailableingredients', ex));
+        this.mIngredients.sort((a, b) => a.name.localeCompare(b.name));
 
         let idTBodyCustomIngredientList = document.querySelector("#idTBodyCustomIngredientList");
 
