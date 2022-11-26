@@ -4,26 +4,8 @@ export default class extends AbstractView {
     constructor(params) {
         super(params);
 
+        this.mColumnCount = 3;
         this.setTitle("Custom cocktail");
-
-        this.mStations = [
-            { stationid: 1, name: "Vokda", remainqty: 1500, totalqty: 2000 },
-            { stationid: 2, name: "Clamato", remainqty: 1500, totalqty: 2000 },
-            { stationid: 3, name: "Grenadine", remainqty: 1500, totalqty: 2000 },
-            { stationid: 4, name: "White rhum", remainqty: 1500, totalqty: 2000 },
-            { stationid: 5, name: "Brown rhum", remainqty: 1500, totalqty: 2000 },
-            { stationid: 6, name: "Whiskey Sour", remainqty: 1500, totalqty: 2000 },
-            { stationid: 7, name: "Dry Martini", remainqty: 1500, totalqty: 2000 },
-            { stationid: 8, name: "Margarita", remainqty: 1500, totalqty: 2000 },
-            { stationid: 9, name: "Sour Puss", remainqty: 1500, totalqty: 2000 },
-            { stationid:10, name: "Gin", remainqty: 1500, totalqty: 2000 },
-            { stationid:11, name: "Bayleys", remainqty: 1500, totalqty: 2000 },
-            { stationid:12, name: "Cosmopolitan", remainqty: 1500, totalqty: 2000 },
-            { stationid:13, name: "Peach schnapps ", remainqty: 1500, totalqty: 2000 },
-            { stationid:14, name: "White mint cream", remainqty: 1500, totalqty: 2000 },
-            { stationid:15, name: "Tequila", remainqty: 1500, totalqty: 2000 },
-            { stationid:16, name: "Tia Maria", remainqty: 1500, totalqty: 2000 }
-        ];
     }
 
     addQty(id, name) {
@@ -33,57 +15,137 @@ export default class extends AbstractView {
         return cboNewIngredientOpt;
     }
 
+    addIngredient(id, name) {
+        let cboNewIngredientOpt = document.createElement("option");
+        cboNewIngredientOpt.setAttribute("value", id);
+        cboNewIngredientOpt.text = name;
+        return cboNewIngredientOpt;
+    }
+
+    addOrderItem(orderListItem) {
+
+        let idDivOrderList = document.querySelector("#idDivOrderList");
+
+        // Alternate row
+       /* if (this.mIndex % 2 == 0) {
+            newTr.classList.add("custom-cocktail-grid-row-odd");
+        }*/
+
+        // =====================
+        const tdIngredientDIV = document.createElement("div"); // create td only
+
+        // Add select
+        let cboSelectIngredient = document.createElement("select");
+        cboSelectIngredient.setAttribute("id", "idSelectIngredient");
+        cboSelectIngredient.style["width"] = "-webkit-fill-available";
+        cboSelectIngredient.classList.add("custom-cocktail-grid-center-select");
+        // Ingredients
+        cboSelectIngredient.appendChild(this.addIngredient(0, "--- None ---"));
+        this.mIngredients.forEach( (ingredient) => cboSelectIngredient.appendChild(this.addIngredient(ingredient.id, ingredient.name)) );                
+        tdIngredientDIV.appendChild(cboSelectIngredient);
+        idDivOrderList.appendChild(tdIngredientDIV);
+
+        // =====================
+        const tdValueDIV = document.createElement("div");
+        
+        // Add select
+        let cboSelectQty = document.createElement("select");
+        cboSelectQty.setAttribute("id", "idSelectQty");
+        cboSelectQty.style["width"] = "-webkit-fill-available";
+        cboSelectQty.classList.add("custom-cocktail-grid-center-select");
+        
+        // Quantities
+        cboSelectQty.appendChild(this.addQty(0, " --- "));                
+        for(let oz = 0.5; oz <= 8; oz += 0.5) {
+            cboSelectQty.appendChild(this.addQty(oz, oz +" oz"));
+        }
+        tdValueDIV.appendChild(cboSelectQty);
+        idDivOrderList.appendChild(tdValueDIV);
+
+        // =====================
+        const tdControlDIV = document.createElement("div");
+        tdControlDIV.style["width"] = "max-content";
+    
+        let btDeleteOrder = document.createElement("button");
+        btDeleteOrder.classList.add("button-cancel");
+        btDeleteOrder.appendChild(document.createTextNode("-"));
+        btDeleteOrder.addEventListener('click', function() {
+            
+            idDivOrderList.removeChild(tdIngredientDIV);
+            idDivOrderList.removeChild(tdValueDIV);
+            idDivOrderList.removeChild(tdControlDIV);
+        });
+
+        tdControlDIV.appendChild(btDeleteOrder);
+        idDivOrderList.appendChild(tdControlDIV);
+
+        this.mIndex++;
+    }
+
     async loaded() {
+
+        const API_GETINGREDIENTS = '/api/getingredients/liquids';
+
+        this.mIngredients = [];
+        this.mIndex = 0;
+
+        // Get system informations
+        await fetch(API_GETINGREDIENTS)
+            .then((response) => response.json())
+            .then((data) => this.mIngredients = data)
+            .catch((ex) => console.error('getingredients', ex));
 
         let idTBodyCustomIngredientList = document.querySelector("#idTBodyCustomIngredientList");
 
-        let i = 0;
-        this.mStations.forEach(
-            (stationItem) =>
+        this.mOrderList = [{ "name" : "test" }, { "name" : "test" }, { "name" : "test" }, { "name" : "test" }];
+
+        this.mOrderList.forEach(
+            (orderListItem) =>
             {
-                let newTr = idTBodyCustomIngredientList.insertRow();
-
-                // Alternate row
-                if (i % 2 == 0) {
-                    newTr.classList.add("custom-table-row-odd");
-                }
-
-                // =====================
-                const tdStation = newTr.insertCell(); // create td only
-                tdStation.appendChild(document.createTextNode(stationItem.stationid));
-                
-                // =====================
-                const tdIngredient = newTr.insertCell(); // create td only
-                tdIngredient.appendChild(document.createTextNode(stationItem.name));
-                
-                // =====================
-                const tdValue = newTr.insertCell(); // create td only
-
-                // Add select
-                let cboSelectQty = document.createElement("select");
-                cboSelectQty.style["width"] = "-webkit-fill-available";
-                
-                // Ingredients
-                cboSelectQty.appendChild(this.addQty(0, " --- "));                
-                for(let oz = 0.5; oz <= 3; oz += 0.5) {
-                    cboSelectQty.appendChild(this.addQty(oz, oz +" oz"));
-                }
-                tdValue.appendChild(cboSelectQty);
-
-                i++;
+                this.addOrderItem(orderListItem);
             });
 
+        let targetThis = this;
+
+        // Bind buttons
+        let idBtAddOrder = document.querySelector("#idBtAddOrder");
+        idBtAddOrder.addEventListener('click', function() {
+            targetThis.addOrderItem(null);
+        });
+        
+        // Bind buttons
+        let idBtOK = document.querySelector("#idBtOK");
+        idBtOK.addEventListener('click', function() {
+            // Get ordered item list
+            let idDivOrderList = document.querySelector("#idDivOrderList");
+
+            const matches = idDivOrderList.querySelectorAll("div");
+
+            for(let i = 0; i < matches.length; i += targetThis.mColumnCount)
+            {
+                let idSelectIngredient = matches[i].querySelector("#idSelectIngredient");
+                let idSelectQty = matches[i+1].querySelector("#idSelectQty");
+
+                console.log("idSelectIngredient: ", idSelectIngredient.value, " idSelectQty: ", idSelectQty.value);
+            }
+        });
     }
 
     async getHtml() {
         return `
-        <table class="custom-table">
-            <tbody id="idTBodyCustomIngredientList">
-                <!-- Space for table items -->
-            </tbody>
-        </table>
-        <br>
-        <button class="pure-button pure-button-primary">Make</button>
+        <div>
+            <div id="idDivOrderList" class="custom-cocktail-grid">
+                <!-- Lines -->
+            </div>
+
+            <div class="button-bar">
+                <button id="idBtAddOrder" class="button-normal button-bar-item">Add order</button>
+            </div>
+
+            <div class="button-bar">
+                <button id="idBtOK" class="button-normal button-bar-item">OK</button>
+            </div>
+        </div>
         `;
     }
 }

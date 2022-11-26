@@ -33,6 +33,7 @@ export default class extends AbstractView {
         //             <div class="colingre_name">Peach Snapps</div>
         //             <div class="colingre_qty">50ml</div>
         //         </div>
+        //         <button class="button-normal">Order</button>
         //     </div>
         // </div>   
         this.mCocktails.sort(
@@ -45,7 +46,6 @@ export default class extends AbstractView {
             (cocktail) =>
             {
                 let newCocktailItemDIV = document.createElement("div");
-                newCocktailItemDIV.classList.add("pure-g");
                 newCocktailItemDIV.classList.add("cocktail_item");
 
                 // Add img
@@ -113,6 +113,22 @@ export default class extends AbstractView {
                 newIngredientDIV.appendChild(newIngredientGridDIV);
 
                 newCocktailItemDIV.appendChild(newIngredientDIV);
+
+                // Controls
+                let newControlDIV = document.createElement("div");
+                newControlDIV.classList.add("cocktail_control");
+                
+                let newBtnOrderDrink = document.createElement("button");
+                newBtnOrderDrink.appendChild(document.createTextNode("Order"));
+                newBtnOrderDrink.classList.add("button-normal");
+                newControlDIV.appendChild(newBtnOrderDrink);
+
+                let newBtnOrderCustomDrink = document.createElement("button");
+                newBtnOrderCustomDrink.appendChild(document.createTextNode("Custom order"));
+                newBtnOrderCustomDrink.classList.add("button-normal");
+                newControlDIV.appendChild(newBtnOrderCustomDrink);
+
+                newCocktailItemDIV.appendChild(newControlDIV);
 
                 idCocktailList.appendChild(newCocktailItemDIV);
             });
