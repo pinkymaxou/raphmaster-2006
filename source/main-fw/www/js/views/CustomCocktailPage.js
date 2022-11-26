@@ -4,6 +4,7 @@ export default class extends AbstractView {
     constructor(params) {
         super(params);
 
+        this.mColumnCount = 3;
         this.setTitle("Custom cocktail");
     }
 
@@ -22,6 +23,7 @@ export default class extends AbstractView {
     }
 
     addOrderItem(orderListItem) {
+
         let idDivOrderList = document.querySelector("#idDivOrderList");
 
         // Alternate row
@@ -34,6 +36,7 @@ export default class extends AbstractView {
 
         // Add select
         let cboSelectIngredient = document.createElement("select");
+        cboSelectIngredient.setAttribute("id", "idSelectIngredient");
         cboSelectIngredient.style["width"] = "-webkit-fill-available";
         cboSelectIngredient.classList.add("custom-cocktail-grid-center-select");
         // Ingredients
@@ -47,6 +50,7 @@ export default class extends AbstractView {
         
         // Add select
         let cboSelectQty = document.createElement("select");
+        cboSelectQty.setAttribute("id", "idSelectQty");
         cboSelectQty.style["width"] = "-webkit-fill-available";
         cboSelectQty.classList.add("custom-cocktail-grid-center-select");
         
@@ -108,6 +112,23 @@ export default class extends AbstractView {
         idBtAddOrder.addEventListener('click', function() {
             targetThis.addOrderItem(null);
         });
+        
+        // Bind buttons
+        let idBtOK = document.querySelector("#idBtOK");
+        idBtOK.addEventListener('click', function() {
+            // Get ordered item list
+            let idDivOrderList = document.querySelector("#idDivOrderList");
+
+            const matches = idDivOrderList.querySelectorAll("div");
+
+            for(let i = 0; i < matches.length; i += targetThis.mColumnCount)
+            {
+                let idSelectIngredient = matches[i].querySelector("#idSelectIngredient");
+                let idSelectQty = matches[i+1].querySelector("#idSelectQty");
+
+                console.log("idSelectIngredient: ", idSelectIngredient.value, " idSelectQty: ", idSelectQty.value);
+            }
+        });
     }
 
     async getHtml() {
@@ -122,8 +143,7 @@ export default class extends AbstractView {
             </div>
 
             <div class="button-bar">
-                <button class="button-normal button-bar-item">Cancel</button>
-                <button class="button-normal button-bar-item">OK</button>
+                <button id="idBtOK" class="button-normal button-bar-item">OK</button>
             </div>
         </div>
         `;
