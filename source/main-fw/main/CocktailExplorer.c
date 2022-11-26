@@ -2,6 +2,7 @@
 #include "esp_log.h"
 
 #include "CocktailExplorer.h" 
+#include "StationSettings.h" 
 #include "assets/EmbedCocktailDb.h"
 #include "cJSON.h"
 
@@ -157,14 +158,15 @@ char* COCKTAILEXPLORER_GetAllAvailableIngredients()
     if (pRoot == NULL)
         goto ERROR;
 
-    for(int i = 0; i < m_sIngredientFile.entries_count; i++)
+    for(int stationId = 1; stationId < STATIONSETTINGS_STATION_COUNT; stationId++)
     {
-        const cocktaildb_Ingredient* pIngredient = COCKTAILEXPLORER_GetIngredientFile(0);
+        int32_t s32IngredientId = STATIONSETTINGS_GetValue(stationId, STATIONSETTINGS_ESTATIONSET_LoadID);
+        const cocktaildb_Ingredient* pIngredient = COCKTAILEXPLORER_GetIngredientFile((uint32_t)s32IngredientId);
         if (pIngredient == NULL)
             continue;
 
         cJSON* pNewRecipe = cJSON_CreateObject();
-        cJSON_AddItemToObject(pNewRecipe, "station_id", cJSON_CreateNumber(i+1));
+        cJSON_AddItemToObject(pNewRecipe, "station_id", cJSON_CreateNumber(stationId));
         cJSON_AddItemToObject(pNewRecipe, "ingredient_id", cJSON_CreateNumber(pIngredient->id));
         cJSON_AddItemToObject(pNewRecipe, "name", cJSON_CreateString(pIngredient->name));
         
@@ -177,4 +179,48 @@ char* COCKTAILEXPLORER_GetAllAvailableIngredients()
     ERROR:
     cJSON_Delete(pRoot);
     return NULL;  
+}
+
+char* COCKTAILEXPLORER_GetStationSettings()
+{
+    cJSON* pRoot = NULL;
+    
+    char buff[100];
+    pRoot = cJSON_CreateArray();
+    if (pRoot == NULL)
+    {
+        goto ERROR;
+    }
+
+    for(int stationId = 1; stationId <= STATIONSETTINGS_STATION_COUNT; stationId++)
+    {       
+        cJSON* pNewStation = cJSON_CreateObject();
+        cJSON_AddItemToObject(pNewStation, "id", cJSON_CreateNumber(stationId));    
+        
+        int32_t s32IngredientId = STATIONSETTINGS_GetValue(stationId, STATIONSETTINGS_ESTATIONSET_LoadID);
+        const cocktaildb_Ingredient* pIngredient = COCKTAILEXPLORER_GetIngredientFile((uint32_t)s32IngredientId);
+        if (pIngredient == NULL)
+            cJSON_AddItemToObject(pNewStation, "ingredient_id", cJSON_CreateNumber(0));
+        else
+            cJSON_AddItemToObject(pNewStation, "ingredient_id", cJSON_CreateNumber(pIngredient->id));
+
+        int32_t s32UsedTotal_ml = STATIONSETTINGS_GetValue(stationId, STATIONSETTINGS_ESTATIONSET_TotalQty);
+        cJSON_AddItemToObject(pNewStation, "total_ml", cJSON_CreateNumber(s32UsedTotal_ml));
+        int32_t s32UsedQty_ml = STATIONSETTINGS_GetValue(stationId, STATIONSETTINGS_ESTATIONSET_UsedQty);
+        cJSON_AddItemToObject(pNewStation, "used_ml", cJSON_CreateNumber(s32UsedQty_ml));
+
+        cJSON_AddItemToArray(pRoot, pNewStation);
+    }
+
+    char* pStr =  cJSON_PrintUnformatted(pRoot);
+    cJSON_Delete(pRoot);
+    return pStr;
+    ERROR:
+    cJSON_Delete(pRoot);
+    return NULL;
+}
+
+bool COCKTAILEXPLORER_SetStationSettings(const char* szRequestBuffer, uint32_t u32Length)
+{
+    return false;
 }

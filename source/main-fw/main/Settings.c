@@ -16,7 +16,7 @@ static const NVSJSON_SSettingEntry m_arrsConfigEntries[SETTINGS_EENTRY_Count] =
     [SETTINGS_EENTRY_WSTAPass]     = NVSJSON_INITSTRING_VAL("WSTA.Pass", "WiFi password [empty, or > 8 characters]", "", ValidateWifiPassword, NVSJSON_EFLAGS_Secret | NVSJSON_EFLAGS_NeedsReboot),
 };
 
-const NVSJSON_SConfig m_sConfig = { .szNamespace = "generalcfg" };
+static const NVSJSON_SConfig m_sConfig = { .szNamespace = "generalcfg" };
 
 void SETTINGS_Init()
 {

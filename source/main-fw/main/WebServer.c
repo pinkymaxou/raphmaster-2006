@@ -11,6 +11,7 @@
 #include "esp_ota_ops.h"
 #include "cJSON.h"
 #include "Settings.h"
+#include "StationSettings.h"
 #include "main.h"
 #include "HardwareGPIO.h"
 #include "CocktailExplorer.h"
@@ -22,14 +23,18 @@
 
 #define DEFAULT_RELATIVE_URI "/index.html"
 
-#define API_GETSETTINGSJSON_URI "/api/getsettingsjson"
-#define API_POSTSETTINGSJSON_URI "/api/setsettingsjson"
+#define API_EXPORTSETTINGSJSON_URI "/api/exportsettingsjson"
+#define API_IMPORTSETTINGSJSON_URI "/api/importsettingsjson"
 
 #define API_GETCOCKTAILSJSON_URI "/api/getcocktails"
 #define API_GETINGREDIENTSLIQUIDSJSON_URI "/api/getingredients/liquids"
 #define API_GETAVAILABLEINGREDIENTSJSON_URI "/api/getavailableingredients"
 
 #define API_GETSTATIONSETTINGSJSON_URI "/api/getstationsettings"
+#define API_SETSTATIONSETTINGSJSON_URI "/api/setstationsettings"
+
+#define API_EXPORTSTATIONSETTINGSJSON_URI "/api/exportstationsettingsjson"
+#define API_IMPORTSTATIONSETTINGSJSON_URI "/api/importstationsettingsjson"
 
 #define API_GETSYSINFOJSON_URI "/api/getsysinfo"
 
@@ -47,7 +52,6 @@ static esp_err_t file_otauploadpost_handler(httpd_req_t *req);
 static const EFEMBEDWWW_SFile* GetFile(const char* strFilename);
 
 static char* GetSysInfo();
-static char* GetStationSettings();
 
 static void ToHexString(char *dstHexString, const uint8_t* data, uint8_t len);
 static const char* GetESPChipId(esp_chip_model_t eChipid);
@@ -212,9 +216,13 @@ static esp_err_t api_get_handler(httpd_req_t *req)
 {
     char* pExportJSON = NULL;
 
-    if (strcmp(req->uri, API_GETSETTINGSJSON_URI) == 0)
+    if (strcmp(req->uri, API_EXPORTSETTINGSJSON_URI) == 0)
     {
-        pExportJSON = NVSJSON_ExportJSON(&g_sSettingHandle);
+        pExportJSON = NVSJSON_ExportJSON(&g_sSettingHandle, true);
+    }
+    else if (strcmp(req->uri,API_EXPORTSTATIONSETTINGSJSON_URI) == 0)
+    {
+        pExportJSON = NVSJSON_ExportJSON(&g_sStationSettingHandle, false);
     }
     else if (strcmp(req->uri, API_GETSYSINFOJSON_URI) == 0)
     {
@@ -229,7 +237,7 @@ static esp_err_t api_get_handler(httpd_req_t *req)
     else if (strcmp(req->uri, API_GETSTATIONSETTINGSJSON_URI) == 0)
     {
         const int64_t u64Start = esp_timer_get_time();
-        pExportJSON = GetStationSettings();
+        pExportJSON = COCKTAILEXPLORER_GetStationSettings();
         ESP_LOGI(TAG, "Get station settings time: %d ms", (int)(esp_timer_get_time() - u64Start) / 1000 );
     }
     else if (strcmp(req->uri, API_GETINGREDIENTSLIQUIDSJSON_URI) == 0) 
@@ -269,7 +277,7 @@ static esp_err_t api_get_handler(httpd_req_t *req)
 static esp_err_t api_post_handler(httpd_req_t *req)
 {
     ESP_LOGI(TAG, "api_post_handler, url: %s", req->uri);
-    if (strcmp(req->uri, API_POSTSETTINGSJSON_URI) == 0)
+    if (strcmp(req->uri, API_IMPORTSETTINGSJSON_URI) == 0)
     {
         int n = httpd_req_recv(req, (char*)m_u8Buffers, HTTPSERVER_BUFFERSIZE);
         m_u8Buffers[n] = '\0';
@@ -279,6 +287,33 @@ static esp_err_t api_post_handler(httpd_req_t *req)
             ESP_LOGE(TAG, "Unable to import JSON");
             httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "Unknown request");
         }
+        else
+            ESP_LOGI(TAG, "Import settings");
+    }
+    else if (strcmp(req->uri, API_IMPORTSTATIONSETTINGSJSON_URI) == 0)
+    {
+        int n = httpd_req_recv(req, (char*)m_u8Buffers, HTTPSERVER_BUFFERSIZE);
+        m_u8Buffers[n] = '\0';
+
+        if (!NVSJSON_ImportJSON(&g_sStationSettingHandle, (const char*)m_u8Buffers))
+        {
+            ESP_LOGE(TAG, "Unable to import JSON");
+            httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "Unknown request");
+        }
+        else
+            ESP_LOGI(TAG, "Import station settings");
+    }
+    else if (strcmp(req->uri, API_SETSTATIONSETTINGSJSON_URI) == 0)
+    {
+        int n = httpd_req_recv(req, (char*)m_u8Buffers, HTTPSERVER_BUFFERSIZE);
+        m_u8Buffers[n] = '\0';
+        if (!COCKTAILEXPLORER_SetStationSettings((char*)m_u8Buffers, n))
+        {
+            ESP_LOGE(TAG, "Unable to save data");
+            httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "Unknown request");
+        }
+        else
+            ESP_LOGI(TAG, "Set station settings");
     }
     else
     {
@@ -425,35 +460,6 @@ static const EFEMBEDWWW_SFile* GetFile(const char* strFilename)
             return pFile;
     }
 
-    return NULL;
-}
-
-static char* GetStationSettings()
-{
-    cJSON* pRoot = NULL;
-    
-    char buff[100];
-    pRoot = cJSON_CreateArray();
-    if (pRoot == NULL)
-    {
-        goto ERROR;
-    }
-
-    for(int i = 0; i < 16; i++)
-    {
-        cJSON* pNewStation = cJSON_CreateObject();
-        cJSON_AddItemToObject(pNewStation, "id", cJSON_CreateNumber(i+1));    
-        cJSON_AddItemToObject(pNewStation, "ingredient_id", cJSON_CreateNumber(0));
-        cJSON_AddItemToObject(pNewStation, "total_ml", cJSON_CreateNumber(2000));
-        cJSON_AddItemToObject(pNewStation, "used_ml", cJSON_CreateNumber(500));
-        cJSON_AddItemToArray(pRoot, pNewStation);
-    }
-
-    char* pStr =  cJSON_PrintUnformatted(pRoot);
-    cJSON_Delete(pRoot);
-    return pStr;
-    ERROR:
-    cJSON_Delete(pRoot);
     return NULL;
 }
 
