@@ -68,7 +68,16 @@ typedef struct _NVSJSON_SSettingEntry
 
 typedef struct
 {
+    const char* szNamespace;
+} NVSJSON_SConfig;
+
+typedef struct
+{
 	nvs_handle_t sNVS;
+
+    // Module configuration
+    const NVSJSON_SConfig* pSConfig;
+
 	// Entries
 	const NVSJSON_SSettingEntry* pSettingEntries;
 	uint32_t u32SettingEntryCount;
@@ -85,7 +94,7 @@ typedef struct
 #define NVSJSON_INITINT32_RNG(_szKey, _szDesc, _s32Default, _s32Min, _s32Max, _eFlags) { .szKey = _szKey, .eType = NVSJSON_ETYPE_Int32,.szDesc = _szDesc, .uConfig = { .sInt32 = { .s32Default = _s32Default, .s32Min = _s32Min, .s32Max = _s32Max, .ptrValidator = NULL } }, .eFlags = _eFlags }
 #define NVSJSON_INITINT32_VAL(_szKey, _szDesc, _s32Default, _ptrValidateInt32, _eFlags) { .szKey = _szKey, .eType = NVSJSON_ETYPE_Int32,.szDesc = _szDesc, .uConfig = { .sInt32 = { .s32Default = _s32Default, .ptrValidator = _ptrValidateInt32 } }, .eFlags = _eFlags }
 
-void NVSJSON_Init(NVSJSON_SHandle* pHandle, const NVSJSON_SSettingEntry* pSettingEntries, uint32_t u32SettingEntryCount);
+void NVSJSON_Init(NVSJSON_SHandle* pHandle, const NVSJSON_SConfig* pSConfig, const NVSJSON_SSettingEntry* pSettingEntries, uint32_t u32SettingEntryCount);
 void NVSJSON_Load(NVSJSON_SHandle* pHandle);
 void NVSJSON_Save(NVSJSON_SHandle* pHandle);
 

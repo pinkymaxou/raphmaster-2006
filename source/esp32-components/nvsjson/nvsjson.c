@@ -8,7 +8,6 @@
 #include <string.h>
 
 #define TAG "SETTINGS"
-#define PARTITION_NAME "nvs"
 
 // JSON entries
 #define JSON_ENTRIES_NAME "entries"
@@ -28,12 +27,14 @@
 static const NVSJSON_SSettingEntry* GetSettingEntry(NVSJSON_SHandle* pHandle, uint16_t eEntry);
 static bool GetSettingEntryByKey(NVSJSON_SHandle* pHandle, const char* szKey, uint16_t* pU16Entry);
 
-void NVSJSON_Init(NVSJSON_SHandle* pHandle, const NVSJSON_SSettingEntry* pSettingEntries, uint32_t u32SettingEntryCount)
+void NVSJSON_Init(NVSJSON_SHandle* pHandle, const NVSJSON_SConfig* pSConfig, const NVSJSON_SSettingEntry* pSettingEntries, uint32_t u32SettingEntryCount)
 {
+    pHandle->pSConfig = pSConfig;
+
 	pHandle->pSettingEntries = pSettingEntries;
 	pHandle->u32SettingEntryCount = u32SettingEntryCount;
 	
-    ESP_ERROR_CHECK(nvs_open(PARTITION_NAME, NVS_READWRITE, &pHandle->sNVS));
+    ESP_ERROR_CHECK(nvs_open(pSConfig->szNamespace, NVS_READWRITE, &pHandle->sNVS));
 }
 
 void NVSJSON_Load(NVSJSON_SHandle* pHandle)
