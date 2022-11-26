@@ -8,7 +8,6 @@
 #include <string.h>
 
 #define TAG "SETTINGS"
-#define PARTITION_NAME "nvs"
 
 // JSON entries
 #define JSON_ENTRIES_NAME "entries"
@@ -28,12 +27,14 @@
 static const NVSJSON_SSettingEntry* GetSettingEntry(NVSJSON_SHandle* pHandle, uint16_t eEntry);
 static bool GetSettingEntryByKey(NVSJSON_SHandle* pHandle, const char* szKey, uint16_t* pU16Entry);
 
-void NVSJSON_Init(NVSJSON_SHandle* pHandle, const NVSJSON_SSettingEntry* pSettingEntries, uint32_t u32SettingEntryCount)
+void NVSJSON_Init(NVSJSON_SHandle* pHandle, const NVSJSON_SConfig* pSConfig, const NVSJSON_SSettingEntry* pSettingEntries, uint32_t u32SettingEntryCount)
 {
+    pHandle->pSConfig = pSConfig;
+
 	pHandle->pSettingEntries = pSettingEntries;
 	pHandle->u32SettingEntryCount = u32SettingEntryCount;
 	
-    ESP_ERROR_CHECK(nvs_open(PARTITION_NAME, NVS_READWRITE, &pHandle->sNVS));
+    ESP_ERROR_CHECK(nvs_open(pSConfig->szNamespace, NVS_READWRITE, &pHandle->sNVS));
 }
 
 void NVSJSON_Load(NVSJSON_SHandle* pHandle)
@@ -157,7 +158,7 @@ NVSJSON_ESETRET NVSJSON_SetValueString(NVSJSON_SHandle* pHandle, uint16_t u16Ent
     return NVSJSON_ESETRET_OK;
 }
 
-char* NVSJSON_ExportJSON(NVSJSON_SHandle* pHandle)
+char* NVSJSON_ExportJSON(NVSJSON_SHandle* pHandle, bool bAddInfo)
 {
     cJSON* pRoot = cJSON_CreateObject();
     if (pRoot == NULL)
@@ -173,53 +174,65 @@ char* NVSJSON_ExportJSON(NVSJSON_SHandle* pHandle)
         cJSON* pEntryJSON = cJSON_CreateObject();
         cJSON_AddItemToObject(pEntryJSON, JSON_ENTRY_KEY_NAME, cJSON_CreateString(pEntry->szKey));
 
-        cJSON* pEntryInfoJSON = cJSON_CreateObject();
-        
-        // Description and flags apply everywhere
-        cJSON_AddItemToObject(pEntryInfoJSON, JSON_ENTRY_INFO_DESC_NAME, cJSON_CreateString(pEntry->szDesc));
-        cJSON_AddItemToObject(pEntryInfoJSON, JSON_ENTRY_INFO_FLAG_REBOOT_NAME, cJSON_CreateNumber((pEntry->eFlags & NVSJSON_EFLAGS_NeedsReboot)? 1 : 0));
-
-        if (pEntry->eType == NVSJSON_ETYPE_Int32)
+        if ((pEntry->eFlags & NVSJSON_EFLAGS_Secret) != NVSJSON_EFLAGS_Secret)
         {
-            if ((pEntry->eFlags & NVSJSON_EFLAGS_Secret) != NVSJSON_EFLAGS_Secret)
+            if (pEntry->eType == NVSJSON_ETYPE_Int32)
+            {
                 cJSON_AddItemToObject(pEntryJSON, JSON_ENTRY_VALUE_NAME, cJSON_CreateNumber(NVSJSON_GetValueInt32(pHandle, u16Entry)));
-
-            cJSON_AddItemToObject(pEntryInfoJSON, JSON_ENTRY_INFO_DEFAULT_NAME, cJSON_CreateNumber(pEntry->uConfig.sInt32.s32Default));
-
-            if (pEntry->uConfig.sInt32.ptrValidator == NULL)
-            {
-                cJSON_AddItemToObject(pEntryInfoJSON, JSON_ENTRY_INFO_MIN_NAME, cJSON_CreateNumber(pEntry->uConfig.sInt32.s32Min));
-                cJSON_AddItemToObject(pEntryInfoJSON, JSON_ENTRY_INFO_MAX_NAME, cJSON_CreateNumber(pEntry->uConfig.sInt32.s32Max));
             }
-            cJSON_AddItemToObject(pEntryInfoJSON, JSON_ENTRY_INFO_TYPE_NAME, cJSON_CreateString("int32"));
-        }
-        else if (pEntry->eType == NVSJSON_ETYPE_Double)
-        {
-            if ((pEntry->eFlags & NVSJSON_EFLAGS_Secret) != NVSJSON_EFLAGS_Secret)
+            else if (pEntry->eType == NVSJSON_ETYPE_Double)
+            {
                 cJSON_AddItemToObject(pEntryJSON, JSON_ENTRY_VALUE_NAME, cJSON_CreateNumber(NVSJSON_GetValueDouble(pHandle, u16Entry)));
-
-            cJSON_AddItemToObject(pEntryInfoJSON, JSON_ENTRY_INFO_DEFAULT_NAME, cJSON_CreateNumber(pEntry->uConfig.sDouble.dDefault));
-            if (pEntry->uConfig.sDouble.ptrValidator == NULL)
-            {
-                cJSON_AddItemToObject(pEntryInfoJSON, JSON_ENTRY_INFO_MIN_NAME, cJSON_CreateNumber(pEntry->uConfig.sDouble.dMin));
-                cJSON_AddItemToObject(pEntryInfoJSON, JSON_ENTRY_INFO_MAX_NAME, cJSON_CreateNumber(pEntry->uConfig.sDouble.dMax));
             }
-            cJSON_AddItemToObject(pEntryInfoJSON, JSON_ENTRY_INFO_TYPE_NAME, cJSON_CreateString("double"));
+            else if (pEntry->eType == NVSJSON_ETYPE_String)
+            {
+                char value[NVSJSON_GETVALUESTRING_MAXLEN+1] = {0,};
+                size_t length = NVSJSON_GETVALUESTRING_MAXLEN;
+                if ((pEntry->eFlags & NVSJSON_EFLAGS_Secret) != NVSJSON_EFLAGS_Secret)
+                {
+                    NVSJSON_GetValueString(pHandle, u16Entry, value, &length);
+                    cJSON_AddItemToObject(pEntryJSON, JSON_ENTRY_VALUE_NAME, cJSON_CreateString(value));
+                }
+            }
         }
-        else if (pEntry->eType == NVSJSON_ETYPE_String)
+        
+        if (bAddInfo) 
         {
-            char value[NVSJSON_GETVALUESTRING_MAXLEN+1] = {0,};
-            size_t length = NVSJSON_GETVALUESTRING_MAXLEN;
-            if ((pEntry->eFlags & NVSJSON_EFLAGS_Secret) != NVSJSON_EFLAGS_Secret)
-            {
-                NVSJSON_GetValueString(pHandle, u16Entry, value, &length);
-                cJSON_AddItemToObject(pEntryJSON, JSON_ENTRY_VALUE_NAME, cJSON_CreateString(value));
-            }
-            cJSON_AddItemToObject(pEntryInfoJSON, JSON_ENTRY_INFO_DEFAULT_NAME, cJSON_CreateString(pEntry->uConfig.sString.szDefault));
-            cJSON_AddItemToObject(pEntryInfoJSON, JSON_ENTRY_INFO_TYPE_NAME, cJSON_CreateString("string"));
-        }
+            cJSON* pEntryInfoJSON = cJSON_CreateObject();
+            
+            // Description and flags apply everywhere
+            cJSON_AddItemToObject(pEntryInfoJSON, JSON_ENTRY_INFO_DESC_NAME, cJSON_CreateString(pEntry->szDesc));
+            cJSON_AddItemToObject(pEntryInfoJSON, JSON_ENTRY_INFO_FLAG_REBOOT_NAME, cJSON_CreateNumber((pEntry->eFlags & NVSJSON_EFLAGS_NeedsReboot)? 1 : 0));
 
-        cJSON_AddItemToObject(pEntryJSON, JSON_ENTRY_INFO_NAME, pEntryInfoJSON);
+            if (pEntry->eType == NVSJSON_ETYPE_Int32)
+            {
+                cJSON_AddItemToObject(pEntryInfoJSON, JSON_ENTRY_INFO_DEFAULT_NAME, cJSON_CreateNumber(pEntry->uConfig.sInt32.s32Default));
+
+                if (pEntry->uConfig.sInt32.ptrValidator == NULL)
+                {
+                    cJSON_AddItemToObject(pEntryInfoJSON, JSON_ENTRY_INFO_MIN_NAME, cJSON_CreateNumber(pEntry->uConfig.sInt32.s32Min));
+                    cJSON_AddItemToObject(pEntryInfoJSON, JSON_ENTRY_INFO_MAX_NAME, cJSON_CreateNumber(pEntry->uConfig.sInt32.s32Max));
+                }
+                cJSON_AddItemToObject(pEntryInfoJSON, JSON_ENTRY_INFO_TYPE_NAME, cJSON_CreateString("int32"));
+            }
+            else if (pEntry->eType == NVSJSON_ETYPE_Double)
+            {
+                cJSON_AddItemToObject(pEntryInfoJSON, JSON_ENTRY_INFO_DEFAULT_NAME, cJSON_CreateNumber(pEntry->uConfig.sDouble.dDefault));
+                if (pEntry->uConfig.sDouble.ptrValidator == NULL)
+                {
+                    cJSON_AddItemToObject(pEntryInfoJSON, JSON_ENTRY_INFO_MIN_NAME, cJSON_CreateNumber(pEntry->uConfig.sDouble.dMin));
+                    cJSON_AddItemToObject(pEntryInfoJSON, JSON_ENTRY_INFO_MAX_NAME, cJSON_CreateNumber(pEntry->uConfig.sDouble.dMax));
+                }
+                cJSON_AddItemToObject(pEntryInfoJSON, JSON_ENTRY_INFO_TYPE_NAME, cJSON_CreateString("double"));
+            }
+            else if (pEntry->eType == NVSJSON_ETYPE_String)
+            {
+                cJSON_AddItemToObject(pEntryInfoJSON, JSON_ENTRY_INFO_DEFAULT_NAME, cJSON_CreateString(pEntry->uConfig.sString.szDefault));
+                cJSON_AddItemToObject(pEntryInfoJSON, JSON_ENTRY_INFO_TYPE_NAME, cJSON_CreateString("string"));
+            }
+
+            cJSON_AddItemToObject(pEntryJSON, JSON_ENTRY_INFO_NAME, pEntryInfoJSON);           
+        }
 
         cJSON_AddItemToArray(pEntries, pEntryJSON);
     }

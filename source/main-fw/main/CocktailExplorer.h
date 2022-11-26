@@ -14,4 +14,8 @@ char* COCKTAILEXPLORER_GetAllIngredients(bool bIsLiquidOnly);
 
 char* COCKTAILEXPLORER_GetAllAvailableIngredients();
 
+char* COCKTAILEXPLORER_GetStationSettings();
+
+bool COCKTAILEXPLORER_SetStationSettings(const char* szRequestBuffer, uint32_t u32Length);
+
 #endif

@@ -16,7 +16,7 @@ export default class extends AbstractView {
             .then((response) => response.json())
             .then((data) => infoItems = data.infos)
             .catch((ex) => console.error('getSysInfo', ex));
- 
+
         let tbodySysInfo = document.querySelector("#tblBdSysInfo");
 
         if (infoItems) {
@@ -26,7 +26,7 @@ export default class extends AbstractView {
                 (infoItem) =>
                 {
                     let newTr = tbodySysInfo.insertRow();
-        
+
                     // Alternate row
                     if (i % 2 == 0) {
                         newTr.classList.add("info-table-odd");
@@ -34,14 +34,14 @@ export default class extends AbstractView {
 
                     const tdName = newTr.insertCell(); // create td only
                     tdName.appendChild(document.createTextNode(infoItem.name));
-                    
+
                     const tdValue = newTr.insertCell(); // create td only
                     tdValue.style["overflow-wrap"] = "anywhere";
                     tdValue.appendChild(document.createTextNode(infoItem.value));
 
                     i++;
                 }
-            );            
+            );
         }
     }
 

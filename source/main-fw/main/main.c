@@ -20,6 +20,7 @@
 #include "FWConfig.h"
 #include "WebServer.h"
 #include "Settings.h"
+#include "StationSettings.h"
 #include "CocktailExplorer.h"
 
 #define TAG "main"
@@ -180,7 +181,9 @@ void app_main(void)
     }
 
     ESP_ERROR_CHECK( ret );
+
     SETTINGS_Init();
+    STATIONSETTINGS_Init();
     
     HARDWAREGPIO_Init();
 
