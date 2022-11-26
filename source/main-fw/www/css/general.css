@@ -90,3 +90,10 @@
     margin-top: 5px;
     margin-bottom: 5px;
 }
+
+
+.networksetting-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px
+}

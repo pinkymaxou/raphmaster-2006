@@ -12,31 +12,34 @@ export default class extends AbstractView {
 
     async getHtml() {
         return `
-        <form class="pure-form pure-form-stacked">
-            <fieldset class="pure-group">
+        <div class="networksetting-container">
+            <fieldset>
                 <legend>Wi-Fi (soft access point)</legend>
-                <div class="pure-control-group">
+                <div>
                     <label for="idWiFiSoAPPassword">Password</label>
-                    <input type="password" id="idWiFiSoAPPassword" class="pure-input-1-2" placeholder="Password" />
+                    <input type="password" id="idWiFiSoAPPassword" placeholder="Password" />
                 </div>
+            </fieldset>
 
+            <fieldset>
                 <legend>Wi-Fi (station mode)</legend>
                 <label for="idWifiSTAIsActive" class="pure-checkbox">
                     <input type="checkbox" id="idWifiSTAIsActive" style="display: inline" /> Activate STA mode
                 </label>
 
-                <div class="pure-control-group">
+                <div class="">
                     <label for="idWiFiSTASSID">SSID</label>
-                    <input type="text" id="idWiFiSTASSID" class="pure-input-1-2" placeholder="SSID" />
+                    <input type="text" id="idWiFiSTASSID" placeholder="SSID" />
                 </div>
-                <div class="pure-control-group">
+                <div>
                     <label for="idWiFiSTAPassword">Password</label>
-                    <input type="password" id="idWiFiSTAPassword" class="pure-input-1-2" placeholder="Password" />
+                    <input type="password" id="idWiFiSTAPassword" placeholder="Password" />
                 </div>
             </fieldset>
-
-            <button class="button-normal button-normal-primary">Save and reboot</button>
-        </form>
+            <div class="button-bar">
+                <button id="idBtSave" class="button-normal button-bar-item">Save and reboot</button>
+            </div>
+        </div>
         `;
     }
 }
