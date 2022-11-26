@@ -16,11 +16,7 @@ export default class extends AbstractView {
     async loaded() {
 
         let tbodySysInfo = document.querySelector("#tblBdStations");
-/*
-        let ingredients = [
-            { id:  1, name: "Vokda" },           
-            { id:  2, name: "Peach Schnapps" },           
-        ];*/
+
         const API_GETINGREDIENTS = '/api/getingredients/liquids';
 
         // Get system informations
@@ -57,8 +53,7 @@ export default class extends AbstractView {
                 // =====================
                 const tdValue = newTr.insertCell(); // create td only
                 // Add select
-                let cboSelectIngredient = document.createElement("select");
-                
+                let cboSelectIngredient = document.createElement("select");               
                 // Ingredients
                 cboSelectIngredient.appendChild(this.addIngredient(0, "--- None ---"));
                 this.mIngredients.forEach( (ingredient) => cboSelectIngredient.appendChild(this.addIngredient(ingredient.id, ingredient.name)) );                
@@ -104,7 +99,7 @@ export default class extends AbstractView {
             </tbody>
         </table>
         <br>
-        <button class="button-normal button-normal-primary">Save</button>
+        <button class="button-normal">Save</button>
         `;
     }
 }
