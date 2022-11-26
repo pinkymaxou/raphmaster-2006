@@ -22,53 +22,58 @@ export default class extends AbstractView {
     }
 
     addOrderItem(orderListItem) {
-        let newTr = idTBodyCustomIngredientList.insertRow();
+        let idDivOrderList = document.querySelector("#idDivOrderList");
 
         // Alternate row
-        if (this.mIndex % 2 == 0) {
-            newTr.classList.add("custom-table-row-odd");
-        }
+       /* if (this.mIndex % 2 == 0) {
+            newTr.classList.add("custom-cocktail-grid-row-odd");
+        }*/
 
         // =====================
-        const tdIngredient = newTr.insertCell(); // create td only
+        const tdIngredientDIV = document.createElement("div"); // create td only
 
         // Add select
         let cboSelectIngredient = document.createElement("select");
         cboSelectIngredient.style["width"] = "-webkit-fill-available";
+        cboSelectIngredient.classList.add("custom-cocktail-grid-center-select");
         // Ingredients
         cboSelectIngredient.appendChild(this.addIngredient(0, "--- None ---"));
         this.mIngredients.forEach( (ingredient) => cboSelectIngredient.appendChild(this.addIngredient(ingredient.id, ingredient.name)) );                
-        tdIngredient.appendChild(cboSelectIngredient);
-        
-        // =====================
-        const tdValue = newTr.insertCell(); // create td only
+        tdIngredientDIV.appendChild(cboSelectIngredient);
+        idDivOrderList.appendChild(tdIngredientDIV);
 
+        // =====================
+        const tdValueDIV = document.createElement("div");
+        
         // Add select
         let cboSelectQty = document.createElement("select");
         cboSelectQty.style["width"] = "-webkit-fill-available";
+        cboSelectQty.classList.add("custom-cocktail-grid-center-select");
         
         // Quantities
         cboSelectQty.appendChild(this.addQty(0, " --- "));                
-        for(let oz = 0.5; oz <= 3; oz += 0.5) {
+        for(let oz = 0.5; oz <= 8; oz += 0.5) {
             cboSelectQty.appendChild(this.addQty(oz, oz +" oz"));
         }
-        tdValue.appendChild(cboSelectQty);
+        tdValueDIV.appendChild(cboSelectQty);
+        idDivOrderList.appendChild(tdValueDIV);
 
         // =====================
-        const tdControl = newTr.insertCell(); // create td only
-        let ctlContainerDIV = document.createElement("div");
-
+        const tdControlDIV = document.createElement("div");
+        tdControlDIV.style["width"] = "max-content";
+    
         let btDeleteOrder = document.createElement("button");
         btDeleteOrder.classList.add("button-normal");
         btDeleteOrder.appendChild(document.createTextNode("-"));
-        ctlContainerDIV.appendChild(btDeleteOrder);
+        btDeleteOrder.addEventListener('click', function() {
+            
+            idDivOrderList.removeChild(tdIngredientDIV);
+            idDivOrderList.removeChild(tdValueDIV);
+            idDivOrderList.removeChild(tdControlDIV);
+        });
 
-        let btAddOrder = document.createElement("button");
-        btAddOrder.classList.add("button-normal");
-        btAddOrder.appendChild(document.createTextNode("+"));
-        ctlContainerDIV.appendChild(btAddOrder);
-
-        tdControl.appendChild(ctlContainerDIV);
+        tdControlDIV.appendChild(btDeleteOrder);
+        idDivOrderList.appendChild(tdControlDIV);
 
         this.mIndex++;
     }
@@ -88,7 +93,7 @@ export default class extends AbstractView {
 
         let idTBodyCustomIngredientList = document.querySelector("#idTBodyCustomIngredientList");
 
-        this.mOrderList = [{ "name" : "test" }];
+        this.mOrderList = [{ "name" : "test" }, { "name" : "test" }, { "name" : "test" }, { "name" : "test" }];
 
         this.mOrderList.forEach(
             (orderListItem) =>
@@ -96,16 +101,31 @@ export default class extends AbstractView {
                 this.addOrderItem(orderListItem);
             });
 
+        let targetThis = this;
+
+        // Bind buttons
+        let idBtAddOrder = document.querySelector("#idBtAddOrder");
+        idBtAddOrder.addEventListener('click', function() {
+            targetThis.addOrderItem(null);
+        });
     }
 
     async getHtml() {
         return `
-        <table class="custom-table">
-            <tbody id="idTBodyCustomIngredientList">
-                <!-- Space for table items -->
-            </tbody>
-        </table>
-        <button class="button-normal">Make</button>
+        <div>
+            <div id="idDivOrderList" class="custom-cocktail-grid">
+                <!-- Lines -->
+            </div>
+
+            <div class="button-bar">
+                <button id="idBtAddOrder" class="button-normal button-bar-item">Add order</button>
+            </div>
+
+            <div class="button-bar">
+                <button class="button-normal button-bar-item">Cancel</button>
+                <button class="button-normal button-bar-item">OK</button>
+            </div>
+        </div>
         `;
     }
 }

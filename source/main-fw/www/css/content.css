@@ -33,7 +33,7 @@
 }
 
 .cocktail_item  {
-    padding: 0.1rem;
+    padding: 5px;
     font-family: 'orbitron';
     
     min-width: 20rem;
@@ -47,8 +47,8 @@
     border-color: mintcream;
     border-style: solid;
     border-width: 3px;
-    border-radius: 0.5rem;
-    margin-bottom: 0.2rem;
+    border-radius: 15px;
+    margin-bottom: 10px;
 
     align-self: flex-start;
 }
@@ -158,31 +158,35 @@
 /* ===============================
     Table
    =============================== */
-.custom-table {
+.custom-cocktail-grid {
+    display: grid;
+    grid-template-columns: 5fr 1fr auto;
+
     background-color: lightcyan;
     border-color: mintcream;
     border-style: solid;
     border-width: 3px;
-    border-radius: 0.5rem;
+    border-radius: 15px;
 
-    border-collapse: collapse;
+    padding: 10px;
 
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-    
-    width: 100%;
-    max-width: 30rem;
+    gap: 5px;
 }
 
-.custom-table th, td {
-    border-width: 0px;
-    padding-left: 0.2rem;
-    padding-right: 0.2rem;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+.custom-cocktail-grid-items {
+    align-self: center;
 }
 
-.custom-table-row-odd {
+.custom-cocktail-grid-center-select {
+    width: -webkit-fill-available;
+    transform: translateY(-50%);
+    top: 50%;
+    margin: 0;
+    position: relative;
+}
+
+
+.custom-cocktail-grid-row-odd {
     background-color: #aaffff;
 }
 
