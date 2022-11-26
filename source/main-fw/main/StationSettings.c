@@ -112,9 +112,23 @@ void STATIONSETTINGS_Init()
 
 int32_t STATIONSETTINGS_GetValue(int stationId, STATIONSETTINGS_ESTATIONSET eStationSet)
 {
-    if (stationId < 1 || stationId > STATIONSETTINGS_STATION_COUNT)
+    if (!STATIONSETTINGS_ISVALIDSTATIONID(stationId))
         return 0;
     int ix0b = stationId - 1;
     const STATIONSETTINGS_EENTRY eEntry = (STATIONSETTINGS_EENTRY)((ix0b * STATIONSETTINGS_ESTATIONSET_Count) + (int)eStationSet);
     return NVSJSON_GetValueInt32(&g_sStationSettingHandle, (uint16_t)eEntry);
+}
+
+NVSJSON_ESETRET STATIONSETTINGS_SetValue(int stationId, STATIONSETTINGS_ESTATIONSET eStationSet, int32_t s32Value)
+{
+    if (!STATIONSETTINGS_ISVALIDSTATIONID(stationId))
+        return 0;
+    int ix0b = stationId - 1;
+    const STATIONSETTINGS_EENTRY eEntry = (STATIONSETTINGS_EENTRY)((ix0b * STATIONSETTINGS_ESTATIONSET_Count) + (int)eStationSet);
+    return NVSJSON_SetValueInt32(&g_sStationSettingHandle, (uint16_t)eEntry, false, s32Value);
+}
+
+void STATIONSETTINGS_CommitAll()
+{
+    NVSJSON_Save(&g_sStationSettingHandle);
 }

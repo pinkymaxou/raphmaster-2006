@@ -117,10 +117,15 @@ typedef enum
 } STATIONSETTINGS_ESTATIONSET;
 
 #define STATIONSETTINGS_STATION_COUNT (16)
+#define STATIONSETTINGS_ISVALIDSTATIONID(_stationid) (_stationid >= 1 && _stationid <= 16)
 
 void STATIONSETTINGS_Init();
 
 int32_t STATIONSETTINGS_GetValue(int stationId, STATIONSETTINGS_ESTATIONSET eStationSet);
+
+NVSJSON_ESETRET STATIONSETTINGS_SetValue(int stationId, STATIONSETTINGS_ESTATIONSET eStationSet, int32_t s32Value);
+
+void STATIONSETTINGS_CommitAll();
 
 extern NVSJSON_SHandle g_sStationSettingHandle;
 

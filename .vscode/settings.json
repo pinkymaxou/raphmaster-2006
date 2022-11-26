@@ -5,6 +5,7 @@
         "hardwaregpio.h": "c",
         "cocktailexplorer.h": "c",
         "cocktaildb.pb.h": "c",
-        "pb_decode.h": "c"
+        "pb_decode.h": "c",
+        "nvsjson.h": "c"
     }
 }

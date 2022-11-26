@@ -268,7 +268,6 @@ static esp_err_t api_get_handler(httpd_req_t *req)
     END:
     if (pExportJSON != NULL)
         free(pExportJSON);
-
     httpd_resp_set_hdr(req, "Connection", "close");
     httpd_resp_send_chunk(req, NULL, 0);
     return ESP_OK;
