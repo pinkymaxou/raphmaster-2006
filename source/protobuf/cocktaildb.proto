@@ -37,7 +37,7 @@ message Ingredient
 
 message Recipe
 {
-	uint32 ID = 1;
+	uint32 id = 1;
 	string name = 2;
 	string imgfile = 7;
 	bool is_cocktail = 5;

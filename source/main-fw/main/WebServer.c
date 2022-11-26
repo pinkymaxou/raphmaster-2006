@@ -26,6 +26,7 @@
 #define API_POSTSETTINGSJSON_URI "/api/setsettingsjson"
 
 #define API_GETCOCKTAILSJSON_URI "/api/getcocktails"
+#define API_GETINGREDIENTSLIQUIDSJSON_URI "/api/getingredients/liquids"
 
 #define API_GETSYSINFOJSON_URI "/api/getsysinfo"
 
@@ -209,42 +210,36 @@ static esp_err_t api_get_handler(httpd_req_t *req)
     if (strcmp(req->uri, API_GETSETTINGSJSON_URI) == 0)
     {
         pExportJSON = NVSJSON_ExportJSON(&g_sSettingHandle);
-
-        if (pExportJSON == NULL || httpd_resp_send_chunk(req, pExportJSON, strlen(pExportJSON)) != ESP_OK)
-        {
-            httpd_resp_send_err(req, HTTPD_500_INTERNAL_SERVER_ERROR, "Unable to send data");
-            goto END;
-        }
     }
     else if (strcmp(req->uri, API_GETSYSINFOJSON_URI) == 0)
     {
         pExportJSON = GetSysInfo();
-       
-        if (pExportJSON == NULL || httpd_resp_send_chunk(req, pExportJSON, strlen(pExportJSON)) != ESP_OK)
-        {
-            httpd_resp_send_err(req, HTTPD_500_INTERNAL_SERVER_ERROR, "Unable to send data");
-            goto END;
-        }
     }
     else if (strcmp(req->uri, API_GETCOCKTAILSJSON_URI) == 0)
     {
         const int64_t u64Start = esp_timer_get_time();
-
         pExportJSON = COCKTAILEXPLORER_GetAllRecipes();
-
         ESP_LOGI(TAG, "Get all recipe time: %d ms", (int)(esp_timer_get_time() - u64Start) / 1000 );
-
-        if (pExportJSON == NULL || httpd_resp_send_chunk(req, pExportJSON, strlen(pExportJSON)) != ESP_OK)
-        {
-            httpd_resp_send_err(req, HTTPD_500_INTERNAL_SERVER_ERROR, "Unable to send data");
-            goto END;
-        }
+    }
+    else if (strcmp(req->uri, API_GETINGREDIENTSLIQUIDSJSON_URI) == 0) 
+    {
+        const int64_t u64Start = esp_timer_get_time();
+        pExportJSON = COCKTAILEXPLORER_GetAllIngredients(true);
+        ESP_LOGI(TAG, "Get all liquid ingredients time: %d ms", (int)(esp_timer_get_time() - u64Start) / 1000 );
     }
     else
     {
         ESP_LOGE(TAG, "api_get_handler, url: %s", req->uri);
         httpd_resp_send_err(req, HTTPD_404_NOT_FOUND, "Unknown request");
+        goto END;
     }
+
+    if (pExportJSON == NULL || httpd_resp_send_chunk(req, pExportJSON, strlen(pExportJSON)) != ESP_OK)
+    {
+        httpd_resp_send_err(req, HTTPD_500_INTERNAL_SERVER_ERROR, "Unable to send data");
+        goto END;
+    }
+
     END:
     if (pExportJSON != NULL)
         free(pExportJSON);

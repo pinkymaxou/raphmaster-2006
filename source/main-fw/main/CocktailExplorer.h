@@ -6,10 +6,8 @@
 
 void COCKTAILEXPLORER_Init();
 
-const cocktaildb_IngredientFile* COCKTAILEXPLORER_GetIngredientFiles();
-
-const cocktaildb_RecipeFile* COCKTAILEXPLORER_GetRecipeFiles();
-
 char* COCKTAILEXPLORER_GetAllRecipes();
+
+char* COCKTAILEXPLORER_GetAllIngredients(bool bIsLiquidOnly);
 
 #endif
