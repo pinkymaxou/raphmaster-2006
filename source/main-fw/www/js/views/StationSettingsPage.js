@@ -16,38 +16,31 @@ export default class extends AbstractView {
     async loaded() {
 
         let tbodySysInfo = document.querySelector("#tblBdStations");
-
+/*
         let ingredients = [
             { id:  1, name: "Vokda" },           
             { id:  2, name: "Peach Schnapps" },           
-        ];
+        ];*/
+        const API_GETINGREDIENTS = '/api/getingredients/liquids';
 
-        let stationItems = [
-            { id:  1, totalQtyml: 0, remainingQtyml: 0 },
-            { id:  2, totalQtyml: 0, remainingQtyml: 0 },
-            { id:  3, totalQtyml: 0, remainingQtyml: 0 },
-            { id:  4, totalQtyml: 0, remainingQtyml: 0 },
- 
-            { id:  5, totalQtyml: 0, remainingQtyml: 0 },
-            { id:  6, totalQtyml: 0, remainingQtyml: 0 },
-            { id:  7, totalQtyml: 0, remainingQtyml: 0 },
-            { id:  8, totalQtyml: 0, remainingQtyml: 0 },
- 
-            { id:  9, totalQtyml: 0, remainingQtyml: 0 },
-            { id: 10, totalQtyml: 0, remainingQtyml: 0 },
-            { id: 11, totalQtyml: 0, remainingQtyml: 0 },
-            { id: 12, totalQtyml: 0, remainingQtyml: 0 },
+        // Get system informations
+        await fetch(API_GETINGREDIENTS)
+            .then((response) => response.json())
+            .then((data) => this.mIngredients = data)
+            .catch((ex) => console.error('getingredients', ex));
 
-            { id: 13, totalQtyml: 0, remainingQtyml: 0 },
-            { id: 14, totalQtyml: 0, remainingQtyml: 0 },
-            { id: 15, totalQtyml: 0, remainingQtyml: 0 },
-            { id: 16, totalQtyml: 0, remainingQtyml: 0 },
-        ];
+        const API_GETSTATIONSETTINGS = '/api/getstationsettings';
 
+        // Get system informations
+        await fetch(API_GETSTATIONSETTINGS)
+            .then((response) => response.json())
+            .then((data) => this.mStationItems = data)
+            .catch((ex) => console.error('getstationsettings', ex));
+    
         // Add info items
         let i = 0;
 
-        stationItems.forEach(
+        this.mStationItems.forEach(
             (stationItem) =>
             {
                 let newTr = tbodySysInfo.insertRow();
@@ -68,7 +61,7 @@ export default class extends AbstractView {
                 
                 // Ingredients
                 cboSelectIngredient.appendChild(this.addIngredient(0, "--- None ---"));
-                ingredients.forEach( (ingredient) => cboSelectIngredient.appendChild(this.addIngredient(ingredient.id, ingredient.name)) );                
+                this.mIngredients.forEach( (ingredient) => cboSelectIngredient.appendChild(this.addIngredient(ingredient.id, ingredient.name)) );                
                 tdValue.appendChild(cboSelectIngredient);
  
                 // =====================
@@ -78,7 +71,7 @@ export default class extends AbstractView {
                 btnValueTotalQtyML.setAttribute("type", "number");
                 btnValueTotalQtyML.setAttribute("min", 0);
                 btnValueTotalQtyML.setAttribute("max", 6000);
-                btnValueTotalQtyML.setAttribute("value", stationItem.totalQtyml);
+                btnValueTotalQtyML.setAttribute("value", stationItem.total_ml);
                 tdValueTotalQtyML.appendChild(btnValueTotalQtyML);
 
                 // =====================
@@ -88,7 +81,7 @@ export default class extends AbstractView {
                 enumUsedQtyText.setAttribute("type", "number");
                 enumUsedQtyText.setAttribute("min", 0);
                 enumUsedQtyText.setAttribute("max", 6000);
-                enumUsedQtyText.setAttribute("value", stationItem.remainingQtyml);
+                enumUsedQtyText.setAttribute("value", stationItem.used_ml);
                 tdValueUsedQtyML.appendChild(enumUsedQtyText);
 
                 i++;

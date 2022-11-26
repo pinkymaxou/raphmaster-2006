@@ -9,8 +9,15 @@ message ProductCode
 
 enum EIngredientType
 {
-	alcohol = 0;
-	garnish = 1;
+	unspecified = 0;
+	liquid_alcohol = 1;
+	reserved_0x02 = 2;	
+	liquid_filler = 3;
+	ice = 4;
+	powder = 5;
+	emulsifying = 6;
+	fruit_or_vegetable = 7;
+	leaf_or_sprig = 8;
 }
 
 enum ELanguage
@@ -30,20 +37,20 @@ message Ingredient
 
 message Recipe
 {
-	uint32 ID = 1;
+	uint32 id = 1;
 	string name = 2;
 	string imgfile = 7;
 	bool is_cocktail = 5;
 	repeated RecipeStep recipe_steps = 6;
 }
 
-enum EQtyType
+enum EUnit
 {
 	none = 0;		// When unit doesn't apply
-	unitary = 1; 	// Counter by round number
+	unitary = 1; 	
 	
 	liquidML = 2;	// Milliliter
-	oz = 3;			// Ounce
+	liquidoz = 3;			// Ounce
 	cup = 4;		// Cup
 	
 	pinch = 6;		// Fingertip quantity
@@ -57,13 +64,17 @@ enum EQtyType
 message Qty
 {
 	float value = 1;
-	EQtyType type = 2;
+	EUnit type = 2;
 }
 
 message RecipeStep
 {
-	uint32 ingredient_id = 2;			// do not accept 0 as ID
+	oneof ingredient {
+		uint32 ingredient_id = 1;			// do not accept 0 as ID
+		uint32 ingredient_group_id = 2;		// do not accept 0 as ID
+	}
 	Qty	qty = 3;
+	bool is_garnish = 4;
 }
 
 message IngredientFile

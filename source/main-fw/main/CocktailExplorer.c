@@ -44,16 +44,6 @@ void COCKTAILEXPLORER_Init()
     ESP_LOGI(TAG, "Loaded recipes, total: %d", m_sRecipeFile.entries_count);
 }
 
-const cocktaildb_IngredientFile* COCKTAILEXPLORER_GetIngredientFiles()
-{
-    return &m_sIngredientFile;
-}
-
-const cocktaildb_RecipeFile* COCKTAILEXPLORER_GetRecipeFiles()
-{
-    return &m_sRecipeFile;
-}
-
 static const cocktaildb_Ingredient* GetIngredientFile(uint32_t u32ID)
 {
     for(int i = 0; i < m_sIngredientFile.entries_count; i++)
@@ -80,6 +70,7 @@ char* COCKTAILEXPLORER_GetAllRecipes()
         cocktaildb_Recipe* pRecipe = &m_sRecipeFile.entries[i];
 
         cJSON* pNewRecipe = cJSON_CreateObject();
+        cJSON_AddItemToObject(pNewRecipe, "id", cJSON_CreateNumber(pRecipe->ID));
         cJSON_AddItemToObject(pNewRecipe, "name", cJSON_CreateString(pRecipe->name));
         
         if (strlen(pRecipe->imgfile) > 0)
@@ -94,14 +85,20 @@ char* COCKTAILEXPLORER_GetAllRecipes()
         {
             cocktaildb_RecipeStep* pRecipeStep = &pRecipe->recipe_steps[j];
 
-            const cocktaildb_Ingredient* pIngredient = GetIngredientFile(pRecipeStep->ingredient_id);
+            // We do not support group yet.
+            if (pRecipeStep->which_ingredient != cocktaildb_RecipeStep_ingredient_id_tag)
+                continue;
+
+            const cocktaildb_Ingredient* pIngredient = GetIngredientFile(pRecipeStep->ingredient.ingredient_id);
             if (pIngredient == NULL)
                 continue;
 
             cJSON* pNewStep = cJSON_CreateObject();
 
+            cJSON_AddItemToObject(pNewStep, "ingredient_id", cJSON_CreateNumber(pIngredient->id));
             cJSON_AddItemToObject(pNewStep, "name", cJSON_CreateString(pIngredient->name));
             cJSON_AddItemToObject(pNewStep, "type", cJSON_CreateNumber(pIngredient->ingredient_type));
+            cJSON_AddItemToObject(pNewStep, "is_garnish", cJSON_CreateBool(pRecipeStep->is_garnish));
 
             if (pRecipeStep->has_qty)
             {
@@ -121,4 +118,36 @@ char* COCKTAILEXPLORER_GetAllRecipes()
     ERROR:
     cJSON_Delete(pRoot);
     return NULL;
+}
+
+char* COCKTAILEXPLORER_GetAllIngredients(bool bIsLiquidOnly)
+{
+    cJSON* pRoot;
+    pRoot = cJSON_CreateArray();
+    if (pRoot == NULL)
+        goto ERROR;
+
+    for(int i = 0; i < m_sIngredientFile.entries_count; i++)
+    {
+        cocktaildb_Ingredient* pIngredient = &m_sIngredientFile.entries[i];
+
+        bool bIsOK = true;
+        if (bIsLiquidOnly)
+            bIsOK = (pIngredient->ingredient_type == cocktaildb_EIngredientType_liquid_alcohol || pIngredient->ingredient_type == cocktaildb_EIngredientType_liquid_filler);
+        if (!bIsOK)
+            continue;
+
+        cJSON* pNewRecipe = cJSON_CreateObject();
+        cJSON_AddItemToObject(pNewRecipe, "id", cJSON_CreateNumber(pIngredient->id));
+        cJSON_AddItemToObject(pNewRecipe, "name", cJSON_CreateString(pIngredient->name));
+        
+        cJSON_AddItemToArray(pRoot, pNewRecipe);
+    }
+
+    char* pStr =  cJSON_PrintUnformatted(pRoot);
+    cJSON_Delete(pRoot);
+    return pStr;
+    ERROR:
+    cJSON_Delete(pRoot);
+    return NULL;  
 }
