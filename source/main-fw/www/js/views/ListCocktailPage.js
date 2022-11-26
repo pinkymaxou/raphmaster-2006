@@ -123,6 +123,11 @@ export default class extends AbstractView {
                 newBtnOrderDrink.classList.add("button-normal");
                 newControlDIV.appendChild(newBtnOrderDrink);
 
+                let newBtnOrderCustomDrink = document.createElement("button");
+                newBtnOrderCustomDrink.appendChild(document.createTextNode("Custom order"));
+                newBtnOrderCustomDrink.classList.add("button-normal");
+                newControlDIV.appendChild(newBtnOrderCustomDrink);
+
                 newCocktailItemDIV.appendChild(newControlDIV);
 
                 idCocktailList.appendChild(newCocktailItemDIV);
