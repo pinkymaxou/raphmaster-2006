@@ -716,9 +716,6 @@ static bool SetNetworkSettings(const char* szJSON, uint32_t u32Length)
                 szError = "STA password is invalid";
                 goto ERROR;
             }
-
-        if (pWifiSTA_SSID != NULL)
-            ESP_LOGI(TAG, "test, ssid: %s, dry_run: %d", pWifiSTA_SSID->valuestring, isDryRun);
     }
 
     cJSON_Delete(pRoot);

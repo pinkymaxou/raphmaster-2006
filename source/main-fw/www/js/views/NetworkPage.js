@@ -63,6 +63,25 @@ export default class extends AbstractView {
                 console.error('Error:', error);
             });
         });
+
+        // Bind buttons
+        let idBtReboot = document.querySelector("#idBtReboot");
+        idBtReboot.addEventListener('click', function() {
+            // Save
+            fetch('/action/reboot', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: "",
+              })
+            .then((data) => {
+                console.log('Success:', data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        });
     }
 
     async getHtml() {
@@ -94,7 +113,8 @@ export default class extends AbstractView {
                 </div>
             </fieldset>
             <div class="button-bar">
-                <button id="idBtSave" class="button-normal button-bar-item">Save and reboot</button>
+                <button id="idBtReboot" class="button-normal button-bar-item">Reboot</button>
+                <button id="idBtSave" class="button-normal button-bar-item">Save</button>
             </div>
         </div>
         `;
