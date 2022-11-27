@@ -35,11 +35,11 @@ export default class extends AbstractView {
         //         </div>
         //         <button class="button-normal">Order</button>
         //     </div>
-        // </div>   
+        // </div>
         this.mCocktails.sort(
-            function compareFn(a, b) 
-            { 
-                return a.name.localeCompare(b.name); 
+            function compareFn(a, b)
+            {
+                return a.name.localeCompare(b.name);
             });
 
         this.mCocktails.forEach(
@@ -52,7 +52,7 @@ export default class extends AbstractView {
                 if (cocktail.img) {
                     let newImg = document.createElement("img");
                     newImg.setAttribute("src", cocktail.img);
-                    newCocktailItemDIV.appendChild(newImg);    
+                    newCocktailItemDIV.appendChild(newImg);
                 }
 
                 let newTitleP = document.createElement("p");
@@ -61,16 +61,16 @@ export default class extends AbstractView {
 
                 // Ingredient items
                 let newIngredientDIV = document.createElement("div");
-                
+
                 // Ingredient div
                 let newIngredientGridDIV = document.createElement("div");
                 newIngredientGridDIV.classList.add("cocktail_ingredient_container");
-                
+
                 // Add ingredients
                 let ingrIndex = 0;
                 cocktail.steps.sort(
-                    function compareFn(a, b) 
-                    { 
+                    function compareFn(a, b)
+                    {
                         if (!a.is_garnish && b.is_garnish)
                             return -1;
                         else if (a.is_garnish && !b.is_garnish)
@@ -82,7 +82,7 @@ export default class extends AbstractView {
                         if (getIngredientTypeOrder(a.type) > getIngredientTypeOrder(b.type))
                             return 1;
 
-                        return a.name.localeCompare(b.name); 
+                        return a.name.localeCompare(b.name);
                     });
                 cocktail.steps.forEach(
                     (stepItem) =>
@@ -109,7 +109,7 @@ export default class extends AbstractView {
                         }
                         ingrIndex++;
                     });
-                
+
                 newIngredientDIV.appendChild(newIngredientGridDIV);
 
                 newCocktailItemDIV.appendChild(newIngredientDIV);
@@ -117,7 +117,7 @@ export default class extends AbstractView {
                 // Controls
                 let newControlDIV = document.createElement("div");
                 newControlDIV.classList.add("cocktail_control");
-                
+
                 let newBtnOrderDrink = document.createElement("button");
                 newBtnOrderDrink.appendChild(document.createTextNode("Order"));
                 newBtnOrderDrink.classList.add("button-normal");
@@ -138,7 +138,7 @@ export default class extends AbstractView {
     async getHtml() {
         return `
         <div id="idCocktailList" class="cocktail_container">
-  
+
         </div>
         `;
     }

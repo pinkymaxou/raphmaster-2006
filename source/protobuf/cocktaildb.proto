@@ -7,6 +7,12 @@ message ProductCode
 	string upc_code = 1;
 }
 
+message IngredientCategory
+{
+	uint32 id = 1;
+	string name = 2;
+}
+
 enum EIngredientType
 {
 	unspecified = 0;
@@ -30,9 +36,10 @@ message Ingredient
 {
 	uint32 id = 1;			// do not accept 0 as ID
 	string name = 2;
-	repeated ProductCode product_codes = 3;
+	// repeated ProductCode product_codes = 3;
 	uint32 recipe_id = 4;	// 0 = null
 	EIngredientType ingredient_type = 5;
+	repeated uint32 ingredient_category_ids = 6;
 }
 
 message Recipe
@@ -79,21 +86,11 @@ message RecipeStep
 
 message IngredientFile
 {
-	repeated Ingredient entries = 1;
+	repeated Ingredient ingredient_entries = 1;
+	repeated IngredientCategory ingredient_category_entries = 2;
 }
 
 message RecipeFile
 {
 	repeated Recipe entries = 1;
-}
-
-message Equivalence
-{
-	repeated uint32 ingredient_ids = 1;
-	float equivalence = 2; // 0 = not so much, 1 = perfectly switchable
-}
-
-message MetaDataFile
-{
-	repeated Equivalence equivalences = 1;
 }

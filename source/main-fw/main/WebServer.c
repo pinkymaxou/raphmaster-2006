@@ -9,6 +9,8 @@
 #include "esp_app_format.h"
 #include "assets/EmbedWWW.h"
 #include "esp_ota_ops.h"
+#include "esp_wifi.h"
+#include "esp_netif.h"
 #include "cJSON.h"
 #include "Settings.h"
 #include "StationSettings.h"
@@ -33,6 +35,9 @@
 #define API_GETSTATIONSETTINGSJSON_URI "/api/getstationsettings"
 #define API_SETSTATIONSETTINGSJSON_URI "/api/setstationsettings"
 
+#define API_GETNETWORKSETTINGSJSON_URI "/api/getnetworksettings"
+#define API_SETNETWORKSETTINGSJSON_URI "/api/setnetworksettings"
+
 #define API_EXPORTSTATIONSETTINGSJSON_URI "/api/exportstationsettingsjson"
 #define API_IMPORTSTATIONSETTINGSJSON_URI "/api/importstationsettingsjson"
 
@@ -53,7 +58,10 @@ static const EFEMBEDWWW_SFile* GetFile(const char* strFilename);
 
 static char* GetSysInfo();
 
-static void ToHexString(char *dstHexString, const uint8_t* data, uint8_t len);
+static char* GetNetworkSettings();
+static bool SetNetworkSettings(const char* szJSON, uint32_t u32Length);
+
+static void ToHexString(char *dstHexString, const uint8_t* data, uint32_t u32Length);
 static const char* GetESPChipId(esp_chip_model_t eChipid);
 
 static uint8_t m_u8Buffers[HTTPSERVER_BUFFERSIZE];
@@ -137,7 +145,6 @@ static esp_err_t file_get_handler(httpd_req_t *req)
     if (strcmp(req->uri, "/") == 0 ||
         strcmp(req->uri, "/about") == 0 ||
         strcmp(req->uri, "/network") == 0 ||
-        strcmp(req->uri, "/settings") == 0 ||
         strcmp(req->uri, "/calib") == 0 ||
         strcmp(req->uri, "/stationsettings") == 0 ||
         strcmp(req->uri, "/listcocktailpage") == 0 ||
@@ -228,6 +235,10 @@ static esp_err_t api_get_handler(httpd_req_t *req)
     {
         pExportJSON = GetSysInfo();
     }
+    else if (strcmp(req->uri, API_GETNETWORKSETTINGSJSON_URI) == 0)
+    {
+        pExportJSON = GetNetworkSettings();
+    }
     else if (strcmp(req->uri, API_GETCOCKTAILSJSON_URI) == 0)
     {
         const int64_t u64Start = esp_timer_get_time();
@@ -307,6 +318,18 @@ static esp_err_t api_post_handler(httpd_req_t *req)
         int n = httpd_req_recv(req, (char*)m_u8Buffers, HTTPSERVER_BUFFERSIZE);
         m_u8Buffers[n] = '\0';
         if (!COCKTAILEXPLORER_SetStationSettings((char*)m_u8Buffers, n))
+        {
+            ESP_LOGE(TAG, "Unable to save data");
+            httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "Unknown request");
+        }
+        else
+            ESP_LOGI(TAG, "Set station settings");
+    }
+    else if (strcmp(req->uri, API_SETNETWORKSETTINGSJSON_URI) == 0)
+    {
+        int n = httpd_req_recv(req, (char*)m_u8Buffers, HTTPSERVER_BUFFERSIZE);
+        m_u8Buffers[n] = '\0';
+        if (!SetNetworkSettings((char*)m_u8Buffers, n))
         {
             ESP_LOGE(TAG, "Unable to save data");
             httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "Unknown request");
@@ -469,9 +492,8 @@ static char* GetSysInfo()
     char buff[100];
     pRoot = cJSON_CreateObject();
     if (pRoot == NULL)
-    {
         goto ERROR;
-    }
+
     cJSON* pEntries = cJSON_AddArrayToObject(pRoot, "infos");
 
     esp_chip_info_t sChipInfo;
@@ -567,13 +589,148 @@ static char* GetSysInfo()
     cJSON_Delete(pRoot);
     return pStr;
     ERROR:
-    cJSON_Delete(pRoot);
+    if (pRoot != NULL)
+        cJSON_Delete(pRoot);
     return NULL;
 }
 
-static void ToHexString(char *dstHexString, const uint8_t* data, uint8_t len)
+static char* GetNetworkSettings()
 {
-    for (uint32_t i = 0; i < len; i++)
+    cJSON* pRoot = NULL;
+    pRoot = cJSON_CreateObject();
+    if (pRoot == NULL)
+        goto ERROR;
+
+    // Soft Access Point config
+    wifi_config_t wifi_configSAP;
+    esp_wifi_get_config(WIFI_IF_AP, &wifi_configSAP);
+
+    cJSON* pNewWiFiSap = cJSON_CreateObject();
+    cJSON_AddItemToObject(pNewWiFiSap, "ssid", cJSON_CreateString((char*)wifi_configSAP.ap.ssid));
+    cJSON_AddItemToObject(pRoot, "wifi_sap", pNewWiFiSap);
+
+    cJSON* pNewWiFiSTA = cJSON_CreateObject();
+    char wifiSTASSID[32+1];
+    size_t wifiSTASSIDLength = 32;
+    NVSJSON_GetValueString(&g_sSettingHandle, SETTINGS_EENTRY_WSTASSID, (char*)wifiSTASSID, &wifiSTASSIDLength);
+    const bool bIsWifiSTAActive = NVSJSON_GetValueInt32(&g_sSettingHandle, SETTINGS_EENTRY_WSTAIsActive) == true;
+    cJSON_AddItemToObject(pNewWiFiSTA, "is_active", cJSON_CreateBool(bIsWifiSTAActive));
+    cJSON_AddItemToObject(pNewWiFiSTA, "ssid", cJSON_CreateString(wifiSTASSID));
+    cJSON_AddItemToObject(pRoot, "wifi_sta", pNewWiFiSTA);
+
+    char* pStr =  cJSON_PrintUnformatted(pRoot);
+    cJSON_Delete(pRoot);
+    return pStr;
+    ERROR:
+    if (pRoot != NULL)
+        cJSON_Delete(pRoot);
+    return NULL;
+}
+
+static bool SetNetworkSettings(const char* szJSON, uint32_t u32Length)
+{
+    const char* szError = NULL;
+
+    cJSON* pRoot = cJSON_ParseWithLength(szJSON, u32Length);
+
+    cJSON* pWifiSAP_Password = NULL;
+
+    cJSON* pWifiSTA_IsActive = NULL;
+    cJSON* pWifiSTA_SSID = NULL;
+    cJSON* pWifiSTA_Password = NULL;
+
+    // If not specified, just ignore
+    cJSON* pWifiSAP = cJSON_GetObjectItemCaseSensitive(pRoot, "wifi_sap");
+    if (pWifiSAP != NULL)
+    {
+        pWifiSAP_Password = cJSON_GetObjectItemCaseSensitive(pWifiSAP, "password");
+        if (pWifiSAP_Password == NULL || cJSON_IsNull(pWifiSAP_Password))
+            pWifiSAP_Password = NULL;
+        else if (!cJSON_IsString(pWifiSAP_Password))
+        {
+            szError = "SAP password field is invalid";
+            goto ERROR;
+        }
+    }
+
+    // If not specified, just ignore
+    cJSON* pWifiSTA = cJSON_GetObjectItemCaseSensitive(pRoot, "wifi_sta");
+    if (pWifiSTA != NULL)
+    {
+        pWifiSTA_IsActive = cJSON_GetObjectItemCaseSensitive(pWifiSTA, "is_active");
+
+        if (pWifiSTA_IsActive == NULL || cJSON_IsNull(pWifiSTA_IsActive))
+            pWifiSTA_IsActive = NULL;
+        else if (!cJSON_IsBool(pWifiSTA_IsActive))
+        {
+            szError = "STA is active field is invalid";
+            goto ERROR;
+        }
+
+        pWifiSTA_SSID = cJSON_GetObjectItemCaseSensitive(pWifiSTA, "ssid");
+        if (pWifiSTA_SSID == NULL || cJSON_IsNull(pWifiSTA_SSID))
+            pWifiSTA_SSID = NULL;
+        else if (!cJSON_IsString(pWifiSTA_SSID))
+        {
+            szError = "STA SSID field is invalid";
+            goto ERROR;
+        }
+
+        pWifiSTA_Password = cJSON_GetObjectItemCaseSensitive(pWifiSTA, "password");
+        if (pWifiSTA_Password == NULL || cJSON_IsNull(pWifiSTA_Password))
+            pWifiSTA_Password = NULL;
+        else if (!cJSON_IsString(pWifiSTA_Password))
+        {
+            szError = "STA password field is invalid";
+            goto ERROR;
+        }
+    }
+
+    // Check if value are valids
+    for(int isDryRun = 1; isDryRun >= 0; isDryRun--)
+    {
+        if (pWifiSAP_Password != NULL)
+            if (NVSJSON_SetValueString(&g_sSettingHandle, SETTINGS_EENTRY_WAPPass, (bool)isDryRun, pWifiSAP_Password->valuestring) != NVSJSON_ESETRET_OK)
+            {
+                szError = "WAP password is invalid";
+                goto ERROR;
+            }
+
+        if (pWifiSTA_IsActive != NULL)
+            if (NVSJSON_SetValueInt32(&g_sSettingHandle, SETTINGS_EENTRY_WSTAIsActive, (bool)isDryRun, pWifiSTA_IsActive->valueint) != NVSJSON_ESETRET_OK)
+            {
+                szError = "STA SSID is invalid";
+                goto ERROR;
+            }
+
+        if (pWifiSTA_SSID != NULL)
+            if (NVSJSON_SetValueString(&g_sSettingHandle, SETTINGS_EENTRY_WSTASSID, (bool)isDryRun, pWifiSTA_SSID->valuestring) != NVSJSON_ESETRET_OK)
+            {
+                szError = "STA SSID is invalid";
+                goto ERROR;
+            }
+
+        if (pWifiSTA_Password != NULL)
+            if (NVSJSON_SetValueString(&g_sSettingHandle, SETTINGS_EENTRY_WSTAPass, (bool)isDryRun, pWifiSTA_Password->valuestring) != NVSJSON_ESETRET_OK)
+            {
+                szError = "STA password is invalid";
+                goto ERROR;
+            }
+    }
+
+    cJSON_Delete(pRoot);
+    return true;
+    ERROR:
+    if (szError != NULL)
+        ESP_LOGE(TAG, "Error: %s", szError);
+    if (pRoot != NULL)
+        cJSON_Delete(pRoot);
+    return false;
+}
+
+static void ToHexString(char *dstHexString, const uint8_t* data, uint32_t u32Length)
+{
+    for (uint32_t i = 0; i < u32Length; i++)
         sprintf(dstHexString + (i * 2), "%02X", data[i]);
 }
 

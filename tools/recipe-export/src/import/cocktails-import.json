@@ -13,13 +13,15 @@
         "name": "Vodka",
         "upc_code": "00627987202564",
         "qty": "50 ml",
-        "type": "liquid_alcohol"
+        "type": "liquid_alcohol",
+        "categories": [ "vodka" ]
       },
       {
-        "name": "Peach snapps",
+        "name": "Peach schnapps",
         "upc_code": "00088004400545",
         "qty": "25 ml",
-        "type": "liquid_alcohol"
+        "type": "liquid_alcohol",
+        "categories": [ "schnapps" ]
       },
       {
         "name": "Orange wedge",
@@ -30,12 +32,14 @@
       {
         "name": "Cranberry juice",
         "qty": "50 ml",
-        "type": "liquid_filler"
+        "type": "liquid_filler",
+        "categories": [ "cranberry juice", "juice" ]
       },
       {
         "name": "Grenadine syrup",
         "qty": "25 ml",
-        "type": "liquid_filler"
+        "type": "liquid_filler",
+        "categories": [ "syrup" ]
       }
     ]
   },
@@ -65,12 +69,14 @@
       {
         "name": "Vodka",
         "qty": "2 oz",
-        "type": "liquid_alcohol"
+        "type": "liquid_alcohol",
+        "categories": [ "vodka" ]
       },
       {
         "name": "Tomato juice",
         "qty": "4 oz",
-        "type": "liquid_filler"
+        "type": "liquid_filler",
+        "categories": [ "tomato juice", "juice" ]
       },
       {
         "name": "Prepared horseradish",
@@ -126,18 +132,21 @@
         "name": "Curaçao bleu",
         "qty": "1/2 oz",
         "upc_code": "03041311026096",
-        "type": "liquid_alcohol"
+        "type": "liquid_alcohol",
+        "categories": [ "citrus liqueur", "liqueur" ]
       },
       {
         "name": "Sour Puss",
         "qty": "1/2 oz",
         "upc_code": "00087116035003",
-        "type": "liquid_alcohol"
+        "type": "liquid_alcohol",
+        "categories": [ "liqueur" ]
       },
       {
         "name": "7-up",
         "qty": "",
-        "type": "liquid_filler"
+        "type": "liquid_filler",
+        "categories": [ "clear cola", "cola" ]
       }
     ]
   },
@@ -150,13 +159,16 @@
         "name": "Creme de menthe",
         "qty": "3/4 oz",
         "upc_code": "00854745000920",
-        "type": "liquid_alcohol"
+        "type": "liquid_alcohol",
+        "categories": [ "mint liqueur", "liqueur" ]
+
       },
       {
         "name": "White creme de cacao",
         "qty": "3/4 oz",
         "upc_code": "03292543720218",
-        "type": "liquid_alcohol"
+        "type": "liquid_alcohol",
+        "categories": [ "chocolate liqueur", "liqueur" ]
       },
       {
         "name": "Heavy cream",
@@ -178,29 +190,36 @@
       {
         "name": "Vodka",
         "qty": "1 oz",
-        "type": "liquid_alcohol"
+        "type": "liquid_alcohol",
+        "categories": [ "vodka" ]
       },
       {
         "name": "Sweet and sour mix",
         "qty": "1 oz",
-        "type": "liquid_alcohol"
+        "type": "liquid_alcohol",
+        "categories": [ "sweet and sour liqueur", "liqueur" ]
       },
       {
         "name": "Midori",
         "qty": "1 oz",
         "upc_code": "00088857035628",
-        "type": "liquid_alcohol"
+        "type": "liquid_alcohol",
+        "categories": [ "melon liqueur", "liqueur" ]
       },
       {
         "name": "Southern comfort",
         "qty": "1 oz",
         "upc_code": "00088544016770",
-        "type": "liquid_alcohol"
+        "type": "liquid_alcohol",
+        "categories": [ "peach liqueur", "liqueur" ]
+
       },
       {
         "name": "Pineapple juice",
         "qty": "1 oz",
-        "type": "liquid_filler"
+        "type": "liquid_filler",
+        "categories": [ "pineapple juice", "juice" ]
+
       }
     ]
   },
@@ -212,18 +231,21 @@
       {
         "name": "Sparkling wine",
         "qty": "3 oz",
-        "type": "liquid_alcohol"
+        "type": "liquid_alcohol",
+        "categories": [ "sparkling wine", "wine" ]
       },
       {
         "name": "Aperol",
         "qty": "2 oz",
         "upc_code": "00086785900001",
-        "type": "liquid_alcohol"
+        "type": "liquid_alcohol",
+        "categories": [ "gentian-based aperitif" ]
       },
       {
         "name": "Club soda",
         "qty": "3/4 oz",
-        "type": "liquid_filler"
+        "type": "liquid_filler",
+        "categories": [ "club soda cola", "cola" ]
       },
       {
         "name": "Ice",
@@ -246,12 +268,14 @@
       {
         "name": "Gin",
         "qty": "2 1/2 oz",
-        "type": "liquid_alcohol"
+        "type": "liquid_alcohol",
+        "categories": [ "dry gin", "gin" ]
       },
       {
         "name": "Dry vermouth",
         "qty": "1/2 oz",
-        "type": "liquid_alcohol"
+        "type": "liquid_alcohol",
+        "categories": [ "dry vermouth", "vermouth" ]
       },
       {
         "name": "Orange",
@@ -273,12 +297,14 @@
       {
         "name": "White rum",
         "qty": "2 oz",
-        "type": "liquid_alcohol"
+        "type": "liquid_alcohol",
+        "categories": [ "white rum", "rum" ]
       },
       {
         "name": "Lime juice",
         "qty": "1 oz",
-        "type": "liquid_filler"
+        "type": "liquid_filler",
+        "categories": [ "lime juice", "juice" ]
       },
       {
         "name": "Demerara sugar syrup",
@@ -301,17 +327,20 @@
       {
         "name": "Tequila",
         "qty": "2 oz",
-        "type": "liquid_alcohol"
+        "type": "liquid_alcohol",
+        "categories": [ "tequila" ]
       },
       {
-        "name": "Orange liquor",
+        "name": "Orange",
         "qty": "1/2 oz",
-        "type": "liquid_alcohol"
+        "type": "liquid_alcohol",
+        "categories": [ "orange liqueur", "liqueur" ]
       },
       {
         "name": "Lime juice",
         "qty": "1 oz",
-        "type": "liquid_filler"
+        "type": "liquid_filler",
+        "categories": [ "lime juice", "juice" ]
       },
       {
         "name": "Agave syrup",
@@ -340,12 +369,14 @@
       {
         "name": "Londo dry gin",
         "qty": "2 oz",
-        "type": "liquid_alcohol"
+        "type": "liquid_alcohol",
+        "categories": [ "dry gin", "gin" ]
       },
       {
         "name": "Lemon juice",
         "qty": "1 oz",
-        "type": "liquid_filler"
+        "type": "liquid_filler",
+        "categories": [ "juice", "lemon juice" ]
       },
       {
         "name": "Simple syrup",
@@ -355,7 +386,8 @@
       {
         "name": "Club soda",
         "qty": "",
-        "type": "liquid_filler"
+        "type": "liquid_filler",
+        "categories": [ "club soda cola", "cola" ]
       },
       {
         "name": "Lemon wheel",
@@ -377,20 +409,23 @@
     "is_cocktail": true,
     "ingredients": [
       {
-        "name": "Amaretto liquor",
+        "name": "Amaretto liqueur",
         "qty": "1 1/2 oz",
         "upc_code": "06279871658144",
-        "type": "liquid_alcohol"
+        "type": "liquid_alcohol",
+        "categories": [ "almond-nut liqueur", "liqueur" ]
       },
       {
         "name": "Cask-proof bourbon",
         "qty": "3/4 oz",
-        "type": "liquid_alcohol"
+        "type": "liquid_alcohol",
+        "categories": [ "bourbon" ]
       },
       {
         "name": "Lemon juice",
         "qty": "1 oz",
-        "type": "liquid_filler"
+        "type": "liquid_filler",
+        "categories": [ "lemon juice", "juice" ]
       },
       {
         "name": "Simple syrup",
@@ -424,17 +459,20 @@
       {
         "name": "Gin",
         "qty": "1 oz",
-        "type": "liquid_alcohol"
+        "type": "liquid_alcohol",
+        "categories": [ "gin" ]
       },
       {
         "name": "Campari",
         "qty": "1 oz",
-        "type": "liquid_alcohol"
+        "type": "liquid_alcohol",
+        "categories": [ "bitter liqueur", "liqueur" ]
       },
       {
         "name": "Sweet red vermouth",
         "qty": "1 oz",
-        "type": "liquid_alcohol"
+        "type": "liquid_alcohol",
+        "categories": [ "sweet red vermouth", "vermouth" ]
       },
       {
         "name": "Orange slice",
@@ -452,12 +490,14 @@
       {
         "name": "White rum",
         "qty": "2 oz",
-        "type": "liquid_alcohol"
+        "type": "liquid_alcohol",
+        "categories": [ "white rum", "rum" ]
       },
       {
         "name": "Lime juice",
         "qty": "1/2 oz",
-        "type": "liquid_filler"
+        "type": "liquid_filler",
+        "categories": [ "lime juice", "juice" ]
       },
       {
         "name": "Sugar",
@@ -477,7 +517,8 @@
       {
         "name": "Club soda",
         "qty": "",
-        "type": "liquid_filler"
+        "type": "liquid_filler",
+        "categories": [ "club soda cola", "cola" ]
       },
       {
         "name": "Simple syrup",
@@ -505,12 +546,14 @@
       {
         "name": "Bourbon",
         "qty": "2 oz",
-        "type": "liquid_alcohol"
+        "type": "liquid_alcohol",
+        "categories": [ "bourbon" ]
       },
       {
         "name": "Lemon juice",
         "qty": "3/4 oz",
-        "type": "liquid_filler"
+        "type": "liquid_filler",
+        "categories": [ "lemon juice", "juice" ]
       },
       {
         "name": "Simple syrup",
@@ -549,27 +592,32 @@
       {
         "name": "Dark rum",
         "qty": "1 oz",
-        "type": "liquid_alcohol"
+        "type": "liquid_alcohol",
+        "categories": [ "dark rum", "rum" ]
       },
       {
         "name": "Amber rum",
         "qty": "1 oz",
-        "type": "liquid_alcohol"
+        "type": "liquid_alcohol",
+        "categories": [ "amber rum", "rum" ]
       },
       {
         "name": "Orange juice",
         "qty": "2 tbsp",
-        "type": "liquid_filler"
+        "type": "liquid_filler",
+        "categories": [ "orange juice", "juice" ]
       },
       {
         "name": "Cointreau",
         "qty": "1/2 oz",
-        "type": "liquid_alcohol"
+        "type": "liquid_alcohol",
+        "categories": [ "citrus liqueur", "liqueur" ]
       },
       {
         "name": "Lime juice",
         "qty": "1 tbsp",
-        "type": "liquid_filler"
+        "type": "liquid_filler",
+        "categories": [ "lime juice", "juice" ]
       },
       {
         "name": "Almond extract",
@@ -582,7 +630,8 @@
       {
         "name": "Grenadine syrup",
         "qty": "1 dash",
-        "type": "liquid_filler"
+        "type": "liquid_filler",
+        "categories": [ "syrup" ]
       }
     ]
   },
@@ -594,7 +643,8 @@
       {
         "name": "Rye whiskey",
         "qty": "2 oz",
-        "type": "liquid_alcohol"
+        "type": "liquid_alcohol",
+        "categories": [ "whiskey" ]
       },
       {
         "name": "Ice",
@@ -604,7 +654,8 @@
       {
         "name": "Italian vermouth",
         "qty": "1 oz",
-        "type": "liquid_alcohol"
+        "type": "liquid_alcohol",
+        "categories": [ "vermouth" ]
       },
       {
         "name": "Angostura bitters",
@@ -626,17 +677,20 @@
       {
         "name": "Bourbon",
         "qty": "1 1/4 oz",
-        "type": "liquid_alcohol"
+        "type": "liquid_alcohol",
+        "categories": [ "bourbon" ]
       },
       {
         "name": "Campari",
         "qty": "1 oz",
-        "type": "liquid_alcohol"
+        "type": "liquid_alcohol",
+        "categories": [ "bitter liqueur", "liqueur" ]
       },
       {
         "name": "Sweet vermouth",
         "qty": "1 oz",
-        "type": "liquid_alcohol"
+        "type": "liquid_alcohol",
+        "categories": [ "vermouth" ]
       },
       {
         "name": "Orange twist",
@@ -659,27 +713,32 @@
       {
         "name": "Apricot brandy",
         "qty": "1 oz",
-        "type": "liquid_alcohol"
+        "type": "liquid_alcohol",
+        "categories": [ "fruit liqueur", "liqueur" ]
       },
       {
         "name": "Lemon juice",
         "qty": "1 oz",
-        "type": "liquid_filler"
+        "type": "liquid_filler",
+        "categories": [ "lemon juice", "juice" ]
       },
       {
         "name": "Orange juice",
         "qty": "1 oz",
-        "type": "liquid_filler"
+        "type": "liquid_filler",
+        "categories": [ "orange juice", "juice" ]
       },
       {
         "name": "Triple sec",
         "qty": "1/2 oz",
-        "type": "liquid_alcohol"
+        "type": "liquid_alcohol",
+        "categories": [ "citrus juice", "juice" ]
       },
       {
         "name": "Grenadine syrup",
         "qty": "1 tsp",
-        "type": "liquid_filler"
+        "type": "liquid_filler",
+        "categories": [ "syrup" ]
       }
     ]
   },
@@ -696,22 +755,26 @@
       {
         "name": "Pineapple juice",
         "qty": "1 cup",
-        "type": "liquid_filler"
+        "type": "liquid_filler",
+        "categories": [ "pineapple juice", "juice" ]
       },
       {
         "name": "Blue curaçao",
         "qty": "1/2 cup",
-        "type": "liquid_alcohol"
+        "type": "liquid_alcohol",
+        "categories": [ "citrus liqueur", "liqueur" ]
       },
       {
         "name": "Vodka",
         "qty": "1/2 cup",
-        "type": "liquid_alcohol"
+        "type": "liquid_alcohol",
+        "categories": [ "vodka" ]
       },
       {
         "name": "Coconut cream",
         "qty": "1/2 cup",
-        "type": "liquid_filler"
+        "type": "liquid_filler",
+        "category": [ "coconut liqueur", "liqueur", "rum" ]
       },
       {
         "name": "Coconut flakes",
@@ -740,12 +803,14 @@
       {
         "name": "Coca-Cola",
         "qty": "6 oz",
-        "type": "liquid_alcohol"
+        "type": "liquid_alcohol",
+        "categories": [ "cola" ]
       },
       {
         "name": "Light rum or dark rum",
         "qty": "2 oz",
-        "type": "liquid_alcohol"
+        "type": "liquid_alcohol",
+        "categories": [ "white rum", "brown rum", "rum" ]
       }
     ]
   }

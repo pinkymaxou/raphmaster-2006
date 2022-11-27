@@ -9,6 +9,9 @@
 PB_BIND(cocktaildb_ProductCode, cocktaildb_ProductCode, AUTO)
 
 
+PB_BIND(cocktaildb_IngredientCategory, cocktaildb_IngredientCategory, AUTO)
+
+
 PB_BIND(cocktaildb_Ingredient, cocktaildb_Ingredient, AUTO)
 
 
@@ -25,12 +28,6 @@ PB_BIND(cocktaildb_IngredientFile, cocktaildb_IngredientFile, 4)
 
 
 PB_BIND(cocktaildb_RecipeFile, cocktaildb_RecipeFile, 4)
-
-
-PB_BIND(cocktaildb_Equivalence, cocktaildb_Equivalence, AUTO)
-
-
-PB_BIND(cocktaildb_MetaDataFile, cocktaildb_MetaDataFile, 4)
 
 
 

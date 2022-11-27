@@ -7,7 +7,7 @@ NVSJSON_SHandle g_sSettingHandle;
 
 static const NVSJSON_SSettingEntry m_arrsConfigEntries[SETTINGS_EENTRY_Count] =
 {
-    // WiFi Station related   
+    // WiFi Station related
     [SETTINGS_EENTRY_WAPPass]      = NVSJSON_INITSTRING_VAL("WAP.Pass", "WiFi password [empty, or > 8 characters]", "!homer2008!", ValidateWifiPassword, NVSJSON_EFLAGS_Secret | NVSJSON_EFLAGS_NeedsReboot),
 
     // WiFi Station related

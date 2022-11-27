@@ -1,6 +1,5 @@
 import ListCocktailPage from "./views/ListCocktailPage.js";
 import CustomCocktailPage from "./views/CustomCocktailPage.js";
-import SettingsPage from "./views/SettingsPage.js";
 import AboutPage from "./views/AboutPage.js";
 import NetworkPage from "./views/NetworkPage.js";
 import CalibPage from "./views/CalibPage.js";
@@ -30,7 +29,6 @@ const router = async () => {
         { path: "/", view: StatusPage },
         { path: "/status", view: StatusPage },
         { path: "/network", view: NetworkPage },
-        { path: "/settings", view: SettingsPage },
         { path: "/calib", view: CalibPage },
         { path: "/stationsettings", view: StationSettingsPage },
         { path: "/customcocktail", view: CustomCocktailPage },
