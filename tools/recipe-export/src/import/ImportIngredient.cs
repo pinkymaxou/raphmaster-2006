@@ -13,6 +13,8 @@ namespace recipe_export.import
         public string UPCCode = "";
         public Cocktaildb.EIngredientType Type { get; set; } = Cocktaildb.EIngredientType.Unspecified;
         public bool IsGarnish = false;
+
+        public string[] Categories { get; set; } = new string[0];
     }
 
 }

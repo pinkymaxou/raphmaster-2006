@@ -26,7 +26,7 @@ void COCKTAILEXPLORER_Init()
         return;
     }
 
-    ESP_LOGI(TAG, "Loaded ingredient, total: %d", m_sIngredientFile.entries_count);
+    ESP_LOGI(TAG, "Loaded ingredient, total: %d", m_sIngredientFile.ingredient_entries_count);
 
     ESP_LOGI(TAG, "Loading recipes, block size: %d", sizeof(m_sRecipeFile));
 
@@ -45,9 +45,9 @@ void COCKTAILEXPLORER_Init()
 
 const cocktaildb_Ingredient* COCKTAILEXPLORER_GetIngredientFile(uint32_t u32ID)
 {
-    for(int i = 0; i < m_sIngredientFile.entries_count; i++)
+    for(int i = 0; i < m_sIngredientFile.ingredient_entries_count; i++)
     {
-        const cocktaildb_Ingredient* pIngredientFile = &m_sIngredientFile.entries[i];
+        const cocktaildb_Ingredient* pIngredientFile = &m_sIngredientFile.ingredient_entries[i];
         if (pIngredientFile->id == u32ID)
             return pIngredientFile;
     }
@@ -127,9 +127,9 @@ char* COCKTAILEXPLORER_GetAllIngredients(bool bIsLiquidOnly)
     if (pRoot == NULL)
         goto ERROR;
 
-    for(int i = 0; i < m_sIngredientFile.entries_count; i++)
+    for(int i = 0; i < m_sIngredientFile.ingredient_entries_count; i++)
     {
-        cocktaildb_Ingredient* pIngredient = &m_sIngredientFile.entries[i];
+        cocktaildb_Ingredient* pIngredient = &m_sIngredientFile.ingredient_entries[i];
 
         bool bIsOK = true;
         if (bIsLiquidOnly)

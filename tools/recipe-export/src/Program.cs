@@ -62,13 +62,22 @@ namespace recipe_export
                                 throw new Exception("Unable to find type");
                         }
 
+                        List<string> categories = new List<string>();
+                        if (ingredient.categories != null)
+                        {
+                            foreach (dynamic category in ingredient.categories)
+                                categories.Add(Convert.ToString(category));
+                        }
+
                         newCR.Ingredients.Add(new ImportIngredient()
                         {
                             Name = Convert.ToString(ingredient.name ?? ""),
                             UPCCode = Convert.ToString(ingredient.upc_code ?? ""),
                             Type = ingredientType ?? Cocktaildb.EIngredientType.Unspecified,
                             IsGarnish = Convert.ToBoolean(ingredient.is_garnish),
-                            Qty = ingredient.qty
+                            Qty = ingredient.qty,
+
+                            Categories = categories.ToArray()
                         }); ;
                     }
 
@@ -80,18 +89,38 @@ namespace recipe_export
                     .SelectMany(p => p.Ingredients)
                     .GroupBy(p => p.Name)
                     .OrderBy(p => p.Key)
-                    .Select(p => new { Name = p.Key, UPCCode = p.FirstOrDefault(p => p.UPCCode != "")?.UPCCode ?? "", Type = p.First().Type, Is_Garnish = p.Any(p => p.IsGarnish), Count = p.Count() })
+                    .Select(p => new 
+                    { 
+                        Name = p.Key, 
+                        UPCCode = p.FirstOrDefault(p => p.UPCCode != "")?.UPCCode ?? "", 
+                        Type = p.First().Type, 
+                        Is_Garnish = p.Any(p => p.IsGarnish), 
+                        Count = p.Count(),
+                    
+                        IngredientCategories = p.SelectMany(p => p.Categories).Distinct().ToArray()
+                    })
                     .ToArray();
                 string ingredientAlls = String.Join("\r\n", allIngredientGroups.Select(p => p.Name));
 
-                var allQtyGroups = cocktailRecipes
-                    .SelectMany(p => p.Ingredients)
-                    .GroupBy(p => p.Qty)
-                    .OrderBy(p => p.Key)
-                    .Select(p => new { Name = p.Key })
-                    .ToArray();
 
-                string allQtys = String.Join("\r\n", allQtyGroups.Select(p => p.Name));
+                // Group by category
+                var allCategoryGroups = cocktailRecipes
+                    .SelectMany(p => p.Ingredients)
+                    .SelectMany(p => p.Categories)
+                    .Distinct()
+                    //.GroupBy(p => p)
+                    .OrderBy(p => p)
+                    .Select(p => new { Name = p })
+                    .ToArray();
+                //string categoryAlls = String.Join("\r\n", allCategoryGroups.Select(p => p.Name));
+
+                //var allQtyGroups = cocktailRecipes
+                //    .SelectMany(p => p.Ingredients)
+                //    .GroupBy(p => p.Qty)
+                //    .OrderBy(p => p.Key)
+                //    .Select(p => new { Name = p.Key })
+                //    .ToArray();
+                //string allQtys = String.Join("\r\n", allQtyGroups.Select(p => p.Name));
 
                 long t = DateTime.Now.Ticks;
 
@@ -100,6 +129,18 @@ namespace recipe_export
                 using (FileStream fs = new FileStream("ingredients.bin", FileMode.OpenOrCreate, FileAccess.ReadWrite))
                 {
                     fs.SetLength(0);
+
+                    uint ingredientCategoryID = 200000;
+                    foreach (var ingreCategory in allCategoryGroups)
+                    {
+                        var newDbIngredientCategory = new Cocktaildb.IngredientCategory()
+                        {
+                            Id = ingredientCategoryID,
+                            Name = ingreCategory.Name,
+                        };
+                        dbIngredientFile.IngredientCategoryEntries.Add(newDbIngredientCategory);
+                        ingredientCategoryID++;
+                    }
 
                     uint ingredientID = 1;
 
@@ -111,6 +152,12 @@ namespace recipe_export
                             Name = ingreGroup.Name,
                             IngredientType = ingreGroup.Type
                         };
+
+                        newDbIngredient.IngredientCategoryIds.AddRange(
+                                (from item in ingreGroup.IngredientCategories
+                                 let dbIngreCategory = dbIngredientFile.IngredientCategoryEntries.FirstOrDefault(p => p.Name == item)
+                                 select (uint)dbIngreCategory.Id).ToArray());
+
                         /*
                         if (!String.IsNullOrEmpty(ingreGroup.UPCCode))
                         {
