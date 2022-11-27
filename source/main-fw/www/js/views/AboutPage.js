@@ -49,16 +49,9 @@ export default class extends AbstractView {
         return `
         <div class="pure-menu pure-menu-horizontal">
             <li class="pure-menu-item">
-                <a href="/network" class="pure-menu-link" data-link>Network Settings</a>
-            </li>
-            <li class="pure-menu-item">
-                <a href="/stationsettings" class="pure-menu-link" data-link>Stations Settings</a>
-            </li>
-            <li class="pure-menu-item">
                 <a href="/calib" class="pure-menu-link" data-link>Calibration</a>
             </li>
         </div>
-
         <table class="info-table info-table-bordered">
             <tbody id="tblBdSysInfo">
                 <!-- Space for table items -->

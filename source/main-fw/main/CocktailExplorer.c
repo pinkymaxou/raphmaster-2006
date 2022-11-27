@@ -74,7 +74,7 @@ char* COCKTAILEXPLORER_GetAllRecipes()
 
         if (strlen(pRecipe->imgfile) > 0)
         {
-            snprintf(tmp, sizeof(tmp) - 1, "img/%s", pRecipe->imgfile);
+            snprintf(tmp, sizeof(tmp) - 1, "img/c/%s", pRecipe->imgfile);
             cJSON_AddItemToObject(pNewRecipe, "img", cJSON_CreateString(tmp));
         }
 

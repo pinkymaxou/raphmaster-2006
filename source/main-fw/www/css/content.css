@@ -243,6 +243,19 @@
     gap: 5px;
 }
 
+/* ===============================
+    Menu item
+   =============================== */
+.menu-item-img {
+    width: 24px;
+    height: 24px;
+    padding: 0;
+}
+
+.menu-item-img:hover {
+    filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg) brightness(118%) contrast(119%);
+}
+
 @keyframes lds-dual-ring {
     0% {
         transform: rotate(0deg);
