@@ -96,9 +96,7 @@ export default class extends AbstractView {
             .catch((ex) => console.error('getavailableingredients', ex));
         this.mIngredients.sort((a, b) => a.name.localeCompare(b.name));
 
-        let idTBodyCustomIngredientList = document.querySelector("#idTBodyCustomIngredientList");
-
-        this.mOrderList = [{ "name" : "test" }, { "name" : "test" }, { "name" : "test" }, { "name" : "test" }];
+        this.mOrderList = [{ "name" : "test" }];
 
         this.mOrderList.forEach(
             (orderListItem) =>
