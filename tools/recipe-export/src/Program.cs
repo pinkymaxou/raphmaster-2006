@@ -111,16 +111,16 @@ namespace recipe_export
                             Name = ingreGroup.Name,
                             IngredientType = ingreGroup.Type
                         };
-
+                        /*
                         if (!String.IsNullOrEmpty(ingreGroup.UPCCode))
                         {
                             newDbIngredient.ProductCodes.Add(new Cocktaildb.ProductCode()
                             {
                                 UpcCode = ingreGroup.UPCCode
                             });
-                        }
+                        }*/
 
-                        dbIngredientFile.Entries.Add(newDbIngredient);
+                        dbIngredientFile.IngredientEntries.Add(newDbIngredient);
 
                         ingredientID++;
                     }
@@ -142,7 +142,7 @@ namespace recipe_export
                     {
                         Cocktaildb.Recipe newRecipe = new Cocktaildb.Recipe()
                         {
-                            ID = recipeStartID++,
+                            Id = recipeStartID++,
                             Name = importRecipe.Name,
                             Imgfile = importRecipe.ImgSrc,
                             IsCocktail = importRecipe.IsCocktail,
@@ -150,9 +150,8 @@ namespace recipe_export
 
                         foreach (ImportIngredient importIngredient in importRecipe.Ingredients)
                         {
-                            Cocktaildb.Ingredient dbIngredient = dbIngredientFile.Entries
+                            Cocktaildb.Ingredient dbIngredient = dbIngredientFile.IngredientEntries
                                 .FirstOrDefault(p => p.Name == importIngredient.Name);
-
 
                             Cocktaildb.Qty newQty = new Cocktaildb.Qty()
                             {
@@ -162,75 +161,7 @@ namespace recipe_export
 
                             if (!String.IsNullOrEmpty(importIngredient.Qty))
                             {
-                                Regex regex = new Regex(@"^(?<scal>((\d+\s+\d+\/\d+)|(\d+\/\d+)|(\d+)))\s*(?<unit>(oz|dash|drop|cup|pinch|tsp|tbsp|ml))?", RegexOptions.ExplicitCapture);
-
-                                Match m = regex.Match(importIngredient.Qty);
-                                if (!m.Success)
-                                    throw new Exception("No match");
-
-                                string valueText = m.Groups["scal"].Value.Trim();
-                                if (!float.TryParse(valueText, out float value))
-                                {
-                                    Regex fraction = new Regex(@"^((((?<int>\d+)\s(?<a>\d+)\/(?<b>\d+)))|(?<a>\d+)\/(?<b>\d+)|(?<int>\d+))", RegexOptions.ExplicitCapture);
-                                    Match mFrac = fraction.Match(valueText);
-                                    if (mFrac.Success)
-                                    {
-                                        string intText = mFrac.Groups["int"].Value;
-                                        int intPart = 0;
-                                        int.TryParse(intText, out intPart);
-
-                                        value = intPart;
-                                        if (int.TryParse(mFrac.Groups["a"].Value, out int intPartA) &&
-                                            int.TryParse(mFrac.Groups["b"].Value, out int intPartB))
-                                        {
-                                            value += (float)intPartA / (float)intPartB;
-                                        }
-                                    }
-                                    else
-                                        throw new Exception("Invalid scal");
-                                }
-
-                                newQty.Value = value;
-
-                                string unitText = m.Groups["unit"].Value.Trim();
-                                if (unitText == "ml")
-                                {
-                                    newQty.Type = Cocktaildb.EUnit.LiquidMl;
-                                }
-                                else if (unitText == "oz")
-                                {
-                                    newQty.Type = Cocktaildb.EUnit.Liquidoz;
-                                }
-                                else if (unitText == "tsp")
-                                {
-                                    newQty.Type = Cocktaildb.EUnit.Teaspoon;
-                                }
-                                else if (unitText == "tbsp")
-                                {
-                                    newQty.Type = Cocktaildb.EUnit.Tablespoon;
-                                }
-                                else if (unitText == "dash")
-                                {
-                                    newQty.Type = Cocktaildb.EUnit.Dash;
-                                }
-                                else if (unitText == "pinch")
-                                {
-                                    newQty.Type = Cocktaildb.EUnit.Pinch;
-                                }
-                                else if (unitText == "cup")
-                                {
-                                    newQty.Type = Cocktaildb.EUnit.Cup;
-                                }
-                                else if (unitText == "drop")
-                                {
-                                    newQty.Type = Cocktaildb.EUnit.Drop;
-                                }
-                                else if (unitText == "")
-                                {
-                                    newQty.Type = Cocktaildb.EUnit.Unitary;
-                                }
-                                else
-                                    throw new Exception("Unknown unit");
+                                DecodeQty(importIngredient.Qty, ref newQty);
                             }
 
                             newRecipe.RecipeSteps.Add(new Cocktaildb.RecipeStep()
@@ -253,6 +184,79 @@ namespace recipe_export
             {
                 Console.Error.WriteLine("Exception: " + ex.Message);
             }
+        }
+
+        private static void DecodeQty(string qtyText, ref Qty newQty)
+        {
+            Regex regex = new Regex(@"^(?<scal>((\d+\s+\d+\/\d+)|(\d+\/\d+)|(\d+)))\s*(?<unit>(oz|dash|drop|cup|pinch|tsp|tbsp|ml))?", RegexOptions.ExplicitCapture);
+
+            Match m = regex.Match(qtyText);
+            if (!m.Success)
+                throw new Exception("No match");
+
+            string valueText = m.Groups["scal"].Value.Trim();
+            if (!float.TryParse(valueText, out float value))
+            {
+                Regex fraction = new Regex(@"^((((?<int>\d+)\s(?<a>\d+)\/(?<b>\d+)))|(?<a>\d+)\/(?<b>\d+)|(?<int>\d+))", RegexOptions.ExplicitCapture);
+                Match mFrac = fraction.Match(valueText);
+                if (mFrac.Success)
+                {
+                    string intText = mFrac.Groups["int"].Value;
+                    int intPart = 0;
+                    int.TryParse(intText, out intPart);
+
+                    value = intPart;
+                    if (int.TryParse(mFrac.Groups["a"].Value, out int intPartA) &&
+                        int.TryParse(mFrac.Groups["b"].Value, out int intPartB))
+                    {
+                        value += (float)intPartA / (float)intPartB;
+                    }
+                }
+                else
+                    throw new Exception("Invalid scal");
+            }
+
+            newQty.Value = value;
+
+            string unitText = m.Groups["unit"].Value.Trim();
+            if (unitText == "ml")
+            {
+                newQty.Type = Cocktaildb.EUnit.LiquidMl;
+            }
+            else if (unitText == "oz")
+            {
+                newQty.Type = Cocktaildb.EUnit.Liquidoz;
+            }
+            else if (unitText == "tsp")
+            {
+                newQty.Type = Cocktaildb.EUnit.Teaspoon;
+            }
+            else if (unitText == "tbsp")
+            {
+                newQty.Type = Cocktaildb.EUnit.Tablespoon;
+            }
+            else if (unitText == "dash")
+            {
+                newQty.Type = Cocktaildb.EUnit.Dash;
+            }
+            else if (unitText == "pinch")
+            {
+                newQty.Type = Cocktaildb.EUnit.Pinch;
+            }
+            else if (unitText == "cup")
+            {
+                newQty.Type = Cocktaildb.EUnit.Cup;
+            }
+            else if (unitText == "drop")
+            {
+                newQty.Type = Cocktaildb.EUnit.Drop;
+            }
+            else if (unitText == "")
+            {
+                newQty.Type = Cocktaildb.EUnit.Unitary;
+            }
+            else
+                throw new Exception("Unknown unit");
         }
     }
 }
