@@ -748,5 +748,33 @@
         "type": "liquid_alcohol"
       }
     ]
+  },
+  {
+    "name": "French 75",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Ice",
+        "qty": "",
+        "type": "ice"
+      },
+      {
+        "name": "Lime wedge",
+        "qty": "1",
+        "type": "fruit_or_vegetable",
+        "is_garnish": true
+      },
+      {
+        "name": "Coca-Cola",
+        "qty": "6 oz",
+        "type": "liquid_alcohol"
+      },
+      {
+        "name": "Light rum or dark rum",
+        "qty": "2 oz",
+        "type": "liquid_alcohol"
+      }
+    ]
   }
 ]

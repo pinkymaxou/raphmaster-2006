@@ -27,12 +27,6 @@ PB_BIND(cocktaildb_IngredientFile, cocktaildb_IngredientFile, 4)
 PB_BIND(cocktaildb_RecipeFile, cocktaildb_RecipeFile, 4)
 
 
-PB_BIND(cocktaildb_Equivalence, cocktaildb_Equivalence, AUTO)
-
-
-PB_BIND(cocktaildb_MetaDataFile, cocktaildb_MetaDataFile, 4)
-
-
 
 
 

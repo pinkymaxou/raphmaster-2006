@@ -17,7 +17,7 @@ namespace generate_code
                 Func<int, string> enumPosXText       = (i) => $"SETTINGS_EENTRY_STATION{i}_POS_X";
                 Func<int, string> enumPosYText       = (i) => $"SETTINGS_EENTRY_STATION{i}_POS_Y";
                 Func<int, string> enumLoadedIDText   = (i) => $"SETTINGS_EENTRY_STATION{i}_LOADID";
-                
+
                 Func<int, string> enumTotalQtyText = (i) => $"SETTINGS_EENTRY_STATION{i}_TOTALQTY";
                 Func<int, string> enumUsedQtyText = (i) => $"SETTINGS_EENTRY_STATION{i}_USEDQTY";
 

@@ -25,42 +25,37 @@ namespace Cocktaildb {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
             "ChBjb2NrdGFpbGRiLnByb3RvEgpjb2NrdGFpbGRiIh8KC1Byb2R1Y3RDb2Rl",
-            "EhAKCHVwY19jb2RlGAEgASgJIp8BCgpJbmdyZWRpZW50EgoKAmlkGAEgASgN",
-            "EgwKBG5hbWUYAiABKAkSLgoNcHJvZHVjdF9jb2RlcxgDIAMoCzIXLmNvY2t0",
-            "YWlsZGIuUHJvZHVjdENvZGUSEQoJcmVjaXBlX2lkGAQgASgNEjQKD2luZ3Jl",
-            "ZGllbnRfdHlwZRgFIAEoDjIbLmNvY2t0YWlsZGIuRUluZ3JlZGllbnRUeXBl",
-            "InYKBlJlY2lwZRIKCgJJRBgBIAEoDRIMCgRuYW1lGAIgASgJEg8KB2ltZ2Zp",
-            "bGUYByABKAkSEwoLaXNfY29ja3RhaWwYBSABKAgSLAoMcmVjaXBlX3N0ZXBz",
-            "GAYgAygLMhYuY29ja3RhaWxkYi5SZWNpcGVTdGVwIjUKA1F0eRINCgV2YWx1",
-            "ZRgBIAEoAhIfCgR0eXBlGAIgASgOMhEuY29ja3RhaWxkYi5FVW5pdCKEAQoK",
-            "UmVjaXBlU3RlcBIXCg1pbmdyZWRpZW50X2lkGAEgASgNSAASHQoTaW5ncmVk",
-            "aWVudF9ncm91cF9pZBgCIAEoDUgAEhwKA3F0eRgDIAEoCzIPLmNvY2t0YWls",
-            "ZGIuUXR5EhIKCmlzX2dhcm5pc2gYBCABKAhCDAoKaW5ncmVkaWVudCI5Cg5J",
-            "bmdyZWRpZW50RmlsZRInCgdlbnRyaWVzGAEgAygLMhYuY29ja3RhaWxkYi5J",
-            "bmdyZWRpZW50IjEKClJlY2lwZUZpbGUSIwoHZW50cmllcxgBIAMoCzISLmNv",
-            "Y2t0YWlsZGIuUmVjaXBlIjoKC0VxdWl2YWxlbmNlEhYKDmluZ3JlZGllbnRf",
-            "aWRzGAEgAygNEhMKC2VxdWl2YWxlbmNlGAIgASgCIj0KDE1ldGFEYXRhRmls",
-            "ZRItCgxlcXVpdmFsZW5jZXMYASADKAsyFy5jb2NrdGFpbGRiLkVxdWl2YWxl",
-            "bmNlKq0BCg9FSW5ncmVkaWVudFR5cGUSDwoLdW5zcGVjaWZpZWQQABISCg5s",
-            "aXF1aWRfYWxjb2hvbBABEhEKDXJlc2VydmVkXzB4MDIQAhIRCg1saXF1aWRf",
-            "ZmlsbGVyEAMSBwoDaWNlEAQSCgoGcG93ZGVyEAUSDwoLZW11bHNpZnlpbmcQ",
-            "BhIWChJmcnVpdF9vcl92ZWdldGFibGUQBxIRCg1sZWFmX29yX3NwcmlnEAgq",
-            "JAoJRUxhbmd1YWdlEgsKB2VuZ2xpc2gQABIKCgZmcmVuY2gQASqAAQoFRVVu",
-            "aXQSCAoEbm9uZRAAEgsKB3VuaXRhcnkQARIMCghsaXF1aWRNTBACEgwKCGxp",
-            "cXVpZG96EAMSBwoDY3VwEAQSCQoFcGluY2gQBhIMCgh0ZWFzcG9vbhAIEg4K",
-            "CnRhYmxlc3Bvb24QCRIICgRkYXNoEAoSCAoEZHJvcBALYgZwcm90bzM="));
+            "EhAKCHVwY19jb2RlGAEgASgJIm8KCkluZ3JlZGllbnQSCgoCaWQYASABKA0S",
+            "DAoEbmFtZRgCIAEoCRIRCglyZWNpcGVfaWQYBCABKA0SNAoPaW5ncmVkaWVu",
+            "dF90eXBlGAUgASgOMhsuY29ja3RhaWxkYi5FSW5ncmVkaWVudFR5cGUidgoG",
+            "UmVjaXBlEgoKAmlkGAEgASgNEgwKBG5hbWUYAiABKAkSDwoHaW1nZmlsZRgH",
+            "IAEoCRITCgtpc19jb2NrdGFpbBgFIAEoCBIsCgxyZWNpcGVfc3RlcHMYBiAD",
+            "KAsyFi5jb2NrdGFpbGRiLlJlY2lwZVN0ZXAiNQoDUXR5Eg0KBXZhbHVlGAEg",
+            "ASgCEh8KBHR5cGUYAiABKA4yES5jb2NrdGFpbGRiLkVVbml0IoQBCgpSZWNp",
+            "cGVTdGVwEhcKDWluZ3JlZGllbnRfaWQYASABKA1IABIdChNpbmdyZWRpZW50",
+            "X2dyb3VwX2lkGAIgASgNSAASHAoDcXR5GAMgASgLMg8uY29ja3RhaWxkYi5R",
+            "dHkSEgoKaXNfZ2FybmlzaBgEIAEoCEIMCgppbmdyZWRpZW50IjkKDkluZ3Jl",
+            "ZGllbnRGaWxlEicKB2VudHJpZXMYASADKAsyFi5jb2NrdGFpbGRiLkluZ3Jl",
+            "ZGllbnQiMQoKUmVjaXBlRmlsZRIjCgdlbnRyaWVzGAEgAygLMhIuY29ja3Rh",
+            "aWxkYi5SZWNpcGUqrQEKD0VJbmdyZWRpZW50VHlwZRIPCgt1bnNwZWNpZmll",
+            "ZBAAEhIKDmxpcXVpZF9hbGNvaG9sEAESEQoNcmVzZXJ2ZWRfMHgwMhACEhEK",
+            "DWxpcXVpZF9maWxsZXIQAxIHCgNpY2UQBBIKCgZwb3dkZXIQBRIPCgtlbXVs",
+            "c2lmeWluZxAGEhYKEmZydWl0X29yX3ZlZ2V0YWJsZRAHEhEKDWxlYWZfb3Jf",
+            "c3ByaWcQCCokCglFTGFuZ3VhZ2USCwoHZW5nbGlzaBAAEgoKBmZyZW5jaBAB",
+            "KoABCgVFVW5pdBIICgRub25lEAASCwoHdW5pdGFyeRABEgwKCGxpcXVpZE1M",
+            "EAISDAoIbGlxdWlkb3oQAxIHCgNjdXAQBBIJCgVwaW5jaBAGEgwKCHRlYXNw",
+            "b29uEAgSDgoKdGFibGVzcG9vbhAJEggKBGRhc2gQChIICgRkcm9wEAtiBnBy",
+            "b3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Cocktaildb.EIngredientType), typeof(global::Cocktaildb.ELanguage), typeof(global::Cocktaildb.EUnit), }, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Cocktaildb.ProductCode), global::Cocktaildb.ProductCode.Parser, new[]{ "UpcCode" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Cocktaildb.Ingredient), global::Cocktaildb.Ingredient.Parser, new[]{ "Id", "Name", "ProductCodes", "RecipeId", "IngredientType" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Cocktaildb.Recipe), global::Cocktaildb.Recipe.Parser, new[]{ "ID", "Name", "Imgfile", "IsCocktail", "RecipeSteps" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Cocktaildb.Ingredient), global::Cocktaildb.Ingredient.Parser, new[]{ "Id", "Name", "RecipeId", "IngredientType" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Cocktaildb.Recipe), global::Cocktaildb.Recipe.Parser, new[]{ "Id", "Name", "Imgfile", "IsCocktail", "RecipeSteps" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Cocktaildb.Qty), global::Cocktaildb.Qty.Parser, new[]{ "Value", "Type" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Cocktaildb.RecipeStep), global::Cocktaildb.RecipeStep.Parser, new[]{ "IngredientId", "IngredientGroupId", "Qty", "IsGarnish" }, new[]{ "Ingredient" }, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Cocktaildb.IngredientFile), global::Cocktaildb.IngredientFile.Parser, new[]{ "Entries" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Cocktaildb.RecipeFile), global::Cocktaildb.RecipeFile.Parser, new[]{ "Entries" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Cocktaildb.Equivalence), global::Cocktaildb.Equivalence.Parser, new[]{ "IngredientIds", "Equivalence_" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Cocktaildb.MetaDataFile), global::Cocktaildb.MetaDataFile.Parser, new[]{ "Equivalences" }, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Cocktaildb.RecipeFile), global::Cocktaildb.RecipeFile.Parser, new[]{ "Entries" }, null, null, null)
           }));
     }
     #endregion
@@ -283,7 +278,6 @@ namespace Cocktaildb {
     public Ingredient(Ingredient other) : this() {
       id_ = other.id_;
       name_ = other.name_;
-      productCodes_ = other.productCodes_.Clone();
       recipeId_ = other.recipeId_;
       ingredientType_ = other.ingredientType_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
@@ -319,21 +313,11 @@ namespace Cocktaildb {
       }
     }
 
-    /// <summary>Field number for the "product_codes" field.</summary>
-    public const int ProductCodesFieldNumber = 3;
-    private static readonly pb::FieldCodec<global::Cocktaildb.ProductCode> _repeated_productCodes_codec
-        = pb::FieldCodec.ForMessage(26, global::Cocktaildb.ProductCode.Parser);
-    private readonly pbc::RepeatedField<global::Cocktaildb.ProductCode> productCodes_ = new pbc::RepeatedField<global::Cocktaildb.ProductCode>();
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<global::Cocktaildb.ProductCode> ProductCodes {
-      get { return productCodes_; }
-    }
-
     /// <summary>Field number for the "recipe_id" field.</summary>
     public const int RecipeIdFieldNumber = 4;
     private uint recipeId_;
     /// <summary>
-    /// 0 = null
+    /// repeated ProductCode product_codes = 3;
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public uint RecipeId {
@@ -369,7 +353,6 @@ namespace Cocktaildb {
       }
       if (Id != other.Id) return false;
       if (Name != other.Name) return false;
-      if(!productCodes_.Equals(other.productCodes_)) return false;
       if (RecipeId != other.RecipeId) return false;
       if (IngredientType != other.IngredientType) return false;
       return Equals(_unknownFields, other._unknownFields);
@@ -380,7 +363,6 @@ namespace Cocktaildb {
       int hash = 1;
       if (Id != 0) hash ^= Id.GetHashCode();
       if (Name.Length != 0) hash ^= Name.GetHashCode();
-      hash ^= productCodes_.GetHashCode();
       if (RecipeId != 0) hash ^= RecipeId.GetHashCode();
       if (IngredientType != 0) hash ^= IngredientType.GetHashCode();
       if (_unknownFields != null) {
@@ -404,7 +386,6 @@ namespace Cocktaildb {
         output.WriteRawTag(18);
         output.WriteString(Name);
       }
-      productCodes_.WriteTo(output, _repeated_productCodes_codec);
       if (RecipeId != 0) {
         output.WriteRawTag(32);
         output.WriteUInt32(RecipeId);
@@ -427,7 +408,6 @@ namespace Cocktaildb {
       if (Name.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(Name);
       }
-      size += productCodes_.CalculateSize(_repeated_productCodes_codec);
       if (RecipeId != 0) {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(RecipeId);
       }
@@ -451,7 +431,6 @@ namespace Cocktaildb {
       if (other.Name.Length != 0) {
         Name = other.Name;
       }
-      productCodes_.Add(other.productCodes_);
       if (other.RecipeId != 0) {
         RecipeId = other.RecipeId;
       }
@@ -475,10 +454,6 @@ namespace Cocktaildb {
           }
           case 18: {
             Name = input.ReadString();
-            break;
-          }
-          case 26: {
-            productCodes_.AddEntriesFrom(input, _repeated_productCodes_codec);
             break;
           }
           case 32: {
@@ -520,7 +495,7 @@ namespace Cocktaildb {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public Recipe(Recipe other) : this() {
-      iD_ = other.iD_;
+      id_ = other.id_;
       name_ = other.name_;
       imgfile_ = other.imgfile_;
       isCocktail_ = other.isCocktail_;
@@ -533,14 +508,14 @@ namespace Cocktaildb {
       return new Recipe(this);
     }
 
-    /// <summary>Field number for the "ID" field.</summary>
-    public const int IDFieldNumber = 1;
-    private uint iD_;
+    /// <summary>Field number for the "id" field.</summary>
+    public const int IdFieldNumber = 1;
+    private uint id_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint ID {
-      get { return iD_; }
+    public uint Id {
+      get { return id_; }
       set {
-        iD_ = value;
+        id_ = value;
       }
     }
 
@@ -600,7 +575,7 @@ namespace Cocktaildb {
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (ID != other.ID) return false;
+      if (Id != other.Id) return false;
       if (Name != other.Name) return false;
       if (Imgfile != other.Imgfile) return false;
       if (IsCocktail != other.IsCocktail) return false;
@@ -611,7 +586,7 @@ namespace Cocktaildb {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
-      if (ID != 0) hash ^= ID.GetHashCode();
+      if (Id != 0) hash ^= Id.GetHashCode();
       if (Name.Length != 0) hash ^= Name.GetHashCode();
       if (Imgfile.Length != 0) hash ^= Imgfile.GetHashCode();
       if (IsCocktail != false) hash ^= IsCocktail.GetHashCode();
@@ -629,9 +604,9 @@ namespace Cocktaildb {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
-      if (ID != 0) {
+      if (Id != 0) {
         output.WriteRawTag(8);
-        output.WriteUInt32(ID);
+        output.WriteUInt32(Id);
       }
       if (Name.Length != 0) {
         output.WriteRawTag(18);
@@ -654,8 +629,8 @@ namespace Cocktaildb {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
-      if (ID != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(ID);
+      if (Id != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Id);
       }
       if (Name.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(Name);
@@ -678,8 +653,8 @@ namespace Cocktaildb {
       if (other == null) {
         return;
       }
-      if (other.ID != 0) {
-        ID = other.ID;
+      if (other.Id != 0) {
+        Id = other.Id;
       }
       if (other.Name.Length != 0) {
         Name = other.Name;
@@ -703,7 +678,7 @@ namespace Cocktaildb {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 8: {
-            ID = input.ReadUInt32();
+            Id = input.ReadUInt32();
             break;
           }
           case 18: {
@@ -1375,280 +1350,6 @@ namespace Cocktaildb {
             break;
           case 10: {
             entries_.AddEntriesFrom(input, _repeated_entries_codec);
-            break;
-          }
-        }
-      }
-    }
-
-  }
-
-  public sealed partial class Equivalence : pb::IMessage<Equivalence> {
-    private static readonly pb::MessageParser<Equivalence> _parser = new pb::MessageParser<Equivalence>(() => new Equivalence());
-    private pb::UnknownFieldSet _unknownFields;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<Equivalence> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::Cocktaildb.CocktaildbReflection.Descriptor.MessageTypes[7]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public Equivalence() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public Equivalence(Equivalence other) : this() {
-      ingredientIds_ = other.ingredientIds_.Clone();
-      equivalence_ = other.equivalence_;
-      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public Equivalence Clone() {
-      return new Equivalence(this);
-    }
-
-    /// <summary>Field number for the "ingredient_ids" field.</summary>
-    public const int IngredientIdsFieldNumber = 1;
-    private static readonly pb::FieldCodec<uint> _repeated_ingredientIds_codec
-        = pb::FieldCodec.ForUInt32(10);
-    private readonly pbc::RepeatedField<uint> ingredientIds_ = new pbc::RepeatedField<uint>();
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<uint> IngredientIds {
-      get { return ingredientIds_; }
-    }
-
-    /// <summary>Field number for the "equivalence" field.</summary>
-    public const int Equivalence_FieldNumber = 2;
-    private float equivalence_;
-    /// <summary>
-    /// 0 = not so much, 1 = perfectly switchable
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public float Equivalence_ {
-      get { return equivalence_; }
-      set {
-        equivalence_ = value;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as Equivalence);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(Equivalence other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if(!ingredientIds_.Equals(other.ingredientIds_)) return false;
-      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(Equivalence_, other.Equivalence_)) return false;
-      return Equals(_unknownFields, other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      hash ^= ingredientIds_.GetHashCode();
-      if (Equivalence_ != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Equivalence_);
-      if (_unknownFields != null) {
-        hash ^= _unknownFields.GetHashCode();
-      }
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-      ingredientIds_.WriteTo(output, _repeated_ingredientIds_codec);
-      if (Equivalence_ != 0F) {
-        output.WriteRawTag(21);
-        output.WriteFloat(Equivalence_);
-      }
-      if (_unknownFields != null) {
-        _unknownFields.WriteTo(output);
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      size += ingredientIds_.CalculateSize(_repeated_ingredientIds_codec);
-      if (Equivalence_ != 0F) {
-        size += 1 + 4;
-      }
-      if (_unknownFields != null) {
-        size += _unknownFields.CalculateSize();
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(Equivalence other) {
-      if (other == null) {
-        return;
-      }
-      ingredientIds_.Add(other.ingredientIds_);
-      if (other.Equivalence_ != 0F) {
-        Equivalence_ = other.Equivalence_;
-      }
-      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
-            break;
-          case 10:
-          case 8: {
-            ingredientIds_.AddEntriesFrom(input, _repeated_ingredientIds_codec);
-            break;
-          }
-          case 21: {
-            Equivalence_ = input.ReadFloat();
-            break;
-          }
-        }
-      }
-    }
-
-  }
-
-  public sealed partial class MetaDataFile : pb::IMessage<MetaDataFile> {
-    private static readonly pb::MessageParser<MetaDataFile> _parser = new pb::MessageParser<MetaDataFile>(() => new MetaDataFile());
-    private pb::UnknownFieldSet _unknownFields;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<MetaDataFile> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::Cocktaildb.CocktaildbReflection.Descriptor.MessageTypes[8]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public MetaDataFile() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public MetaDataFile(MetaDataFile other) : this() {
-      equivalences_ = other.equivalences_.Clone();
-      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public MetaDataFile Clone() {
-      return new MetaDataFile(this);
-    }
-
-    /// <summary>Field number for the "equivalences" field.</summary>
-    public const int EquivalencesFieldNumber = 1;
-    private static readonly pb::FieldCodec<global::Cocktaildb.Equivalence> _repeated_equivalences_codec
-        = pb::FieldCodec.ForMessage(10, global::Cocktaildb.Equivalence.Parser);
-    private readonly pbc::RepeatedField<global::Cocktaildb.Equivalence> equivalences_ = new pbc::RepeatedField<global::Cocktaildb.Equivalence>();
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<global::Cocktaildb.Equivalence> Equivalences {
-      get { return equivalences_; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as MetaDataFile);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(MetaDataFile other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if(!equivalences_.Equals(other.equivalences_)) return false;
-      return Equals(_unknownFields, other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      hash ^= equivalences_.GetHashCode();
-      if (_unknownFields != null) {
-        hash ^= _unknownFields.GetHashCode();
-      }
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-      equivalences_.WriteTo(output, _repeated_equivalences_codec);
-      if (_unknownFields != null) {
-        _unknownFields.WriteTo(output);
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      size += equivalences_.CalculateSize(_repeated_equivalences_codec);
-      if (_unknownFields != null) {
-        size += _unknownFields.CalculateSize();
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(MetaDataFile other) {
-      if (other == null) {
-        return;
-      }
-      equivalences_.Add(other.equivalences_);
-      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
-            break;
-          case 10: {
-            equivalences_.AddEntriesFrom(input, _repeated_equivalences_codec);
             break;
           }
         }

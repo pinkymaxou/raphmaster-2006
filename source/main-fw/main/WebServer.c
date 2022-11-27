@@ -137,7 +137,6 @@ static esp_err_t file_get_handler(httpd_req_t *req)
     if (strcmp(req->uri, "/") == 0 ||
         strcmp(req->uri, "/about") == 0 ||
         strcmp(req->uri, "/network") == 0 ||
-        strcmp(req->uri, "/settings") == 0 ||
         strcmp(req->uri, "/calib") == 0 ||
         strcmp(req->uri, "/stationsettings") == 0 ||
         strcmp(req->uri, "/listcocktailpage") == 0 ||

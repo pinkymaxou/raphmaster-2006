@@ -55,9 +55,6 @@ export default class extends AbstractView {
                 <a href="/stationsettings" class="pure-menu-link" data-link>Stations Settings</a>
             </li>
             <li class="pure-menu-item">
-                <a href="/settings" class="pure-menu-link" data-link>General Settings</a>
-            </li>
-            <li class="pure-menu-item">
                 <a href="/calib" class="pure-menu-link" data-link>Calibration</a>
             </li>
         </div>
