@@ -110,4 +110,6 @@ NVSJSON_ESETRET NVSJSON_SetValueString(NVSJSON_SHandle* pHandle, uint16_t u16Ent
 char* NVSJSON_ExportJSON(NVSJSON_SHandle* pHandle, bool bAddInfo);
 bool NVSJSON_ImportJSON(NVSJSON_SHandle* pHandle, const char* szJSON);
 
+const char* NVSJSON_GetSetRetString(NVSJSON_ESETRET eSetRet);
+
 #endif

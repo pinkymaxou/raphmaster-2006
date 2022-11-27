@@ -12,6 +12,8 @@
 static cocktaildb_IngredientFile m_sIngredientFile;
 static cocktaildb_RecipeFile m_sRecipeFile;
 
+static bool IsIngredientLiquid(const cocktaildb_Ingredient* pIngredient);
+
 void COCKTAILEXPLORER_Init()
 {
     ESP_LOGI(TAG, "Loading ingredient, block size: %d", sizeof(m_sIngredientFile));
@@ -131,10 +133,7 @@ char* COCKTAILEXPLORER_GetAllIngredients(bool bIsLiquidOnly)
     {
         cocktaildb_Ingredient* pIngredient = &m_sIngredientFile.ingredient_entries[i];
 
-        bool bIsOK = true;
-        if (bIsLiquidOnly)
-            bIsOK = (pIngredient->ingredient_type == cocktaildb_EIngredientType_liquid_alcohol || pIngredient->ingredient_type == cocktaildb_EIngredientType_liquid_filler);
-        if (!bIsOK)
+        if (!(!bIsLiquidOnly || IsIngredientLiquid(pIngredient)))
             continue;
 
         cJSON* pNewRecipe = cJSON_CreateObject();
@@ -203,7 +202,7 @@ char* COCKTAILEXPLORER_GetStationSettings()
 
         int32_t s32IngredientId = STATIONSETTINGS_GetValue(stationId, STATIONSETTINGS_ESTATIONSET_LoadID);
         const cocktaildb_Ingredient* pIngredient = COCKTAILEXPLORER_GetIngredientFile((uint32_t)s32IngredientId);
-        if (pIngredient == NULL)
+        if (pIngredient == NULL || !IsIngredientLiquid(pIngredient))
             cJSON_AddItemToObject(pNewStation, "ingredient_id", cJSON_CreateNumber(0));
         else
             cJSON_AddItemToObject(pNewStation, "ingredient_id", cJSON_CreateNumber(pIngredient->id));
@@ -257,7 +256,7 @@ bool COCKTAILEXPLORER_SetStationSettings(const char* szRequestBuffer, uint32_t u
         if (pIngredientIdJSON->valueint != 0)
         {
             pIngredient = COCKTAILEXPLORER_GetIngredientFile((uint32_t)pIngredientIdJSON->valueint);
-            if (pIngredient == NULL)
+            if (pIngredient == NULL || !IsIngredientLiquid(pIngredient))
             {
                 ESP_LOGE(TAG, "Invalid ingredient id, not found into db");
                 goto ERROR;
@@ -293,4 +292,9 @@ bool COCKTAILEXPLORER_SetStationSettings(const char* szRequestBuffer, uint32_t u
     if (pRoot != NULL)
         cJSON_Delete(pRoot);
     return false;
+}
+
+static bool IsIngredientLiquid(const cocktaildb_Ingredient* pIngredient)
+{
+    return pIngredient->ingredient_type == cocktaildb_EIngredientType_liquid_alcohol || pIngredient->ingredient_type == cocktaildb_EIngredientType_liquid_filler;
 }

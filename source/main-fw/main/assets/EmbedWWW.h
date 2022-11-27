@@ -29,7 +29,7 @@ typedef enum
   EFEMBEDWWW_EFILE_JS_VIEWS_CALIBPAGE_JS = 7,    /*!< @brief File: js/views/CalibPage.js (size: 5.6 KB) */
   EFEMBEDWWW_EFILE_JS_VIEWS_CUSTOMCOCKTAILPAGE_JS = 8,    /*!< @brief File: js/views/CustomCocktailPage.js (size: 5.4 KB) */
   EFEMBEDWWW_EFILE_JS_VIEWS_LISTCOCKTAILPAGE_JS = 9,    /*!< @brief File: js/views/ListCocktailPage.js (size: 5.8 KB) */
-  EFEMBEDWWW_EFILE_JS_VIEWS_NETWORKPAGE_JS = 10,    /*!< @brief File: js/views/NetworkPage.js (size: 1.7 KB) */
+  EFEMBEDWWW_EFILE_JS_VIEWS_NETWORKPAGE_JS = 10,    /*!< @brief File: js/views/NetworkPage.js (size: 4.1 KB) */
   EFEMBEDWWW_EFILE_JS_ROUTER_JS = 11,    /*!< @brief File: js/router.js (size: 2.4 KB) */
   EFEMBEDWWW_EFILE_JS_VIEWS_STATIONSETTINGSPAGE_JS = 12,    /*!< @brief File: js/views/StationSettingsPage.js (size: 6.3 KB) */
   EFEMBEDWWW_EFILE_JS_VIEWS_STATUSPAGE_JS = 13,    /*!< @brief File: js/views/StatusPage.js (size: 2.5 KB) */
@@ -58,8 +58,9 @@ typedef enum
   EFEMBEDWWW_EFILE_IMG_C_SKITTLE_JPG = 36,    /*!< @brief File: img/c/skittle.jpg (size: 973 B) */
   EFEMBEDWWW_EFILE_IMG_C_TOM_COLLINS_JPG = 37,    /*!< @brief File: img/c/tom-collins.jpg (size: 3.0 KB) */
   EFEMBEDWWW_EFILE_IMG_SVG_WIFI_SVG = 38,    /*!< @brief File: img/svg/wifi.svg (size: 795 B) */
-  EFEMBEDWWW_EFILE_IMG_SVG_WRENCH_SVG = 39,    /*!< @brief File: img/svg/wrench.svg (size: 713 B) */
-  EFEMBEDWWW_EFILE_COUNT = 40
+  EFEMBEDWWW_EFILE_IMG_SVG_WINE_BOTTLE_SVG = 39,    /*!< @brief File: img/svg/wine-bottle.svg (size: 702 B) */
+  EFEMBEDWWW_EFILE_IMG_SVG_WRENCH_SVG = 40,    /*!< @brief File: img/svg/wrench.svg (size: 713 B) */
+  EFEMBEDWWW_EFILE_COUNT = 41
 } EFEMBEDWWW_EFILE;
 
 /*! @brief Check if compressed flag is active */
