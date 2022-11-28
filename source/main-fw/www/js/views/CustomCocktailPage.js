@@ -59,7 +59,7 @@ export default class extends AbstractView {
         // Quantities
         cboSelectQty.appendChild(this.addQty(0, " --- "));
         for(let oz = 0.5; oz <= 8; oz += 0.5) {
-            cboSelectQty.appendChild(this.addQty(oz, oz +" oz"));
+            cboSelectQty.appendChild(this.addQty(oz, getPrettyFraction(oz) +" oz"));
         }
         tdValueDIV.appendChild(cboSelectQty);
         idDivOrderList.appendChild(tdValueDIV);
