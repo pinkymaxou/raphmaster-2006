@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "esp_log.h"
+#include "esp_heap_caps.h"
 
 #include "CocktailExplorer.h"
 #include "StationSettings.h"
@@ -9,48 +10,51 @@
 #define TAG "CocktailExplorer"
 
 // Load everything into memory, it's easier
-static cocktaildb_IngredientFile m_sIngredientFile;
-static cocktaildb_RecipeFile m_sRecipeFile;
+static cocktaildb_IngredientFile* m_psIngredientFile;
+static cocktaildb_RecipeFile* m_psRecipeFile;
 
 static bool IsIngredientLiquid(const cocktaildb_Ingredient* pIngredient);
 static uint32_t GetAvailableIngredients(const cocktaildb_Ingredient* sAvailableIngredientIds[STATIONSETTINGS_STATION_COUNT]);
 
 void COCKTAILEXPLORER_Init()
 {
-    ESP_LOGI(TAG, "Loading ingredient, block size: %d", sizeof(m_sIngredientFile));
+    m_psIngredientFile = heap_caps_malloc(sizeof(cocktaildb_IngredientFile), MALLOC_CAP_SPIRAM);
+    m_psRecipeFile = heap_caps_malloc(sizeof(cocktaildb_RecipeFile), MALLOC_CAP_SPIRAM);
+
+    ESP_LOGI(TAG, "Loading ingredient, block size: %d", sizeof(cocktaildb_IngredientFile));
 
     const EFEMBEDCOCKTAILDB_SFile* psIngredientFile = &EFEMBEDCOCKTAILDB_g_sFiles[EFEMBEDCOCKTAILDB_EFILE_INGREDIENTS_BIN];
 
     pb_istream_t ingredientStream = pb_istream_from_buffer(psIngredientFile->pu8StartAddr, psIngredientFile->u32Length);
-    bool status1 = pb_decode(&ingredientStream, cocktaildb_IngredientFile_fields, &m_sIngredientFile);
+    bool status1 = pb_decode(&ingredientStream, cocktaildb_IngredientFile_fields, m_psIngredientFile);
     if (!status1)
     {
         ESP_LOGE(TAG, "Unable to open file");
         return;
     }
 
-    ESP_LOGI(TAG, "Loaded ingredient, total: %d", m_sIngredientFile.ingredient_entries_count);
+    ESP_LOGI(TAG, "Loaded ingredient, total: %d", m_psIngredientFile->ingredient_entries_count);
 
-    ESP_LOGI(TAG, "Loading recipes, block size: %d", sizeof(m_sRecipeFile));
+    ESP_LOGI(TAG, "Loading recipes, block size: %d", sizeof(cocktaildb_RecipeFile));
 
     const EFEMBEDCOCKTAILDB_SFile* psRecipeFile = &EFEMBEDCOCKTAILDB_g_sFiles[EFEMBEDCOCKTAILDB_EFILE_RECIPES_BIN];
 
     pb_istream_t recipeStream = pb_istream_from_buffer(psRecipeFile->pu8StartAddr, psRecipeFile->u32Length);
-    bool status2 = pb_decode(&recipeStream, cocktaildb_RecipeFile_fields, &m_sRecipeFile);
+    bool status2 = pb_decode(&recipeStream, cocktaildb_RecipeFile_fields, m_psRecipeFile);
     if (!status2)
     {
         ESP_LOGE(TAG, "Unable to open file");
         return;
     }
 
-    ESP_LOGI(TAG, "Loaded recipes, total: %d", m_sRecipeFile.entries_count);
+    ESP_LOGI(TAG, "Loaded recipes, total: %d", m_psRecipeFile->entries_count);
 }
 
 const cocktaildb_Ingredient* COCKTAILEXPLORER_GetIngredientFile(uint32_t u32ID)
 {
-    for(int i = 0; i < m_sIngredientFile.ingredient_entries_count; i++)
+    for(int i = 0; i < m_psIngredientFile->ingredient_entries_count; i++)
     {
-        const cocktaildb_Ingredient* pIngredientFile = &m_sIngredientFile.ingredient_entries[i];
+        const cocktaildb_Ingredient* pIngredientFile = &m_psIngredientFile->ingredient_entries[i];
         if (pIngredientFile->id == u32ID)
             return pIngredientFile;
     }
@@ -74,9 +78,9 @@ char* COCKTAILEXPLORER_GetAllRecipes()
     const cocktaildb_Ingredient* sAvailableIngredientIds[STATIONSETTINGS_STATION_COUNT];
     uint32_t u32AvailableIngredientCount = GetAvailableIngredients(sAvailableIngredientIds);
 
-    for(int i = 0; i < m_sRecipeFile.entries_count; i++)
+    for(int i = 0; i < m_psRecipeFile->entries_count; i++)
     {
-        cocktaildb_Recipe* pRecipe = &m_sRecipeFile.entries[i];
+        cocktaildb_Recipe* pRecipe = &m_psRecipeFile->entries[i];
 
         cJSON* pNewRecipe = cJSON_CreateObject();
         cJSON_AddItemToObject(pNewRecipe, "id", cJSON_CreateNumber(pRecipe->id));
@@ -159,9 +163,9 @@ char* COCKTAILEXPLORER_GetAllIngredients(bool bIsLiquidOnly)
     if (pRoot == NULL)
         goto ERROR;
 
-    for(int i = 0; i < m_sIngredientFile.ingredient_entries_count; i++)
+    for(int i = 0; i < m_psIngredientFile->ingredient_entries_count; i++)
     {
-        cocktaildb_Ingredient* pIngredient = &m_sIngredientFile.ingredient_entries[i];
+        cocktaildb_Ingredient* pIngredient = &m_psIngredientFile->ingredient_entries[i];
         if (!(!bIsLiquidOnly || IsIngredientLiquid(pIngredient)))
             continue;
 
@@ -215,8 +219,6 @@ char* COCKTAILEXPLORER_GetAllAvailableIngredients()
 char* COCKTAILEXPLORER_GetStationSettings()
 {
     cJSON* pRoot = NULL;
-
-    char buff[100];
     pRoot = cJSON_CreateArray();
     if (pRoot == NULL)
         goto ERROR;

@@ -568,15 +568,26 @@ static char* GetSysInfo()
     cJSON_AddItemToObject(pEntryJSON7, "value", cJSON_CreateString(buff));
     cJSON_AddItemToArray(pEntries, pEntryJSON7);
 
-    // Memory
+    // Memory (Internal)
     cJSON* pEntryJSON8 = cJSON_CreateObject();
-    cJSON_AddItemToObject(pEntryJSON8, "name", cJSON_CreateString("Memory"));
-    const int totalSize = heap_caps_get_total_size(MALLOC_CAP_8BIT);
-    const int usedSize = totalSize - heap_caps_get_free_size(MALLOC_CAP_8BIT);
+    multi_heap_info_t heap_infoInt;
 
-    sprintf(buff, "%d / %d", /*0*/usedSize, /*1*/totalSize);
+    heap_caps_get_info(&heap_infoInt, MALLOC_CAP_INTERNAL | MALLOC_CAP_8BIT);
+    const uint32_t u32TotalMemoryInt = heap_infoInt.total_free_bytes + heap_infoInt.total_allocated_bytes;
+    cJSON_AddItemToObject(pEntryJSON8, "name", cJSON_CreateString("Memory (internal)"));
+    sprintf(buff, "%d / %d", /*0*/heap_infoInt.total_allocated_bytes, /*1*/u32TotalMemoryInt);
     cJSON_AddItemToObject(pEntryJSON8, "value", cJSON_CreateString(buff));
     cJSON_AddItemToArray(pEntries, pEntryJSON8);
+
+    // Memory (External)
+    cJSON* pEntryJSON81 = cJSON_CreateObject();
+    multi_heap_info_t heap_infoExt;
+    heap_caps_get_info(&heap_infoExt, MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT);
+    const uint32_t u32TotalMemoryExt = heap_infoExt.total_free_bytes + heap_infoExt.total_allocated_bytes;
+    cJSON_AddItemToObject(pEntryJSON81, "name", cJSON_CreateString("Memory (external)"));
+    sprintf(buff, "%d / %d", /*0*/heap_infoExt.total_allocated_bytes, /*1*/u32TotalMemoryExt);
+    cJSON_AddItemToObject(pEntryJSON81, "value", cJSON_CreateString(buff));
+    cJSON_AddItemToArray(pEntries, pEntryJSON81);
 
     // WiFi-station (IP address)
     cJSON* pEntryJSON9 = cJSON_CreateObject();

@@ -87,7 +87,7 @@ static void wifi_init()
     size_t staPassLength = 64;
     NVSJSON_GetValueString(&g_sSettingHandle, SETTINGS_EENTRY_WAPPass, (char*)wifi_configAP.ap.password, &staPassLength);
 
-    if (strlen((const char*)wifi_configAP.ap.password) == 0) 
+    if (strlen((const char*)wifi_configAP.ap.password) == 0)
     {
         wifi_configAP.ap.authmode = WIFI_AUTH_OPEN;
     }
@@ -171,6 +171,11 @@ static void mdns_sn_init()
     netbiosns_set_name(FWCONFIG_MDNS_HOSTNAME);
 }
 
+static void failed_alloc_cb(size_t size, uint32_t caps, const char *function_name)
+{
+    ESP_LOGE("HEAP", "Failed alloc: %d, caps: %d, function: %s", size, caps, function_name);
+}
+
 void app_main(void)
 {
     // Initialize NVS
@@ -182,27 +187,29 @@ void app_main(void)
 
     ESP_ERROR_CHECK( ret );
 
+    heap_caps_register_failed_alloc_callback(failed_alloc_cb);
+
     SETTINGS_Init();
     STATIONSETTINGS_Init();
-    
+
     HARDWAREGPIO_Init();
 
     COCKTAILEXPLORER_Init();
 
     wifi_init();
-    
+
     mdns_sn_init();
 
     // |WIFI_PROTOCOL_LR
     ESP_ERROR_CHECK( esp_wifi_set_protocol(ESP_IF_WIFI_AP, WIFI_PROTOCOL_11B|WIFI_PROTOCOL_11G|WIFI_PROTOCOL_11N) );
-   
+
     WEBSERVER_Init();
 
     while (true)
     {
 
         vTaskDelay(pdMS_TO_TICKS(10));
-    }   
+    }
 }
 
 static void wifisoftap_event_handler(void* arg, esp_event_base_t event_base, int32_t event_id, void* event_data)
