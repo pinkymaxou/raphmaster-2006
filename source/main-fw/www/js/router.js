@@ -24,6 +24,8 @@ const navigateTo = url => {
     router();
 };
 
+window.navigateTo = navigateTo;
+
 const router = async () => {
     const routes = [
         { path: "/", view: StatusPage },
@@ -32,6 +34,7 @@ const router = async () => {
         { path: "/calib", view: CalibPage },
         { path: "/stationsettings", view: StationSettingsPage },
         { path: "/customcocktail", view: CustomCocktailPage },
+        { path: "/customcocktail/:id", view: CustomCocktailPage },
         { path: "/listcocktailpage", view: ListCocktailPage },
         { path: "/about", view: AboutPage },
     ];

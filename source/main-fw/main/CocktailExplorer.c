@@ -13,6 +13,7 @@ static cocktaildb_IngredientFile m_sIngredientFile;
 static cocktaildb_RecipeFile m_sRecipeFile;
 
 static bool IsIngredientLiquid(const cocktaildb_Ingredient* pIngredient);
+static uint32_t GetAvailableIngredients(const cocktaildb_Ingredient* sAvailableIngredientIds[STATIONSETTINGS_STATION_COUNT]);
 
 void COCKTAILEXPLORER_Init()
 {
@@ -59,12 +60,19 @@ const cocktaildb_Ingredient* COCKTAILEXPLORER_GetIngredientFile(uint32_t u32ID)
 
 char* COCKTAILEXPLORER_GetAllRecipes()
 {
+    const char* szError = NULL;
     cJSON* pRoot;
     pRoot = cJSON_CreateArray();
     if (pRoot == NULL)
+    {
+        szError = "Cannot create array";
         goto ERROR;
+    }
 
     char tmp[100+1];
+
+    const cocktaildb_Ingredient* sAvailableIngredientIds[STATIONSETTINGS_STATION_COUNT];
+    uint32_t u32AvailableIngredientCount = GetAvailableIngredients(sAvailableIngredientIds);
 
     for(int i = 0; i < m_sRecipeFile.entries_count; i++)
     {
@@ -101,6 +109,21 @@ char* COCKTAILEXPLORER_GetAllRecipes()
             cJSON_AddItemToObject(pNewStep, "type", cJSON_CreateNumber(pIngredient->ingredient_type));
             cJSON_AddItemToObject(pNewStep, "is_garnish", cJSON_CreateBool(pRecipeStep->is_garnish));
 
+            bool bIsAvail = false;
+            if (IsIngredientLiquid(pIngredient))
+            {
+                // Check if the ingredient is available
+                for(int i = 0; i < u32AvailableIngredientCount; i++)
+                {
+                    if (sAvailableIngredientIds[i]->id == pIngredient->id)
+                    {
+                        bIsAvail = true;
+                        break;
+                    }
+                }
+            }
+            cJSON_AddItemToObject(pNewStep, "is_avail", cJSON_CreateBool(bIsAvail));
+
             if (pRecipeStep->has_qty)
             {
                 cJSON_AddItemToObject(pNewStep, "qty", cJSON_CreateNumber(pRecipeStep->qty.value));
@@ -114,6 +137,11 @@ char* COCKTAILEXPLORER_GetAllRecipes()
     }
 
     char* pStr =  cJSON_PrintUnformatted(pRoot);
+    if (pStr == NULL)
+    {
+        szError = "Cannot generate JSON, out of memory";
+        goto ERROR;
+    }
     cJSON_Delete(pRoot);
     return pStr;
     ERROR:
@@ -132,7 +160,6 @@ char* COCKTAILEXPLORER_GetAllIngredients(bool bIsLiquidOnly)
     for(int i = 0; i < m_sIngredientFile.ingredient_entries_count; i++)
     {
         cocktaildb_Ingredient* pIngredient = &m_sIngredientFile.ingredient_entries[i];
-
         if (!(!bIsLiquidOnly || IsIngredientLiquid(pIngredient)))
             continue;
 
@@ -163,7 +190,7 @@ char* COCKTAILEXPLORER_GetAllAvailableIngredients()
     {
         int32_t s32IngredientId = STATIONSETTINGS_GetValue(stationId, STATIONSETTINGS_ESTATIONSET_LoadID);
         const cocktaildb_Ingredient* pIngredient = COCKTAILEXPLORER_GetIngredientFile((uint32_t)s32IngredientId);
-        if (pIngredient == NULL)
+        if (pIngredient == NULL || !IsIngredientLiquid(pIngredient))
             continue;
 
         cJSON* pNewRecipe = cJSON_CreateObject();
@@ -297,4 +324,23 @@ bool COCKTAILEXPLORER_SetStationSettings(const char* szRequestBuffer, uint32_t u
 static bool IsIngredientLiquid(const cocktaildb_Ingredient* pIngredient)
 {
     return pIngredient->ingredient_type == cocktaildb_EIngredientType_liquid_alcohol || pIngredient->ingredient_type == cocktaildb_EIngredientType_liquid_filler;
+}
+
+static uint32_t GetAvailableIngredients(const cocktaildb_Ingredient* sAvailableIngredientIds[STATIONSETTINGS_STATION_COUNT])
+{
+    uint32_t u32Count = 0;
+
+    for(int stationId = 1; stationId < STATIONSETTINGS_STATION_COUNT; stationId++)
+    {
+        int32_t s32IngredientId = STATIONSETTINGS_GetValue(stationId, STATIONSETTINGS_ESTATIONSET_LoadID);
+        if (s32IngredientId == 0)
+            continue;
+        const cocktaildb_Ingredient* pIngredient = COCKTAILEXPLORER_GetIngredientFile((uint32_t)s32IngredientId);
+         if (pIngredient == NULL || !IsIngredientLiquid(pIngredient))
+            continue;
+        sAvailableIngredientIds[u32Count] = pIngredient;
+        u32Count++;
+    }
+
+    return u32Count;
 }

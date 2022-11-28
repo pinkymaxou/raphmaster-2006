@@ -6,6 +6,8 @@ export default class extends AbstractView {
 
         this.mColumnCount = 3;
         this.setTitle("Custom cocktail");
+
+        console.log("test", params);
     }
 
     addQty(id, name) {
@@ -142,7 +144,7 @@ export default class extends AbstractView {
             </div>
 
             <div class="button-bar">
-                <button id="idBtOK" class="button-normal button-bar-item">OK</button>
+                <button id="idBtOK" class="button-normal button-bar-item">MAKE COCKTAIL</button>
             </div>
         </div>
         `;

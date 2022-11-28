@@ -91,16 +91,21 @@
 }
 
 .colingre_name {
-    padding: 0.1rem;
+    padding: 5px;
 
     color: black;
 }
 
 .colingre_qty {
-    padding: 0.1rem;
+    padding: 5px;
     white-space: nowrap;
     font-weight: bold;
     color: black;
+}
+
+.colingre_isavailable {
+    color: blue;
+    font-weight: bold;
 }
 
 .ingredient_row_odd {
