@@ -145,6 +145,8 @@ char* COCKTAILEXPLORER_GetAllRecipes()
     cJSON_Delete(pRoot);
     return pStr;
     ERROR:
+    if (szError != NULL)
+        ESP_LOGE(TAG, "Cocktail explorer error: %s", szError);
     if (pRoot != NULL)
         cJSON_Delete(pRoot);
     return NULL;
