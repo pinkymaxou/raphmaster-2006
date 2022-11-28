@@ -38,8 +38,8 @@
 #define API_GETNETWORKSETTINGSJSON_URI "/api/getnetworksettings"
 #define API_SETNETWORKSETTINGSJSON_URI "/api/setnetworksettings"
 
-#define API_EXPORTSTATIONSETTINGSJSON_URI "/api/exportstationsettingsjson"
-#define API_IMPORTSTATIONSETTINGSJSON_URI "/api/importstationsettingsjson"
+#define API_EXPORTSTATIONSETTINGSJSON_URI "/api/exportstationsettings"
+#define API_IMPORTSTATIONSETTINGSJSON_URI "/api/importstationsettings"
 
 #define API_GETSYSINFOJSON_URI "/api/getsysinfo"
 
