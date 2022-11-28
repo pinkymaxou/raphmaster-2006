@@ -54,7 +54,7 @@ static esp_err_t set_content_type_from_file(httpd_req_t *req, const char *filena
 
 static esp_err_t file_otauploadpost_handler(httpd_req_t *req);
 
-static const EFEMBEDWWW_SFile* GetFile(const char* strFilename);
+static const EFEMBEDWWW_SFile* GetFile(const char* strFilename, uint32_t u32Len);
 
 static char* GetSysInfo();
 
@@ -141,21 +141,29 @@ static esp_err_t file_get_handler(httpd_req_t *req)
 
     ESP_LOGI(TAG, "Opening file uri: %s", req->uri);
 
+    int pathlen = strlen(req->uri);
+    const char* queryMark = strchr(req->uri, '?');
+    if (queryMark) {
+        pathlen = MIN(pathlen, queryMark - req->uri);
+        queryMark++; // Skip ? character
+        ESP_LOGI(TAG, "uri: %s, length: %d, query: %s", req->uri, pathlen, queryMark);
+    }
+
     // Redirect root to index.html
-    if (strcmp(req->uri, "/") == 0 ||
-        strcmp(req->uri, "/about") == 0 ||
-        strcmp(req->uri, "/network") == 0 ||
-        strcmp(req->uri, "/calib") == 0 ||
-        strcmp(req->uri, "/stationsettings") == 0 ||
-        strcmp(req->uri, "/listcocktailpage") == 0 ||
-        strcmp(req->uri, "/customcocktail") == 0 ||
-        strcmp(req->uri, "/status") == 0)
+    if (strncmp(req->uri, "/", pathlen) == 0 ||
+        strncmp(req->uri, "/about", pathlen) == 0 ||
+        strncmp(req->uri, "/network", pathlen) == 0 ||
+        strncmp(req->uri, "/calib", pathlen) == 0 ||
+        strncmp(req->uri, "/stationsettings", pathlen) == 0 ||
+        strncmp(req->uri, "/listcocktailpage", pathlen) == 0 ||
+        strncmp(req->uri, "/customcocktail", pathlen) == 0 ||
+        strncmp(req->uri, "/status", pathlen) == 0)
     {
-        pFile = GetFile(DEFAULT_RELATIVE_URI+1);
+        pFile = GetFile(DEFAULT_RELATIVE_URI+1, strlen(DEFAULT_RELATIVE_URI) - 1);
         // No cache
     }
     else {
-        pFile = GetFile(req->uri+1);
+        pFile = GetFile(req->uri+1, pathlen - 1);
 
         if (pFile != NULL) {
             httpd_resp_set_hdr(req, "Cache-Control", "public, max-age=3600");
@@ -176,12 +184,13 @@ static esp_err_t file_get_handler(httpd_req_t *req)
 
     while(u32Index < pFile->u32Length)
     {
-        const uint32_t n = MIN(pFile->u32Length - u32Index, HTTPSERVER_BUFFERSIZE);
+        const uint32_t n = MIN(pFile->u32Length - u32Index, 2048);
 
         if (n > 0) {
             /* Send the buffer contents as HTTP response m_u8Buffers */
-            if (httpd_resp_send_chunk(req, (char*)(pFile->pu8StartAddr + u32Index), n) != ESP_OK) {
-                ESP_LOGE(TAG, "File sending failed!");
+            esp_err_t errChunk = httpd_resp_send_chunk(req, (char*)(pFile->pu8StartAddr + u32Index), n);
+            if (errChunk != ESP_OK) {
+                ESP_LOGE(TAG, "File sending failed!, err: %s", esp_err_to_name(errChunk));
                 /* Abort sending file */
                 httpd_resp_sendstr_chunk(req, NULL);
                 /* Respond with 500 Internal Server Error */
@@ -270,8 +279,10 @@ static esp_err_t api_get_handler(httpd_req_t *req)
         goto END;
     }
 
-    if (pExportJSON == NULL || httpd_resp_send_chunk(req, pExportJSON, strlen(pExportJSON)) != ESP_OK)
+    esp_err_t err = 0;
+    if (pExportJSON == NULL || (err = httpd_resp_send(req, pExportJSON, strlen(pExportJSON))) != ESP_OK)
     {
+        ESP_LOGE(TAG, "Unable to send data, uri: '%s', pointer: %d, err: %d", req->uri, (int)pExportJSON, (int)err);
         httpd_resp_send_err(req, HTTPD_500_INTERNAL_SERVER_ERROR, "Unable to send data");
         goto END;
     }
@@ -473,12 +484,12 @@ static esp_err_t set_content_type_from_file(httpd_req_t *req, const char *filena
     return httpd_resp_set_type(req, "text/plain");
 }
 
-static const EFEMBEDWWW_SFile* GetFile(const char* strFilename)
+static const EFEMBEDWWW_SFile* GetFile(const char* strFilename, uint32_t u32Len)
 {
     for(int i = 0; i < EFEMBEDWWW_EFILE_COUNT; i++)
     {
         const EFEMBEDWWW_SFile* pFile = &EFEMBEDWWW_g_sFiles[i];
-        if (strcmp(pFile->strFilename, strFilename) == 0)
+        if (strncmp(pFile->strFilename, strFilename, u32Len) == 0)
             return pFile;
     }
 

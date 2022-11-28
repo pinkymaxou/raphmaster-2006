@@ -9,6 +9,7 @@ The project is still in pre-development.
  - Orbitron (https://fonts.google.com/specimen/Orbitron/about) Matt McInerney (Open Font License)
  - Roboto-Mono (https://fonts.google.com/specimen/Roboto+Mono/about) Christian Robertson (Apache License, Version 2.0)
  - Font Awesome License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
+ - dCode for some examples, https://dcode.domenade.com/tutorials/build-a-single-page-app-with-javascript-no-frameworks 
 
 ## Goals
 

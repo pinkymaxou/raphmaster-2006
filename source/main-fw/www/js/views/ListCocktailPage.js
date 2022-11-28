@@ -89,6 +89,9 @@ export default class extends AbstractView {
                     {
                         let newNameDIV = document.createElement("div");
                         newNameDIV.classList.add("colingre_name");
+                        if (stepItem.is_avail) {
+                            newNameDIV.classList.add("colingre_isavailable");
+                        }
                         let nameText = stepItem.name;
                         if (stepItem.is_garnish) {
                             nameText = "GARNISH: " + nameText;
@@ -98,6 +101,9 @@ export default class extends AbstractView {
 
                         let newQtyDIV = document.createElement("div");
                         newQtyDIV.classList.add("colingre_qty");
+                        if (stepItem.is_avail) {
+                            newQtyDIV.classList.add("colingre_isavailable");
+                        }
                         let qtyText = getPrettyQty(stepItem.qty, stepItem.unit);
                         newQtyDIV.appendChild(document.createTextNode(qtyText));
                         newIngredientGridDIV.appendChild(newQtyDIV);
@@ -121,11 +127,17 @@ export default class extends AbstractView {
                 let newBtnOrderDrink = document.createElement("button");
                 newBtnOrderDrink.appendChild(document.createTextNode("Order"));
                 newBtnOrderDrink.classList.add("button-normal");
+                newBtnOrderDrink.addEventListener('click', function() {
+                    window.navigateTo("./customcocktail?recipeid=55");
+                });
                 newControlDIV.appendChild(newBtnOrderDrink);
 
                 let newBtnOrderCustomDrink = document.createElement("button");
                 newBtnOrderCustomDrink.appendChild(document.createTextNode("Custom order"));
                 newBtnOrderCustomDrink.classList.add("button-normal");
+                newBtnOrderCustomDrink.addEventListener('click', function() {
+                    window.navigateTo("./customcocktail?recipeid=55");
+                });
                 newControlDIV.appendChild(newBtnOrderCustomDrink);
 
                 newCocktailItemDIV.appendChild(newControlDIV);
