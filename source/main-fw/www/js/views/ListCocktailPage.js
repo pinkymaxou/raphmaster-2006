@@ -126,7 +126,7 @@ export default class extends AbstractView {
                 newBtnOrderDrink.appendChild(document.createTextNode("Order"));
                 newBtnOrderDrink.classList.add("button-normal");
                 newBtnOrderDrink.addEventListener('click', function() {
-                    window.navigateTo("./customcocktail?recipeid=55");
+                    window.navigateTo("./customcocktail?recipeid=" + String(cocktail.id));
                 });
                 newControlDIV.appendChild(newBtnOrderDrink);
 
@@ -134,7 +134,7 @@ export default class extends AbstractView {
                 newBtnOrderCustomDrink.appendChild(document.createTextNode("Custom order"));
                 newBtnOrderCustomDrink.classList.add("button-normal");
                 newBtnOrderCustomDrink.addEventListener('click', function() {
-                    window.navigateTo("./customcocktail?recipeid=55");
+                    window.navigateTo("./customcocktail?recipeid=" + String(cocktail.id));
                 });
                 newControlDIV.appendChild(newBtnOrderCustomDrink);
 

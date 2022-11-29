@@ -31,6 +31,7 @@
 #define API_GETCOCKTAILSJSON_URI "/api/getcocktails"
 #define API_GETINGREDIENTSLIQUIDSJSON_URI "/api/getingredients/liquids"
 #define API_GETAVAILABLEINGREDIENTSJSON_URI "/api/getavailableingredients"
+#define API_GETAVAILABLEINGREDIENTSJSON_ID_URI "/api/getavailableingredients?id="
 
 #define API_GETSTATINGREDIENTSJSON_URI "/api/getstatingredients"
 
@@ -230,7 +231,7 @@ static esp_err_t file_post_handler(httpd_req_t *req)
     return ESP_FAIL;
 }
 
-static esp_err_t api_get_handler(httpd_req_t *req)
+static esp_err_t api_get_handler(httpd_req_t* req)
 {
     char* pExportJSON = NULL;
 
@@ -253,7 +254,7 @@ static esp_err_t api_get_handler(httpd_req_t *req)
     else if (strcmp(req->uri, API_GETCOCKTAILSJSON_URI) == 0)
     {
         const int64_t u64Start = esp_timer_get_time();
-        pExportJSON = COCKTAILEXPLORER_GetAllRecipes();
+        pExportJSON = COCKTAILEXPLORER_GetAllRecipes(0);
         ESP_LOGI(TAG, "Get all recipe time: %d ms", (int)(esp_timer_get_time() - u64Start) / 1000 );
     }
     else if (strcmp(req->uri, API_GETSTATIONSETTINGSJSON_URI) == 0)
@@ -273,6 +274,17 @@ static esp_err_t api_get_handler(httpd_req_t *req)
         const int64_t u64Start = esp_timer_get_time();
         pExportJSON = COCKTAILEXPLORER_GetAllIngredients(true);
         ESP_LOGI(TAG, "Get all liquid ingredients time: %d ms", (int)(esp_timer_get_time() - u64Start) / 1000 );
+    }
+    else if (strncmp(req->uri, API_GETAVAILABLEINGREDIENTSJSON_ID_URI, strlen(API_GETAVAILABLEINGREDIENTSJSON_ID_URI)) == 0)
+    {
+        const int uriLen = strlen(req->uri);
+        const int n = strlen(API_GETAVAILABLEINGREDIENTSJSON_ID_URI);
+        if (n < uriLen)
+        {
+            char* param = req->uri + n;
+            int recipeId = atoi(param);
+            pExportJSON = COCKTAILEXPLORER_GetAllRecipes(recipeId);
+        }
     }
     else if (strcmp(req->uri, API_GETAVAILABLEINGREDIENTSJSON_URI) == 0)
     {

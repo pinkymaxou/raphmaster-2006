@@ -62,7 +62,7 @@ const cocktaildb_Ingredient* COCKTAILEXPLORER_GetIngredientFile(uint32_t u32ID)
     return NULL;
 }
 
-char* COCKTAILEXPLORER_GetAllRecipes()
+char* COCKTAILEXPLORER_GetAllRecipes(uint32_t recipe_id)
 {
     const char* szError = NULL;
     cJSON* pRoot;
@@ -81,6 +81,10 @@ char* COCKTAILEXPLORER_GetAllRecipes()
     for(int i = 0; i < m_psRecipeFile->entries_count; i++)
     {
         cocktaildb_Recipe* pRecipe = &m_psRecipeFile->entries[i];
+
+        if (recipe_id != 0 &&
+            pRecipe->id != recipe_id)
+            continue;
 
         cJSON* pNewRecipe = cJSON_CreateObject();
         cJSON_AddItemToObject(pNewRecipe, "id", cJSON_CreateNumber(pRecipe->id));

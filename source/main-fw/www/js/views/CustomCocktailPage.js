@@ -44,6 +44,7 @@ export default class extends AbstractView {
         // Ingredients
         cboSelectIngredient.appendChild(this.addIngredient(0, "--- None ---"));
         this.mIngredients.forEach( (ingredient) => cboSelectIngredient.appendChild(this.addIngredient(ingredient.ingredient_id, ingredient.name)) );
+        cboSelectIngredient.value = orderListItem.ingredient_id;
         tdIngredientDIV.appendChild(cboSelectIngredient);
         idDivOrderList.appendChild(tdIngredientDIV);
 
@@ -98,7 +99,7 @@ export default class extends AbstractView {
             .catch((ex) => console.error('getavailableingredients', ex));
         this.mIngredients.sort((a, b) => a.name.localeCompare(b.name));
 
-        this.mOrderList = [{ "name" : "test" }];
+        this.mOrderList = [{ "ingredient_id" : 64 }, { "ingredient_id" : 29 }];
 
         this.mOrderList.forEach(
             (orderListItem) =>
