@@ -7,7 +7,7 @@ export default class extends AbstractView {
         this.mColumnCount = 3;
         this.setTitle("Custom cocktail");
 
-        console.log("test", params);
+        this.mParams = params;
     }
 
     addQty(id, name) {
@@ -99,7 +99,25 @@ export default class extends AbstractView {
             .catch((ex) => console.error('getavailableingredients', ex));
         this.mIngredients.sort((a, b) => a.name.localeCompare(b.name));
 
-        this.mOrderList = [{ "ingredient_id" : 64 }, { "ingredient_id" : 29 }];
+        this.mOrderList = [{ ingredient_id : 0 }];
+
+        // Load existing recipe
+        if (this.mParams["id"]) {
+            this.mRecipe = null;
+            const API_GETRECIPE = "/api/getavailableingredients/" + String(this.mParams["id"]);
+            await fetch(API_GETRECIPE)
+                .then((response) => response.json())
+                .then((data) => this.mRecipe = data[0])
+                .catch((ex) => console.error('getavailableingredients', ex));
+
+            console.log("recipe: ", this.mRecipe);
+            this.mOrderList = [];
+            for(let i = 0; i < this.mRecipe.steps.length; i++) {
+                if (this.mRecipe.steps[i].is_avail) {
+                    this.mOrderList.push({ ingredient_id: this.mRecipe.steps[i].ingredient_id });
+                }
+            }
+        }
 
         this.mOrderList.forEach(
             (orderListItem) =>
@@ -112,7 +130,7 @@ export default class extends AbstractView {
         // Bind buttons
         let idBtAddOrder = document.querySelector("#idBtAddOrder");
         idBtAddOrder.addEventListener('click', function() {
-            targetThis.addOrderItem(null);
+            targetThis.addOrderItem({ ingredient_id: 0 });
         });
 
         // Bind buttons

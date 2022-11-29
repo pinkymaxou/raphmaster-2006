@@ -159,7 +159,7 @@ static esp_err_t file_get_handler(httpd_req_t *req)
         strncmp(req->uri, "/calib", pathlen) == 0 ||
         strncmp(req->uri, "/stationsettings", pathlen) == 0 ||
         strncmp(req->uri, "/listcocktailpage", pathlen) == 0 ||
-        strncmp(req->uri, "/customcocktail", strlen("/customcocktail")) == 0 ||
+        strncmp(req->uri, "/customcocktail", pathlen) == 0 ||
         strncmp(req->uri, "/status", pathlen) == 0)
     {
         pFile = GetFile(DEFAULT_RELATIVE_URI+1, strlen(DEFAULT_RELATIVE_URI) - 1);
@@ -175,6 +175,19 @@ static esp_err_t file_get_handler(httpd_req_t *req)
 
     if (pFile == NULL)
     {
+        // In case it gets unwanted parameters
+        if (strncmp(req->uri, "/customcocktail/", strlen("/customcocktail/")) == 0)
+        {
+            // Remember, browser keep 301 in cache so be careful
+            ESP_LOGW(TAG, "Redirect URI: '%s', to '%s'", req->uri, DEFAULT_RELATIVE_URI);
+            // Redirect to default page
+            httpd_resp_set_type(req, "text/html");
+            httpd_resp_set_status(req, "302 Moved Temporarily");
+            httpd_resp_set_hdr(req, "Location", DEFAULT_RELATIVE_URI);
+            httpd_resp_send(req, NULL, 0);
+            return ESP_OK;
+        }
+
         ESP_LOGE(TAG, "Failed to open file for reading");
         httpd_resp_send_err(req, HTTPD_404_NOT_FOUND, "File does not exist");
         return ESP_FAIL;
