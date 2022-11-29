@@ -31,7 +31,7 @@
 #define API_GETCOCKTAILSJSON_URI "/api/getcocktails"
 #define API_GETINGREDIENTSLIQUIDSJSON_URI "/api/getingredients/liquids"
 #define API_GETAVAILABLEINGREDIENTSJSON_URI "/api/getavailableingredients"
-#define API_GETAVAILABLEINGREDIENTSJSON_ID_URI "/api/getavailableingredients?id="
+#define API_GETAVAILABLEINGREDIENTSJSON_ID_URI "/api/getavailableingredients/"
 
 #define API_GETSTATINGREDIENTSJSON_URI "/api/getstatingredients"
 
@@ -159,7 +159,7 @@ static esp_err_t file_get_handler(httpd_req_t *req)
         strncmp(req->uri, "/calib", pathlen) == 0 ||
         strncmp(req->uri, "/stationsettings", pathlen) == 0 ||
         strncmp(req->uri, "/listcocktailpage", pathlen) == 0 ||
-        strncmp(req->uri, "/customcocktail", pathlen) == 0 ||
+        strncmp(req->uri, "/customcocktail", strlen("/customcocktail")) == 0 ||
         strncmp(req->uri, "/status", pathlen) == 0)
     {
         pFile = GetFile(DEFAULT_RELATIVE_URI+1, strlen(DEFAULT_RELATIVE_URI) - 1);
@@ -181,6 +181,8 @@ static esp_err_t file_get_handler(httpd_req_t *req)
     }
 
     set_content_type_from_file(req, pFile->strFilename);
+    ESP_LOGI(TAG, "Open file: %s", pFile->strFilename);
+
     // Fixed cache a 1h for now
 
     uint32_t u32Index = 0;
@@ -467,17 +469,13 @@ ERROR:
 }
 
 #define IS_FILE_EXT(filename, ext) \
-    (strcasecmp(&filename[strlen(filename) - sizeof(ext) + 1], ext) == 0)
+    (strcasecmp(&filename[strlen(filename) - strlen(ext)], ext) == 0)
 
 /* Set HTTP response content type according to file extension */
-static esp_err_t set_content_type_from_file(httpd_req_t *req, const char *filename)
+static esp_err_t set_content_type_from_file(httpd_req_t *req, const char* filename)
 {
     if (IS_FILE_EXT(filename, ".pdf")) {
         return httpd_resp_set_type(req, "application/pdf");
-    } else if (IS_FILE_EXT(filename, ".html") | IS_FILE_EXT(filename, ".htm")) {
-        return httpd_resp_set_type(req, "text/html");
-    } else if (IS_FILE_EXT(filename, ".jpeg") || IS_FILE_EXT(filename, ".jpg")) {
-        return httpd_resp_set_type(req, "image/jpeg");
     } else if (IS_FILE_EXT(filename, ".ico")) {
         return httpd_resp_set_type(req, "image/x-icon");
     } else if (IS_FILE_EXT(filename, ".css")) {
@@ -488,12 +486,14 @@ static esp_err_t set_content_type_from_file(httpd_req_t *req, const char *filena
         return httpd_resp_set_type(req, "text/javascript");
     } else if (IS_FILE_EXT(filename, ".json")) {
         return httpd_resp_set_type(req, "application/json");
-    }
-    else if (IS_FILE_EXT(filename, ".ttf")) {
+    } else if (IS_FILE_EXT(filename, ".ttf")) {
         return httpd_resp_set_type(req, "application/x-font-truetype");
-    }
-    else if (IS_FILE_EXT(filename, ".woff")) {
+    } else if (IS_FILE_EXT(filename, ".woff")) {
         return httpd_resp_set_type(req, "application/font-woff");
+    } else if (IS_FILE_EXT(filename, ".html") || IS_FILE_EXT(filename, ".htm")) {
+        return httpd_resp_set_type(req, "text/html");
+    } else if (IS_FILE_EXT(filename, ".jpeg") || IS_FILE_EXT(filename, ".jpg")) {
+        return httpd_resp_set_type(req, "image/jpeg");
     }
     else if (IS_FILE_EXT(filename, ".svg")) {
         return httpd_resp_set_type(req, "image/svg+xml");
