@@ -216,6 +216,55 @@ char* COCKTAILEXPLORER_GetAllAvailableIngredients()
     return NULL;
 }
 
+char* COCKTAILEXPLORER_GetStatIngredients()
+{
+    char* ret = NULL;
+    cJSON* pRoot = NULL;
+    pRoot = cJSON_CreateArray();
+    if (pRoot == NULL)
+        goto ERROR;
+
+    for(int i = 0; i < m_psIngredientFile->ingredient_entries_count; i++)
+    {
+        const cocktaildb_Ingredient* pIngredient = &m_psIngredientFile->ingredient_entries[i];
+        if (!IsIngredientLiquid(pIngredient))
+            continue;
+
+        uint32_t u32Stat = 0;
+
+        // Scan recipe to find the ingredient
+        for(int j = 0; j < m_psRecipeFile->entries_count; j++)
+        {
+            const cocktaildb_Recipe* pRecipe = &m_psRecipeFile->entries[j];
+
+            for(int k = 0; k < pRecipe->recipe_steps_count; k++)
+            {
+                const cocktaildb_RecipeStep* pRecipeStep = &pRecipe->recipe_steps[k];
+
+                if (pRecipeStep->which_ingredient != cocktaildb_RecipeStep_ingredient_id_tag ||
+                    pRecipeStep->ingredient.ingredient_id != pIngredient->id)
+                    continue;
+                u32Stat++;
+            }
+        }
+
+        cJSON* pNewRecipe = cJSON_CreateObject();
+        cJSON_AddItemToObject(pNewRecipe, "ingredient_id", cJSON_CreateNumber(pIngredient->id));
+        cJSON_AddItemToObject(pNewRecipe, "name", cJSON_CreateString(pIngredient->name));
+        cJSON_AddItemToObject(pNewRecipe, "count", cJSON_CreateNumber(u32Stat));
+        cJSON_AddItemToArray(pRoot, pNewRecipe);
+    }
+
+    ret = cJSON_PrintUnformatted(pRoot);
+    goto END;
+    ERROR:
+    ESP_LOGE(TAG, "Unable to get stat ingredients");
+    END:
+    if (pRoot != NULL)
+        cJSON_Delete(pRoot);
+    return ret;
+}
+
 char* COCKTAILEXPLORER_GetStationSettings()
 {
     cJSON* pRoot = NULL;

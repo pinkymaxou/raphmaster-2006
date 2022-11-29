@@ -32,6 +32,8 @@
 #define API_GETINGREDIENTSLIQUIDSJSON_URI "/api/getingredients/liquids"
 #define API_GETAVAILABLEINGREDIENTSJSON_URI "/api/getavailableingredients"
 
+#define API_GETSTATINGREDIENTSJSON_URI "/api/getstatingredients"
+
 #define API_GETSTATIONSETTINGSJSON_URI "/api/getstationsettings"
 #define API_SETSTATIONSETTINGSJSON_URI "/api/setstationsettings"
 
@@ -259,6 +261,12 @@ static esp_err_t api_get_handler(httpd_req_t *req)
         const int64_t u64Start = esp_timer_get_time();
         pExportJSON = COCKTAILEXPLORER_GetStationSettings();
         ESP_LOGI(TAG, "Get station settings time: %d ms", (int)(esp_timer_get_time() - u64Start) / 1000 );
+    }
+    else if (strcmp(req->uri, API_GETSTATINGREDIENTSJSON_URI) == 0)
+    {
+        const int64_t u64Start = esp_timer_get_time();
+        pExportJSON = COCKTAILEXPLORER_GetStatIngredients();
+        ESP_LOGI(TAG, "Get stat ingredients time: %d ms", (int)(esp_timer_get_time() - u64Start) / 1000 );
     }
     else if (strcmp(req->uri, API_GETINGREDIENTSLIQUIDSJSON_URI) == 0)
     {
@@ -570,12 +578,10 @@ static char* GetSysInfo()
 
     // Memory (Internal)
     cJSON* pEntryJSON8 = cJSON_CreateObject();
-    multi_heap_info_t heap_infoInt;
-
-    heap_caps_get_info(&heap_infoInt, MALLOC_CAP_INTERNAL | MALLOC_CAP_8BIT);
-    const uint32_t u32TotalMemoryInt = heap_infoInt.total_free_bytes + heap_infoInt.total_allocated_bytes;
-    cJSON_AddItemToObject(pEntryJSON8, "name", cJSON_CreateString("Memory (internal)"));
-    sprintf(buff, "%d / %d", /*0*/heap_infoInt.total_allocated_bytes, /*1*/u32TotalMemoryInt);
+    cJSON_AddItemToObject(pEntryJSON8, "name", cJSON_CreateString("Memory (all)"));
+    const int totalSize = heap_caps_get_total_size(MALLOC_CAP_8BIT);
+    const int usedSize = totalSize - heap_caps_get_free_size(MALLOC_CAP_8BIT);
+    sprintf(buff, "%d / %d", /*0*/usedSize, /*1*/totalSize);
     cJSON_AddItemToObject(pEntryJSON8, "value", cJSON_CreateString(buff));
     cJSON_AddItemToArray(pEntries, pEntryJSON8);
 
