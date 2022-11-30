@@ -195,6 +195,15 @@
     background-color: #aaffff;
 }
 
+.custom_cocktail_name_title
+{
+    font-family: 'orbitron';
+    font-weight: bold;
+    font-size: larger;
+    margin: 10px;
+    text-transform: uppercase;
+}
+
 /* ===============================
     Progress bar
    =============================== */

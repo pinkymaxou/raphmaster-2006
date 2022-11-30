@@ -61,6 +61,11 @@ export default class extends AbstractView {
         cboSelectQty.appendChild(this.addQty(0, " --- "));
         for(let oz = 0.5; oz <= 8; oz += 0.5) {
             cboSelectQty.appendChild(this.addQty(oz, getPrettyFraction(oz) +" oz"));
+
+            // If near enough ....
+            if (Math.abs(orderListItem.qty_ml - (oz * OneOz)) < 0.25) {
+                cboSelectQty.value = oz;
+            }
         }
         tdValueDIV.appendChild(cboSelectQty);
         idDivOrderList.appendChild(tdValueDIV);
@@ -72,25 +77,32 @@ export default class extends AbstractView {
         let btDeleteOrder = document.createElement("button");
         btDeleteOrder.classList.add("button-cancel");
         btDeleteOrder.appendChild(document.createTextNode("-"));
+        let currentThis = this;
         btDeleteOrder.addEventListener('click', function() {
-
+            if (currentThis.mOrderItemCount == 1) {
+                return; // Minimum one item
+            }
             idDivOrderList.removeChild(tdIngredientDIV);
             idDivOrderList.removeChild(tdValueDIV);
             idDivOrderList.removeChild(tdControlDIV);
+
+            currentThis.mOrderItemCount--;
         });
 
         tdControlDIV.appendChild(btDeleteOrder);
         idDivOrderList.appendChild(tdControlDIV);
 
-        this.mIndex++;
+        this.mOrderItemCount++;
     }
 
     async loaded() {
 
         const API_GETINGREDIENTS = '/api/getavailableingredients';
 
+        let idCustomCocktailName = document.querySelector("#idCustomCocktailName");
+
         this.mIngredients = [];
-        this.mIndex = 0;
+        this.mOrderItemCount = 0;
 
         // Get system informations
         await fetch(API_GETINGREDIENTS)
@@ -99,7 +111,7 @@ export default class extends AbstractView {
             .catch((ex) => console.error('getavailableingredients', ex));
         this.mIngredients.sort((a, b) => a.name.localeCompare(b.name));
 
-        this.mOrderList = [{ ingredient_id : 0 }];
+        this.mOrderList = [{ ingredient_id : 0, qty_ml: OneOz }];
 
         // Load existing recipe
         if (this.mParams["id"]) {
@@ -110,11 +122,21 @@ export default class extends AbstractView {
                 .then((data) => this.mRecipe = data[0])
                 .catch((ex) => console.error('getavailableingredients', ex));
 
-            console.log("recipe: ", this.mRecipe);
-            this.mOrderList = [];
-            for(let i = 0; i < this.mRecipe.steps.length; i++) {
-                if (this.mRecipe.steps[i].is_avail) {
-                    this.mOrderList.push({ ingredient_id: this.mRecipe.steps[i].ingredient_id });
+            if (this.mRecipe) {
+                console.log("recipe: ", this.mRecipe);
+                idCustomCocktailName.innerText = this.mRecipe.name;
+
+                this.mOrderList = [];
+                for(let i = 0; i < this.mRecipe.steps.length; i++) {
+                    let step = this.mRecipe.steps[i];
+                    if (step.is_avail) {
+                        // Convert oz to ml
+                        let qty_ml = step.qty;
+                        if (step.unit == EQtyType.liquid_oz)
+                            qty_ml = step.qty * OneOz;
+
+                        this.mOrderList.push({ ingredient_id: step.ingredient_id, qty_ml: qty_ml });
+                    }
                 }
             }
         }
@@ -130,7 +152,7 @@ export default class extends AbstractView {
         // Bind buttons
         let idBtAddOrder = document.querySelector("#idBtAddOrder");
         idBtAddOrder.addEventListener('click', function() {
-            targetThis.addOrderItem({ ingredient_id: 0 });
+            targetThis.addOrderItem({ ingredient_id: 0, qty_ml: OneOz });
         });
 
         // Bind buttons
@@ -150,10 +172,12 @@ export default class extends AbstractView {
             }
         });
     }
-
     async getHtml() {
         return `
         <div>
+            <div>
+                <p id="idCustomCocktailName" class="custom_cocktail_name_title">Custom drink</p>
+            </div>
             <div id="idDivOrderList" class="custom-cocktail-grid">
                 <!-- Lines -->
             </div>
