@@ -547,7 +547,7 @@
         "name": "Bourbon",
         "qty": "2 oz",
         "type": "liquid_alcohol",
-        "categories": [ "bourbon" ]
+        "categories": [ "bourbon", "whiskey" ]
       },
       {
         "name": "Lemon juice",
@@ -811,6 +811,243 @@
         "qty": "2 oz",
         "type": "liquid_alcohol",
         "categories": [ "white rum", "brown rum", "rum" ]
+      }
+    ]
+  },
+  {
+    "name": "French 75",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Ice",
+        "qty": "",
+        "type": "ice"
+      },
+      {
+        "name": "Sparkling wine",
+        "qty": "3 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "sparkling wine", "wine" ]
+      },
+      {
+        "name": "Gin",
+        "qty": "1 1/4 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "dry gin", "gin" ]
+      },
+      {
+        "name": "Lemon juice",
+        "qty": "3/4 oz",
+        "type": "liquid_filler",
+        "categories": [ "juice", "lemon juice" ]
+      },
+      {
+        "name": "Simple syrup",
+        "qty": "1/2 oz",
+        "type": "liquid_filler"
+      },
+      {
+        "name": "Lime wedge",
+        "qty": "1",
+        "type": "fruit_or_vegetable",
+        "is_garnish": true
+      }
+    ]
+  },
+  {
+    "name": "Long island iced tea",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Vodka",
+        "upc_code": "00627987202564",
+        "qty": "1/2 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "vodka" ]
+      },
+      {
+        "name": "Gin",
+        "qty": "1/2 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "dry gin", "gin" ]
+      },
+      {
+        "name": "Cointreau",
+        "qty": "1/2 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "citrus liqueur", "liqueur" ]
+      },
+      {
+        "name": "Tequila",
+        "qty": "1/2 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "tequila" ]
+      },
+      {
+        "name": "Light rum or dark rum",
+        "qty": "3/4 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "white rum", "brown rum", "rum" ]
+      },
+      {
+        "name": "Lemon juice",
+        "qty": "1/2 oz",
+        "type": "liquid_filler",
+        "categories": [ "juice", "lemon juice" ]
+      },
+      {
+        "name": "Coca-Cola",
+        "qty": "2 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "cola" ]
+      },
+      {
+        "name": "Lime wedge",
+        "qty": "1",
+        "type": "fruit_or_vegetable",
+        "is_garnish": true
+      }
+    ]
+  },
+  {
+    "name": "Long island spiced tea",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Kraken rum",
+        "qty": "3/2 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "spiced rum", "brown rum", "rum" ]
+      },
+      {
+        "name": "Vodka",
+        "upc_code": "00627987202564",
+        "qty": "1/2 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "vodka" ]
+      },
+      {
+        "name": "Gin",
+        "qty": "1/2 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "dry gin", "gin" ]
+      },
+      {
+        "name": "Cointreau",
+        "qty": "1/2 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "citrus liqueur", "liqueur" ]
+      },
+      {
+        "name": "Tequila",
+        "qty": "1/2 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "tequila" ]
+      },
+      {
+        "name": "Lemon juice",
+        "qty": "1/2 oz",
+        "type": "liquid_filler",
+        "categories": [ "juice", "lemon juice" ]
+      },
+      {
+        "name": "Coca-Cola",
+        "qty": "2 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "cola" ]
+      },
+      {
+        "name": "Lime wedge",
+        "qty": "1",
+        "type": "fruit_or_vegetable",
+        "is_garnish": true
+      }
+    ]
+  },
+  {
+    "name": "Whisky lemonade",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Bourbon",
+        "qty": "1 1/2 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "bourbon", "whiskey" ]
+      },
+      {
+        "name": "Cointreau",
+        "qty": "1/2 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "citrus liqueur", "liqueur" ]
+      },
+      {
+        "name": "Simple syrup",
+        "qty": "1/2 oz",
+        "type": "liquid_filler"
+      },
+      {
+        "name": "Lemon juice",
+        "qty": "1 oz",
+        "type": "liquid_filler",
+        "categories": [ "juice", "lemon juice" ]
+      },
+      {
+        "name": "Lemon wedge",
+        "qty": "1",
+        "type": "fruit_or_vegetable",
+        "is_garnish": true
+      }
+    ]
+  },
+  {
+    "name": "New-York sour",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Bourbon",
+        "qty": "2 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "bourbon", "whiskey" ]
+      },
+      {
+        "name": "Simple syrup",
+        "qty": "1/2 oz",
+        "type": "liquid_filler"
+      },
+      {
+        "name": "Lemon juice",
+        "qty": "1 oz",
+        "type": "liquid_filler",
+        "categories": [ "juice", "lemon juice" ]
+      },
+      {
+        "name": "Orange juice",
+        "qty": "1/4 oz",
+        "type": "liquid_filler",
+        "categories": [ "orange juice", "juice" ]
+      },
+      {
+        "name": "Red wine",
+        "qty": "1/2 oz",
+        "type": "liquid_filler",
+        "categories": [ "orange juice", "juice" ]
+      },
+      {
+        "name": "Orange wedge",
+        "qty": "2",
+        "type": "fruit_or_vegetable",
+        "is_garnish": true
+      },
+      {
+        "name": "Cherry",
+        "qty": "1",
+        "type": "fruit_or_vegetable",
+        "is_garnish": true
       }
     ]
   }
