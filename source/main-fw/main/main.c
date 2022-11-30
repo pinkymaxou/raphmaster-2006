@@ -4,6 +4,7 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/semphr.h"
 #include "freertos/timers.h"
+#include "freertos/task.h"
 #include "esp_ota_ops.h"
 #include "esp_flash_partitions.h"
 #include "esp_partition.h"
@@ -20,6 +21,7 @@
 #include "FWConfig.h"
 #include "WebServer.h"
 #include "Settings.h"
+#include "Control.h"
 #include "StationSettings.h"
 #include "CocktailExplorer.h"
 
@@ -185,11 +187,14 @@ void app_main(void)
         ret = nvs_flash_init();
     }
 
-    ESP_ERROR_CHECK( ret );
-
     heap_caps_register_failed_alloc_callback(failed_alloc_cb);
 
+    ESP_ERROR_CHECK( ret );
+
+    CONTROL_Init();
+
     SETTINGS_Init();
+
     STATIONSETTINGS_Init();
 
     HARDWAREGPIO_Init();
@@ -205,10 +210,18 @@ void app_main(void)
 
     WEBSERVER_Init();
 
+    char* szAllTask = (char*)malloc(4096);
+    vTaskList(szAllTask);
+    ESP_LOGI(TAG, "vTaskList: \r\n\r\n%s", szAllTask);
+    free(szAllTask);
+
     while (true)
     {
+        // Basically do nothing except idling ...
+        CONTROL_Ticks();
 
-        vTaskDelay(pdMS_TO_TICKS(10));
+        // Leave some time, we want the poor idle tasks to have some time
+        vTaskDelay(1);
     }
 }
 
