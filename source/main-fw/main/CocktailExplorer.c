@@ -196,7 +196,7 @@ char* COCKTAILEXPLORER_GetAllAvailableIngredients()
     if (pRoot == NULL)
         goto ERROR;
 
-    for(int stationId = 1; stationId < STATIONSETTINGS_STATION_COUNT; stationId++)
+    for(int stationId = 1; stationId <= STATIONSETTINGS_STATION_COUNT; stationId++)
     {
         int32_t s32IngredientId = STATIONSETTINGS_GetValue(stationId, STATIONSETTINGS_ESTATIONSET_LoadID);
         const cocktaildb_Ingredient* pIngredient = COCKTAILEXPLORER_GetIngredientFile((uint32_t)s32IngredientId);
@@ -290,6 +290,9 @@ char* COCKTAILEXPLORER_GetStationSettings()
             cJSON_AddItemToObject(pNewStation, "ingredient_id", cJSON_CreateNumber(0));
         else
             cJSON_AddItemToObject(pNewStation, "ingredient_id", cJSON_CreateNumber(pIngredient->id));
+
+        const bool bIsPeristaltic = STATIONSETTINGS_ISPUMPSTATIONID(stationId);
+        cJSON_AddItemToObject(pNewStation, "is_peristaltic", cJSON_CreateBool(bIsPeristaltic));
 
         int32_t s32UsedTotal_ml = STATIONSETTINGS_GetValue(stationId, STATIONSETTINGS_ESTATIONSET_TotalQty);
         cJSON_AddItemToObject(pNewStation, "total_ml", cJSON_CreateNumber(s32UsedTotal_ml));
@@ -387,7 +390,7 @@ static uint32_t GetAvailableIngredients(const cocktaildb_Ingredient* sAvailableI
 {
     uint32_t u32Count = 0;
 
-    for(int stationId = 1; stationId < STATIONSETTINGS_STATION_COUNT; stationId++)
+    for(int stationId = 1; stationId <= STATIONSETTINGS_STATION_COUNT; stationId++)
     {
         int32_t s32IngredientId = STATIONSETTINGS_GetValue(stationId, STATIONSETTINGS_ESTATIONSET_LoadID);
         if (s32IngredientId == 0)

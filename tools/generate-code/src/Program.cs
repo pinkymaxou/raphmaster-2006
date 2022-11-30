@@ -12,14 +12,14 @@ namespace generate_code
             {
                 Console.Error.WriteLine("Generate settings matrix");
 
-                int stationCount = 16;
+                int stationCount = 24;
 
-                Func<int, string> enumPosXText       = (i) => $"SETTINGS_EENTRY_STATION{i}_POS_X";
-                Func<int, string> enumPosYText       = (i) => $"SETTINGS_EENTRY_STATION{i}_POS_Y";
-                Func<int, string> enumLoadedIDText   = (i) => $"SETTINGS_EENTRY_STATION{i}_LOADID";
+                Func<int, string> enumPosXText       = (i) => $"STATIONSETTINGS_EENTRY_STATION_{i}_PosX";
+                Func<int, string> enumPosYText       = (i) => $"STATIONSETTINGS_EENTRY_STATION_{i}_PosY";
+                Func<int, string> enumLoadedIDText   = (i) => $"STATIONSETTINGS_EENTRY_STATION_{i}_LoadID";
 
-                Func<int, string> enumTotalQtyText = (i) => $"SETTINGS_EENTRY_STATION{i}_TOTALQTY";
-                Func<int, string> enumUsedQtyText = (i) => $"SETTINGS_EENTRY_STATION{i}_USEDQTY";
+                Func<int, string> enumTotalQtyText = (i) => $"STATIONSETTINGS_EENTRY_STATION_{i}_TotalQty";
+                Func<int, string> enumUsedQtyText = (i) => $"STATIONSETTINGS_EENTRY_STATION_{i}_UsedQty";
 
                 string settingsMatrix1Txt = "settingmatrix1.txt";
 
