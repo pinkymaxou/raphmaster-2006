@@ -2,8 +2,8 @@ const EQtyType = Object.freeze({
 	none: 0,		// When unit doesn't apply
 	unitary: 1, 	// Counter by round number
 	
-	liquidML: 2,	// Milliliter
-	oz: 3,			// Ounce
+	liquid_ml: 2,	// Milliliter
+	liquid_oz: 3,			// Ounce
 	cup: 4,		    // Cup
 	pinch: 6,		// Fingertip quantity
 	teaspoon: 8,	// 4.5 ml (1/6 oz)
@@ -23,6 +23,8 @@ const EIngredientType = Object.freeze({
 	fruit_or_vegetable: 7,
 	leaf_or_sprig: 8
 });
+
+const OneOz = 30;
 
 function getIngredientTypeOrder(ingredientType) {
     switch(ingredientType) {
@@ -87,10 +89,10 @@ function getPrettyQty(qtyValue, unit)
     if (unit == EQtyType.unitary) {
         qtyText = getPrettyFraction(qtyValue);
     }
-    else if (unit == EQtyType.liquidML) {
+    else if (unit == EQtyType.liquid_ml) {
         qtyText = String(qtyValue) + " ml";
     }
-    else if (unit == EQtyType.oz) {
+    else if (unit == EQtyType.liquid_oz) {
         qtyText = getPrettyFraction(qtyValue) + " oz";
     }
     else if (unit == EQtyType.cup) {

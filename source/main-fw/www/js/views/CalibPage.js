@@ -15,12 +15,12 @@ export default class extends AbstractView {
             { id:  2, x: 0, y: 1},
             { id:  3, x: 0, y: 1},
             { id:  4, x: 0, y: 1},
- 
+
             { id:  5, x: 0, y: 1},
             { id:  6, x: 0, y: 1},
             { id:  7, x: 0, y: 1},
             { id:  8, x: 0, y: 1},
- 
+
             { id:  9, x: 0, y: 1},
             { id: 10, x: 0, y: 1},
             { id: 11, x: 0, y: 1},
@@ -47,7 +47,7 @@ export default class extends AbstractView {
 
                 const tdName = newTr.insertCell(); // create td only
                 tdName.appendChild(document.createTextNode(stationItem.id));
-                
+
                 const tdValueX = newTr.insertCell(); // create td only
                 tdValueX.appendChild(document.createTextNode(stationItem.x));
 
@@ -55,7 +55,7 @@ export default class extends AbstractView {
                 tdValueY.appendChild(document.createTextNode(stationItem.y));
 
                 const tdValueAct = newTr.insertCell(); // create td only
- 
+
                 // Save
                 let btnSave = document.createElement("button");
                 btnSave.classList.add("button-normal");
@@ -81,7 +81,7 @@ export default class extends AbstractView {
             <button class="button-normal button-normal-primary">Home all</button><br><br>
 
             <br>
-            
+
             <!-- Axis -->
             <table class="info-table">
             <thead>
@@ -109,7 +109,7 @@ export default class extends AbstractView {
                 <tr>
                     <td>Y</td>
                     <td>0</td>
-                    <td>    
+                    <td>
                         <div>
                             <button class="button-normal">&lt;&lt;&lt;</button>
                             <button class="button-normal">&lt;&lt;</button>

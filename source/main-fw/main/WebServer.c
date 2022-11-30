@@ -31,6 +31,9 @@
 #define API_GETCOCKTAILSJSON_URI "/api/getcocktails"
 #define API_GETINGREDIENTSLIQUIDSJSON_URI "/api/getingredients/liquids"
 #define API_GETAVAILABLEINGREDIENTSJSON_URI "/api/getavailableingredients"
+#define API_GETAVAILABLEINGREDIENTSJSON_ID_URI "/api/getavailableingredients/"
+
+#define API_GETSTATINGREDIENTSJSON_URI "/api/getstatingredients"
 
 #define API_GETSTATIONSETTINGSJSON_URI "/api/getstationsettings"
 #define API_SETSTATIONSETTINGSJSON_URI "/api/setstationsettings"
@@ -172,12 +175,27 @@ static esp_err_t file_get_handler(httpd_req_t *req)
 
     if (pFile == NULL)
     {
+        // In case it gets unwanted parameters
+        if (strncmp(req->uri, "/customcocktail/", strlen("/customcocktail/")) == 0)
+        {
+            // Remember, browser keep 301 in cache so be careful
+            ESP_LOGW(TAG, "Redirect URI: '%s', to '%s'", req->uri, DEFAULT_RELATIVE_URI);
+            // Redirect to default page
+            httpd_resp_set_type(req, "text/html");
+            httpd_resp_set_status(req, "302 Moved Temporarily");
+            httpd_resp_set_hdr(req, "Location", DEFAULT_RELATIVE_URI);
+            httpd_resp_send(req, NULL, 0);
+            return ESP_OK;
+        }
+
         ESP_LOGE(TAG, "Failed to open file for reading");
         httpd_resp_send_err(req, HTTPD_404_NOT_FOUND, "File does not exist");
         return ESP_FAIL;
     }
 
     set_content_type_from_file(req, pFile->strFilename);
+    ESP_LOGI(TAG, "Open file: %s", pFile->strFilename);
+
     // Fixed cache a 1h for now
 
     uint32_t u32Index = 0;
@@ -228,7 +246,7 @@ static esp_err_t file_post_handler(httpd_req_t *req)
     return ESP_FAIL;
 }
 
-static esp_err_t api_get_handler(httpd_req_t *req)
+static esp_err_t api_get_handler(httpd_req_t* req)
 {
     char* pExportJSON = NULL;
 
@@ -251,7 +269,7 @@ static esp_err_t api_get_handler(httpd_req_t *req)
     else if (strcmp(req->uri, API_GETCOCKTAILSJSON_URI) == 0)
     {
         const int64_t u64Start = esp_timer_get_time();
-        pExportJSON = COCKTAILEXPLORER_GetAllRecipes();
+        pExportJSON = COCKTAILEXPLORER_GetAllRecipes(0);
         ESP_LOGI(TAG, "Get all recipe time: %d ms", (int)(esp_timer_get_time() - u64Start) / 1000 );
     }
     else if (strcmp(req->uri, API_GETSTATIONSETTINGSJSON_URI) == 0)
@@ -260,11 +278,28 @@ static esp_err_t api_get_handler(httpd_req_t *req)
         pExportJSON = COCKTAILEXPLORER_GetStationSettings();
         ESP_LOGI(TAG, "Get station settings time: %d ms", (int)(esp_timer_get_time() - u64Start) / 1000 );
     }
+    else if (strcmp(req->uri, API_GETSTATINGREDIENTSJSON_URI) == 0)
+    {
+        const int64_t u64Start = esp_timer_get_time();
+        pExportJSON = COCKTAILEXPLORER_GetStatIngredients();
+        ESP_LOGI(TAG, "Get stat ingredients time: %d ms", (int)(esp_timer_get_time() - u64Start) / 1000 );
+    }
     else if (strcmp(req->uri, API_GETINGREDIENTSLIQUIDSJSON_URI) == 0)
     {
         const int64_t u64Start = esp_timer_get_time();
         pExportJSON = COCKTAILEXPLORER_GetAllIngredients(true);
         ESP_LOGI(TAG, "Get all liquid ingredients time: %d ms", (int)(esp_timer_get_time() - u64Start) / 1000 );
+    }
+    else if (strncmp(req->uri, API_GETAVAILABLEINGREDIENTSJSON_ID_URI, strlen(API_GETAVAILABLEINGREDIENTSJSON_ID_URI)) == 0)
+    {
+        const int uriLen = strlen(req->uri);
+        const int n = strlen(API_GETAVAILABLEINGREDIENTSJSON_ID_URI);
+        if (n < uriLen)
+        {
+            char* param = req->uri + n;
+            int recipeId = atoi(param);
+            pExportJSON = COCKTAILEXPLORER_GetAllRecipes(recipeId);
+        }
     }
     else if (strcmp(req->uri, API_GETAVAILABLEINGREDIENTSJSON_URI) == 0)
     {
@@ -447,17 +482,13 @@ ERROR:
 }
 
 #define IS_FILE_EXT(filename, ext) \
-    (strcasecmp(&filename[strlen(filename) - sizeof(ext) + 1], ext) == 0)
+    (strcasecmp(&filename[strlen(filename) - strlen(ext)], ext) == 0)
 
 /* Set HTTP response content type according to file extension */
-static esp_err_t set_content_type_from_file(httpd_req_t *req, const char *filename)
+static esp_err_t set_content_type_from_file(httpd_req_t *req, const char* filename)
 {
     if (IS_FILE_EXT(filename, ".pdf")) {
         return httpd_resp_set_type(req, "application/pdf");
-    } else if (IS_FILE_EXT(filename, ".html") | IS_FILE_EXT(filename, ".htm")) {
-        return httpd_resp_set_type(req, "text/html");
-    } else if (IS_FILE_EXT(filename, ".jpeg") || IS_FILE_EXT(filename, ".jpg")) {
-        return httpd_resp_set_type(req, "image/jpeg");
     } else if (IS_FILE_EXT(filename, ".ico")) {
         return httpd_resp_set_type(req, "image/x-icon");
     } else if (IS_FILE_EXT(filename, ".css")) {
@@ -468,12 +499,14 @@ static esp_err_t set_content_type_from_file(httpd_req_t *req, const char *filena
         return httpd_resp_set_type(req, "text/javascript");
     } else if (IS_FILE_EXT(filename, ".json")) {
         return httpd_resp_set_type(req, "application/json");
-    }
-    else if (IS_FILE_EXT(filename, ".ttf")) {
+    } else if (IS_FILE_EXT(filename, ".ttf")) {
         return httpd_resp_set_type(req, "application/x-font-truetype");
-    }
-    else if (IS_FILE_EXT(filename, ".woff")) {
+    } else if (IS_FILE_EXT(filename, ".woff")) {
         return httpd_resp_set_type(req, "application/font-woff");
+    } else if (IS_FILE_EXT(filename, ".html") || IS_FILE_EXT(filename, ".htm")) {
+        return httpd_resp_set_type(req, "text/html");
+    } else if (IS_FILE_EXT(filename, ".jpeg") || IS_FILE_EXT(filename, ".jpg")) {
+        return httpd_resp_set_type(req, "image/jpeg");
     }
     else if (IS_FILE_EXT(filename, ".svg")) {
         return httpd_resp_set_type(req, "image/svg+xml");
@@ -570,12 +603,10 @@ static char* GetSysInfo()
 
     // Memory (Internal)
     cJSON* pEntryJSON8 = cJSON_CreateObject();
-    multi_heap_info_t heap_infoInt;
-
-    heap_caps_get_info(&heap_infoInt, MALLOC_CAP_INTERNAL | MALLOC_CAP_8BIT);
-    const uint32_t u32TotalMemoryInt = heap_infoInt.total_free_bytes + heap_infoInt.total_allocated_bytes;
-    cJSON_AddItemToObject(pEntryJSON8, "name", cJSON_CreateString("Memory (internal)"));
-    sprintf(buff, "%d / %d", /*0*/heap_infoInt.total_allocated_bytes, /*1*/u32TotalMemoryInt);
+    cJSON_AddItemToObject(pEntryJSON8, "name", cJSON_CreateString("Memory (all)"));
+    const int totalSize = heap_caps_get_total_size(MALLOC_CAP_8BIT);
+    const int usedSize = totalSize - heap_caps_get_free_size(MALLOC_CAP_8BIT);
+    sprintf(buff, "%d / %d", /*0*/usedSize, /*1*/totalSize);
     cJSON_AddItemToObject(pEntryJSON8, "value", cJSON_CreateString(buff));
     cJSON_AddItemToArray(pEntries, pEntryJSON8);
 

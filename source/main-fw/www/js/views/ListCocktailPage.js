@@ -4,7 +4,7 @@ export default class extends AbstractView {
     constructor(params) {
         super(params);
 
-        this.mCocktails = null;
+        this.mAllCocktails = null;
 
         this.setTitle("Cocktails");
     }
@@ -14,11 +14,11 @@ export default class extends AbstractView {
 
         const API_GETCOCKTAILS = '/api/getcocktails';
 
-        if (this.mCocktails == null) {
+        if (this.mAllCocktails == null) {
             // Get system informations
             await fetch(API_GETCOCKTAILS)
                 .then((response) => response.json())
-                .then((data) => this.mCocktails = data)
+                .then((data) => this.mAllCocktails = data)
                 .catch((ex) => console.error('getcocktails', ex));
         }
         // myself: That's stupid, why don't you use vueJS ?
@@ -36,11 +36,9 @@ export default class extends AbstractView {
         //         <button class="button-normal">Order</button>
         //     </div>
         // </div>
-        this.mCocktails.sort(
-            function compareFn(a, b)
-            {
-                return a.name.localeCompare(b.name);
-            });
+        this.mCocktails = this.mAllCocktails; //.filter(cocktailItem => cocktailItem.steps.some(stepItem => stepItem.is_avail));
+
+        this.mCocktails.sort( (a, b) => a.name.localeCompare(b.name) );
 
         this.mCocktails.forEach(
             (cocktail) =>
@@ -128,7 +126,7 @@ export default class extends AbstractView {
                 newBtnOrderDrink.appendChild(document.createTextNode("Order"));
                 newBtnOrderDrink.classList.add("button-normal");
                 newBtnOrderDrink.addEventListener('click', function() {
-                    window.navigateTo("./customcocktail?recipeid=55");
+                    window.navigateTo("./customcocktail/" + String(cocktail.id));
                 });
                 newControlDIV.appendChild(newBtnOrderDrink);
 
@@ -136,7 +134,7 @@ export default class extends AbstractView {
                 newBtnOrderCustomDrink.appendChild(document.createTextNode("Custom order"));
                 newBtnOrderCustomDrink.classList.add("button-normal");
                 newBtnOrderCustomDrink.addEventListener('click', function() {
-                    window.navigateTo("./customcocktail?recipeid=55");
+                    window.navigateTo("./customcocktail/" + String(cocktail.id));
                 });
                 newControlDIV.appendChild(newBtnOrderCustomDrink);
 
