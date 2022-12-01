@@ -217,8 +217,7 @@ void app_main(void)
 
     while (true)
     {
-        // Basically do nothing except idling ...
-        CONTROL_Ticks();
+        CONTROL_Run();
 
         // Leave some time, we want the poor idle tasks to have some time
         vTaskDelay(1);
