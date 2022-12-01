@@ -1,5 +1,6 @@
 #include "Control.h"
 #include "CocktailExplorer.h"
+#include "HardwareGPIO.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "freertos/queue.h"
@@ -43,9 +44,12 @@ typedef enum
 {
     EMOVETOHOME_Start,
 
-    EMOVETOHOME_y,
-    EMOVETOHOME_x,
-    EMOVETOHOME_z,
+    EMOVETOHOME_Y_StartMove,
+    EMOVETOHOME_Y_Wait,
+    EMOVETOHOME_X_StartMove,
+    EMOVETOHOME_X_Wait,
+    EMOVETOHOME_Z_StartMove,
+    EMOVETOHOME_Z_Wait,
 
     EMOVETOHOME_Count
 } EMOVETOHOME;
@@ -171,8 +175,7 @@ void CONTROL_Run()
             if (m_sHandle.bIsCancelRequest)
             {
                 ESP_LOGE(TAG, "Cancelling homing ...");
-                // TODO: Stop stepper and go to sleep
-
+                HARDWAREGPIO_EnableAllSteppers(false);
                 m_sHandle.eState = ESTATE_Cancelled;
                 break;
             }
@@ -186,14 +189,54 @@ void CONTROL_Run()
                     ESP_LOGI(TAG, "Starting homing process on Y");
                     // Wake-up Y stepper
                     // Command it to move to "infinite"
-                    m_sHandle.uStepData.sMoveToHome.eMoveToHome = EMOVETOHOME_y;
+                    HARDWAREGPIO_EnableAllSteppers(true);
+                    m_sHandle.uStepData.sMoveToHome.eMoveToHome = EMOVETOHOME_Y_StartMove;
                     break;
-                case EMOVETOHOME_y:
+                case EMOVETOHOME_Y_StartMove:
+                {
+                    HARDWAREGPIO_MoveStepperAsync(HARDWAREGPIO_EAXIS_y, &m_sHandle.s32CurrentY, -100000);
                     break;
-                case EMOVETOHOME_x:
+                }
+                case EMOVETOHOME_Y_Wait:
+                {
+                    if (HARDWAREGPIO_CheckEndStop_LOW(HARDWAREGPIO_EAXIS_y))
+                    {
+                        m_sHandle.s32CurrentY = 0;
+                        m_sHandle.uStepData.sMoveToHome.eMoveToHome = EMOVETOHOME_X_StartMove;
+                        ESP_LOGI(TAG, "Home Y is done");
+                    }
                     break;
-                case EMOVETOHOME_z:
+                }
+                case EMOVETOHOME_X_StartMove:
+                {
+                    HARDWAREGPIO_MoveStepperAsync(HARDWAREGPIO_EAXIS_x, &m_sHandle.s32CurrentX, -100000);
                     break;
+                }
+                case EMOVETOHOME_X_Wait:
+                {
+                    if (HARDWAREGPIO_CheckEndStop_LOW(HARDWAREGPIO_EAXIS_x))
+                    {
+                        m_sHandle.s32CurrentX = 0;
+                        m_sHandle.uStepData.sMoveToHome.eMoveToHome = EMOVETOHOME_Z_StartMove;
+                        ESP_LOGI(TAG, "Home X is done");
+                    }
+                    break;
+                }
+                case EMOVETOHOME_Z_StartMove:
+                {
+                    HARDWAREGPIO_MoveStepperAsync(HARDWAREGPIO_EAXIS_z, &m_sHandle.s32CurrentZ, -100000);
+                    break;
+                }
+                case EMOVETOHOME_Z_Wait:
+                {
+                    if (HARDWAREGPIO_CheckEndStop_LOW(HARDWAREGPIO_EAXIS_z))
+                    {
+                        m_sHandle.s32CurrentZ = 0;
+                        m_sHandle.eState = ESTATE_WaitingForGlass;
+                        ESP_LOGI(TAG, "Home Z is done");
+                    }
+                    break;
+                }
                 case EMOVETOHOME_Count:
                 default:
                     break;
