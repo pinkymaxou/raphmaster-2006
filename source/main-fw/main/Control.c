@@ -17,11 +17,12 @@ typedef enum
     ESTATE_MoveToStation = 3,
     ESTATE_FillingGlass = 4,
     ESTATE_MoveBackToHomeEnd = 5,
+    ESTATE_WaitForRemovingGlass = 6,
 
-    ESTATE_Cancelled = 6,
+    ESTATE_Cancelled = 7,
 
-    ESTATE_StartHoming = 7,
-    ESTATE_InProgressHoming = 8,
+    ESTATE_StartHoming = 8,
+    ESTATE_InProgressHoming = 9,
 } ESTATE;
 
 typedef struct
@@ -54,17 +55,65 @@ typedef enum
     EMOVETOHOME_Count
 } EMOVETOHOME;
 
+typedef enum
+{
+    EMOVETOSTATIONSTEP_Start,
+    EMOVETOSTATIONSTEP_Wait
+} EMOVETOSTATIONSTEP;
+
+typedef enum
+{
+    EFILLINGGLASSSTEP_Start,
+    EFILLINGGLASSSTEP_WaitStartFilling,
+    EFILLINGGLASSSTEP_WaitUntilFillingCompleted,
+    EFILLINGGLASSSTEP_WaitUntilRetreatCompleted
+} EWAITINGFORGLASSSTEP;
+
+typedef enum
+{
+    EMOVEBACKTOHOMEENDSTEP_Start,
+    EMOVEBACKTOHOMEENDSTEP_Wait,
+} EMOVEBACKTOHOMEENDSTEP;
+
 typedef union
 {
     struct
     {
         EMOVETOHOME eMoveToHome;
+
+        TickType_t ttLastMeasureTicks;
     } sMoveToHome;
     struct
     {
-        uint32_t sTarget32X;
-        uint32_t sTarget32Y;
+        EMOVETOSTATIONSTEP eMoveToStationStep;
+
+        uint32_t s32TargetX;
+        uint32_t s32TargetZ;
+
+        TickType_t ttLastMeasureTicks;
     } sMoveToStation;
+    struct
+    {
+        int32_t s32ScaleWeightGram;
+        uint8_t u8MeasureCount;
+
+        TickType_t ttLastMeasureTicks;
+    } sWaitingForGlass;
+    struct
+    {
+        EWAITINGFORGLASSSTEP eWaitingForGlassStep;
+
+        uint32_t s32TargetY;
+        uint32_t u32TimeHold_ms;
+
+        int32_t s32RequiredQty_ml;
+        TickType_t ttLastMeasureTicks;
+    } sFillingGlass;
+    struct
+    {
+        EMOVEBACKTOHOMEENDSTEP eMoveBackToHomeEnd;
+        TickType_t ttLastMeasureTicks;
+    } sMoveBackToHomeEnd;
 } UStepData;
 
 typedef struct
@@ -195,6 +244,7 @@ void CONTROL_Run()
                 case EMOVETOHOME_Y_StartMove:
                 {
                     HARDWAREGPIO_MoveStepperAsync(HARDWAREGPIO_EAXIS_y, &m_sHandle.s32CurrentY, -100000);
+                    m_sHandle.uStepData.sMoveToHome.eMoveToHome = EMOVETOHOME_Y_Wait;
                     break;
                 }
                 case EMOVETOHOME_Y_Wait:
@@ -210,6 +260,7 @@ void CONTROL_Run()
                 case EMOVETOHOME_X_StartMove:
                 {
                     HARDWAREGPIO_MoveStepperAsync(HARDWAREGPIO_EAXIS_x, &m_sHandle.s32CurrentX, -100000);
+                    m_sHandle.uStepData.sMoveToHome.eMoveToHome = EMOVETOHOME_X_Wait;
                     break;
                 }
                 case EMOVETOHOME_X_Wait:
@@ -225,6 +276,7 @@ void CONTROL_Run()
                 case EMOVETOHOME_Z_StartMove:
                 {
                     HARDWAREGPIO_MoveStepperAsync(HARDWAREGPIO_EAXIS_z, &m_sHandle.s32CurrentZ, -100000);
+                    m_sHandle.uStepData.sMoveToHome.eMoveToHome = EMOVETOHOME_Z_Wait;
                     break;
                 }
                 case EMOVETOHOME_Z_Wait:
@@ -232,6 +284,13 @@ void CONTROL_Run()
                     if (HARDWAREGPIO_CheckEndStop_LOW(HARDWAREGPIO_EAXIS_z))
                     {
                         m_sHandle.s32CurrentZ = 0;
+
+                        // Measure count at 0 before ...
+                        m_sHandle.uStepData.sWaitingForGlass.u8MeasureCount = 0;
+                        m_sHandle.uStepData.sWaitingForGlass.s32ScaleWeightGram = HARDWAREGPIO_GetScaleWeightGram();
+
+                        m_sHandle.uStepData.sWaitingForGlass.ttLastMeasureTicks = xTaskGetTickCount();
+
                         m_sHandle.eState = ESTATE_WaitingForGlass;
                         ESP_LOGI(TAG, "Home Z is done");
                     }
@@ -245,24 +304,238 @@ void CONTROL_Run()
         }
         case ESTATE_WaitingForGlass:
         {
+            if (m_sHandle.bIsCancelRequest)
+            {
+                ESP_LOGE(TAG, "Cancelling waiting for glass ...");
+                m_sHandle.eState = ESTATE_Cancelled;
+                break;
+            }
+
             // TODO: Use the scale to know when the glass is on the sleigh.
             // 90 seconds timeout?
+            if ( (xTaskGetTickCount() - m_sHandle.uStepData.sWaitingForGlass.ttLastMeasureTicks) > pdMS_TO_TICKS(50) )
+            {
+                m_sHandle.uStepData.sWaitingForGlass.ttLastMeasureTicks = xTaskGetTickCount();
+
+                const int32_t s32ScaleWeightGram = HARDWAREGPIO_GetScaleWeightGram();
+
+                m_sHandle.uStepData.sWaitingForGlass.s32ScaleWeightGram = (m_sHandle.uStepData.sWaitingForGlass.s32ScaleWeightGram / 9) + (s32ScaleWeightGram / 10);
+                m_sHandle.uStepData.sWaitingForGlass.u8MeasureCount++;
+
+                // If it moved, reset measures
+                const int32_t s32MovingDiff = abs(m_sHandle.uStepData.sWaitingForGlass.s32ScaleWeightGram - s32ScaleWeightGram);
+                if (s32MovingDiff > 5)
+                {
+                    ESP_LOGW(TAG, "Moving too much ...");
+                    m_sHandle.uStepData.sWaitingForGlass.u8MeasureCount = 0;
+                }
+
+                if (m_sHandle.uStepData.sWaitingForGlass.u8MeasureCount >= 10)
+                {
+                    // If it's not heavy enough, do it again
+                    const int32_t s32Offset = 0;
+
+                    if (m_sHandle.uStepData.sWaitingForGlass.s32ScaleWeightGram - s32Offset > 20)
+                    {
+                        // Glass detected, go to next step.
+                        // Find the station
+                        ESP_LOGI(TAG, "Moving to the first station");
+                        m_sHandle.u32CurrentStep = 0;
+
+                        // TODO: Locate ingredient X, Z by station id
+                        m_sHandle.uStepData.sMoveToStation.eMoveToStationStep = EMOVETOSTATIONSTEP_Start;
+                        m_sHandle.uStepData.sMoveToStation.s32TargetX = 0;
+                        m_sHandle.uStepData.sMoveToStation.s32TargetZ = 0;
+                        m_sHandle.eState = ESTATE_MoveToStation;
+                    }
+                    m_sHandle.uStepData.sWaitingForGlass.u8MeasureCount = 0;
+                }
+            }
             break;
         }
         case ESTATE_MoveToStation:
         {
+            if (m_sHandle.bIsCancelRequest)
+            {
+                ESP_LOGE(TAG, "Cancelling move to station ...");
+                HARDWAREGPIO_EnableAllSteppers(false);
+                m_sHandle.eState = ESTATE_Cancelled;
+                break;
+            }
+
             // TODO: Moving to a station
+            switch(m_sHandle.uStepData.sMoveToStation.eMoveToStationStep)
+            {
+                case EMOVETOSTATIONSTEP_Start:
+                {
+                    ESP_LOGI(TAG, "Moving to station at X: %d, Z: %d", m_sHandle.uStepData.sMoveToStation.s32TargetX, m_sHandle.uStepData.sMoveToStation.s32TargetZ);
+                    HARDWAREGPIO_EnableAllSteppers(true);
+                    HARDWAREGPIO_MoveStepperAsync(HARDWAREGPIO_EAXIS_x, &m_sHandle.s32CurrentX, m_sHandle.uStepData.sMoveToStation.s32TargetX);
+                    HARDWAREGPIO_MoveStepperAsync(HARDWAREGPIO_EAXIS_z, &m_sHandle.s32CurrentZ, m_sHandle.uStepData.sMoveToStation.s32TargetZ);
+
+                    m_sHandle.uStepData.sMoveToStation.ttLastMeasureTicks = xTaskGetTickCount();
+                    m_sHandle.uStepData.sMoveToStation.eMoveToStationStep = EMOVETOSTATIONSTEP_Wait;
+                    break;
+                }
+                case EMOVETOSTATIONSTEP_Wait:
+                {
+                    if ((xTaskGetTickCount() - m_sHandle.uStepData.sMoveToStation.ttLastMeasureTicks) > pdMS_TO_TICKS(5000))
+                    {
+                        ESP_LOGE(TAG, "Cancelling move to station ...");
+                        HARDWAREGPIO_EnableAllSteppers(false);
+                        m_sHandle.eState = ESTATE_Cancelled;
+                        break;
+                    }
+
+                    if (m_sHandle.s32CurrentX == m_sHandle.uStepData.sMoveToStation.s32TargetX &&
+                        m_sHandle.s32CurrentZ == m_sHandle.uStepData.sMoveToStation.s32TargetZ)
+                    {
+                        // TODO: Filling glass time
+                        m_sHandle.uStepData.sFillingGlass.eWaitingForGlassStep = EFILLINGGLASSSTEP_Start;
+
+                        m_sHandle.eState = ESTATE_FillingGlass;
+                    }
+                    break;
+                }
+            }
             break;
         }
         case ESTATE_FillingGlass:
         {
+            if (m_sHandle.bIsCancelRequest)
+            {
+                ESP_LOGE(TAG, "Cancelling filling glass ...");
+                HARDWAREGPIO_EnableAllSteppers(false);
+                m_sHandle.eState = ESTATE_Cancelled;
+                break;
+            }
+
+            switch(m_sHandle.uStepData.sFillingGlass.eWaitingForGlassStep)
+            {
+                case EFILLINGGLASSSTEP_Start:
+                {
+                    ESP_LOGE(TAG, "Starting filling glass ...");
+
+                    m_sHandle.uStepData.sFillingGlass.ttLastMeasureTicks = xTaskGetTickCount();
+
+                    // TODO: Load target Y
+                    m_sHandle.uStepData.sFillingGlass.s32TargetY = 5000;
+                    m_sHandle.uStepData.sFillingGlass.u32TimeHold_ms = 2500;
+
+                    HARDWAREGPIO_EnableAllSteppers(true);
+                    HARDWAREGPIO_MoveStepperAsync(HARDWAREGPIO_EAXIS_y, &m_sHandle.s32CurrentY, m_sHandle.uStepData.sFillingGlass.s32TargetY);
+
+                    m_sHandle.uStepData.sFillingGlass.eWaitingForGlassStep = EFILLINGGLASSSTEP_WaitStartFilling;
+                    break;
+                }
+                case EFILLINGGLASSSTEP_WaitStartFilling:
+                {
+                    if ((xTaskGetTickCount() - m_sHandle.uStepData.sFillingGlass.ttLastMeasureTicks) > pdMS_TO_TICKS(5000))
+                    {
+                        ESP_LOGE(TAG, "Cancelling filling glass ...");
+                        HARDWAREGPIO_EnableAllSteppers(false);
+                        m_sHandle.eState = ESTATE_Cancelled;
+                        break;
+                    }
+
+                    if (m_sHandle.s32CurrentY == m_sHandle.uStepData.sFillingGlass.s32TargetY)
+                    {
+                        ESP_LOGE(TAG, "In place for filling");
+                        m_sHandle.uStepData.sFillingGlass.ttLastMeasureTicks = xTaskGetTickCount();
+                        m_sHandle.uStepData.sFillingGlass.eWaitingForGlassStep = EFILLINGGLASSSTEP_WaitUntilFillingCompleted;
+                    }
+                    break;
+                }
+                case EFILLINGGLASSSTEP_WaitUntilFillingCompleted:
+                {
+                    const TickType_t ttWait = xTaskGetTickCount() - m_sHandle.uStepData.sFillingGlass.ttLastMeasureTicks;
+
+                    if (ttWait > pdMS_TO_TICKS(10000))
+                    {
+                        ESP_LOGE(TAG, "Cancelling filling glass ...");
+                        HARDWAREGPIO_EnableAllSteppers(false);
+                        m_sHandle.eState = ESTATE_Cancelled;
+                    }
+                    else if (ttWait > pdMS_TO_TICKS(m_sHandle.uStepData.sFillingGlass.u32TimeHold_ms))
+                    {
+                        ESP_LOGE(TAG, "Time to retreat the arm");
+                        HARDWAREGPIO_MoveStepperAsync(HARDWAREGPIO_EAXIS_y, &m_sHandle.s32CurrentY, 0);
+                        m_sHandle.uStepData.sFillingGlass.ttLastMeasureTicks = xTaskGetTickCount();
+                        m_sHandle.uStepData.sFillingGlass.eWaitingForGlassStep = EFILLINGGLASSSTEP_WaitUntilRetreatCompleted;
+                    }
+                    break;
+                }
+                case EFILLINGGLASSSTEP_WaitUntilRetreatCompleted:
+                {
+                    if ((xTaskGetTickCount() - m_sHandle.uStepData.sFillingGlass.ttLastMeasureTicks) > pdMS_TO_TICKS(10000))
+                    {
+                        ESP_LOGE(TAG, "Cancelling filling glass ...");
+                        HARDWAREGPIO_EnableAllSteppers(false);
+                        m_sHandle.eState = ESTATE_Cancelled;
+                        break;
+                    }
+
+                    if (m_sHandle.s32CurrentY == m_sHandle.uStepData.sFillingGlass.s32TargetY)
+                    {
+                        ESP_LOGE(TAG, "Filling probe is now retreated");
+                        m_sHandle.uStepData.sMoveBackToHomeEnd.eMoveBackToHomeEnd = EMOVEBACKTOHOMEENDSTEP_Start;
+                        m_sHandle.eState = ESTATE_MoveBackToHomeEnd;
+                    }
+                    break;
+                }
+            }
             // TODO: Trigger the pouring process and stay there until the scale detect the correct quantity has been poured.
             // go to the next station if there is something else to pour or go back to home
             break;
         }
         case ESTATE_MoveBackToHomeEnd:
         {
-            // TODO: Move back to home
+            switch (m_sHandle.uStepData.sMoveBackToHomeEnd.eMoveBackToHomeEnd)
+            {
+                case EMOVEBACKTOHOMEENDSTEP_Start:
+                {
+                    ESP_LOGI(TAG, "Move back to home");
+
+                    m_sHandle.uStepData.sMoveBackToHomeEnd.eMoveBackToHomeEnd = EMOVEBACKTOHOMEENDSTEP_Wait;
+
+                    m_sHandle.uStepData.sMoveBackToHomeEnd.ttLastMeasureTicks = xTaskGetTickCount();
+
+                    HARDWAREGPIO_MoveStepperAsync(HARDWAREGPIO_EAXIS_x, &m_sHandle.s32CurrentX, 0);
+                    HARDWAREGPIO_MoveStepperAsync(HARDWAREGPIO_EAXIS_z, &m_sHandle.s32CurrentZ, 0);
+                    break;
+                }
+                case EMOVEBACKTOHOMEENDSTEP_Wait:
+                {
+                    if ((xTaskGetTickCount() - m_sHandle.uStepData.sMoveBackToHomeEnd.ttLastMeasureTicks) > pdMS_TO_TICKS(10000))
+                    {
+                        ESP_LOGE(TAG, "Cancelling move to station ...");
+                        HARDWAREGPIO_EnableAllSteppers(false);
+                        m_sHandle.eState = ESTATE_Cancelled;
+                        break;
+                    }
+
+                    if (m_sHandle.s32CurrentX == 0 &&
+                        m_sHandle.s32CurrentZ == 0)
+                    {
+                        ESP_LOGI(TAG, "Move back to home");
+                        m_sHandle.eState = ESTATE_WaitForRemovingGlass;
+                    }
+                    break;
+                }
+            }
+            break;
+        }
+        case ESTATE_WaitForRemovingGlass:
+        {
+            // Add code to detect when the scale is under the minimum
+            const int32_t s32ScaleWeightGram = HARDWAREGPIO_GetScaleWeightGram();
+            const int32_t s32Offset = 0;
+
+            if (s32ScaleWeightGram - s32Offset <= 20)
+            {
+                ESP_LOGI(TAG, "Glass has been removed");
+                m_sHandle.eState = ESTATE_IdleWaitingForOrder;
+            }
             break;
         }
 

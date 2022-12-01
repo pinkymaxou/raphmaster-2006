@@ -26,3 +26,8 @@ bool HARDWAREGPIO_CheckEndStop_LOW(HARDWAREGPIO_EAXIS eAxis)
 {
     return true;
 }
+
+int32_t HARDWAREGPIO_GetScaleWeightGram()
+{
+    return 0;
+}
