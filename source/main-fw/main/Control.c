@@ -25,22 +25,6 @@ typedef enum
     ESTATE_InProgressHoming = 9,
 } ESTATE;
 
-typedef struct
-{
-    uint32_t u32IngredientID;
-    uint32_t u32Qty_ml;
-
-    bool bIsHandled;
-} MakerStep;
-
-typedef struct
-{
-    uint32_t u32RecipeId;
-
-    MakerStep sMakerSteps[CONTROL_MAXIMUMSTEPS_COUNT];
-    uint32_t u32MakerStepCount;
-} SOrder;
-
 typedef enum
 {
     EMOVETOHOME_Start,
@@ -80,7 +64,6 @@ typedef union
     struct
     {
         EMOVETOHOME eMoveToHome;
-
         TickType_t ttLastMeasureTicks;
     } sMoveToHome;
     struct
@@ -96,6 +79,8 @@ typedef union
     {
         int32_t s32ScaleWeightGram;
         uint8_t u8MeasureCount;
+
+        TickType_t ttTimeoutGlassTicks;
 
         TickType_t ttLastMeasureTicks;
     } sWaitingForGlass;
@@ -122,7 +107,7 @@ typedef struct
 
     bool bIsCancelRequest;
 
-    SOrder sOrder;
+    CONTROL_SOrder sOrder;
     uint32_t u32CurrentStep;
 
     UStepData uStepData;
@@ -144,7 +129,7 @@ void CONTROL_Init()
 {
     ESP_LOGI(TAG, "Init control");
 
-    m_hQueueHandle = xQueueCreate(MAXIMUM_QUEUE_LEN, sizeof(SOrder));
+    m_hQueueHandle = xQueueCreate(MAXIMUM_QUEUE_LEN, sizeof(CONTROL_SOrder));
 
     // IDLE state
     m_sHandle.eState = ESTATE_IdleWaitingForOrder;
@@ -162,15 +147,12 @@ void CONTROL_Init()
     m_sHandle.s32CurrentZ = 0;
 }
 
-bool CONTROL_QueueOrder(uint32_t u32RecipeId)
+bool CONTROL_QueueOrder(const CONTROL_SOrder* pSOrder)
 {
-    const SOrder sOrder =
-    {
-        .u32RecipeId = u32RecipeId
-    };
+    ESP_LOGI(TAG, "Add new order to queue, recipeid: %d, step count: %d", pSOrder->u32RecipeId, pSOrder->u32MakerStepCount);
 
     // Fill data
-    if ( xQueueSend(m_hQueueHandle, &sOrder, 0) != pdPASS )
+    if ( xQueueSend(m_hQueueHandle, pSOrder, 0) != pdPASS )
         return false;
 
     return true;
@@ -194,7 +176,7 @@ void CONTROL_Run()
         case ESTATE_IdleWaitingForOrder:
         {
             // Orders
-            SOrder sOrder;
+            CONTROL_SOrder sOrder;
             if (xQueueReceive(m_hQueueHandle, &sOrder, 0) == pdPASS)
             {
                 if (sOrder.u32MakerStepCount == 0)
@@ -207,7 +189,7 @@ void CONTROL_Run()
 
                 ESP_LOGI(TAG, "New order started with recipeid: %d, steps: %d", sOrder.u32RecipeId, sOrder.u32MakerStepCount);
 
-                memcpy(&m_sHandle.sOrder, &sOrder, sizeof(SOrder));
+                memcpy(&m_sHandle.sOrder, &sOrder, sizeof(CONTROL_SOrder));
                 m_sHandle.eState = ESTATE_MoveToHomeStart;
                 m_sHandle.bIsCancelRequest = false;
                 // Current step
@@ -290,6 +272,7 @@ void CONTROL_Run()
                         m_sHandle.uStepData.sWaitingForGlass.s32ScaleWeightGram = HARDWAREGPIO_GetScaleWeightGram();
 
                         m_sHandle.uStepData.sWaitingForGlass.ttLastMeasureTicks = xTaskGetTickCount();
+                        m_sHandle.uStepData.sWaitingForGlass.ttTimeoutGlassTicks = xTaskGetTickCount();
 
                         m_sHandle.eState = ESTATE_WaitingForGlass;
                         ESP_LOGI(TAG, "Home Z is done");
@@ -304,7 +287,8 @@ void CONTROL_Run()
         }
         case ESTATE_WaitingForGlass:
         {
-            if (m_sHandle.bIsCancelRequest)
+            if (m_sHandle.bIsCancelRequest || 
+                (xTaskGetTickCount() - m_sHandle.uStepData.sWaitingForGlass.ttTimeoutGlassTicks) >= pdMS_TO_TICKS(30000))
             {
                 ESP_LOGE(TAG, "Cancelling waiting for glass ...");
                 m_sHandle.eState = ESTATE_Cancelled;
