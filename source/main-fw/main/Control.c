@@ -379,7 +379,7 @@ void CONTROL_Run()
                 }
                 case EMOVETOSTATIONSTEP_Wait:
                 {
-                    if ((xTaskGetTickCount() - m_sHandle.uStepData.sMoveToStation.ttLastMeasureTicks) > pdMS_TO_TICKS(5000))
+                    if ((xTaskGetTickCount() - m_sHandle.uStepData.sMoveToStation.ttLastMeasureTicks) > pdMS_TO_TICKS(10000))
                     {
                         ESP_LOGE(TAG, "Cancelling move to station ...");
                         HARDWAREGPIO_EnableAllSteppers(false);
@@ -430,7 +430,7 @@ void CONTROL_Run()
                 }
                 case EFILLINGGLASSSTEP_WaitStartFilling:
                 {
-                    if ((xTaskGetTickCount() - m_sHandle.uStepData.sFillingGlass.ttLastMeasureTicks) > pdMS_TO_TICKS(5000))
+                    if ((xTaskGetTickCount() - m_sHandle.uStepData.sFillingGlass.ttLastMeasureTicks) > pdMS_TO_TICKS(10000))
                     {
                         ESP_LOGE(TAG, "Cancelling filling glass ...");
                         HARDWAREGPIO_EnableAllSteppers(false);
@@ -478,6 +478,7 @@ void CONTROL_Run()
                     if (m_sHandle.s32CurrentY == m_sHandle.uStepData.sFillingGlass.s32TargetY)
                     {
                         ESP_LOGE(TAG, "Filling probe is now retreated");
+                        // Fill another or go home
                         m_sHandle.uStepData.sMoveBackToHomeEnd.eMoveBackToHomeEnd = EMOVEBACKTOHOMEENDSTEP_Start;
                         m_sHandle.eState = ESTATE_MoveBackToHomeEnd;
                     }
