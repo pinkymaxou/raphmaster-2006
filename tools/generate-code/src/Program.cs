@@ -15,7 +15,7 @@ namespace generate_code
                 int stationCount = 24;
 
                 Func<int, string> enumPosXText       = (i) => $"STATIONSETTINGS_EENTRY_STATION_{i}_PosX";
-                Func<int, string> enumPosYText       = (i) => $"STATIONSETTINGS_EENTRY_STATION_{i}_PosY";
+                Func<int, string> enumPosYText       = (i) => $"STATIONSETTINGS_EENTRY_STATION_{i}_PosZ";
                 Func<int, string> enumLoadedIDText   = (i) => $"STATIONSETTINGS_EENTRY_STATION_{i}_LoadID";
 
                 Func<int, string> enumTotalQtyText = (i) => $"STATIONSETTINGS_EENTRY_STATION_{i}_TotalQty";

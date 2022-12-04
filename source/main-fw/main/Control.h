@@ -25,7 +25,7 @@ typedef struct
 
 void CONTROL_Init();
 
-void CONTROL_Run();
+void CONTROL_StartTask();
 
 bool CONTROL_QueueOrder(const CONTROL_SOrder* pSOrder);
 
