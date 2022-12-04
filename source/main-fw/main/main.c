@@ -210,6 +210,8 @@ void app_main(void)
 
     WEBSERVER_Init();
 
+    CONTROL_StartTask();
+
     char* szAllTask = (char*)malloc(4096);
     vTaskList(szAllTask);
     ESP_LOGI(TAG, "vTaskList: \r\n\r\n%s", szAllTask);
@@ -217,8 +219,6 @@ void app_main(void)
 
     while (true)
     {
-        CONTROL_Run();
-
         // Leave some time, we want the poor idle tasks to have some time
         vTaskDelay(1);
     }

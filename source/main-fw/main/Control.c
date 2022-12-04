@@ -1,10 +1,10 @@
 #include "Control.h"
 #include "CocktailExplorer.h"
-#include "HardwareGPIO.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "freertos/queue.h"
 #include "esp_log.h"
+#include "StationSettings.h"
 
 #define TAG "Control"
 
@@ -21,523 +21,499 @@ typedef enum
 
     ESTATE_Cancelled = 7,
 
-    ESTATE_StartHoming = 8,
-    ESTATE_InProgressHoming = 9,
+    ESTATE_CmdHomeAll = 50,
+    ESTATE_CmdMoveAxis = 51,
+    ESTATE_CmdMoveToStation = 52
 } ESTATE;
 
 typedef enum
 {
-    EMOVETOHOME_Start,
+    EINSTRUCTION_Order,     /* Order a new cocktail*/
+    EINSTRUCTION_HomeAll,   /* Home all axis */
 
-    EMOVETOHOME_Y_StartMove,
-    EMOVETOHOME_Y_Wait,
-    EMOVETOHOME_X_StartMove,
-    EMOVETOHOME_X_Wait,
-    EMOVETOHOME_Z_StartMove,
-    EMOVETOHOME_Z_Wait,
+    EINSTRUCTION_MoveAxis,
+    EINSTRUCTION_MoveToStation
+} EINSTRUCTION;
 
-    EMOVETOHOME_Count
-} EMOVETOHOME;
-
-typedef enum
+typedef struct
 {
-    EMOVETOSTATIONSTEP_Start,
-    EMOVETOSTATIONSTEP_Wait
-} EMOVETOSTATIONSTEP;
-
-typedef enum
-{
-    EFILLINGGLASSSTEP_Start,
-    EFILLINGGLASSSTEP_WaitStartFilling,
-    EFILLINGGLASSSTEP_WaitUntilFillingCompleted,
-    EFILLINGGLASSSTEP_WaitUntilRetreatCompleted
-} EWAITINGFORGLASSSTEP;
-
-typedef enum
-{
-    EMOVEBACKTOHOMEENDSTEP_Start,
-    EMOVEBACKTOHOMEENDSTEP_Wait,
-} EMOVEBACKTOHOMEENDSTEP;
-
-typedef union
-{
-    struct
+    EINSTRUCTION eInstruction;
+    union
     {
-        EMOVETOHOME eMoveToHome;
-        TickType_t ttLastMeasureTicks;
-    } sMoveToHome;
-    struct
-    {
-        EMOVETOSTATIONSTEP eMoveToStationStep;
-
-        uint32_t s32TargetX;
-        uint32_t s32TargetZ;
-
-        TickType_t ttLastMeasureTicks;
-    } sMoveToStation;
-    struct
-    {
-        int32_t s32ScaleWeightGram;
-        uint8_t u8MeasureCount;
-
-        TickType_t ttTimeoutGlassTicks;
-
-        TickType_t ttLastMeasureTicks;
-    } sWaitingForGlass;
-    struct
-    {
-        EWAITINGFORGLASSSTEP eWaitingForGlassStep;
-
-        uint32_t s32TargetY;
-        uint32_t u32TimeHold_ms;
-
-        int32_t s32RequiredQty_ml;
-        TickType_t ttLastMeasureTicks;
-    } sFillingGlass;
-    struct
-    {
-        EMOVEBACKTOHOMEENDSTEP eMoveBackToHomeEnd;
-        TickType_t ttLastMeasureTicks;
-    } sMoveBackToHomeEnd;
-} UStepData;
+        CONTROL_SOrder sOrder;
+        struct
+        {
+            HARDWAREGPIO_EAXIS eAxis;
+            int32_t s32Value;
+        } sMoveAxis;
+        struct
+        {
+            uint32_t u32StationId;
+        } sMoveToStation;
+    } uArg;
+} SQueueInstruction;
 
 typedef struct
 {
     ESTATE eState;
 
+    SQueueInstruction sQueueInstruction;
+
     bool bIsCancelRequest;
-
-    CONTROL_SOrder sOrder;
-    uint32_t u32CurrentStep;
-
-    UStepData uStepData;
-
     // Positions
     int32_t s32CurrentX; // negative = LEFT, positive = RIGHT
     int32_t s32CurrentY; // negative = DOWN, positive = UP
     int32_t s32CurrentZ; // negative = TOWARD FRONT, positive = TOWARD BACK
-
-    bool bIsHomingDone;
 } SHandle;
 
 #define MAXIMUM_QUEUE_LEN (5)
 
 static SHandle m_sHandle = {0};
 static QueueHandle_t m_hQueueHandle = NULL;
+static TaskHandle_t m_hTaskHandle = NULL;
+
+static void ControlThreadRun(void* pParam);
+
+static bool DoAxisHoming(HARDWAREGPIO_EAXIS eAxis);
+static bool WaitUntilGlassIsThere();
+static bool WaitUntilGlassRemoved();
+static bool FillGlass(uint16_t u16Qty);
+static bool MoveToCoordinate(int32_t s32X, int32_t s32Z);
 
 void CONTROL_Init()
 {
     ESP_LOGI(TAG, "Init control");
 
-    m_hQueueHandle = xQueueCreate(MAXIMUM_QUEUE_LEN, sizeof(CONTROL_SOrder));
+    m_hQueueHandle = xQueueCreate(MAXIMUM_QUEUE_LEN, sizeof(SQueueInstruction));
 
     // IDLE state
     m_sHandle.eState = ESTATE_IdleWaitingForOrder;
     m_sHandle.bIsCancelRequest = false;
 
-    m_sHandle.bIsHomingDone = false;
-
-    m_sHandle.u32CurrentStep = 0;
-
     // Step counts
-    m_sHandle.sOrder.u32MakerStepCount = 0;
+    memset(&m_sHandle.sQueueInstruction, 0, sizeof(SQueueInstruction));
 
     m_sHandle.s32CurrentX = 0;
     m_sHandle.s32CurrentY = 0;
     m_sHandle.s32CurrentZ = 0;
 }
 
+void CONTROL_StartTask()
+{
+    // Create the new task with default priority and stack size
+    xTaskCreate(ControlThreadRun, "control", CONTROL_STACKSIZE, NULL, CONTROL_PRIORITY, &m_hTaskHandle);
+}
+
 bool CONTROL_QueueOrder(const CONTROL_SOrder* pSOrder)
 {
-    ESP_LOGI(TAG, "Add new order to queue, recipeid: %d, step count: %d", pSOrder->u32RecipeId, pSOrder->u32MakerStepCount);
+    const SQueueInstruction sQueueInstruction =
+    {
+        .eInstruction = EINSTRUCTION_Order,
+        .uArg = { .sOrder = *pSOrder }
+    };
 
     // Fill data
-    if ( xQueueSend(m_hQueueHandle, pSOrder, 0) != pdPASS )
+    if ( xQueueSend(m_hQueueHandle, &sQueueInstruction, 0) != pdPASS )
+    {
+        ESP_LOGE(TAG, "Cannot queue order");
         return false;
-
+    }
+    ESP_LOGI(TAG, "Add new order to queue, recipeid: %d, step count: %d", pSOrder->u32RecipeId, pSOrder->u32MakerStepCount);
     return true;
 }
 
-void CONTROL_Run()
+bool CONTROL_QueueHomeAllAxis()
 {
-    switch (m_sHandle.eState)
+    const SQueueInstruction sQueueInstruction =
     {
-        case ESTATE_Cancelled:
-        {
-            // TODO: Do nothing until another recipe start to be produced
-            // In pause until it get started again.
-            if (!m_sHandle.bIsCancelRequest)
-            {
-                ESP_LOGI(TAG, "Cancel has been cancelled ...");
-                m_sHandle.eState = ESTATE_IdleWaitingForOrder;
+        .eInstruction = EINSTRUCTION_HomeAll,
+    };
+
+    // Fill data
+    if ( xQueueSend(m_hQueueHandle, &sQueueInstruction, 0) != pdPASS )
+    {
+        ESP_LOGE(TAG, "Cannot queue order");
+        return false;
+    }
+    ESP_LOGI(TAG, "Home all axis");
+    return true;
+}
+
+bool CONTROL_QueueMoveAxis(HARDWAREGPIO_EAXIS eAxis, int32_t s32Value)
+{
+    const SQueueInstruction sQueueInstruction =
+    {
+        .eInstruction = EINSTRUCTION_MoveAxis,
+        .uArg = {
+            .sMoveAxis = {
+                .eAxis = eAxis,
+                .s32Value = s32Value
             }
-            break;
         }
-        case ESTATE_IdleWaitingForOrder:
+    };
+
+    // Fill data
+    if ( xQueueSend(m_hQueueHandle, &sQueueInstruction, 0) != pdPASS )
+    {
+        ESP_LOGE(TAG, "Cannot queue order");
+        return false;
+    }
+    ESP_LOGI(TAG, "Move axis");
+    return true;
+}
+
+bool CONTROL_QueueMoveToStation(uint32_t u32StationId)
+{
+    const SQueueInstruction sQueueInstruction =
+    {
+        .eInstruction = EINSTRUCTION_MoveAxis,
+        .uArg = {
+            .sMoveToStation = {
+                .u32StationId = u32StationId
+            }
+        }
+    };
+
+    // Fill data
+    if ( xQueueSend(m_hQueueHandle, &sQueueInstruction, 0) != pdPASS )
+    {
+        ESP_LOGE(TAG, "Cannot queue order");
+        return false;
+    }
+    ESP_LOGI(TAG, "Move axis");
+    return true;
+}
+
+void CONTROL_Cancel()
+{
+    ESP_LOGI(TAG, "Cancelling ...");
+    m_sHandle.bIsCancelRequest = true;
+}
+
+static void ControlThreadRun(void* pParam)
+{
+    while(true)
+    {
+        // Orders
+        SQueueInstruction sQueueInstruction;
+        if (xQueueReceive(m_hQueueHandle, &sQueueInstruction, portMAX_DELAY) == pdPASS)
         {
-            // Orders
-            CONTROL_SOrder sOrder;
-            if (xQueueReceive(m_hQueueHandle, &sOrder, 0) == pdPASS)
+            if (sQueueInstruction.eInstruction == EINSTRUCTION_Order)
             {
-                if (sOrder.u32MakerStepCount == 0)
+                if (sQueueInstruction.uArg.sOrder.u32MakerStepCount == 0)
                 {
                     ESP_LOGE(TAG, "Invalid order, just skip it ...");
                     // If the order is wrong, we just skip it.
-                    m_sHandle.eState = ESTATE_IdleWaitingForOrder;
-                    break;
+                    continue;
                 }
 
-                ESP_LOGI(TAG, "New order started with recipeid: %d, steps: %d", sOrder.u32RecipeId, sOrder.u32MakerStepCount);
-
-                memcpy(&m_sHandle.sOrder, &sOrder, sizeof(CONTROL_SOrder));
-                m_sHandle.eState = ESTATE_MoveToHomeStart;
-                m_sHandle.bIsCancelRequest = false;
-                // Current step
-                m_sHandle.u32CurrentStep = 0;
-                // Ingredients
-                // Start with Y to be sure it's at the lowest position and won't interfere
-                m_sHandle.eState = ESTATE_MoveToHomeStart;
-                m_sHandle.uStepData.sMoveToHome.eMoveToHome = EMOVETOHOME_Start;
+                ESP_LOGI(TAG, "New order started with recipeid: %d, steps: %d", sQueueInstruction.uArg.sOrder.u32RecipeId, sQueueInstruction.uArg.sOrder.u32MakerStepCount);
             }
-            break;
+            memcpy(&m_sHandle.sQueueInstruction, &sQueueInstruction, sizeof(SQueueInstruction));
+            m_sHandle.bIsCancelRequest = false;
         }
-        case ESTATE_MoveToHomeStart:
+
+        // Order instruction
+        if (sQueueInstruction.eInstruction == EINSTRUCTION_Order)
         {
-            if (m_sHandle.bIsCancelRequest)
+            // Ingredients
+            // Start with Y to be sure it's at the lowest position and won't interfere
+            // Do homing on all axis before accepting glass
+            m_sHandle.eState = ESTATE_MoveToHomeStart;
+            if (!DoAxisHoming(HARDWAREGPIO_EAXIS_y))
+                goto CANCEL;
+            if (!DoAxisHoming(HARDWAREGPIO_EAXIS_z))
+                goto CANCEL;
+            if (!DoAxisHoming(HARDWAREGPIO_EAXIS_x))
+                goto CANCEL;
+
+            // Wait until user put his glass on the plate
+            m_sHandle.eState = ESTATE_WaitingForGlass;
+            if (!WaitUntilGlassIsThere())
+                goto CANCEL;
+
+            for(int i = 0; i < m_sHandle.sQueueInstruction.uArg.sOrder.u32MakerStepCount; i++)
             {
-                ESP_LOGE(TAG, "Cancelling homing ...");
-                HARDWAREGPIO_EnableAllSteppers(false);
-                m_sHandle.eState = ESTATE_Cancelled;
-                break;
+                const CONTROL_MakerStep* psMakerStep = &m_sHandle.sQueueInstruction.uArg.sOrder.sMakerSteps[i];
+
+                // Get station id
+                int32_t s32X = STATIONSETTINGS_GetValue(psMakerStep->u32StationID, STATIONSETTINGS_ESTATIONSET_PosX);
+                int32_t s32Z = STATIONSETTINGS_GetValue(psMakerStep->u32StationID, STATIONSETTINGS_ESTATIONSET_PosZ);
+
+                if (s32X == 0 && s32Z == 0)
+                {
+                    ESP_LOGE(TAG, "Invalid calibration, cancelled");
+                    goto CANCEL;
+                }
+
+                // Move to station
+                m_sHandle.eState = ESTATE_MoveToStation;
+                if (!MoveToCoordinate(s32X, s32Z))
+                    goto CANCEL;
+
+                m_sHandle.eState = ESTATE_FillingGlass;
+                if (!FillGlass(psMakerStep->u32Qty_ml))
+                    goto CANCEL;
             }
 
-            // TODO: Move back to the home position
-            // assume touching home switch or going to 0 is the home position
-            // Add a timeout just in case
-            switch(m_sHandle.uStepData.sMoveToHome.eMoveToHome)
-            {
-                case EMOVETOHOME_Start:
-                    ESP_LOGI(TAG, "Starting homing process on Y");
-                    // Wake-up Y stepper
-                    // Command it to move to "infinite"
-                    HARDWAREGPIO_EnableAllSteppers(true);
-                    m_sHandle.uStepData.sMoveToHome.eMoveToHome = EMOVETOHOME_Y_StartMove;
-                    break;
-                case EMOVETOHOME_Y_StartMove:
-                {
-                    HARDWAREGPIO_MoveStepperAsync(HARDWAREGPIO_EAXIS_y, &m_sHandle.s32CurrentY, -100000);
-                    m_sHandle.uStepData.sMoveToHome.eMoveToHome = EMOVETOHOME_Y_Wait;
-                    break;
-                }
-                case EMOVETOHOME_Y_Wait:
-                {
-                    if (HARDWAREGPIO_CheckEndStop_LOW(HARDWAREGPIO_EAXIS_y))
-                    {
-                        m_sHandle.s32CurrentY = 0;
-                        m_sHandle.uStepData.sMoveToHome.eMoveToHome = EMOVETOHOME_X_StartMove;
-                        ESP_LOGI(TAG, "Home Y is done");
-                    }
-                    break;
-                }
-                case EMOVETOHOME_X_StartMove:
-                {
-                    HARDWAREGPIO_MoveStepperAsync(HARDWAREGPIO_EAXIS_x, &m_sHandle.s32CurrentX, -100000);
-                    m_sHandle.uStepData.sMoveToHome.eMoveToHome = EMOVETOHOME_X_Wait;
-                    break;
-                }
-                case EMOVETOHOME_X_Wait:
-                {
-                    if (HARDWAREGPIO_CheckEndStop_LOW(HARDWAREGPIO_EAXIS_x))
-                    {
-                        m_sHandle.s32CurrentX = 0;
-                        m_sHandle.uStepData.sMoveToHome.eMoveToHome = EMOVETOHOME_Z_StartMove;
-                        ESP_LOGI(TAG, "Home X is done");
-                    }
-                    break;
-                }
-                case EMOVETOHOME_Z_StartMove:
-                {
-                    HARDWAREGPIO_MoveStepperAsync(HARDWAREGPIO_EAXIS_z, &m_sHandle.s32CurrentZ, -100000);
-                    m_sHandle.uStepData.sMoveToHome.eMoveToHome = EMOVETOHOME_Z_Wait;
-                    break;
-                }
-                case EMOVETOHOME_Z_Wait:
-                {
-                    if (HARDWAREGPIO_CheckEndStop_LOW(HARDWAREGPIO_EAXIS_z))
-                    {
-                        m_sHandle.s32CurrentZ = 0;
+            // Move back to home
+            m_sHandle.eState = ESTATE_MoveBackToHomeEnd;
+            if (!MoveToCoordinate(0, 0))
+                goto CANCEL;
 
-                        // Measure count at 0 before ...
-                        m_sHandle.uStepData.sWaitingForGlass.u8MeasureCount = 0;
-                        m_sHandle.uStepData.sWaitingForGlass.s32ScaleWeightGram = HARDWAREGPIO_GetScaleWeightGram();
+            m_sHandle.eState = ESTATE_WaitForRemovingGlass;
+            if (!WaitUntilGlassRemoved())
+                goto CANCEL;
 
-                        m_sHandle.uStepData.sWaitingForGlass.ttLastMeasureTicks = xTaskGetTickCount();
-                        m_sHandle.uStepData.sWaitingForGlass.ttTimeoutGlassTicks = xTaskGetTickCount();
-
-                        m_sHandle.eState = ESTATE_WaitingForGlass;
-                        ESP_LOGI(TAG, "Home Z is done");
-                    }
-                    break;
-                }
-                case EMOVETOHOME_Count:
-                default:
-                    break;
-            }
-            break;
+            // Normal ending
+            m_sHandle.eState = ESTATE_IdleWaitingForOrder;
+            goto END;
         }
-        case ESTATE_WaitingForGlass:
+        else if (sQueueInstruction.eInstruction == EINSTRUCTION_HomeAll)
         {
-            if (m_sHandle.bIsCancelRequest || 
-                (xTaskGetTickCount() - m_sHandle.uStepData.sWaitingForGlass.ttTimeoutGlassTicks) >= pdMS_TO_TICKS(30000))
-            {
-                ESP_LOGE(TAG, "Cancelling waiting for glass ...");
-                m_sHandle.eState = ESTATE_Cancelled;
-                break;
-            }
-
-            // TODO: Use the scale to know when the glass is on the sleigh.
-            // 90 seconds timeout?
-            if ( (xTaskGetTickCount() - m_sHandle.uStepData.sWaitingForGlass.ttLastMeasureTicks) > pdMS_TO_TICKS(50) )
-            {
-                m_sHandle.uStepData.sWaitingForGlass.ttLastMeasureTicks = xTaskGetTickCount();
-
-                const int32_t s32ScaleWeightGram = HARDWAREGPIO_GetScaleWeightGram();
-
-                m_sHandle.uStepData.sWaitingForGlass.s32ScaleWeightGram = (m_sHandle.uStepData.sWaitingForGlass.s32ScaleWeightGram / 9) + (s32ScaleWeightGram / 10);
-                m_sHandle.uStepData.sWaitingForGlass.u8MeasureCount++;
-
-                // If it moved, reset measures
-                const int32_t s32MovingDiff = abs(m_sHandle.uStepData.sWaitingForGlass.s32ScaleWeightGram - s32ScaleWeightGram);
-                if (s32MovingDiff > 5)
-                {
-                    ESP_LOGW(TAG, "Moving too much ...");
-                    m_sHandle.uStepData.sWaitingForGlass.u8MeasureCount = 0;
-                }
-
-                if (m_sHandle.uStepData.sWaitingForGlass.u8MeasureCount >= 10)
-                {
-                    // If it's not heavy enough, do it again
-                    const int32_t s32Offset = 0;
-
-                    if (m_sHandle.uStepData.sWaitingForGlass.s32ScaleWeightGram - s32Offset > 20)
-                    {
-                        // Glass detected, go to next step.
-                        // Find the station
-                        ESP_LOGI(TAG, "Moving to the first station");
-                        m_sHandle.u32CurrentStep = 0;
-
-                        // TODO: Locate ingredient X, Z by station id
-                        m_sHandle.uStepData.sMoveToStation.eMoveToStationStep = EMOVETOSTATIONSTEP_Start;
-                        m_sHandle.uStepData.sMoveToStation.s32TargetX = 0;
-                        m_sHandle.uStepData.sMoveToStation.s32TargetZ = 0;
-                        m_sHandle.eState = ESTATE_MoveToStation;
-                    }
-                    m_sHandle.uStepData.sWaitingForGlass.u8MeasureCount = 0;
-                }
-            }
-            break;
+            ESP_LOGI(TAG, "Executing: CmdHomeAll");
+            m_sHandle.eState = ESTATE_CmdHomeAll;
+            if (!DoAxisHoming(HARDWAREGPIO_EAXIS_y))
+                goto CANCEL;
+            if (!DoAxisHoming(HARDWAREGPIO_EAXIS_z))
+                goto CANCEL;
+            if (!DoAxisHoming(HARDWAREGPIO_EAXIS_x))
+                goto CANCEL;
+            ESP_LOGI(TAG, "Completed: CmdHomeAll");
         }
-        case ESTATE_MoveToStation:
+        else if (sQueueInstruction.eInstruction == EINSTRUCTION_MoveToStation)
         {
-            if (m_sHandle.bIsCancelRequest)
-            {
-                ESP_LOGE(TAG, "Cancelling move to station ...");
-                HARDWAREGPIO_EnableAllSteppers(false);
-                m_sHandle.eState = ESTATE_Cancelled;
-                break;
-            }
+            m_sHandle.eState = ESTATE_CmdMoveToStation;
+            ESP_LOGI(TAG, "Executing: CmdMoveToStation");
 
-            // TODO: Moving to a station
-            switch(m_sHandle.uStepData.sMoveToStation.eMoveToStationStep)
-            {
-                case EMOVETOSTATIONSTEP_Start:
-                {
-                    ESP_LOGI(TAG, "Moving to station at X: %d, Z: %d", m_sHandle.uStepData.sMoveToStation.s32TargetX, m_sHandle.uStepData.sMoveToStation.s32TargetZ);
-                    HARDWAREGPIO_EnableAllSteppers(true);
-                    HARDWAREGPIO_MoveStepperAsync(HARDWAREGPIO_EAXIS_x, &m_sHandle.s32CurrentX, m_sHandle.uStepData.sMoveToStation.s32TargetX);
-                    HARDWAREGPIO_MoveStepperAsync(HARDWAREGPIO_EAXIS_z, &m_sHandle.s32CurrentZ, m_sHandle.uStepData.sMoveToStation.s32TargetZ);
+            int32_t s32X = STATIONSETTINGS_GetValue(sQueueInstruction.uArg.sMoveToStation.u32StationId, STATIONSETTINGS_ESTATIONSET_PosX);
+            int32_t s32Z = STATIONSETTINGS_GetValue(sQueueInstruction.uArg.sMoveToStation.u32StationId, STATIONSETTINGS_ESTATIONSET_PosZ);
 
-                    m_sHandle.uStepData.sMoveToStation.ttLastMeasureTicks = xTaskGetTickCount();
-                    m_sHandle.uStepData.sMoveToStation.eMoveToStationStep = EMOVETOSTATIONSTEP_Wait;
-                    break;
-                }
-                case EMOVETOSTATIONSTEP_Wait:
-                {
-                    if ((xTaskGetTickCount() - m_sHandle.uStepData.sMoveToStation.ttLastMeasureTicks) > pdMS_TO_TICKS(CONTROL_STEPTIMEOUT_MS))
-                    {
-                        ESP_LOGE(TAG, "Cancelling move to station ...");
-                        HARDWAREGPIO_EnableAllSteppers(false);
-                        m_sHandle.eState = ESTATE_Cancelled;
-                        break;
-                    }
-
-                    if (m_sHandle.s32CurrentX == m_sHandle.uStepData.sMoveToStation.s32TargetX &&
-                        m_sHandle.s32CurrentZ == m_sHandle.uStepData.sMoveToStation.s32TargetZ)
-                    {
-                        // TODO: Filling glass time
-                        m_sHandle.uStepData.sFillingGlass.eWaitingForGlassStep = EFILLINGGLASSSTEP_Start;
-
-                        m_sHandle.eState = ESTATE_FillingGlass;
-                    }
-                    break;
-                }
-            }
-            break;
+            if (MoveToCoordinate(s32X, s32Z))
+                goto CANCEL;
+            ESP_LOGI(TAG, "Completed: CmdMoveToStation");
         }
-        case ESTATE_FillingGlass:
+        else if (sQueueInstruction.eInstruction == EINSTRUCTION_MoveAxis)
         {
-            if (m_sHandle.bIsCancelRequest)
-            {
-                ESP_LOGE(TAG, "Cancelling filling glass ...");
-                HARDWAREGPIO_EnableAllSteppers(false);
-                m_sHandle.eState = ESTATE_Cancelled;
-                break;
-            }
-
-            switch(m_sHandle.uStepData.sFillingGlass.eWaitingForGlassStep)
-            {
-                case EFILLINGGLASSSTEP_Start:
-                {
-                    ESP_LOGE(TAG, "Starting filling glass ...");
-
-                    m_sHandle.uStepData.sFillingGlass.ttLastMeasureTicks = xTaskGetTickCount();
-
-                    // TODO: Load target Y
-                    m_sHandle.uStepData.sFillingGlass.s32TargetY = 5000;
-                    m_sHandle.uStepData.sFillingGlass.u32TimeHold_ms = 2500;
-
-                    HARDWAREGPIO_EnableAllSteppers(true);
-                    HARDWAREGPIO_MoveStepperAsync(HARDWAREGPIO_EAXIS_y, &m_sHandle.s32CurrentY, m_sHandle.uStepData.sFillingGlass.s32TargetY);
-
-                    m_sHandle.uStepData.sFillingGlass.eWaitingForGlassStep = EFILLINGGLASSSTEP_WaitStartFilling;
-                    break;
-                }
-                case EFILLINGGLASSSTEP_WaitStartFilling:
-                {
-                    if ((xTaskGetTickCount() - m_sHandle.uStepData.sFillingGlass.ttLastMeasureTicks) > pdMS_TO_TICKS(CONTROL_STEPTIMEOUT_MS))
-                    {
-                        ESP_LOGE(TAG, "Cancelling filling glass ...");
-                        HARDWAREGPIO_EnableAllSteppers(false);
-                        m_sHandle.eState = ESTATE_Cancelled;
-                        break;
-                    }
-
-                    if (m_sHandle.s32CurrentY == m_sHandle.uStepData.sFillingGlass.s32TargetY)
-                    {
-                        ESP_LOGE(TAG, "In place for filling");
-                        m_sHandle.uStepData.sFillingGlass.ttLastMeasureTicks = xTaskGetTickCount();
-                        m_sHandle.uStepData.sFillingGlass.eWaitingForGlassStep = EFILLINGGLASSSTEP_WaitUntilFillingCompleted;
-                    }
-                    break;
-                }
-                case EFILLINGGLASSSTEP_WaitUntilFillingCompleted:
-                {
-                    const TickType_t ttWait = xTaskGetTickCount() - m_sHandle.uStepData.sFillingGlass.ttLastMeasureTicks;
-
-                    if (ttWait > pdMS_TO_TICKS(CONTROL_STEPTIMEOUT_MS))
-                    {
-                        ESP_LOGE(TAG, "Cancelling filling glass ...");
-                        HARDWAREGPIO_EnableAllSteppers(false);
-                        m_sHandle.eState = ESTATE_Cancelled;
-                    }
-                    else if (ttWait > pdMS_TO_TICKS(m_sHandle.uStepData.sFillingGlass.u32TimeHold_ms))
-                    {
-                        ESP_LOGE(TAG, "Time to retreat the arm");
-                        HARDWAREGPIO_MoveStepperAsync(HARDWAREGPIO_EAXIS_y, &m_sHandle.s32CurrentY, 0);
-                        m_sHandle.uStepData.sFillingGlass.ttLastMeasureTicks = xTaskGetTickCount();
-                        m_sHandle.uStepData.sFillingGlass.eWaitingForGlassStep = EFILLINGGLASSSTEP_WaitUntilRetreatCompleted;
-                    }
-                    break;
-                }
-                case EFILLINGGLASSSTEP_WaitUntilRetreatCompleted:
-                {
-                    if ((xTaskGetTickCount() - m_sHandle.uStepData.sFillingGlass.ttLastMeasureTicks) > pdMS_TO_TICKS(CONTROL_STEPTIMEOUT_MS))
-                    {
-                        ESP_LOGE(TAG, "Cancelling filling glass ...");
-                        HARDWAREGPIO_EnableAllSteppers(false);
-                        m_sHandle.eState = ESTATE_Cancelled;
-                        break;
-                    }
-
-                    if (m_sHandle.s32CurrentY == m_sHandle.uStepData.sFillingGlass.s32TargetY)
-                    {
-                        ESP_LOGE(TAG, "Filling probe is now retreated");
-                        // Fill another or go home
-                        m_sHandle.uStepData.sMoveBackToHomeEnd.eMoveBackToHomeEnd = EMOVEBACKTOHOMEENDSTEP_Start;
-                        m_sHandle.eState = ESTATE_MoveBackToHomeEnd;
-                    }
-                    break;
-                }
-            }
-            // TODO: Trigger the pouring process and stay there until the scale detect the correct quantity has been poured.
-            // go to the next station if there is something else to pour or go back to home
-            break;
+            m_sHandle.eState = ESTATE_CmdMoveAxis;
+            ESP_LOGI(TAG, "Executing: CmdMoveAxis");
+            HARDWAREGPIO_MoveStepperAsync(sQueueInstruction.uArg.sMoveAxis.eAxis, sQueueInstruction.uArg.sMoveAxis.s32Value);
+            ESP_LOGI(TAG, "Completed: CmdMoveAxis");
         }
-        case ESTATE_MoveBackToHomeEnd:
+        else
         {
-            switch (m_sHandle.uStepData.sMoveBackToHomeEnd.eMoveBackToHomeEnd)
-            {
-                case EMOVEBACKTOHOMEENDSTEP_Start:
-                {
-                    ESP_LOGI(TAG, "Move back to home");
-
-                    m_sHandle.uStepData.sMoveBackToHomeEnd.eMoveBackToHomeEnd = EMOVEBACKTOHOMEENDSTEP_Wait;
-
-                    m_sHandle.uStepData.sMoveBackToHomeEnd.ttLastMeasureTicks = xTaskGetTickCount();
-
-                    HARDWAREGPIO_MoveStepperAsync(HARDWAREGPIO_EAXIS_x, &m_sHandle.s32CurrentX, 0);
-                    HARDWAREGPIO_MoveStepperAsync(HARDWAREGPIO_EAXIS_z, &m_sHandle.s32CurrentZ, 0);
-                    break;
-                }
-                case EMOVEBACKTOHOMEENDSTEP_Wait:
-                {
-                    if ((xTaskGetTickCount() - m_sHandle.uStepData.sMoveBackToHomeEnd.ttLastMeasureTicks) > pdMS_TO_TICKS(CONTROL_STEPTIMEOUT_MS))
-                    {
-                        ESP_LOGE(TAG, "Cancelling move to station ...");
-                        HARDWAREGPIO_EnableAllSteppers(false);
-                        m_sHandle.eState = ESTATE_Cancelled;
-                        break;
-                    }
-
-                    if (m_sHandle.s32CurrentX == 0 &&
-                        m_sHandle.s32CurrentZ == 0)
-                    {
-                        ESP_LOGI(TAG, "Move back to home");
-                        m_sHandle.eState = ESTATE_WaitForRemovingGlass;
-                    }
-                    break;
-                }
-            }
-            break;
-        }
-        case ESTATE_WaitForRemovingGlass:
-        {
-            // Add code to detect when the scale is under the minimum
-            const int32_t s32ScaleWeightGram = HARDWAREGPIO_GetScaleWeightGram();
-            const int32_t s32Offset = 0;
-
-            if (s32ScaleWeightGram - s32Offset <= 20)
-            {
-                ESP_LOGI(TAG, "Glass has been removed");
-                m_sHandle.eState = ESTATE_IdleWaitingForOrder;
-            }
-            break;
+            ESP_LOGE(TAG, "Ignored instruction");
+            goto CANCEL;
         }
 
-        /* Homing process */
-        case ESTATE_StartHoming:
-        {
-            // TODO: Move X stepper to the left until it touch end switch
-
-            // TODO: Move Z stepper toward the front until it touch end switch
-
-            break;
-        }
-        case ESTATE_InProgressHoming:
-        {
-            // TODO: Wait until it touch the switch and consider it's the zero position
-            break;
-        }
+        // Done gracefully, we can return to normal state
+        m_sHandle.eState = ESTATE_IdleWaitingForOrder;
+        CANCEL:
+        m_sHandle.eState = ESTATE_Cancelled;
+        HARDWAREGPIO_EnableAllSteppers(false);
+        ESP_LOGE(TAG, "Cancelling order");
+        END:
+        // Leave some time, we want the poor idle tasks to have some time
+        vTaskDelay(1);
     }
+
+    vTaskDelete(NULL);
 }
 
+static bool DoAxisHoming(HARDWAREGPIO_EAXIS eAxis)
+{
+    ESP_LOGI(TAG, "Starting homing ...");
+
+    if (HARDWAREGPIO_CheckEndStop_LOW(eAxis))
+    {
+        ESP_LOGI(TAG, "Already at home position");
+        return true;
+    }
+
+    HARDWAREGPIO_EnableAllSteppers(true);
+    // Give it some time to be sure it's activated
+    vTaskDelay(pdMS_TO_TICKS(10));
+
+    TickType_t ttProcessTimeoutTicks = xTaskGetTickCount();
+
+    while(true)
+    {
+        if (m_sHandle.bIsCancelRequest)
+        {
+            ESP_LOGE(TAG, "Cancel requested by user");
+            goto ERROR;
+        }
+
+        if ((xTaskGetTickCount() - ttProcessTimeoutTicks) > pdMS_TO_TICKS(10000))
+        {
+            ESP_LOGE(TAG, "Cancelling axis homing because of timeout condition");
+            goto ERROR;
+        }
+
+        // Move until it reach the lowest end
+        HARDWAREGPIO_MoveStepperAsync(eAxis, -1);
+        if (HARDWAREGPIO_CheckEndStop_LOW(eAxis))
+        {
+            if (eAxis == HARDWAREGPIO_EAXIS_x)
+                m_sHandle.s32CurrentX = 0;
+            else if (eAxis == HARDWAREGPIO_EAXIS_y)
+                m_sHandle.s32CurrentY = 0;
+            else if (eAxis == HARDWAREGPIO_EAXIS_z)
+                m_sHandle.s32CurrentZ = 0;
+            break;
+        }
+        vTaskDelay(pdMS_TO_TICKS(1));
+    }
+
+    HARDWAREGPIO_EnableAllSteppers(false);
+    return true;
+    ERROR:
+    HARDWAREGPIO_EnableAllSteppers(false);
+    return false;
+}
+
+static bool WaitUntilGlassIsThere()
+{
+    ESP_LOGI(TAG, "Until until a glass get in place ...");
+
+    const int32_t s32ScaleWeightGram = HARDWAREGPIO_GetScaleWeightGram();
+
+    const TickType_t ttProcessTimeoutTicks = xTaskGetTickCount();
+
+    uint8_t u8MeasureCount = 0;
+    int32_t avgS32ScaleWeight_Gram = 0;
+
+    while(true)
+    {
+        if (m_sHandle.bIsCancelRequest)
+        {
+            ESP_LOGE(TAG, "Cancel requested by user");
+            goto ERROR;
+        }
+
+        if ((xTaskGetTickCount() - ttProcessTimeoutTicks) > pdMS_TO_TICKS(90*1000))
+        {
+            ESP_LOGE(TAG, "Cancelling axis homing because of timeout condition");
+            goto ERROR;
+        }
+
+        const int32_t s32ScaleWeightGram = HARDWAREGPIO_GetScaleWeightGram();
+
+        avgS32ScaleWeight_Gram = (avgS32ScaleWeight_Gram / 9) + (s32ScaleWeightGram / 10);
+        u8MeasureCount++;
+
+        // If it moved, reset measures
+        const int32_t s32MovingDiff = abs(avgS32ScaleWeight_Gram - s32ScaleWeightGram);
+        if (s32MovingDiff > 10)
+        {
+            ESP_LOGW(TAG, "Moving too much ...");
+            u8MeasureCount = 0;
+        }
+
+        if (u8MeasureCount >= 10)
+        {
+            // If it's not heavy enough, do it again
+            const int32_t s32Offset = 0;
+
+            if (avgS32ScaleWeight_Gram - s32Offset > 20)
+            {
+                // Glass detected, go to next step.
+                // Find the station
+                ESP_LOGI(TAG, "Glass detection has detected a glass");
+                break;
+            }
+            u8MeasureCount = 0;
+        }
+
+        vTaskDelay(pdMS_TO_TICKS(50));
+    }
+
+    return true;
+    ERROR:
+    return false;
+}
+
+static bool WaitUntilGlassRemoved()
+{
+    ESP_LOGI(TAG, "Wait until the glass get removed ...");
+
+    // This process doesn't have a timeout.
+    // the only way to cancel it is too cancel manually or put a glass
+    const int32_t s32ScaleWeightGram = HARDWAREGPIO_GetScaleWeightGram();
+    uint8_t u8MeasureCount = 0;
+    int32_t avgS32ScaleWeight_Gram = 0;
+
+    while(true)
+    {
+        if (m_sHandle.bIsCancelRequest)
+        {
+            ESP_LOGE(TAG, "Cancel requested by user");
+            goto ERROR;
+        }
+
+        const int32_t s32ScaleWeightGram = HARDWAREGPIO_GetScaleWeightGram();
+
+        avgS32ScaleWeight_Gram = (avgS32ScaleWeight_Gram / 9) + (s32ScaleWeightGram / 10);
+        u8MeasureCount++;
+
+        // If it moved, reset measures
+        const int32_t s32MovingDiff = abs(avgS32ScaleWeight_Gram - s32ScaleWeightGram);
+        if (s32MovingDiff > 10)
+        {
+            ESP_LOGW(TAG, "Moving too much ...");
+            u8MeasureCount = 0;
+        }
+
+        if (u8MeasureCount >= 10)
+        {
+            // If it's not heavy enough, do it again
+            const int32_t s32Offset = 0;
+
+            if (avgS32ScaleWeight_Gram - s32Offset <= 20)
+            {
+                ESP_LOGI(TAG, "Glass detection has detected the glass have been removed");
+                break;
+            }
+            u8MeasureCount = 0;
+        }
+
+        vTaskDelay(pdMS_TO_TICKS(50));
+    }
+
+    return true;
+    ERROR:
+    return false;
+}
+
+static bool FillGlass(uint16_t u16Qty)
+{
+    ESP_LOGI(TAG, "Filling glass ...");
+
+    if (m_sHandle.bIsCancelRequest)
+    {
+        ESP_LOGE(TAG, "Cancel requested by user");
+        goto ERROR;
+    }
+
+    // It it's an optic, move the arm upward
+    // if it's a peristaltic pump just spin until the weight fit.
+
+    return true;
+    ERROR:
+    return false;
+}
+
+static bool MoveToCoordinate(int32_t s32X, int32_t s32Z)
+{
+    ESP_LOGI(TAG, "Moving to coordinate ...");
+
+    if (m_sHandle.bIsCancelRequest)
+    {
+        ESP_LOGE(TAG, "Cancel requested by user");
+        goto ERROR;
+    }
+
+    return true;
+    ERROR:
+    return false;
+}
