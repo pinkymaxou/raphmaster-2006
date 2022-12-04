@@ -51,7 +51,6 @@ static TaskHandle_t m_hTaskHandle = NULL;
 static void ControlThreadRun(void* pParam);
 
 static bool DoAxisHoming(HARDWAREGPIO_EAXIS eAxis);
-static bool CancelIfRequested();
 static bool WaitUntilGlassIsThere();
 static bool WaitUntilGlassRemoved();
 static bool FillGlass(uint16_t u16Qty);
@@ -120,14 +119,8 @@ static void ControlThreadRun(void* pParam)
         // Do homing on all axis before accepting glass
         m_sHandle.eState = ESTATE_MoveToHomeStart;
         DoAxisHoming(HARDWAREGPIO_EAXIS_y);
-        if (CancelIfRequested())
-            goto CANCEL;
         DoAxisHoming(HARDWAREGPIO_EAXIS_z);
-        if (CancelIfRequested())
-            goto CANCEL;
         DoAxisHoming(HARDWAREGPIO_EAXIS_x);
-        if (CancelIfRequested())
-            goto CANCEL;
 
         // Wait until user put his glass on the plate
         m_sHandle.eState = ESTATE_WaitingForGlass;
@@ -176,6 +169,8 @@ static void ControlThreadRun(void* pParam)
 
 static bool DoAxisHoming(HARDWAREGPIO_EAXIS eAxis)
 {
+    ESP_LOGI(TAG, "Starting homing ...");
+
     if (HARDWAREGPIO_CheckEndStop_LOW(eAxis))
     {
         ESP_LOGI(TAG, "Already at home position");
@@ -226,6 +221,8 @@ static bool DoAxisHoming(HARDWAREGPIO_EAXIS eAxis)
 
 static bool WaitUntilGlassIsThere()
 {
+    ESP_LOGI(TAG, "Until until a glass get in place ...");
+
     const int32_t s32ScaleWeightGram = HARDWAREGPIO_GetScaleWeightGram();
 
     const TickType_t ttProcessTimeoutTicks = xTaskGetTickCount();
@@ -285,6 +282,8 @@ static bool WaitUntilGlassIsThere()
 
 static bool WaitUntilGlassRemoved()
 {
+    ESP_LOGI(TAG, "Wait until the glass get removed ...");
+
     // This process doesn't have a timeout.
     // the only way to cancel it is too cancel manually or put a glass
     const int32_t s32ScaleWeightGram = HARDWAREGPIO_GetScaleWeightGram();
@@ -335,6 +334,8 @@ static bool WaitUntilGlassRemoved()
 
 static bool FillGlass(uint16_t u16Qty)
 {
+    ESP_LOGI(TAG, "Filling glass ...");
+
     if (m_sHandle.bIsCancelRequest)
     {
         ESP_LOGE(TAG, "Cancel requested by user");
@@ -351,6 +352,8 @@ static bool FillGlass(uint16_t u16Qty)
 
 static bool MoveToCoordinate(int32_t s32X, int32_t s32Z)
 {
+    ESP_LOGI(TAG, "Moving to coordinate ...");
+
     if (m_sHandle.bIsCancelRequest)
     {
         ESP_LOGE(TAG, "Cancel requested by user");
@@ -362,7 +365,3 @@ static bool MoveToCoordinate(int32_t s32X, int32_t s32Z)
     return false;
 }
 
-static bool CancelIfRequested()
-{
-    return false;
-}
