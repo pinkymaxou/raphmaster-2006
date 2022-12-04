@@ -27,6 +27,16 @@ typedef struct
     uint32_t u32MakerStepCount;
 } CONTROL_SOrder;
 
+typedef struct
+{
+    uint32_t u32RecipeId;   // 0 = not linked to any recipe
+    bool bIsCancelRequest;
+    // Positions
+    int32_t s32X; // negative = LEFT, positive = RIGHT
+    int32_t s32Z; // negative = TOWARD FRONT, positive = TOWARD BACK
+    int32_t s32Y; // negative = DOWN, positive = UP
+} CONTROL_SInfo;
+
 void CONTROL_Init();
 
 void CONTROL_StartTask();
@@ -40,5 +50,7 @@ bool CONTROL_QueueMoveToStation(uint32_t u32StationId);
 bool CONTROL_QueueHomeAllAxis();
 
 void CONTROL_Cancel();
+
+const CONTROL_SInfo CONTROL_GetInfos();
 
 #endif

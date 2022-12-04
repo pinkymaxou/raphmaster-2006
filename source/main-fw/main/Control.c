@@ -59,7 +59,7 @@ typedef struct
 
     SQueueInstruction sQueueInstruction;
 
-    bool bIsCancelRequest;
+    volatile bool bIsCancelRequest;
     // Positions
     int32_t s32CurrentX; // negative = LEFT, positive = RIGHT
     int32_t s32CurrentY; // negative = DOWN, positive = UP
@@ -284,10 +284,10 @@ static void ControlThreadRun(void* pParam)
         else if (sQueueInstruction.eInstruction == EINSTRUCTION_MoveToStation)
         {
             m_sHandle.eState = ESTATE_CmdMoveToStation;
-            ESP_LOGI(TAG, "Executing: CmdMoveToStation");
-
             int32_t s32X = STATIONSETTINGS_GetValue(sQueueInstruction.uArg.sMoveToStation.u32StationId, STATIONSETTINGS_ESTATIONSET_PosX);
             int32_t s32Z = STATIONSETTINGS_GetValue(sQueueInstruction.uArg.sMoveToStation.u32StationId, STATIONSETTINGS_ESTATIONSET_PosZ);
+
+            ESP_LOGI(TAG, "Executing: CmdMoveToStation, goto coordinate: x: %d, z: %d", s32X, s32Z);
 
             if (MoveToCoordinate(s32X, s32Z))
                 goto CANCEL;
@@ -308,6 +308,7 @@ static void ControlThreadRun(void* pParam)
 
         // Done gracefully, we can return to normal state
         m_sHandle.eState = ESTATE_IdleWaitingForOrder;
+        goto END;
         CANCEL:
         m_sHandle.eState = ESTATE_Cancelled;
         HARDWAREGPIO_EnableAllSteppers(false);
@@ -376,12 +377,10 @@ static bool WaitUntilGlassIsThere()
 {
     ESP_LOGI(TAG, "Until until a glass get in place ...");
 
-    const int32_t s32ScaleWeightGram = HARDWAREGPIO_GetScaleWeightGram();
-
     const TickType_t ttProcessTimeoutTicks = xTaskGetTickCount();
 
     uint8_t u8MeasureCount = 0;
-    int32_t avgS32ScaleWeight_Gram = 0;
+    int32_t avgS32ScaleWeight_Gram = HARDWAREGPIO_GetScaleWeightGram();
 
     while(true)
     {
@@ -439,9 +438,8 @@ static bool WaitUntilGlassRemoved()
 
     // This process doesn't have a timeout.
     // the only way to cancel it is too cancel manually or put a glass
-    const int32_t s32ScaleWeightGram = HARDWAREGPIO_GetScaleWeightGram();
     uint8_t u8MeasureCount = 0;
-    int32_t avgS32ScaleWeight_Gram = 0;
+    int32_t avgS32ScaleWeight_Gram = HARDWAREGPIO_GetScaleWeightGram();
 
     while(true)
     {
@@ -497,7 +495,15 @@ static bool FillGlass(uint16_t u16Qty)
 
     // It it's an optic, move the arm upward
     // if it's a peristaltic pump just spin until the weight fit.
+    for(int i = 0; i < 2000; i++)
+    {
+        HARDWAREGPIO_MoveStepperAsync(HARDWAREGPIO_EAXIS_y, 1);
+        m_sHandle.s32CurrentY++;
+        vTaskDelay(1);
+    }
 
+    // Go back to home.
+    DoAxisHoming(HARDWAREGPIO_EAXIS_y);
     return true;
     ERROR:
     return false;
@@ -513,7 +519,37 @@ static bool MoveToCoordinate(int32_t s32X, int32_t s32Z)
         goto ERROR;
     }
 
+    const int32_t s32DiffX = s32X - m_sHandle.s32CurrentX;
+    const int32_t s32DiffZ = s32Z - m_sHandle.s32CurrentZ;
+    // TODO: Moving doesn't correctly cancel yet
+    // cancellation and acceleration curve will be necessary.
+    // The movement is too rough for now.
+    HARDWAREGPIO_MoveStepperAsync(HARDWAREGPIO_EAXIS_x, s32DiffX);
+    m_sHandle.s32CurrentX += s32DiffX;
+    HARDWAREGPIO_MoveStepperAsync(HARDWAREGPIO_EAXIS_z, s32DiffZ);
+    m_sHandle.s32CurrentZ += s32DiffZ;
     return true;
     ERROR:
     return false;
+}
+
+const CONTROL_SInfo CONTROL_GetInfos()
+{
+    CONTROL_SInfo sInfo =
+    {
+        .u32RecipeId = 0,
+        .bIsCancelRequest = m_sHandle.bIsCancelRequest,
+
+        // General
+        .s32X = m_sHandle.s32CurrentX,
+        .s32Z = m_sHandle.s32CurrentZ,
+        .s32Y = m_sHandle.s32CurrentY
+    };
+
+    if (m_sHandle.sQueueInstruction.eInstruction == EINSTRUCTION_Order)
+    {
+        sInfo.u32RecipeId = m_sHandle.sQueueInstruction.uArg.sOrder.u32RecipeId;
+    }
+
+    return sInfo;
 }
