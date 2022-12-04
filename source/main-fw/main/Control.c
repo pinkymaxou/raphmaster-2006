@@ -363,7 +363,7 @@ void CONTROL_Run()
                 }
                 case EMOVETOSTATIONSTEP_Wait:
                 {
-                    if ((xTaskGetTickCount() - m_sHandle.uStepData.sMoveToStation.ttLastMeasureTicks) > pdMS_TO_TICKS(10000))
+                    if ((xTaskGetTickCount() - m_sHandle.uStepData.sMoveToStation.ttLastMeasureTicks) > pdMS_TO_TICKS(CONTROL_STEPTIMEOUT_MS))
                     {
                         ESP_LOGE(TAG, "Cancelling move to station ...");
                         HARDWAREGPIO_EnableAllSteppers(false);
@@ -414,7 +414,7 @@ void CONTROL_Run()
                 }
                 case EFILLINGGLASSSTEP_WaitStartFilling:
                 {
-                    if ((xTaskGetTickCount() - m_sHandle.uStepData.sFillingGlass.ttLastMeasureTicks) > pdMS_TO_TICKS(10000))
+                    if ((xTaskGetTickCount() - m_sHandle.uStepData.sFillingGlass.ttLastMeasureTicks) > pdMS_TO_TICKS(CONTROL_STEPTIMEOUT_MS))
                     {
                         ESP_LOGE(TAG, "Cancelling filling glass ...");
                         HARDWAREGPIO_EnableAllSteppers(false);
@@ -434,7 +434,7 @@ void CONTROL_Run()
                 {
                     const TickType_t ttWait = xTaskGetTickCount() - m_sHandle.uStepData.sFillingGlass.ttLastMeasureTicks;
 
-                    if (ttWait > pdMS_TO_TICKS(10000))
+                    if (ttWait > pdMS_TO_TICKS(CONTROL_STEPTIMEOUT_MS))
                     {
                         ESP_LOGE(TAG, "Cancelling filling glass ...");
                         HARDWAREGPIO_EnableAllSteppers(false);
@@ -451,7 +451,7 @@ void CONTROL_Run()
                 }
                 case EFILLINGGLASSSTEP_WaitUntilRetreatCompleted:
                 {
-                    if ((xTaskGetTickCount() - m_sHandle.uStepData.sFillingGlass.ttLastMeasureTicks) > pdMS_TO_TICKS(10000))
+                    if ((xTaskGetTickCount() - m_sHandle.uStepData.sFillingGlass.ttLastMeasureTicks) > pdMS_TO_TICKS(CONTROL_STEPTIMEOUT_MS))
                     {
                         ESP_LOGE(TAG, "Cancelling filling glass ...");
                         HARDWAREGPIO_EnableAllSteppers(false);
@@ -491,7 +491,7 @@ void CONTROL_Run()
                 }
                 case EMOVEBACKTOHOMEENDSTEP_Wait:
                 {
-                    if ((xTaskGetTickCount() - m_sHandle.uStepData.sMoveBackToHomeEnd.ttLastMeasureTicks) > pdMS_TO_TICKS(10000))
+                    if ((xTaskGetTickCount() - m_sHandle.uStepData.sMoveBackToHomeEnd.ttLastMeasureTicks) > pdMS_TO_TICKS(CONTROL_STEPTIMEOUT_MS))
                     {
                         ESP_LOGE(TAG, "Cancelling move to station ...");
                         HARDWAREGPIO_EnableAllSteppers(false);

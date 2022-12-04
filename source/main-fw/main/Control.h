@@ -7,6 +7,8 @@
 
 #define CONTROL_MAXIMUMSTEPS_COUNT (15)
 
+#define CONTROL_STEPTIMEOUT_MS (15*1000)
+
 typedef struct
 {
     uint32_t u32StationID;
