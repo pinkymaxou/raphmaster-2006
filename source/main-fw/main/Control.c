@@ -135,6 +135,12 @@ static void ControlThreadRun(void* pParam)
             int32_t s32X = STATIONSETTINGS_GetValue(psMakerStep->u32StationID, STATIONSETTINGS_ESTATIONSET_PosX);
             int32_t s32Z = STATIONSETTINGS_GetValue(psMakerStep->u32StationID, STATIONSETTINGS_ESTATIONSET_PosZ);
 
+            if (s32X == 0 && s32Z == 0)
+            {
+                ESP_LOGE(TAG, "Invalid calibration, cancelled");
+                goto CANCEL;
+            }
+
             // Move to station
             m_sHandle.eState = ESTATE_MoveToStation;
             if (!MoveToCoordinate(s32X, s32Z))
