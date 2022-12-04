@@ -1,6 +1,5 @@
 #include "Control.h"
 #include "CocktailExplorer.h"
-#include "HardwareGPIO.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "freertos/queue.h"
@@ -33,14 +32,25 @@ typedef enum
     EINSTRUCTION_HomeAll,   /* Home all axis */
 
     EINSTRUCTION_MoveAxis,
-    EINSTRUCTION_MoveToStation,
+    EINSTRUCTION_MoveToStation
 } EINSTRUCTION;
 
 typedef struct
 {
     EINSTRUCTION eInstruction;
-
-    CONTROL_SOrder sOrder;
+    union
+    {
+        CONTROL_SOrder sOrder;
+        struct
+        {
+            HARDWAREGPIO_EAXIS eAxis;
+            int32_t s32Value;
+        } sMoveAxis;
+        struct
+        {
+            uint32_t u32StationId;
+        } sMoveToStation;
+    } uArg;
 } SQueueInstruction;
 
 typedef struct
@@ -99,7 +109,7 @@ bool CONTROL_QueueOrder(const CONTROL_SOrder* pSOrder)
     const SQueueInstruction sQueueInstruction =
     {
         .eInstruction = EINSTRUCTION_Order,
-        .sOrder = *pSOrder
+        .uArg = { .sOrder = *pSOrder }
     };
 
     // Fill data
@@ -129,6 +139,51 @@ bool CONTROL_QueueHomeAllAxis()
     return true;
 }
 
+bool CONTROL_QueueMoveAxis(HARDWAREGPIO_EAXIS eAxis, int32_t s32Value)
+{
+    const SQueueInstruction sQueueInstruction =
+    {
+        .eInstruction = EINSTRUCTION_MoveAxis,
+        .uArg = {
+            .sMoveAxis = {
+                .eAxis = eAxis,
+                .s32Value = s32Value
+            }
+        }
+    };
+
+    // Fill data
+    if ( xQueueSend(m_hQueueHandle, &sQueueInstruction, 0) != pdPASS )
+    {
+        ESP_LOGE(TAG, "Cannot queue order");
+        return false;
+    }
+    ESP_LOGI(TAG, "Move axis");
+    return true;
+}
+
+bool CONTROL_QueueMoveToStation(uint32_t u32StationId)
+{
+    const SQueueInstruction sQueueInstruction =
+    {
+        .eInstruction = EINSTRUCTION_MoveAxis,
+        .uArg = {
+            .sMoveToStation = {
+                .u32StationId = u32StationId
+            }
+        }
+    };
+
+    // Fill data
+    if ( xQueueSend(m_hQueueHandle, &sQueueInstruction, 0) != pdPASS )
+    {
+        ESP_LOGE(TAG, "Cannot queue order");
+        return false;
+    }
+    ESP_LOGI(TAG, "Move axis");
+    return true;
+}
+
 void CONTROL_Cancel()
 {
     ESP_LOGI(TAG, "Cancelling ...");
@@ -145,14 +200,14 @@ static void ControlThreadRun(void* pParam)
         {
             if (sQueueInstruction.eInstruction == EINSTRUCTION_Order)
             {
-                if (sQueueInstruction.sOrder.u32MakerStepCount == 0)
+                if (sQueueInstruction.uArg.sOrder.u32MakerStepCount == 0)
                 {
                     ESP_LOGE(TAG, "Invalid order, just skip it ...");
                     // If the order is wrong, we just skip it.
                     continue;
                 }
 
-                ESP_LOGI(TAG, "New order started with recipeid: %d, steps: %d", sQueueInstruction.sOrder.u32RecipeId, sQueueInstruction.sOrder.u32MakerStepCount);
+                ESP_LOGI(TAG, "New order started with recipeid: %d, steps: %d", sQueueInstruction.uArg.sOrder.u32RecipeId, sQueueInstruction.uArg.sOrder.u32MakerStepCount);
             }
             memcpy(&m_sHandle.sQueueInstruction, &sQueueInstruction, sizeof(SQueueInstruction));
             m_sHandle.bIsCancelRequest = false;
@@ -177,9 +232,9 @@ static void ControlThreadRun(void* pParam)
             if (!WaitUntilGlassIsThere())
                 goto CANCEL;
 
-            for(int i = 0; i < m_sHandle.sQueueInstruction.sOrder.u32MakerStepCount; i++)
+            for(int i = 0; i < m_sHandle.sQueueInstruction.uArg.sOrder.u32MakerStepCount; i++)
             {
-                const CONTROL_MakerStep* psMakerStep = &m_sHandle.sQueueInstruction.sOrder.sMakerSteps[i];
+                const CONTROL_MakerStep* psMakerStep = &m_sHandle.sQueueInstruction.uArg.sOrder.sMakerSteps[i];
 
                 // Get station id
                 int32_t s32X = STATIONSETTINGS_GetValue(psMakerStep->u32StationID, STATIONSETTINGS_ESTATIONSET_PosX);
@@ -216,7 +271,7 @@ static void ControlThreadRun(void* pParam)
         }
         else if (sQueueInstruction.eInstruction == EINSTRUCTION_HomeAll)
         {
-            ESP_LOGI(TAG, "Starting homing all axis");
+            ESP_LOGI(TAG, "Executing: CmdHomeAll");
             m_sHandle.eState = ESTATE_CmdHomeAll;
             if (!DoAxisHoming(HARDWAREGPIO_EAXIS_y))
                 goto CANCEL;
@@ -224,19 +279,26 @@ static void ControlThreadRun(void* pParam)
                 goto CANCEL;
             if (!DoAxisHoming(HARDWAREGPIO_EAXIS_x))
                 goto CANCEL;
-            ESP_LOGI(TAG, "Homing all axis completed");
+            ESP_LOGI(TAG, "Completed: CmdHomeAll");
         }
         else if (sQueueInstruction.eInstruction == EINSTRUCTION_MoveToStation)
         {
             m_sHandle.eState = ESTATE_CmdMoveToStation;
-            ESP_LOGE(TAG, "No yet implemented");
-            goto CANCEL;
+            ESP_LOGI(TAG, "Executing: CmdMoveToStation");
+
+            int32_t s32X = STATIONSETTINGS_GetValue(sQueueInstruction.uArg.sMoveToStation.u32StationId, STATIONSETTINGS_ESTATIONSET_PosX);
+            int32_t s32Z = STATIONSETTINGS_GetValue(sQueueInstruction.uArg.sMoveToStation.u32StationId, STATIONSETTINGS_ESTATIONSET_PosZ);
+
+            if (MoveToCoordinate(s32X, s32Z))
+                goto CANCEL;
+            ESP_LOGI(TAG, "Completed: CmdMoveToStation");
         }
         else if (sQueueInstruction.eInstruction == EINSTRUCTION_MoveAxis)
         {
             m_sHandle.eState = ESTATE_CmdMoveAxis;
-            ESP_LOGE(TAG, "No yet implemented");
-            goto CANCEL;
+            ESP_LOGI(TAG, "Executing: CmdMoveAxis");
+            HARDWAREGPIO_MoveStepperAsync(sQueueInstruction.uArg.sMoveAxis.eAxis, sQueueInstruction.uArg.sMoveAxis.s32Value);
+            ESP_LOGI(TAG, "Completed: CmdMoveAxis");
         }
         else
         {

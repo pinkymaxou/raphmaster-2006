@@ -4,6 +4,7 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <stdbool.h>
+#include "HardwareGPIO.h"
 
 #define CONTROL_MAXIMUMSTEPS_COUNT (15)
 
@@ -31,6 +32,10 @@ void CONTROL_Init();
 void CONTROL_StartTask();
 
 bool CONTROL_QueueOrder(const CONTROL_SOrder* pSOrder);
+
+bool CONTROL_QueueMoveAxis(HARDWAREGPIO_EAXIS eAxis, int32_t s32Value);
+
+bool CONTROL_QueueMoveToStation(uint32_t u32StationId);
 
 bool CONTROL_QueueHomeAllAxis();
 
