@@ -22,24 +22,38 @@ typedef enum
 
     ESTATE_Cancelled = 7,
 
-    ESTATE_StartHoming = 8,
-    ESTATE_InProgressHoming = 9,
+    ESTATE_CmdHomeAll = 50,
+    ESTATE_CmdMoveAxis = 51,
+    ESTATE_CmdMoveToStation = 52
 } ESTATE;
+
+typedef enum
+{
+    EINSTRUCTION_Order,     /* Order a new cocktail*/
+    EINSTRUCTION_HomeAll,   /* Home all axis */
+
+    EINSTRUCTION_MoveAxis,
+    EINSTRUCTION_MoveToStation,
+} EINSTRUCTION;
+
+typedef struct
+{
+    EINSTRUCTION eInstruction;
+
+    CONTROL_SOrder sOrder;
+} SQueueInstruction;
 
 typedef struct
 {
     ESTATE eState;
 
+    SQueueInstruction sQueueInstruction;
+
     bool bIsCancelRequest;
-
-    CONTROL_SOrder sOrder;
-
     // Positions
     int32_t s32CurrentX; // negative = LEFT, positive = RIGHT
     int32_t s32CurrentY; // negative = DOWN, positive = UP
     int32_t s32CurrentZ; // negative = TOWARD FRONT, positive = TOWARD BACK
-
-    bool bIsHomingDone;
 } SHandle;
 
 #define MAXIMUM_QUEUE_LEN (5)
@@ -60,16 +74,14 @@ void CONTROL_Init()
 {
     ESP_LOGI(TAG, "Init control");
 
-    m_hQueueHandle = xQueueCreate(MAXIMUM_QUEUE_LEN, sizeof(CONTROL_SOrder));
+    m_hQueueHandle = xQueueCreate(MAXIMUM_QUEUE_LEN, sizeof(SQueueInstruction));
 
     // IDLE state
     m_sHandle.eState = ESTATE_IdleWaitingForOrder;
     m_sHandle.bIsCancelRequest = false;
 
-    m_sHandle.bIsHomingDone = false;
-
     // Step counts
-    m_sHandle.sOrder.u32MakerStepCount = 0;
+    memset(&m_sHandle.sQueueInstruction, 0, sizeof(SQueueInstruction));
 
     m_sHandle.s32CurrentX = 0;
     m_sHandle.s32CurrentY = 0;
@@ -79,18 +91,48 @@ void CONTROL_Init()
 void CONTROL_StartTask()
 {
     // Create the new task with default priority and stack size
-    xTaskCreate(ControlThreadRun, "control", 3500, NULL, 1, &m_hTaskHandle);
+    xTaskCreate(ControlThreadRun, "control", CONTROL_STACKSIZE, NULL, CONTROL_PRIORITY, &m_hTaskHandle);
 }
 
 bool CONTROL_QueueOrder(const CONTROL_SOrder* pSOrder)
 {
-    ESP_LOGI(TAG, "Add new order to queue, recipeid: %d, step count: %d", pSOrder->u32RecipeId, pSOrder->u32MakerStepCount);
+    const SQueueInstruction sQueueInstruction =
+    {
+        .eInstruction = EINSTRUCTION_Order,
+        .sOrder = *pSOrder
+    };
 
     // Fill data
-    if ( xQueueSend(m_hQueueHandle, pSOrder, 0) != pdPASS )
+    if ( xQueueSend(m_hQueueHandle, &sQueueInstruction, 0) != pdPASS )
+    {
+        ESP_LOGE(TAG, "Cannot queue order");
         return false;
-
+    }
+    ESP_LOGI(TAG, "Add new order to queue, recipeid: %d, step count: %d", pSOrder->u32RecipeId, pSOrder->u32MakerStepCount);
     return true;
+}
+
+bool CONTROL_QueueHomeAllAxis()
+{
+    const SQueueInstruction sQueueInstruction =
+    {
+        .eInstruction = EINSTRUCTION_HomeAll,
+    };
+
+    // Fill data
+    if ( xQueueSend(m_hQueueHandle, &sQueueInstruction, 0) != pdPASS )
+    {
+        ESP_LOGE(TAG, "Cannot queue order");
+        return false;
+    }
+    ESP_LOGI(TAG, "Home all axis");
+    return true;
+}
+
+void CONTROL_Cancel()
+{
+    ESP_LOGI(TAG, "Cancelling ...");
+    m_sHandle.bIsCancelRequest = true;
 }
 
 static void ControlThreadRun(void* pParam)
@@ -98,69 +140,112 @@ static void ControlThreadRun(void* pParam)
     while(true)
     {
         // Orders
-        CONTROL_SOrder sOrder;
-        if (xQueueReceive(m_hQueueHandle, &sOrder, portMAX_DELAY) == pdPASS)
+        SQueueInstruction sQueueInstruction;
+        if (xQueueReceive(m_hQueueHandle, &sQueueInstruction, portMAX_DELAY) == pdPASS)
         {
-            if (sOrder.u32MakerStepCount == 0)
+            if (sQueueInstruction.eInstruction == EINSTRUCTION_Order)
             {
-                ESP_LOGE(TAG, "Invalid order, just skip it ...");
-                // If the order is wrong, we just skip it.
-                m_sHandle.eState = ESTATE_IdleWaitingForOrder;
-                break;
+                if (sQueueInstruction.sOrder.u32MakerStepCount == 0)
+                {
+                    ESP_LOGE(TAG, "Invalid order, just skip it ...");
+                    // If the order is wrong, we just skip it.
+                    continue;
+                }
+
+                ESP_LOGI(TAG, "New order started with recipeid: %d, steps: %d", sQueueInstruction.sOrder.u32RecipeId, sQueueInstruction.sOrder.u32MakerStepCount);
             }
-
-            ESP_LOGI(TAG, "New order started with recipeid: %d, steps: %d", sOrder.u32RecipeId, sOrder.u32MakerStepCount);
-
-            memcpy(&m_sHandle.sOrder, &sOrder, sizeof(CONTROL_SOrder));
+            memcpy(&m_sHandle.sQueueInstruction, &sQueueInstruction, sizeof(SQueueInstruction));
             m_sHandle.bIsCancelRequest = false;
         }
-        // Ingredients
-        // Start with Y to be sure it's at the lowest position and won't interfere
-        // Do homing on all axis before accepting glass
-        m_sHandle.eState = ESTATE_MoveToHomeStart;
-        DoAxisHoming(HARDWAREGPIO_EAXIS_y);
-        DoAxisHoming(HARDWAREGPIO_EAXIS_z);
-        DoAxisHoming(HARDWAREGPIO_EAXIS_x);
 
-        // Wait until user put his glass on the plate
-        m_sHandle.eState = ESTATE_WaitingForGlass;
-        if (!WaitUntilGlassIsThere())
-            goto CANCEL;
-
-        for(int i = 0; i < m_sHandle.sOrder.u32MakerStepCount; i++)
+        // Order instruction
+        if (sQueueInstruction.eInstruction == EINSTRUCTION_Order)
         {
-            const CONTROL_MakerStep* psMakerStep = &m_sHandle.sOrder.sMakerSteps[i];
-
-            // Get station id
-            int32_t s32X = STATIONSETTINGS_GetValue(psMakerStep->u32StationID, STATIONSETTINGS_ESTATIONSET_PosX);
-            int32_t s32Z = STATIONSETTINGS_GetValue(psMakerStep->u32StationID, STATIONSETTINGS_ESTATIONSET_PosZ);
-
-            if (s32X == 0 && s32Z == 0)
-            {
-                ESP_LOGE(TAG, "Invalid calibration, cancelled");
+            // Ingredients
+            // Start with Y to be sure it's at the lowest position and won't interfere
+            // Do homing on all axis before accepting glass
+            m_sHandle.eState = ESTATE_MoveToHomeStart;
+            if (!DoAxisHoming(HARDWAREGPIO_EAXIS_y))
                 goto CANCEL;
+            if (!DoAxisHoming(HARDWAREGPIO_EAXIS_z))
+                goto CANCEL;
+            if (!DoAxisHoming(HARDWAREGPIO_EAXIS_x))
+                goto CANCEL;
+
+            // Wait until user put his glass on the plate
+            m_sHandle.eState = ESTATE_WaitingForGlass;
+            if (!WaitUntilGlassIsThere())
+                goto CANCEL;
+
+            for(int i = 0; i < m_sHandle.sQueueInstruction.sOrder.u32MakerStepCount; i++)
+            {
+                const CONTROL_MakerStep* psMakerStep = &m_sHandle.sQueueInstruction.sOrder.sMakerSteps[i];
+
+                // Get station id
+                int32_t s32X = STATIONSETTINGS_GetValue(psMakerStep->u32StationID, STATIONSETTINGS_ESTATIONSET_PosX);
+                int32_t s32Z = STATIONSETTINGS_GetValue(psMakerStep->u32StationID, STATIONSETTINGS_ESTATIONSET_PosZ);
+
+                if (s32X == 0 && s32Z == 0)
+                {
+                    ESP_LOGE(TAG, "Invalid calibration, cancelled");
+                    goto CANCEL;
+                }
+
+                // Move to station
+                m_sHandle.eState = ESTATE_MoveToStation;
+                if (!MoveToCoordinate(s32X, s32Z))
+                    goto CANCEL;
+
+                m_sHandle.eState = ESTATE_FillingGlass;
+                if (!FillGlass(psMakerStep->u32Qty_ml))
+                    goto CANCEL;
             }
 
-            // Move to station
-            m_sHandle.eState = ESTATE_MoveToStation;
-            if (!MoveToCoordinate(s32X, s32Z))
+            // Move back to home
+            m_sHandle.eState = ESTATE_MoveBackToHomeEnd;
+            if (!MoveToCoordinate(0, 0))
                 goto CANCEL;
 
-            m_sHandle.eState = ESTATE_FillingGlass;
-            if (!FillGlass(psMakerStep->u32Qty_ml))
+            m_sHandle.eState = ESTATE_WaitForRemovingGlass;
+            if (!WaitUntilGlassRemoved())
                 goto CANCEL;
+
+            // Normal ending
+            m_sHandle.eState = ESTATE_IdleWaitingForOrder;
+            goto END;
+        }
+        else if (sQueueInstruction.eInstruction == EINSTRUCTION_HomeAll)
+        {
+            ESP_LOGI(TAG, "Starting homing all axis");
+            m_sHandle.eState = ESTATE_CmdHomeAll;
+            if (!DoAxisHoming(HARDWAREGPIO_EAXIS_y))
+                goto CANCEL;
+            if (!DoAxisHoming(HARDWAREGPIO_EAXIS_z))
+                goto CANCEL;
+            if (!DoAxisHoming(HARDWAREGPIO_EAXIS_x))
+                goto CANCEL;
+            ESP_LOGI(TAG, "Homing all axis completed");
+        }
+        else if (sQueueInstruction.eInstruction == EINSTRUCTION_MoveToStation)
+        {
+            m_sHandle.eState = ESTATE_CmdMoveToStation;
+            ESP_LOGE(TAG, "No yet implemented");
+            goto CANCEL;
+        }
+        else if (sQueueInstruction.eInstruction == EINSTRUCTION_MoveAxis)
+        {
+            m_sHandle.eState = ESTATE_CmdMoveAxis;
+            ESP_LOGE(TAG, "No yet implemented");
+            goto CANCEL;
+        }
+        else
+        {
+            ESP_LOGE(TAG, "Ignored instruction");
+            goto CANCEL;
         }
 
-        // Move back to home
-        m_sHandle.eState = ESTATE_MoveBackToHomeEnd;
-        if (!MoveToCoordinate(0, 0))
-            goto CANCEL;
-
-        m_sHandle.eState = ESTATE_WaitForRemovingGlass;
-        if (!WaitUntilGlassRemoved())
-            goto CANCEL;
-
-        goto END;
+        // Done gracefully, we can return to normal state
+        m_sHandle.eState = ESTATE_IdleWaitingForOrder;
         CANCEL:
         m_sHandle.eState = ESTATE_Cancelled;
         HARDWAREGPIO_EnableAllSteppers(false);
@@ -370,4 +455,3 @@ static bool MoveToCoordinate(int32_t s32X, int32_t s32Z)
     ERROR:
     return false;
 }
-

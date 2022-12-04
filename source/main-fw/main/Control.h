@@ -7,6 +7,9 @@
 
 #define CONTROL_MAXIMUMSTEPS_COUNT (15)
 
+#define CONTROL_STACKSIZE (3500)
+#define CONTROL_PRIORITY  (1)
+
 #define CONTROL_STEPTIMEOUT_MS (15*1000)
 
 typedef struct
@@ -28,5 +31,9 @@ void CONTROL_Init();
 void CONTROL_StartTask();
 
 bool CONTROL_QueueOrder(const CONTROL_SOrder* pSOrder);
+
+bool CONTROL_QueueHomeAllAxis();
+
+void CONTROL_Cancel();
 
 #endif
