@@ -14,6 +14,7 @@
 #include "cJSON.h"
 #include "Settings.h"
 #include "StationSettings.h"
+#include "Control.h"
 #include "main.h"
 #include "HardwareGPIO.h"
 #include "CocktailExplorer.h"
@@ -40,6 +41,8 @@
 
 #define API_GETNETWORKSETTINGSJSON_URI "/api/getnetworksettings"
 #define API_SETNETWORKSETTINGSJSON_URI "/api/setnetworksettings"
+
+#define API_ADDORDERJSON_URI "/api/addorder"
 
 #define API_EXPORTSTATIONSETTINGSJSON_URI "/api/exportstationsettings"
 #define API_IMPORTSTATIONSETTINGSJSON_URI "/api/importstationsettings"
@@ -376,6 +379,28 @@ static esp_err_t api_post_handler(httpd_req_t *req)
         int n = httpd_req_recv(req, (char*)m_u8Buffers, HTTPSERVER_BUFFERSIZE);
         m_u8Buffers[n] = '\0';
         if (!SetNetworkSettings((char*)m_u8Buffers, n))
+        {
+            ESP_LOGE(TAG, "Unable to save data");
+            httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "Unknown request");
+        }
+        else
+            ESP_LOGI(TAG, "Set station settings");
+    }
+    else if (strcmp(req->uri, API_ADDORDERJSON_URI) == 0)
+    {
+        int n = httpd_req_recv(req, (char*)m_u8Buffers, HTTPSERVER_BUFFERSIZE);
+        m_u8Buffers[n] = '\0';
+
+        CONTROL_SOrder sOrder = {
+            .u32RecipeId = 0,
+            .u32MakerStepCount = 0
+        };
+
+        sOrder.sMakerSteps[0].u32StationID = 1;
+        sOrder.sMakerSteps[0].u32Qty_ml = 45;
+        sOrder.u32MakerStepCount++;
+
+        if (!CONTROL_QueueOrder(&sOrder))
         {
             ESP_LOGE(TAG, "Unable to save data");
             httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "Unknown request");

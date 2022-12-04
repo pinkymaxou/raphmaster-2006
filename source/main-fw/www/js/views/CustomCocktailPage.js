@@ -59,11 +59,11 @@ export default class extends AbstractView {
 
         // Quantities
         cboSelectQty.appendChild(this.addQty(0, " --- "));
-        for(let oz = 0.5; oz <= 8; oz += 0.5) {
+        for(let oz = 0.5; oz <= 8; oz += 0.25) {
             cboSelectQty.appendChild(this.addQty(oz, getPrettyFraction(oz) +" oz"));
 
             // If near enough ....
-            if (Math.abs(orderListItem.qty_ml - (oz * OneOz)) < 0.25) {
+            if (Math.abs(orderListItem.qty_ml - (oz * OneOz)) < 0.125) {
                 cboSelectQty.value = oz;
             }
         }

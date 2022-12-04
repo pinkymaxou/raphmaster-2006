@@ -11,3 +11,23 @@ void HARDWAREGPIO_Init()
 {
 
 }
+
+void HARDWAREGPIO_EnableAllSteppers(bool bIsEnabled)
+{
+
+}
+
+void HARDWAREGPIO_MoveStepperAsync(HARDWAREGPIO_EAXIS eAxis, int32_t* const ps32CurrentSteps, int32_t s32AbsPosition)
+{
+
+}
+
+bool HARDWAREGPIO_CheckEndStop_LOW(HARDWAREGPIO_EAXIS eAxis)
+{
+    return true;
+}
+
+int32_t HARDWAREGPIO_GetScaleWeightGram()
+{
+    return 0;
+}

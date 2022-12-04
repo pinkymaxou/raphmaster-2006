@@ -62,6 +62,18 @@ const cocktaildb_Ingredient* COCKTAILEXPLORER_GetIngredientFile(uint32_t u32ID)
     return NULL;
 }
 
+const cocktaildb_Recipe* COCKTAILEXPLORER_GetRecipe(uint32_t u32ID)
+{
+    for(int i = 0; i < m_psRecipeFile->entries_count; i++)
+    {
+        const cocktaildb_Recipe* pRecipe = &m_psRecipeFile->entries[i];
+        if (pRecipe->id == u32ID)
+            return pRecipe;
+    }
+
+    return NULL;
+}
+
 char* COCKTAILEXPLORER_GetAllRecipes(uint32_t recipe_id)
 {
     const char* szError = NULL;
