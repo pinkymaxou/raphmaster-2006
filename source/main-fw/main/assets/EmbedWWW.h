@@ -21,7 +21,7 @@ typedef enum
 {
   EFEMBEDWWW_EFILE_INDEX_HTML = 0,    /*!< @brief File: index.html (size: 1.7 KB) */
   EFEMBEDWWW_EFILE_CSS_BUTTON_CSS = 1,    /*!< @brief File: css/button.css (size: 2.0 KB) */
-  EFEMBEDWWW_EFILE_CSS_CONTENT_CSS = 2,    /*!< @brief File: css/content.css (size: 5.4 KB) */
+  EFEMBEDWWW_EFILE_CSS_CONTENT_CSS = 2,    /*!< @brief File: css/content.css (size: 5.3 KB) */
   EFEMBEDWWW_EFILE_CSS_GENERAL_CSS = 3,    /*!< @brief File: css/general.css (size: 1.6 KB) */
   EFEMBEDWWW_EFILE_JS_VIEWS_ABOUTPAGE_JS = 4,    /*!< @brief File: js/views/AboutPage.js (size: 1.9 KB) */
   EFEMBEDWWW_EFILE_JS_VIEWS_ABSTRACTVIEW_JS = 5,    /*!< @brief File: js/views/AbstractView.js (size: 249 B) */
@@ -32,7 +32,7 @@ typedef enum
   EFEMBEDWWW_EFILE_JS_VIEWS_NETWORKPAGE_JS = 10,    /*!< @brief File: js/views/NetworkPage.js (size: 4.8 KB) */
   EFEMBEDWWW_EFILE_JS_ROUTER_JS = 11,    /*!< @brief File: js/router.js (size: 2.5 KB) */
   EFEMBEDWWW_EFILE_JS_VIEWS_STATIONSETTINGSPAGE_JS = 12,    /*!< @brief File: js/views/StationSettingsPage.js (size: 6.3 KB) */
-  EFEMBEDWWW_EFILE_JS_VIEWS_STATUSPAGE_JS = 13,    /*!< @brief File: js/views/StatusPage.js (size: 2.5 KB) */
+  EFEMBEDWWW_EFILE_JS_VIEWS_STATUSPAGE_JS = 13,    /*!< @brief File: js/views/StatusPage.js (size: 1016 B) */
   EFEMBEDWWW_EFILE_FAVICON_ICO = 14,    /*!< @brief File: favicon.ico (size: 15.0 KB) */
   EFEMBEDWWW_EFILE_IMG_C_AMARETTO_SOUR_JPG = 15,    /*!< @brief File: img/c/amaretto-sour.jpg (size: 3.5 KB) */
   EFEMBEDWWW_EFILE_IMG_C_APEROL_SPRITZ_JPG = 16,    /*!< @brief File: img/c/aperol_spritz.jpg (size: 5.1 KB) */

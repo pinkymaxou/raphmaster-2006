@@ -83,7 +83,7 @@
     display: grid;
     grid-template-columns: auto fit-content(40%);
 
-    margin: 0.5rem;
+    margin: 10px;
 }
 
 .cocktail_ingredient_item {
@@ -126,33 +126,32 @@
     border-color: mintcream;
     border-style: solid;
     border-width: 3px;
-    border-radius: 0.5rem;
+    border-radius: 15px;
 
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
+    padding: 10px;
 }
 
 .status_userinstruction {
     font-weight: bold;
     font-size: larger;
-    margin: 1rem;
+    margin: 10px;
 }
 
 .status_cocktailname {
-    margin: 0.5rem;
+    margin: 10px;
     font-weight: bold;
     font-family: 'orbitron';
     font-size: x-larger;
 }
 
 .status_ingredient_item {
-    padding: 0.5rem;
+    padding: 10px;
 }
 
 .status_infotitle {
     font-weight: bolder;
     text-transform: uppercase;
-    padding-left: 0.5rem;
+    padding-left: 10px;
 }
 
 .status_progress_container {

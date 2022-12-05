@@ -1,5 +1,5 @@
 /* ================================================
-    Buttons 
+    Buttons
    ================================================ */
 /* Normal */
 .button-normal {
@@ -12,7 +12,7 @@
     color: black;
     cursor: pointer;
     display: inline-block;
-    padding: 0.5rem 1rem;
+    padding: 10px 20px;
     position: relative;
     text-align: center;
     text-decoration: none;
@@ -21,7 +21,7 @@
     touch-action: manipulation;
     vertical-align: middle;
     white-space: nowrap;
-    
+
     text-transform: uppercase;
     font-weight: bold;
 }
@@ -55,7 +55,7 @@
     font-weight: bold;
     cursor: pointer;
     display: inline-block;
-    padding: 0.5rem 1rem;
+    padding: 10px 20px;
     position: relative;
     text-align: center;
     text-decoration: none;
@@ -66,7 +66,7 @@
     white-space: nowrap;
     text-transform: uppercase;
 }
-    
+
 .button-cancel:focus:not(:focus-visible):not(.focus-visible) {
     box-shadow: none;
     outline: none;
@@ -83,4 +83,3 @@
     cursor: not-allowed;
 }
 
-  
