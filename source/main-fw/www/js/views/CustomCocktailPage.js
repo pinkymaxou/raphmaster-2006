@@ -163,13 +163,36 @@ export default class extends AbstractView {
 
             const matches = idDivOrderList.querySelectorAll("div");
 
+            let added_steps = [];
+
             for(let i = 0; i < matches.length; i += targetThis.mColumnCount)
             {
                 let idSelectIngredient = matches[i].querySelector("#idSelectIngredient");
                 let idSelectQty = matches[i+1].querySelector("#idSelectQty");
-
-                console.log("idSelectIngredient: ", idSelectIngredient.value, " idSelectQty: ", idSelectQty.value);
+                added_steps.push({ ingredient_id: Number(idSelectIngredient.value), qty_ml : Number(idSelectQty.value * OneOz) });
             }
+
+            let request = { recipe_id : 0, steps: added_steps };
+            console.log("request: ", request);
+
+            fetch('/api/addorder', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(request),
+              })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Unable to process the order');
+                }
+                console.log('Success:', response);
+                window.navigateTo("/status");
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert("Error: " + error);
+            });
         });
     }
     async getHtml() {

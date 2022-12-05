@@ -56,11 +56,16 @@ export default class extends AbstractView {
                 },
                 body: JSON.stringify(networkSettings),
               })
-            .then((data) => {
-                console.log('Success:', data);
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Unable to process the order');
+                }
+                console.log('Success:', response);
+                alert("Success");
             })
             .catch((error) => {
                 console.error('Error:', error);
+                alert("Error: " + error);
             });
         });
 

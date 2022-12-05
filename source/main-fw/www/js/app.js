@@ -1,7 +1,7 @@
 const EQtyType = Object.freeze({
 	none: 0,		// When unit doesn't apply
 	unitary: 1, 	// Counter by round number
-	
+
 	liquid_ml: 2,	// Milliliter
 	liquid_oz: 3,			// Ounce
 	cup: 4,		    // Cup
@@ -22,6 +22,22 @@ const EIngredientType = Object.freeze({
 	emulsifying: 6,
 	fruit_or_vegetable: 7,
 	leaf_or_sprig: 8
+});
+
+const EControlState = Object.freeze({
+	unspecified: 0,
+    IdleWaitingForOrder: 0,
+    MoveToHomeStart: 1,
+    WaitingForGlass: 2,
+    MoveToStation: 3,
+    FillingGlass: 4,
+    MoveBackToHomeEnd: 5,
+    WaitForRemovingGlass: 6,
+    Cancelled: 7,
+
+    CmdHomeAll: 50,
+    CmdMoveAxis: 51,
+    CmdMoveToStation: 52
 });
 
 const OneOz = 30;
@@ -114,4 +130,49 @@ function getPrettyQty(qtyValue, unit)
         qtyText = getPrettyFraction(qtyValue) + " drop";
     }
     return qtyText;
+}
+
+function getControlPrettyStepString(controlStep)
+{
+    switch(controlStep) {
+        case EControlState.IdleWaitingForOrder:
+            return "Idling";
+        case EControlState.MoveToHomeStart:
+            return "Moving the sleigh to home";
+        case EControlState.WaitingForGlass:
+            return "Please deposit your glass on the sleigh";
+        case EControlState.MoveToStation:
+            return "Moving to a station";
+        case EControlState.FillingGlass:
+            return "Filling glass";
+        case EControlState.MoveBackToHomeEnd:
+            return "Moving back to home";
+        case EControlState.WaitForRemovingGlass:
+            return "Wait for the glass to be removed";
+        case EControlState.Cancelled:
+            return "Last operation cancelled";
+
+        case EControlState.CmdHomeAll:
+            return "Manual: Home all";
+        case EControlState.CmdMoveAxis:
+            return "Manual: Move axis";
+        case EControlState.CmdMoveToStation:
+            return "Manual: Move to station";
+    }
+
+    return "-/-"
+}
+
+async function timerHandler() {
+
+    // Get system informations
+    await fetch('/api/getstatus')
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error('Unable to process the order');
+            }
+            return response.json();
+        })
+        .then((data) => infoItems = data.infos)
+        .catch((ex) => console.error('getstatus', ex));
 }

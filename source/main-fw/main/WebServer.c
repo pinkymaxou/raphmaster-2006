@@ -48,6 +48,7 @@
 #define API_IMPORTSTATIONSETTINGSJSON_URI "/api/importstationsettings"
 
 #define API_GETSYSINFOJSON_URI "/api/getsysinfo"
+#define API_GETSTATUSJSON_URI "/api/getstatus"
 
 #define ACTION_POST_REBOOT "/action/reboot"
 
@@ -63,9 +64,12 @@ static esp_err_t file_otauploadpost_handler(httpd_req_t *req);
 static const EFEMBEDWWW_SFile* GetFile(const char* strFilename, uint32_t u32Len);
 
 static char* GetSysInfo();
+static char* GetStatus();
 
 static char* GetNetworkSettings();
 static bool SetNetworkSettings(const char* szJSON, uint32_t u32Length);
+
+static bool HandleAddOrder(const char* szData, uint32_t u32Length);
 
 static void ToHexString(char *dstHexString, const uint8_t* data, uint32_t u32Length);
 static const char* GetESPChipId(esp_chip_model_t eChipid);
@@ -125,6 +129,7 @@ void WEBSERVER_Init()
     config.lru_purge_enable = true;
     config.uri_match_fn = httpd_uri_match_wildcard;
     config.max_open_sockets = 13;
+    config.stack_size = 5500;
 
     // Start the httpd server
     ESP_LOGI(TAG, "Starting server on port: '%d'", config.server_port);
@@ -265,6 +270,10 @@ static esp_err_t api_get_handler(httpd_req_t* req)
     {
         pExportJSON = GetSysInfo();
     }
+    else if (strcmp(req->uri, API_GETSTATUSJSON_URI) == 0)
+    {
+        pExportJSON = GetStatus();
+    }
     else if (strcmp(req->uri, API_GETNETWORKSETTINGSJSON_URI) == 0)
     {
         pExportJSON = GetNetworkSettings();
@@ -335,86 +344,72 @@ static esp_err_t api_get_handler(httpd_req_t* req)
 
 static esp_err_t api_post_handler(httpd_req_t *req)
 {
+    const char* szError = NULL;
+
+    int n = httpd_req_recv(req, (char*)m_u8Buffers, HTTPSERVER_BUFFERSIZE);
+    m_u8Buffers[n] = '\0';
+
     ESP_LOGI(TAG, "api_post_handler, url: %s", req->uri);
     if (strcmp(req->uri, API_IMPORTSETTINGSJSON_URI) == 0)
     {
-        int n = httpd_req_recv(req, (char*)m_u8Buffers, HTTPSERVER_BUFFERSIZE);
-        m_u8Buffers[n] = '\0';
-
         if (!NVSJSON_ImportJSON(&g_sSettingHandle, (const char*)m_u8Buffers))
         {
-            ESP_LOGE(TAG, "Unable to import JSON");
-            httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "Unknown request");
+            szError = "Unable to import JSON";
+            goto ERROR;
         }
-        else
-            ESP_LOGI(TAG, "Import settings");
+        ESP_LOGI(TAG, "Import settings");
     }
     else if (strcmp(req->uri, API_IMPORTSTATIONSETTINGSJSON_URI) == 0)
     {
-        int n = httpd_req_recv(req, (char*)m_u8Buffers, HTTPSERVER_BUFFERSIZE);
-        m_u8Buffers[n] = '\0';
-
         if (!NVSJSON_ImportJSON(&g_sStationSettingHandle, (const char*)m_u8Buffers))
         {
-            ESP_LOGE(TAG, "Unable to import JSON");
-            httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "Unknown request");
+            szError = "Unable to import JSON";
+            goto ERROR;
         }
-        else
-            ESP_LOGI(TAG, "Import station settings");
-    }
-    else if (strcmp(req->uri, API_SETSTATIONSETTINGSJSON_URI) == 0)
-    {
-        int n = httpd_req_recv(req, (char*)m_u8Buffers, HTTPSERVER_BUFFERSIZE);
-        m_u8Buffers[n] = '\0';
-        if (!COCKTAILEXPLORER_SetStationSettings((char*)m_u8Buffers, n))
-        {
-            ESP_LOGE(TAG, "Unable to save data");
-            httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "Unknown request");
-        }
-        else
-            ESP_LOGI(TAG, "Set station settings");
-    }
-    else if (strcmp(req->uri, API_SETNETWORKSETTINGSJSON_URI) == 0)
-    {
-        int n = httpd_req_recv(req, (char*)m_u8Buffers, HTTPSERVER_BUFFERSIZE);
-        m_u8Buffers[n] = '\0';
-        if (!SetNetworkSettings((char*)m_u8Buffers, n))
-        {
-            ESP_LOGE(TAG, "Unable to save data");
-            httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "Unknown request");
-        }
-        else
-            ESP_LOGI(TAG, "Set station settings");
+        ESP_LOGI(TAG, "Import station settings");
     }
     else if (strcmp(req->uri, API_ADDORDERJSON_URI) == 0)
     {
-        int n = httpd_req_recv(req, (char*)m_u8Buffers, HTTPSERVER_BUFFERSIZE);
-        m_u8Buffers[n] = '\0';
-
-        CONTROL_SOrder sOrder = {
-            .u32RecipeId = 0,
-            .u32MakerStepCount = 0
-        };
-
-        sOrder.sMakerSteps[0].u32StationID = 1;
-        sOrder.sMakerSteps[0].u32Qty_ml = 45;
-        sOrder.u32MakerStepCount++;
-
-        if (!CONTROL_QueueOrder(&sOrder))
+        if (!HandleAddOrder((char*)m_u8Buffers, n))
         {
-            ESP_LOGE(TAG, "Unable to save data");
-            httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "Unknown request");
+            szError = "Unable to add order";
+            goto ERROR;
         }
-        else
-            ESP_LOGI(TAG, "Set station settings");
+        ESP_LOGI(TAG, "Request: %s handled with success", API_ADDORDERJSON_URI);
+    }
+    else if (strcmp(req->uri, API_SETSTATIONSETTINGSJSON_URI) == 0)
+    {
+        if (!COCKTAILEXPLORER_SetStationSettings((char*)m_u8Buffers, n))
+        {
+            szError = "Unable to save data";
+            goto ERROR;
+        }
+        ESP_LOGI(TAG, "Set station settings");
+    }
+    else if (strcmp(req->uri, API_SETNETWORKSETTINGSJSON_URI) == 0)
+    {
+        if (!SetNetworkSettings((char*)m_u8Buffers, n))
+        {
+            szError = "Unable to save data";
+            goto ERROR;
+        }
+        ESP_LOGI(TAG, "Set station settings");
     }
     else
     {
         ESP_LOGE(TAG, "api_post_handler, url: %s", req->uri);
         httpd_resp_send_err(req, HTTPD_404_NOT_FOUND, "Unknown request");
     }
+
     httpd_resp_set_hdr(req, "Connection", "close");
     httpd_resp_send_chunk(req, NULL, 0);
+    return ESP_OK;
+    ERROR:
+    if (szError != NULL)
+        ESP_LOGE(TAG, "API post error: %s", szError);
+
+    httpd_resp_set_hdr(req, "Connection", "close");
+    httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "Error");
     return ESP_OK;
 }
 
@@ -672,6 +667,35 @@ static char* GetSysInfo()
     return NULL;
 }
 
+static char* GetStatus()
+{
+    cJSON* pRoot = NULL;
+
+    char buff[100];
+    pRoot = cJSON_CreateObject();
+    if (pRoot == NULL)
+        goto ERROR;
+
+    const CONTROL_SInfo sInfo = CONTROL_GetInfos();
+
+    cJSON_AddItemToObject(pRoot, "recipe_id", cJSON_CreateNumber(sInfo.u32RecipeId));
+    cJSON_AddItemToObject(pRoot, "state", cJSON_CreateNumber(sInfo.eState));
+    cJSON_AddItemToObject(pRoot, "is_cancel_request", cJSON_CreateBool(sInfo.bIsCancelRequest));
+    cJSON_AddItemToObject(pRoot, "x", cJSON_CreateNumber(sInfo.s32X));
+    cJSON_AddItemToObject(pRoot, "z", cJSON_CreateNumber(sInfo.s32Z));
+    cJSON_AddItemToObject(pRoot, "y", cJSON_CreateNumber(sInfo.s32Y));
+    cJSON_AddItemToObject(pRoot, "percent", cJSON_CreateNumber(sInfo.dPercent));
+    cJSON_AddItemToObject(pRoot, "backlog_count", cJSON_CreateNumber(sInfo.u32BacklogCount));
+
+    char* pStr = cJSON_PrintUnformatted(pRoot);
+    cJSON_Delete(pRoot);
+    return pStr;
+    ERROR:
+    if (pRoot != NULL)
+        cJSON_Delete(pRoot);
+    return NULL;
+}
+
 static char* GetNetworkSettings()
 {
     cJSON* pRoot = NULL;
@@ -795,6 +819,113 @@ static bool SetNetworkSettings(const char* szJSON, uint32_t u32Length)
                 goto ERROR;
             }
     }
+
+    cJSON_Delete(pRoot);
+    return true;
+    ERROR:
+    if (szError != NULL)
+        ESP_LOGE(TAG, "Error: %s", szError);
+    if (pRoot != NULL)
+        cJSON_Delete(pRoot);
+    return false;
+}
+
+static bool HandleAddOrder(const char* szData, uint32_t u32Length)
+{
+    const char* szError = NULL;
+    cJSON* pRoot = cJSON_ParseWithLength(szData, u32Length);
+    if (pRoot == NULL)
+    {
+        szError = "unable to decode json";
+        goto ERROR;
+    }
+
+    cJSON* pOrder_recipeid = cJSON_GetObjectItemCaseSensitive(pRoot, "recipe_id");
+    if (pOrder_recipeid == NULL || !cJSON_IsNumber(pOrder_recipeid))
+    {
+        szError = "recipe_id is missing from json";
+        goto ERROR;
+    }
+
+    CONTROL_SOrder sOrder = {
+        .u32RecipeId = 0,
+        .u32MakerStepCount = 0
+    };
+
+    // Recipe isn't mandatory
+    const cocktaildb_Recipe* pRecipe = NULL;
+    if (pOrder_recipeid->valueint > 0)
+    {
+        pRecipe = COCKTAILEXPLORER_GetRecipe(pOrder_recipeid->valueint);
+        if (pRecipe == NULL)
+        {
+            szError = "cannot find recipe";
+            goto ERROR;
+        }
+    }
+
+    cJSON* pOrder_steps = cJSON_GetObjectItemCaseSensitive(pRoot, "steps");
+    if (pOrder_steps == NULL || !cJSON_IsArray(pOrder_steps))
+    {
+        szError = "steps is missing from json";
+        goto ERROR;
+    }
+
+    sOrder.u32RecipeId = (uint32_t)pOrder_recipeid->valueint;
+    sOrder.u32MakerStepCount = 0;
+
+    const cJSON* pOrder_stepItem = NULL;
+    cJSON_ArrayForEach(pOrder_stepItem, pOrder_steps)
+    {
+        const cJSON* pingredient_id = cJSON_GetObjectItemCaseSensitive(pOrder_stepItem, "ingredient_id");
+        if (pingredient_id == NULL || !cJSON_IsNumber(pingredient_id))
+        {
+            szError = "ingredient_id cannot be found in JSON";
+            goto ERROR;
+        }
+
+        // Find ingredient id and station related to it
+        uint32_t u32StationId = 0;
+        const cocktaildb_Ingredient* pIngredient = COCKTAILEXPLORER_GetAvailableIngredient(pingredient_id->valueint, &u32StationId);
+        if (pIngredient == NULL)
+        {
+            szError = "cannot find the ingredient loaded into an existing station";
+            goto ERROR;
+        }
+
+        const cJSON* pQty_ml = cJSON_GetObjectItemCaseSensitive(pOrder_stepItem, "qty_ml");
+        if (pQty_ml == NULL || !cJSON_IsNumber(pQty_ml))
+        {
+            szError = "qty_ml cannot be found in JSON";
+            goto ERROR;
+        }
+
+        if (pQty_ml->valueint <= 0 || pQty_ml->valueint > 1000)
+        {
+            szError = "quantity (ml) is not valid";
+            goto ERROR;
+        }
+
+        CONTROL_MakerStep* pMakerStep = &sOrder.sMakerSteps[sOrder.u32MakerStepCount];
+        // Find station by ingredient
+        pMakerStep->u32StationID = u32StationId;
+        pMakerStep->u32Qty_ml = pQty_ml->valueint;
+        sOrder.u32MakerStepCount++;
+    }
+
+    if (sOrder.u32MakerStepCount == 0)
+    {
+        szError = "No steps";
+        goto ERROR;
+    }
+
+    if (!CONTROL_QueueOrder(&sOrder))
+    {
+        szError = "Order list is full";
+        goto ERROR;
+    }
+
+    ESP_LOGI(TAG, "Order added to queue");
 
     cJSON_Delete(pRoot);
     return true;

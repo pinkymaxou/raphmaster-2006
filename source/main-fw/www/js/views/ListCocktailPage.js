@@ -122,13 +122,13 @@ export default class extends AbstractView {
                 let newControlDIV = document.createElement("div");
                 newControlDIV.classList.add("cocktail_control");
 
-                let newBtnOrderDrink = document.createElement("button");
-                newBtnOrderDrink.appendChild(document.createTextNode("Order"));
-                newBtnOrderDrink.classList.add("button-normal");
-                newBtnOrderDrink.addEventListener('click', function() {
-                    window.navigateTo("./customcocktail/" + String(cocktail.id));
-                });
-                newControlDIV.appendChild(newBtnOrderDrink);
+                // let newBtnOrderDrink = document.createElement("button");
+                // newBtnOrderDrink.appendChild(document.createTextNode("Order"));
+                // newBtnOrderDrink.classList.add("button-normal");
+                // newBtnOrderDrink.addEventListener('click', function() {
+                //     window.navigateTo("./customcocktail/" + String(cocktail.id));
+                // });
+                // newControlDIV.appendChild(newBtnOrderDrink);
 
                 let newBtnOrderCustomDrink = document.createElement("button");
                 newBtnOrderCustomDrink.appendChild(document.createTextNode("Custom order"));

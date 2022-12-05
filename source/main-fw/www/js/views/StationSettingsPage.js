@@ -114,6 +114,7 @@ export default class extends AbstractView {
                 let item = { id: Number(idStationId.value), ingredient_id: Number(idSelectIngredient.value), total_ml: Number(idValueTotalQty.value), used_ml : Number(idValueUsedQty.value) };
                 stationSettingItems.push(item);
             }
+
             fetch('/api/setstationsettings', {
                 method: 'POST',
                 headers: {
@@ -121,11 +122,15 @@ export default class extends AbstractView {
                 },
                 body: JSON.stringify(stationSettingItems),
               })
-            .then((data) => {
-                console.log('Success:', data);
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Unable to process the order');
+                }
+                console.log('Success:', response);
             })
             .catch((error) => {
                 console.error('Error:', error);
+                alert("Error: " + error);
             });
         });
     }

@@ -10,24 +10,6 @@
 
 typedef enum
 {
-    ESTATE_IdleWaitingForOrder = 0,
-
-    ESTATE_MoveToHomeStart = 1,
-    ESTATE_WaitingForGlass = 2,
-    ESTATE_MoveToStation = 3,
-    ESTATE_FillingGlass = 4,
-    ESTATE_MoveBackToHomeEnd = 5,
-    ESTATE_WaitForRemovingGlass = 6,
-
-    ESTATE_Cancelled = 7,
-
-    ESTATE_CmdHomeAll = 50,
-    ESTATE_CmdMoveAxis = 51,
-    ESTATE_CmdMoveToStation = 52
-} ESTATE;
-
-typedef enum
-{
     EINSTRUCTION_Order,     /* Order a new cocktail*/
     EINSTRUCTION_HomeAll,   /* Home all axis */
 
@@ -55,11 +37,13 @@ typedef struct
 
 typedef struct
 {
-    ESTATE eState;
+    CONTROL_ESTATE eState;
 
     SQueueInstruction sQueueInstruction;
 
-    bool bIsCancelRequest;
+    double dPercent;
+
+    volatile bool bIsCancelRequest;
     // Positions
     int32_t s32CurrentX; // negative = LEFT, positive = RIGHT
     int32_t s32CurrentY; // negative = DOWN, positive = UP
@@ -87,7 +71,7 @@ void CONTROL_Init()
     m_hQueueHandle = xQueueCreate(MAXIMUM_QUEUE_LEN, sizeof(SQueueInstruction));
 
     // IDLE state
-    m_sHandle.eState = ESTATE_IdleWaitingForOrder;
+    m_sHandle.eState = CONTROL_ESTATE_IdleWaitingForOrder;
     m_sHandle.bIsCancelRequest = false;
 
     // Step counts
@@ -210,28 +194,34 @@ static void ControlThreadRun(void* pParam)
                 ESP_LOGI(TAG, "New order started with recipeid: %d, steps: %d", sQueueInstruction.uArg.sOrder.u32RecipeId, sQueueInstruction.uArg.sOrder.u32MakerStepCount);
             }
             memcpy(&m_sHandle.sQueueInstruction, &sQueueInstruction, sizeof(SQueueInstruction));
+            m_sHandle.dPercent = 0.0d;
             m_sHandle.bIsCancelRequest = false;
         }
 
         // Order instruction
         if (sQueueInstruction.eInstruction == EINSTRUCTION_Order)
         {
+            m_sHandle.dPercent = 0.0d;
             // Ingredients
             // Start with Y to be sure it's at the lowest position and won't interfere
             // Do homing on all axis before accepting glass
-            m_sHandle.eState = ESTATE_MoveToHomeStart;
+            m_sHandle.eState = CONTROL_ESTATE_MoveToHomeStart;
             if (!DoAxisHoming(HARDWAREGPIO_EAXIS_y))
                 goto CANCEL;
+            m_sHandle.dPercent = 0.1d;
             if (!DoAxisHoming(HARDWAREGPIO_EAXIS_z))
                 goto CANCEL;
+            m_sHandle.dPercent = 0.2d;
             if (!DoAxisHoming(HARDWAREGPIO_EAXIS_x))
                 goto CANCEL;
+            m_sHandle.dPercent = 0.3d;
 
             // Wait until user put his glass on the plate
-            m_sHandle.eState = ESTATE_WaitingForGlass;
+            m_sHandle.eState = CONTROL_ESTATE_WaitingForGlass;
             if (!WaitUntilGlassIsThere())
                 goto CANCEL;
 
+            m_sHandle.dPercent = 0.4d;
             for(int i = 0; i < m_sHandle.sQueueInstruction.uArg.sOrder.u32MakerStepCount; i++)
             {
                 const CONTROL_MakerStep* psMakerStep = &m_sHandle.sQueueInstruction.uArg.sOrder.sMakerSteps[i];
@@ -247,32 +237,36 @@ static void ControlThreadRun(void* pParam)
                 }
 
                 // Move to station
-                m_sHandle.eState = ESTATE_MoveToStation;
+                m_sHandle.eState = CONTROL_ESTATE_MoveToStation;
                 if (!MoveToCoordinate(s32X, s32Z))
                     goto CANCEL;
 
-                m_sHandle.eState = ESTATE_FillingGlass;
+                m_sHandle.eState = CONTROL_ESTATE_FillingGlass;
                 if (!FillGlass(psMakerStep->u32Qty_ml))
                     goto CANCEL;
+
+                m_sHandle.dPercent = 0.4d + 0.4d * ((double)(i+1) / (double)m_sHandle.sQueueInstruction.uArg.sOrder.u32MakerStepCount);
             }
 
             // Move back to home
-            m_sHandle.eState = ESTATE_MoveBackToHomeEnd;
+            m_sHandle.dPercent = 0.8d;
+            m_sHandle.eState = CONTROL_ESTATE_MoveBackToHomeEnd;
             if (!MoveToCoordinate(0, 0))
                 goto CANCEL;
 
-            m_sHandle.eState = ESTATE_WaitForRemovingGlass;
+            m_sHandle.dPercent = 0.9d;
+            m_sHandle.eState = CONTROL_ESTATE_WaitForRemovingGlass;
             if (!WaitUntilGlassRemoved())
                 goto CANCEL;
-
+            m_sHandle.dPercent = 1.0d;
             // Normal ending
-            m_sHandle.eState = ESTATE_IdleWaitingForOrder;
+            m_sHandle.eState = CONTROL_ESTATE_IdleWaitingForOrder;
             goto END;
         }
         else if (sQueueInstruction.eInstruction == EINSTRUCTION_HomeAll)
         {
             ESP_LOGI(TAG, "Executing: CmdHomeAll");
-            m_sHandle.eState = ESTATE_CmdHomeAll;
+            m_sHandle.eState = CONTROL_ESTATE_CmdHomeAll;
             if (!DoAxisHoming(HARDWAREGPIO_EAXIS_y))
                 goto CANCEL;
             if (!DoAxisHoming(HARDWAREGPIO_EAXIS_z))
@@ -283,11 +277,11 @@ static void ControlThreadRun(void* pParam)
         }
         else if (sQueueInstruction.eInstruction == EINSTRUCTION_MoveToStation)
         {
-            m_sHandle.eState = ESTATE_CmdMoveToStation;
-            ESP_LOGI(TAG, "Executing: CmdMoveToStation");
-
+            m_sHandle.eState = CONTROL_ESTATE_CmdMoveToStation;
             int32_t s32X = STATIONSETTINGS_GetValue(sQueueInstruction.uArg.sMoveToStation.u32StationId, STATIONSETTINGS_ESTATIONSET_PosX);
             int32_t s32Z = STATIONSETTINGS_GetValue(sQueueInstruction.uArg.sMoveToStation.u32StationId, STATIONSETTINGS_ESTATIONSET_PosZ);
+
+            ESP_LOGI(TAG, "Executing: CmdMoveToStation, goto coordinate: x: %d, z: %d", s32X, s32Z);
 
             if (MoveToCoordinate(s32X, s32Z))
                 goto CANCEL;
@@ -295,7 +289,7 @@ static void ControlThreadRun(void* pParam)
         }
         else if (sQueueInstruction.eInstruction == EINSTRUCTION_MoveAxis)
         {
-            m_sHandle.eState = ESTATE_CmdMoveAxis;
+            m_sHandle.eState = CONTROL_ESTATE_CmdMoveAxis;
             ESP_LOGI(TAG, "Executing: CmdMoveAxis");
             HARDWAREGPIO_MoveStepperAsync(sQueueInstruction.uArg.sMoveAxis.eAxis, sQueueInstruction.uArg.sMoveAxis.s32Value);
             ESP_LOGI(TAG, "Completed: CmdMoveAxis");
@@ -307,9 +301,10 @@ static void ControlThreadRun(void* pParam)
         }
 
         // Done gracefully, we can return to normal state
-        m_sHandle.eState = ESTATE_IdleWaitingForOrder;
+        m_sHandle.eState = CONTROL_ESTATE_IdleWaitingForOrder;
+        goto END;
         CANCEL:
-        m_sHandle.eState = ESTATE_Cancelled;
+        m_sHandle.eState = CONTROL_ESTATE_Cancelled;
         HARDWAREGPIO_EnableAllSteppers(false);
         ESP_LOGE(TAG, "Cancelling order");
         END:
@@ -376,12 +371,10 @@ static bool WaitUntilGlassIsThere()
 {
     ESP_LOGI(TAG, "Until until a glass get in place ...");
 
-    const int32_t s32ScaleWeightGram = HARDWAREGPIO_GetScaleWeightGram();
-
     const TickType_t ttProcessTimeoutTicks = xTaskGetTickCount();
 
     uint8_t u8MeasureCount = 0;
-    int32_t avgS32ScaleWeight_Gram = 0;
+    int32_t avgS32ScaleWeight_Gram = HARDWAREGPIO_GetScaleWeightGram();
 
     while(true)
     {
@@ -439,9 +432,8 @@ static bool WaitUntilGlassRemoved()
 
     // This process doesn't have a timeout.
     // the only way to cancel it is too cancel manually or put a glass
-    const int32_t s32ScaleWeightGram = HARDWAREGPIO_GetScaleWeightGram();
     uint8_t u8MeasureCount = 0;
-    int32_t avgS32ScaleWeight_Gram = 0;
+    int32_t avgS32ScaleWeight_Gram = HARDWAREGPIO_GetScaleWeightGram();
 
     while(true)
     {
@@ -497,7 +489,15 @@ static bool FillGlass(uint16_t u16Qty)
 
     // It it's an optic, move the arm upward
     // if it's a peristaltic pump just spin until the weight fit.
+    for(int i = 0; i < 2000; i++)
+    {
+        HARDWAREGPIO_MoveStepperAsync(HARDWAREGPIO_EAXIS_y, 1);
+        m_sHandle.s32CurrentY++;
+        vTaskDelay(1);
+    }
 
+    // Go back to home.
+    DoAxisHoming(HARDWAREGPIO_EAXIS_y);
     return true;
     ERROR:
     return false;
@@ -513,7 +513,41 @@ static bool MoveToCoordinate(int32_t s32X, int32_t s32Z)
         goto ERROR;
     }
 
+    const int32_t s32DiffX = s32X - m_sHandle.s32CurrentX;
+    const int32_t s32DiffZ = s32Z - m_sHandle.s32CurrentZ;
+    // TODO: Moving doesn't correctly cancel yet
+    // cancellation and acceleration curve will be necessary.
+    // The movement is too rough for now.
+    HARDWAREGPIO_MoveStepperAsync(HARDWAREGPIO_EAXIS_x, s32DiffX);
+    m_sHandle.s32CurrentX += s32DiffX;
+    HARDWAREGPIO_MoveStepperAsync(HARDWAREGPIO_EAXIS_z, s32DiffZ);
+    m_sHandle.s32CurrentZ += s32DiffZ;
     return true;
     ERROR:
     return false;
+}
+
+const CONTROL_SInfo CONTROL_GetInfos()
+{
+    CONTROL_SInfo sInfo =
+    {
+        .u32RecipeId = 0,
+        .eState = m_sHandle.eState,
+        .bIsCancelRequest = m_sHandle.bIsCancelRequest,
+
+        // General
+        .s32X = m_sHandle.s32CurrentX,
+        .s32Z = m_sHandle.s32CurrentZ,
+        .s32Y = m_sHandle.s32CurrentY,
+
+        .u32BacklogCount = uxQueueMessagesWaiting(m_hQueueHandle)
+    };
+
+    if (m_sHandle.sQueueInstruction.eInstruction == EINSTRUCTION_Order)
+    {
+        sInfo.u32RecipeId = m_sHandle.sQueueInstruction.uArg.sOrder.u32RecipeId;
+        sInfo.dPercent = m_sHandle.dPercent;
+    }
+
+    return sInfo;
 }

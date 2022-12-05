@@ -232,6 +232,26 @@ char* COCKTAILEXPLORER_GetAllAvailableIngredients()
     return NULL;
 }
 
+
+const cocktaildb_Ingredient* COCKTAILEXPLORER_GetAvailableIngredient(uint32_t ingredient_id, uint32_t* pu32StationId)
+{
+   for(int stationId = 1; stationId <= STATIONSETTINGS_STATION_COUNT; stationId++)
+    {
+        int32_t s32IngredientId = STATIONSETTINGS_GetValue(stationId, STATIONSETTINGS_ESTATIONSET_LoadID);
+        if (s32IngredientId != ingredient_id)
+            continue;
+
+        const cocktaildb_Ingredient* pIngredient = COCKTAILEXPLORER_GetIngredientFile((uint32_t)s32IngredientId);
+        if (pIngredient == NULL || !IsIngredientLiquid(pIngredient))
+            continue;
+
+        *pu32StationId = stationId;
+        return pIngredient;
+    }
+
+    return NULL;
+}
+
 char* COCKTAILEXPLORER_GetStatIngredients()
 {
     char* ret = NULL;
