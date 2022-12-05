@@ -182,8 +182,11 @@ export default class extends AbstractView {
                 },
                 body: JSON.stringify(request),
               })
-            .then((data) => {
-                console.log('Success:', data);
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Unable to process the order');
+                }
+                console.log('Success:', response);
                 window.navigateTo("/status");
             })
             .catch((error) => {

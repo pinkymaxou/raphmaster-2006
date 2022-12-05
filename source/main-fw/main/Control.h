@@ -13,7 +13,6 @@
 
 #define CONTROL_STEPTIMEOUT_MS (15*1000)
 
-
 typedef struct
 {
     uint32_t u32StationID;
@@ -28,16 +27,39 @@ typedef struct
     uint32_t u32MakerStepCount;
 } CONTROL_SOrder;
 
+typedef enum
+{
+    CONTROL_ESTATE_IdleWaitingForOrder = 0,
+
+    CONTROL_ESTATE_MoveToHomeStart = 1,
+    CONTROL_ESTATE_WaitingForGlass = 2,
+    CONTROL_ESTATE_MoveToStation = 3,
+    CONTROL_ESTATE_FillingGlass = 4,
+    CONTROL_ESTATE_MoveBackToHomeEnd = 5,
+    CONTROL_ESTATE_WaitForRemovingGlass = 6,
+
+    CONTROL_ESTATE_Cancelled = 7,
+
+    CONTROL_ESTATE_CmdHomeAll = 50,
+    CONTROL_ESTATE_CmdMoveAxis = 51,
+    CONTROL_ESTATE_CmdMoveToStation = 52
+} CONTROL_ESTATE;
+
 typedef struct
 {
     uint32_t u32RecipeId;   // 0 = not linked to any recipe
+
+    CONTROL_ESTATE eState;
+
     bool bIsCancelRequest;
     // Positions
     int32_t s32X; // negative = LEFT, positive = RIGHT
     int32_t s32Z; // negative = TOWARD FRONT, positive = TOWARD BACK
     int32_t s32Y; // negative = DOWN, positive = UP
 
-    uint32_t u32QueueCount;
+    double dPercent;
+
+    uint32_t u32BacklogCount;
 } CONTROL_SInfo;
 
 void CONTROL_Init();

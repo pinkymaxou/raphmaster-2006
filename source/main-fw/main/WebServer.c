@@ -48,6 +48,7 @@
 #define API_IMPORTSTATIONSETTINGSJSON_URI "/api/importstationsettings"
 
 #define API_GETSYSINFOJSON_URI "/api/getsysinfo"
+#define API_GETSTATUSJSON_URI "/api/getstatus"
 
 #define ACTION_POST_REBOOT "/action/reboot"
 
@@ -63,6 +64,7 @@ static esp_err_t file_otauploadpost_handler(httpd_req_t *req);
 static const EFEMBEDWWW_SFile* GetFile(const char* strFilename, uint32_t u32Len);
 
 static char* GetSysInfo();
+static char* GetStatus();
 
 static char* GetNetworkSettings();
 static bool SetNetworkSettings(const char* szJSON, uint32_t u32Length);
@@ -267,6 +269,10 @@ static esp_err_t api_get_handler(httpd_req_t* req)
     else if (strcmp(req->uri, API_GETSYSINFOJSON_URI) == 0)
     {
         pExportJSON = GetSysInfo();
+    }
+    else if (strcmp(req->uri, API_GETSTATUSJSON_URI) == 0)
+    {
+        pExportJSON = GetStatus();
     }
     else if (strcmp(req->uri, API_GETNETWORKSETTINGSJSON_URI) == 0)
     {
@@ -653,6 +659,35 @@ static char* GetSysInfo()
     cJSON_AddItemToArray(pEntries, pEntryJSON10);
 
     char* pStr =  cJSON_PrintUnformatted(pRoot);
+    cJSON_Delete(pRoot);
+    return pStr;
+    ERROR:
+    if (pRoot != NULL)
+        cJSON_Delete(pRoot);
+    return NULL;
+}
+
+static char* GetStatus()
+{
+    cJSON* pRoot = NULL;
+
+    char buff[100];
+    pRoot = cJSON_CreateObject();
+    if (pRoot == NULL)
+        goto ERROR;
+
+    const CONTROL_SInfo sInfo = CONTROL_GetInfos();
+
+    cJSON_AddItemToObject(pRoot, "recipe_id", cJSON_CreateNumber(sInfo.u32RecipeId));
+    cJSON_AddItemToObject(pRoot, "state", cJSON_CreateNumber(sInfo.eState));
+    cJSON_AddItemToObject(pRoot, "is_cancel_request", cJSON_CreateBool(sInfo.bIsCancelRequest));
+    cJSON_AddItemToObject(pRoot, "x", cJSON_CreateNumber(sInfo.s32X));
+    cJSON_AddItemToObject(pRoot, "z", cJSON_CreateNumber(sInfo.s32Z));
+    cJSON_AddItemToObject(pRoot, "y", cJSON_CreateNumber(sInfo.s32Y));
+    cJSON_AddItemToObject(pRoot, "percent", cJSON_CreateNumber(sInfo.dPercent));
+    cJSON_AddItemToObject(pRoot, "backlog_count", cJSON_CreateNumber(sInfo.u32BacklogCount));
+
+    char* pStr = cJSON_PrintUnformatted(pRoot);
     cJSON_Delete(pRoot);
     return pStr;
     ERROR:
