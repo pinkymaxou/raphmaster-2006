@@ -865,7 +865,7 @@ static bool HandleAddOrder(const char* szData, uint32_t u32Length)
             goto ERROR;
         }
 
-        if (pQty_ml->valueint < 0 || pQty_ml->valueint > 1000)
+        if (pQty_ml->valueint <= 0 || pQty_ml->valueint > 1000)
         {
             szError = "quantity (ml) is not valid";
             goto ERROR;
@@ -876,6 +876,12 @@ static bool HandleAddOrder(const char* szData, uint32_t u32Length)
         pMakerStep->u32StationID = u32StationId;
         pMakerStep->u32Qty_ml = pQty_ml->valueint;
         sOrder.u32MakerStepCount++;
+    }
+
+    if (sOrder.u32MakerStepCount == 0)
+    {
+        szError = "No steps";
+        goto ERROR;
     }
 
     if (!CONTROL_QueueOrder(&sOrder))

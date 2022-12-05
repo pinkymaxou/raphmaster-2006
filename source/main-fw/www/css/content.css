@@ -114,7 +114,7 @@
 
 .cocktail_control {
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: auto;
     gap: 10px;
 }
 
