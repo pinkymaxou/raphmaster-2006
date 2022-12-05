@@ -173,6 +173,20 @@ async function timerHandler() {
             }
             return response.json();
         })
-        .then((data) => infoItems = data.infos)
-        .catch((ex) => console.error('getstatus', ex));
+        .then((data) => 
+        {
+            console.log("data", data);
+            setTimeout(timerHandler, 500);
+        })
+        .catch((ex) => 
+        {
+            setTimeout(timerHandler, 5000);
+            console.error('getstatus', ex);
+        });
 }
+
+window.addEventListener("load", (event) => {
+    console.log("page is fully loaded");
+
+    setTimeout(timerHandler, 500);
+});
