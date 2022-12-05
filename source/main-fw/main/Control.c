@@ -543,7 +543,9 @@ const CONTROL_SInfo CONTROL_GetInfos()
         // General
         .s32X = m_sHandle.s32CurrentX,
         .s32Z = m_sHandle.s32CurrentZ,
-        .s32Y = m_sHandle.s32CurrentY
+        .s32Y = m_sHandle.s32CurrentY,
+
+        .u32QueueCount = uxQueueMessagesWaiting(m_hTaskHandle)
     };
 
     if (m_sHandle.sQueueInstruction.eInstruction == EINSTRUCTION_Order)

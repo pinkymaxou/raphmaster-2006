@@ -13,6 +13,7 @@
 
 #define CONTROL_STEPTIMEOUT_MS (15*1000)
 
+
 typedef struct
 {
     uint32_t u32StationID;
@@ -35,6 +36,8 @@ typedef struct
     int32_t s32X; // negative = LEFT, positive = RIGHT
     int32_t s32Z; // negative = TOWARD FRONT, positive = TOWARD BACK
     int32_t s32Y; // negative = DOWN, positive = UP
+
+    uint32_t u32QueueCount;
 } CONTROL_SInfo;
 
 void CONTROL_Init();

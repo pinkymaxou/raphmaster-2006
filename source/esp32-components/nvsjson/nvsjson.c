@@ -249,7 +249,7 @@ bool NVSJSON_ImportJSON(NVSJSON_SHandle* pHandle, const char* szJSON)
     bool bRet = true;
     cJSON* pRoot = cJSON_Parse(szJSON);
 
-    cJSON* pEntriesArray = cJSON_GetObjectItem(pRoot, JSON_ENTRIES_NAME);
+    cJSON* pEntriesArray = cJSON_GetObjectItemCaseSensitive(pRoot, JSON_ENTRIES_NAME);
     if (!cJSON_IsArray(pEntriesArray))
     {
         ESP_LOGE(TAG, "Entries array is not valid");
@@ -264,14 +264,14 @@ bool NVSJSON_ImportJSON(NVSJSON_SHandle* pHandle, const char* szJSON)
         {
             cJSON* pEntryJSON = cJSON_GetArrayItem(pEntriesArray, i);
 
-            cJSON* pKeyJSON = cJSON_GetObjectItem(pEntryJSON, JSON_ENTRY_KEY_NAME);
+            cJSON* pKeyJSON = cJSON_GetObjectItemCaseSensitive(pEntryJSON, JSON_ENTRY_KEY_NAME);
             if (pKeyJSON == NULL || !cJSON_IsString(pKeyJSON))
             {
                 ESP_LOGE(TAG, "Cannot find JSON key element");
                 goto ERROR;
             }
 
-            cJSON* pValueJSON = cJSON_GetObjectItem(pEntryJSON, JSON_ENTRY_VALUE_NAME);
+            cJSON* pValueJSON = cJSON_GetObjectItemCaseSensitive(pEntryJSON, JSON_ENTRY_VALUE_NAME);
             if (pValueJSON == NULL)
             {
                 // We just ignore changing the setting if the value property is not there.
