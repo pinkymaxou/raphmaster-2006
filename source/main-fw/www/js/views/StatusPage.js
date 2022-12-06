@@ -27,6 +27,7 @@ export default class extends AbstractView {
                 </div>
                 <button class="button-cancel">Cancel</button>
             </div>
+            <p class="status_coordinate">[x: 0, z: 0, y: 0]</p>
         </div>
         `;
     }

@@ -144,6 +144,12 @@
     font-size: x-larger;
 }
 
+.status_coordinate {
+    font-size: small;
+    color: gray;
+    font-family: 'robotomono';
+}
+
 .status_ingredient_item {
     padding: 10px;
 }
