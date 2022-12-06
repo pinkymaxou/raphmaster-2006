@@ -18,6 +18,8 @@
 #include "main.h"
 #include "HardwareGPIO.h"
 #include "CocktailExplorer.h"
+#include "api/CocktailApi.h"
+#include "api/Settings.h"
 
 #define TAG "webserver"
 
@@ -281,7 +283,7 @@ static esp_err_t api_get_handler(httpd_req_t* req)
     else if (strcmp(req->uri, API_GETCOCKTAILSJSON_URI) == 0)
     {
         const int64_t u64Start = esp_timer_get_time();
-        pExportJSON = COCKTAILEXPLORER_GetAllRecipes(0);
+        pExportJSON = COCKTAILAPI_GetAllRecipes(0);
         ESP_LOGI(TAG, "Get all recipe time: %d ms", (int)(esp_timer_get_time() - u64Start) / 1000 );
     }
     else if (strcmp(req->uri, API_GETSTATIONSETTINGSJSON_URI) == 0)
@@ -293,13 +295,13 @@ static esp_err_t api_get_handler(httpd_req_t* req)
     else if (strcmp(req->uri, API_GETSTATINGREDIENTSJSON_URI) == 0)
     {
         const int64_t u64Start = esp_timer_get_time();
-        pExportJSON = COCKTAILEXPLORER_GetStatIngredients();
+        pExportJSON = COCKTAILAPI_GetStatIngredients();
         ESP_LOGI(TAG, "Get stat ingredients time: %d ms", (int)(esp_timer_get_time() - u64Start) / 1000 );
     }
     else if (strcmp(req->uri, API_GETINGREDIENTSLIQUIDSJSON_URI) == 0)
     {
         const int64_t u64Start = esp_timer_get_time();
-        pExportJSON = COCKTAILEXPLORER_GetAllIngredients(true);
+        pExportJSON = COCKTAILAPI_GetAllIngredients(true);
         ESP_LOGI(TAG, "Get all liquid ingredients time: %d ms", (int)(esp_timer_get_time() - u64Start) / 1000 );
     }
     else if (strncmp(req->uri, API_GETAVAILABLEINGREDIENTSJSON_ID_URI, strlen(API_GETAVAILABLEINGREDIENTSJSON_ID_URI)) == 0)
@@ -310,13 +312,13 @@ static esp_err_t api_get_handler(httpd_req_t* req)
         {
             char* param = req->uri + n;
             int recipeId = atoi(param);
-            pExportJSON = COCKTAILEXPLORER_GetAllRecipes(recipeId);
+            pExportJSON = COCKTAILAPI_GetAllRecipes(recipeId);
         }
     }
     else if (strcmp(req->uri, API_GETAVAILABLEINGREDIENTSJSON_URI) == 0)
     {
         const int64_t u64Start = esp_timer_get_time();
-        pExportJSON = COCKTAILEXPLORER_GetAllAvailableIngredients();
+        pExportJSON = COCKTAILAPI_GetAllAvailableIngredients();
         ESP_LOGI(TAG, "Get all available ingredients time: %d ms", (int)(esp_timer_get_time() - u64Start) / 1000 );
     }
     else

@@ -527,7 +527,7 @@ static bool MoveToCoordinate(int32_t s32X, int32_t s32Z)
     return false;
 }
 
-const CONTROL_SInfo CONTROL_GetInfos()
+CONTROL_SInfo CONTROL_GetInfos()
 {
     CONTROL_SInfo sInfo =
     {

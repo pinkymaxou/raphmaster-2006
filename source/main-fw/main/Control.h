@@ -76,6 +76,6 @@ bool CONTROL_QueueHomeAllAxis();
 
 void CONTROL_Cancel();
 
-const CONTROL_SInfo CONTROL_GetInfos();
+CONTROL_SInfo CONTROL_GetInfos();
 
 #endif
