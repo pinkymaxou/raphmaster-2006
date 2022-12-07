@@ -3,6 +3,7 @@
 
 #include "nanopb/pb_decode.h"
 #include "cocktaildb/cocktaildb.pb.h"
+#include "StationSettings.h"
 
 void COCKTAILEXPLORER_Init();
 
@@ -10,22 +11,18 @@ void COCKTAILEXPLORER_Init();
 
 // void COCKTAILEXPLORER_ReleaseLock();
 
-const cocktaildb_Ingredient* COCKTAILEXPLORER_GetIngredientFile(uint32_t u32ID);
+const cocktaildb_Ingredient* COCKTAILEXPLORER_GetIngredientById(uint32_t u32ID);
 
-const cocktaildb_Recipe* COCKTAILEXPLORER_GetRecipe(uint32_t u32ID);
-
-char* COCKTAILEXPLORER_GetAllRecipes(uint32_t recipe_id);
-
-char* COCKTAILEXPLORER_GetAllIngredients(bool bIsLiquidOnly);
-
-char* COCKTAILEXPLORER_GetAllAvailableIngredients();
+const cocktaildb_Recipe* COCKTAILEXPLORER_GetRecipeById(uint32_t u32ID);
 
 const cocktaildb_Ingredient* COCKTAILEXPLORER_GetAvailableIngredient(uint32_t ingredient_id, uint32_t* pu32StationId);
 
-char* COCKTAILEXPLORER_GetStatIngredients();
+bool COCKTAILEXPLORER_IsIngredientLiquid(const cocktaildb_Ingredient* pIngredient);
 
-char* COCKTAILEXPLORER_GetStationSettings();
+uint32_t COCKTAILEXPLORER_GetAvailableIngredients(const cocktaildb_Ingredient* sAvailableIngredientIds[STATIONSETTINGS_STATION_COUNT]);
 
-bool COCKTAILEXPLORER_SetStationSettings(const char* szRequestBuffer, uint32_t u32Length);
+const cocktaildb_IngredientFile* COCKTAILEXPLORER_GetIngredientFile();
+
+const cocktaildb_RecipeFile* COCKTAILEXPLORER_GetRecipeFile();
 
 #endif

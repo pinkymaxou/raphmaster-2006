@@ -190,3 +190,4 @@ window.addEventListener("load", (event) => {
 
     setTimeout(timerHandler, 500);
 });
+

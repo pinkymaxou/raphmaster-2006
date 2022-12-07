@@ -9,6 +9,10 @@
         "nvsjson.h": "c",
         "stationsettings.h": "c",
         "control.h": "c",
-        "hwconfig.h": "c"
+        "hwconfig.h": "c",
+        "cocktailapi.h": "c",
+        "embedcocktaildb.h": "c",
+        "productionapi.h": "c",
+        "miscapi.h": "c"
     }
 }
