@@ -6,53 +6,26 @@
 #include <sys/unistd.h>
 #include <sys/stat.h>
 #include <dirent.h>
-#include "esp_app_format.h"
 #include "assets/EmbedWWW.h"
 #include "esp_ota_ops.h"
 #include "esp_wifi.h"
 #include "esp_netif.h"
 #include "cJSON.h"
 #include "Settings.h"
+#include "ApiURL.h"
 #include "StationSettings.h"
 #include "Control.h"
-#include "main.h"
 #include "HardwareGPIO.h"
 #include "CocktailExplorer.h"
 #include "api/CocktailApi.h"
 #include "api/Settings.h"
+#include "api/ProductionApi.h"
+#include "api/MiscApi.h"
 
 #define TAG "webserver"
 
 /* Max length a file path can have on storage */
 #define HTTPSERVER_BUFFERSIZE (1024*12)
-
-#define DEFAULT_RELATIVE_URI "/index.html"
-
-#define API_EXPORTSETTINGSJSON_URI "/api/exportsettingsjson"
-#define API_IMPORTSETTINGSJSON_URI "/api/importsettingsjson"
-
-#define API_GETCOCKTAILSJSON_URI "/api/getcocktails"
-#define API_GETINGREDIENTSLIQUIDSJSON_URI "/api/getingredients/liquids"
-#define API_GETAVAILABLEINGREDIENTSJSON_URI "/api/getavailableingredients"
-#define API_GETAVAILABLEINGREDIENTSJSON_ID_URI "/api/getavailableingredients/"
-
-#define API_GETSTATINGREDIENTSJSON_URI "/api/getstatingredients"
-
-#define API_GETSTATIONSETTINGSJSON_URI "/api/getstationsettings"
-#define API_SETSTATIONSETTINGSJSON_URI "/api/setstationsettings"
-
-#define API_GETNETWORKSETTINGSJSON_URI "/api/getnetworksettings"
-#define API_SETNETWORKSETTINGSJSON_URI "/api/setnetworksettings"
-
-#define API_ADDORDERJSON_URI "/api/addorder"
-
-#define API_EXPORTSTATIONSETTINGSJSON_URI "/api/exportstationsettings"
-#define API_IMPORTSTATIONSETTINGSJSON_URI "/api/importstationsettings"
-
-#define API_GETSYSINFOJSON_URI "/api/getsysinfo"
-#define API_GETSTATUSJSON_URI "/api/getstatus"
-
-#define ACTION_POST_REBOOT "/action/reboot"
 
 static esp_err_t api_get_handler(httpd_req_t *req);
 static esp_err_t api_post_handler(httpd_req_t *req);
@@ -65,21 +38,7 @@ static esp_err_t file_otauploadpost_handler(httpd_req_t *req);
 
 static const EFEMBEDWWW_SFile* GetFile(const char* strFilename, uint32_t u32Len);
 
-static char* GetSysInfo();
-static char* GetStatus();
-
-static char* GetNetworkSettings();
-static bool SetNetworkSettings(const char* szJSON, uint32_t u32Length);
-
-static bool HandleAddOrder(const char* szData, uint32_t u32Length);
-
-static void ToHexString(char *dstHexString, const uint8_t* data, uint32_t u32Length);
-static const char* GetESPChipId(esp_chip_model_t eChipid);
-
 static uint8_t m_u8Buffers[HTTPSERVER_BUFFERSIZE];
-
-/*! @brief this variable is set by linker script, don't rename it. It contains app image informations. */
-extern const esp_app_desc_t esp_app_desc;
 
 static const httpd_uri_t m_sHttpUI = {
     .uri       = "/*",
@@ -172,7 +131,7 @@ static esp_err_t file_get_handler(httpd_req_t *req)
         strncmp(req->uri, "/customcocktail", pathlen) == 0 ||
         strncmp(req->uri, "/status", pathlen) == 0)
     {
-        pFile = GetFile(DEFAULT_RELATIVE_URI+1, strlen(DEFAULT_RELATIVE_URI) - 1);
+        pFile = GetFile(APIURL_DEFAULT_RELATIVE_URI+1, strlen(APIURL_DEFAULT_RELATIVE_URI) - 1);
         // No cache
     }
     else {
@@ -189,11 +148,11 @@ static esp_err_t file_get_handler(httpd_req_t *req)
         if (strncmp(req->uri, "/customcocktail/", strlen("/customcocktail/")) == 0)
         {
             // Remember, browser keep 301 in cache so be careful
-            ESP_LOGW(TAG, "Redirect URI: '%s', to '%s'", req->uri, DEFAULT_RELATIVE_URI);
+            ESP_LOGW(TAG, "Redirect URI: '%s', to '%s'", req->uri, APIURL_DEFAULT_RELATIVE_URI);
             // Redirect to default page
             httpd_resp_set_type(req, "text/html");
             httpd_resp_set_status(req, "302 Moved Temporarily");
-            httpd_resp_set_hdr(req, "Location", DEFAULT_RELATIVE_URI);
+            httpd_resp_set_hdr(req, "Location", APIURL_DEFAULT_RELATIVE_URI);
             httpd_resp_send(req, NULL, 0);
             return ESP_OK;
         }
@@ -238,7 +197,7 @@ static esp_err_t file_post_handler(httpd_req_t *req)
 {
     ESP_LOGI(TAG, "file_post_handler, url: %s", req->uri);
 
-    if (strcmp(req->uri, ACTION_POST_REBOOT) == 0)
+    if (strcmp(req->uri, APIURL_ACTION_POST_REBOOT) == 0)
     {
         esp_restart();
     }
@@ -260,54 +219,54 @@ static esp_err_t api_get_handler(httpd_req_t* req)
 {
     char* pExportJSON = NULL;
 
-    if (strcmp(req->uri, API_EXPORTSETTINGSJSON_URI) == 0)
+    if (strcmp(req->uri, APIURL_EXPORTSETTINGSJSON_URI) == 0)
     {
         pExportJSON = NVSJSON_ExportJSON(&g_sSettingHandle, true);
     }
-    else if (strcmp(req->uri,API_EXPORTSTATIONSETTINGSJSON_URI) == 0)
+    else if (strcmp(req->uri,APIURL_EXPORTSTATIONSETTINGSJSON_URI) == 0)
     {
         pExportJSON = NVSJSON_ExportJSON(&g_sStationSettingHandle, false);
     }
-    else if (strcmp(req->uri, API_GETSYSINFOJSON_URI) == 0)
+    else if (strcmp(req->uri, APIURL_GETSYSINFOJSON_URI) == 0)
     {
-        pExportJSON = GetSysInfo();
+        pExportJSON = MISCAPI_GetSysInfo();
     }
-    else if (strcmp(req->uri, API_GETSTATUSJSON_URI) == 0)
+    else if (strcmp(req->uri, APIURL_GETSTATUSJSON_URI) == 0)
     {
-        pExportJSON = GetStatus();
+        pExportJSON = PRODUCTIONAPI_GetStatus();
     }
-    else if (strcmp(req->uri, API_GETNETWORKSETTINGSJSON_URI) == 0)
+    else if (strcmp(req->uri, APIURL_GETNETWORKSETTINGSJSON_URI) == 0)
     {
-        pExportJSON = GetNetworkSettings();
+        pExportJSON = SETTINGSAPI_GetNetworkSettings();
     }
-    else if (strcmp(req->uri, API_GETCOCKTAILSJSON_URI) == 0)
+    else if (strcmp(req->uri, APIURL_GETCOCKTAILSJSON_URI) == 0)
     {
         const int64_t u64Start = esp_timer_get_time();
         pExportJSON = COCKTAILAPI_GetAllRecipes(0);
         ESP_LOGI(TAG, "Get all recipe time: %d ms", (int)(esp_timer_get_time() - u64Start) / 1000 );
     }
-    else if (strcmp(req->uri, API_GETSTATIONSETTINGSJSON_URI) == 0)
+    else if (strcmp(req->uri, APIURL_GETSTATIONSETTINGSJSON_URI) == 0)
     {
         const int64_t u64Start = esp_timer_get_time();
-        pExportJSON = COCKTAILEXPLORER_GetStationSettings();
+        pExportJSON = SETTINGSAPI_GetStationSettings();
         ESP_LOGI(TAG, "Get station settings time: %d ms", (int)(esp_timer_get_time() - u64Start) / 1000 );
     }
-    else if (strcmp(req->uri, API_GETSTATINGREDIENTSJSON_URI) == 0)
+    else if (strcmp(req->uri, APIURL_GETSTATINGREDIENTSJSON_URI) == 0)
     {
         const int64_t u64Start = esp_timer_get_time();
         pExportJSON = COCKTAILAPI_GetStatIngredients();
         ESP_LOGI(TAG, "Get stat ingredients time: %d ms", (int)(esp_timer_get_time() - u64Start) / 1000 );
     }
-    else if (strcmp(req->uri, API_GETINGREDIENTSLIQUIDSJSON_URI) == 0)
+    else if (strcmp(req->uri, APIURL_GETINGREDIENTSLIQUIDSJSON_URI) == 0)
     {
         const int64_t u64Start = esp_timer_get_time();
         pExportJSON = COCKTAILAPI_GetAllIngredients(true);
         ESP_LOGI(TAG, "Get all liquid ingredients time: %d ms", (int)(esp_timer_get_time() - u64Start) / 1000 );
     }
-    else if (strncmp(req->uri, API_GETAVAILABLEINGREDIENTSJSON_ID_URI, strlen(API_GETAVAILABLEINGREDIENTSJSON_ID_URI)) == 0)
+    else if (strncmp(req->uri, APIURL_GETAVAILABLEINGREDIENTSJSON_ID_URI, strlen(APIURL_GETAVAILABLEINGREDIENTSJSON_ID_URI)) == 0)
     {
         const int uriLen = strlen(req->uri);
-        const int n = strlen(API_GETAVAILABLEINGREDIENTSJSON_ID_URI);
+        const int n = strlen(APIURL_GETAVAILABLEINGREDIENTSJSON_ID_URI);
         if (n < uriLen)
         {
             char* param = req->uri + n;
@@ -315,7 +274,7 @@ static esp_err_t api_get_handler(httpd_req_t* req)
             pExportJSON = COCKTAILAPI_GetAllRecipes(recipeId);
         }
     }
-    else if (strcmp(req->uri, API_GETAVAILABLEINGREDIENTSJSON_URI) == 0)
+    else if (strcmp(req->uri, APIURL_GETAVAILABLEINGREDIENTSJSON_URI) == 0)
     {
         const int64_t u64Start = esp_timer_get_time();
         pExportJSON = COCKTAILAPI_GetAllAvailableIngredients();
@@ -352,7 +311,7 @@ static esp_err_t api_post_handler(httpd_req_t *req)
     m_u8Buffers[n] = '\0';
 
     ESP_LOGI(TAG, "api_post_handler, url: %s", req->uri);
-    if (strcmp(req->uri, API_IMPORTSETTINGSJSON_URI) == 0)
+    if (strcmp(req->uri, APIURL_IMPORTSETTINGSJSON_URI) == 0)
     {
         if (!NVSJSON_ImportJSON(&g_sSettingHandle, (const char*)m_u8Buffers))
         {
@@ -361,7 +320,7 @@ static esp_err_t api_post_handler(httpd_req_t *req)
         }
         ESP_LOGI(TAG, "Import settings");
     }
-    else if (strcmp(req->uri, API_IMPORTSTATIONSETTINGSJSON_URI) == 0)
+    else if (strcmp(req->uri, APIURL_IMPORTSTATIONSETTINGSJSON_URI) == 0)
     {
         if (!NVSJSON_ImportJSON(&g_sStationSettingHandle, (const char*)m_u8Buffers))
         {
@@ -370,27 +329,27 @@ static esp_err_t api_post_handler(httpd_req_t *req)
         }
         ESP_LOGI(TAG, "Import station settings");
     }
-    else if (strcmp(req->uri, API_ADDORDERJSON_URI) == 0)
+    else if (strcmp(req->uri, APIURL_ADDORDERJSON_URI) == 0)
     {
-        if (!HandleAddOrder((char*)m_u8Buffers, n))
+        if (!PRODUCTIONAPI_HandleOrder((char*)m_u8Buffers, n))
         {
             szError = "Unable to add order";
             goto ERROR;
         }
-        ESP_LOGI(TAG, "Request: %s handled with success", API_ADDORDERJSON_URI);
+        ESP_LOGI(TAG, "Request: %s handled with success", APIURL_ADDORDERJSON_URI);
     }
-    else if (strcmp(req->uri, API_SETSTATIONSETTINGSJSON_URI) == 0)
+    else if (strcmp(req->uri, APIURL_SETSTATIONSETTINGSJSON_URI) == 0)
     {
-        if (!COCKTAILEXPLORER_SetStationSettings((char*)m_u8Buffers, n))
+        if (!SETTINGSAPI_SetStationSettings((char*)m_u8Buffers, n))
         {
             szError = "Unable to save data";
             goto ERROR;
         }
         ESP_LOGI(TAG, "Set station settings");
     }
-    else if (strcmp(req->uri, API_SETNETWORKSETTINGSJSON_URI) == 0)
+    else if (strcmp(req->uri, APIURL_SETNETWORKSETTINGSJSON_URI) == 0)
     {
-        if (!SetNetworkSettings((char*)m_u8Buffers, n))
+        if (!SETTINGSAPI_SetNetworkSettings((char*)m_u8Buffers, n))
         {
             szError = "Unable to save data";
             goto ERROR;
@@ -549,416 +508,4 @@ static const EFEMBEDWWW_SFile* GetFile(const char* strFilename, uint32_t u32Len)
     }
 
     return NULL;
-}
-
-static char* GetSysInfo()
-{
-    cJSON* pRoot = NULL;
-
-    char buff[100];
-    pRoot = cJSON_CreateObject();
-    if (pRoot == NULL)
-        goto ERROR;
-
-    cJSON* pEntries = cJSON_AddArrayToObject(pRoot, "infos");
-
-    esp_chip_info_t sChipInfo;
-    esp_chip_info(&sChipInfo);
-
-    // Chip
-    cJSON* pEntryJSON0 = cJSON_CreateObject();
-    cJSON_AddItemToObject(pEntryJSON0, "name", cJSON_CreateString("Chip"));
-    cJSON_AddItemToObject(pEntryJSON0, "value", cJSON_CreateString(GetESPChipId(sChipInfo.model)));
-    cJSON_AddItemToArray(pEntries, pEntryJSON0);
-
-    // Firmware
-    cJSON* pEntryJSON1 = cJSON_CreateObject();
-    cJSON_AddItemToObject(pEntryJSON1, "name", cJSON_CreateString("Firmware"));
-    cJSON_AddItemToObject(pEntryJSON1, "value", cJSON_CreateString(esp_app_desc.version));
-    cJSON_AddItemToArray(pEntries, pEntryJSON1);
-
-    // Compile Time
-    cJSON* pEntryJSON2 = cJSON_CreateObject();
-    cJSON_AddItemToObject(pEntryJSON2, "name", cJSON_CreateString("Compile Time"));
-    sprintf(buff, "%s %s", /*0*/esp_app_desc.date, /*0*/esp_app_desc.time);
-    cJSON_AddItemToObject(pEntryJSON2, "value", cJSON_CreateString(buff));
-    cJSON_AddItemToArray(pEntries, pEntryJSON2);
-
-    // SHA256
-    cJSON* pEntryJSON3 = cJSON_CreateObject();
-    cJSON_AddItemToObject(pEntryJSON3, "name", cJSON_CreateString("SHA256"));
-    char elfSHA256[sizeof(esp_app_desc.app_elf_sha256)*2 + 1] = {0,};
-    ToHexString(elfSHA256, esp_app_desc.app_elf_sha256, sizeof(esp_app_desc.app_elf_sha256));
-    cJSON_AddItemToObject(pEntryJSON3, "value", cJSON_CreateString(elfSHA256));
-    cJSON_AddItemToArray(pEntries, pEntryJSON3);
-
-    // IDF
-    cJSON* pEntryJSON4 = cJSON_CreateObject();
-    cJSON_AddItemToObject(pEntryJSON4, "name", cJSON_CreateString("IDF"));
-    cJSON_AddItemToObject(pEntryJSON4, "value", cJSON_CreateString(esp_app_desc.idf_ver));
-    cJSON_AddItemToArray(pEntries, pEntryJSON4);
-
-    // WiFi-STA
-    uint8_t u8Macs[6];
-    cJSON* pEntryJSON6 = cJSON_CreateObject();
-    cJSON_AddItemToObject(pEntryJSON6, "name", cJSON_CreateString("WiFi.STA"));
-    esp_read_mac(u8Macs, ESP_MAC_WIFI_STA);
-    sprintf(buff, "%02X:%02X:%02X:%02X:%02X:%02X", /*0*/u8Macs[0], /*1*/u8Macs[1], /*2*/u8Macs[2], /*3*/u8Macs[3], /*4*/u8Macs[4], /*5*/u8Macs[5]);
-    cJSON_AddItemToObject(pEntryJSON6, "value", cJSON_CreateString(buff));
-    cJSON_AddItemToArray(pEntries, pEntryJSON6);
-
-    // WiFi-AP
-    cJSON* pEntryJSON5 = cJSON_CreateObject();
-    cJSON_AddItemToObject(pEntryJSON5, "name", cJSON_CreateString("WiFi.AP"));
-    esp_read_mac(u8Macs, ESP_MAC_WIFI_SOFTAP);
-    sprintf(buff, "%02X:%02X:%02X:%02X:%02X:%02X", /*0*/u8Macs[0], /*1*/u8Macs[1], /*2*/u8Macs[2], /*3*/u8Macs[3], /*4*/u8Macs[4], /*5*/u8Macs[5]);
-    cJSON_AddItemToObject(pEntryJSON5, "value", cJSON_CreateString(buff));
-    cJSON_AddItemToArray(pEntries, pEntryJSON5);
-
-    // WiFi-BT
-    cJSON* pEntryJSON7 = cJSON_CreateObject();
-    cJSON_AddItemToObject(pEntryJSON7, "name", cJSON_CreateString("WiFi.BT"));
-    esp_read_mac(u8Macs, ESP_MAC_BT);
-    sprintf(buff, "%02X:%02X:%02X:%02X:%02X:%02X", /*0*/u8Macs[0], /*1*/u8Macs[1], /*2*/u8Macs[2], /*3*/u8Macs[3], /*4*/u8Macs[4], /*5*/u8Macs[5]);
-    cJSON_AddItemToObject(pEntryJSON7, "value", cJSON_CreateString(buff));
-    cJSON_AddItemToArray(pEntries, pEntryJSON7);
-
-    // Memory (Internal)
-    cJSON* pEntryJSON8 = cJSON_CreateObject();
-    cJSON_AddItemToObject(pEntryJSON8, "name", cJSON_CreateString("Memory (all)"));
-    const int totalSize = heap_caps_get_total_size(MALLOC_CAP_8BIT);
-    const int usedSize = totalSize - heap_caps_get_free_size(MALLOC_CAP_8BIT);
-    sprintf(buff, "%d / %d", /*0*/usedSize, /*1*/totalSize);
-    cJSON_AddItemToObject(pEntryJSON8, "value", cJSON_CreateString(buff));
-    cJSON_AddItemToArray(pEntries, pEntryJSON8);
-
-    // Memory (External)
-    cJSON* pEntryJSON81 = cJSON_CreateObject();
-    multi_heap_info_t heap_infoExt;
-    heap_caps_get_info(&heap_infoExt, MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT);
-    const uint32_t u32TotalMemoryExt = heap_infoExt.total_free_bytes + heap_infoExt.total_allocated_bytes;
-    cJSON_AddItemToObject(pEntryJSON81, "name", cJSON_CreateString("Memory (external)"));
-    sprintf(buff, "%d / %d", /*0*/heap_infoExt.total_allocated_bytes, /*1*/u32TotalMemoryExt);
-    cJSON_AddItemToObject(pEntryJSON81, "value", cJSON_CreateString(buff));
-    cJSON_AddItemToArray(pEntries, pEntryJSON81);
-
-    // WiFi-station (IP address)
-    cJSON* pEntryJSON9 = cJSON_CreateObject();
-    cJSON_AddItemToObject(pEntryJSON9, "name", cJSON_CreateString("WiFi (STA)"));
-    esp_netif_ip_info_t wifiIpSta;
-    MAIN_GetWiFiSTAIP(&wifiIpSta);
-    sprintf(buff, IPSTR, IP2STR(&wifiIpSta.ip));
-    cJSON_AddItemToObject(pEntryJSON9, "value", cJSON_CreateString(buff));
-    cJSON_AddItemToArray(pEntries, pEntryJSON9);
-
-    // WiFi-Soft AP (IP address)
-    cJSON* pEntryJSON10 = cJSON_CreateObject();
-    cJSON_AddItemToObject(pEntryJSON10, "name", cJSON_CreateString("WiFi (Soft-AP)"));
-    esp_netif_ip_info_t wifiIpSoftAP;
-    MAIN_GetWiFiSoftAPIP(&wifiIpSoftAP);
-    sprintf(buff, IPSTR, IP2STR(&wifiIpSoftAP.ip));
-    cJSON_AddItemToObject(pEntryJSON10, "value", cJSON_CreateString(buff));
-    cJSON_AddItemToArray(pEntries, pEntryJSON10);
-
-    char* pStr =  cJSON_PrintUnformatted(pRoot);
-    cJSON_Delete(pRoot);
-    return pStr;
-    ERROR:
-    if (pRoot != NULL)
-        cJSON_Delete(pRoot);
-    return NULL;
-}
-
-static char* GetStatus()
-{
-    cJSON* pRoot = NULL;
-
-    char buff[100];
-    pRoot = cJSON_CreateObject();
-    if (pRoot == NULL)
-        goto ERROR;
-
-    const CONTROL_SInfo sInfo = CONTROL_GetInfos();
-
-    cJSON_AddItemToObject(pRoot, "recipe_id", cJSON_CreateNumber(sInfo.u32RecipeId));
-    cJSON_AddItemToObject(pRoot, "state", cJSON_CreateNumber(sInfo.eState));
-    cJSON_AddItemToObject(pRoot, "is_cancel_request", cJSON_CreateBool(sInfo.bIsCancelRequest));
-    cJSON_AddItemToObject(pRoot, "x", cJSON_CreateNumber(sInfo.s32X));
-    cJSON_AddItemToObject(pRoot, "z", cJSON_CreateNumber(sInfo.s32Z));
-    cJSON_AddItemToObject(pRoot, "y", cJSON_CreateNumber(sInfo.s32Y));
-    cJSON_AddItemToObject(pRoot, "percent", cJSON_CreateNumber(sInfo.dPercent));
-    cJSON_AddItemToObject(pRoot, "backlog_count", cJSON_CreateNumber(sInfo.u32BacklogCount));
-
-    char* pStr = cJSON_PrintUnformatted(pRoot);
-    cJSON_Delete(pRoot);
-    return pStr;
-    ERROR:
-    if (pRoot != NULL)
-        cJSON_Delete(pRoot);
-    return NULL;
-}
-
-static char* GetNetworkSettings()
-{
-    cJSON* pRoot = NULL;
-    pRoot = cJSON_CreateObject();
-    if (pRoot == NULL)
-        goto ERROR;
-
-    // Soft Access Point config
-    wifi_config_t wifi_configSAP;
-    esp_wifi_get_config(WIFI_IF_AP, &wifi_configSAP);
-
-    cJSON* pNewWiFiSap = cJSON_CreateObject();
-    cJSON_AddItemToObject(pNewWiFiSap, "ssid", cJSON_CreateString((char*)wifi_configSAP.ap.ssid));
-    cJSON_AddItemToObject(pRoot, "wifi_sap", pNewWiFiSap);
-
-    cJSON* pNewWiFiSTA = cJSON_CreateObject();
-    char wifiSTASSID[32+1];
-    size_t wifiSTASSIDLength = 32;
-    NVSJSON_GetValueString(&g_sSettingHandle, SETTINGS_EENTRY_WSTASSID, (char*)wifiSTASSID, &wifiSTASSIDLength);
-    const bool bIsWifiSTAActive = NVSJSON_GetValueInt32(&g_sSettingHandle, SETTINGS_EENTRY_WSTAIsActive) == true;
-    cJSON_AddItemToObject(pNewWiFiSTA, "is_active", cJSON_CreateBool(bIsWifiSTAActive));
-    cJSON_AddItemToObject(pNewWiFiSTA, "ssid", cJSON_CreateString(wifiSTASSID));
-    cJSON_AddItemToObject(pRoot, "wifi_sta", pNewWiFiSTA);
-
-    char* pStr =  cJSON_PrintUnformatted(pRoot);
-    cJSON_Delete(pRoot);
-    return pStr;
-    ERROR:
-    if (pRoot != NULL)
-        cJSON_Delete(pRoot);
-    return NULL;
-}
-
-static bool SetNetworkSettings(const char* szJSON, uint32_t u32Length)
-{
-    const char* szError = NULL;
-
-    cJSON* pRoot = cJSON_ParseWithLength(szJSON, u32Length);
-
-    cJSON* pWifiSAP_Password = NULL;
-
-    cJSON* pWifiSTA_IsActive = NULL;
-    cJSON* pWifiSTA_SSID = NULL;
-    cJSON* pWifiSTA_Password = NULL;
-
-    // If not specified, just ignore
-    cJSON* pWifiSAP = cJSON_GetObjectItemCaseSensitive(pRoot, "wifi_sap");
-    if (pWifiSAP != NULL)
-    {
-        pWifiSAP_Password = cJSON_GetObjectItemCaseSensitive(pWifiSAP, "password");
-        if (pWifiSAP_Password == NULL || cJSON_IsNull(pWifiSAP_Password))
-            pWifiSAP_Password = NULL;
-        else if (!cJSON_IsString(pWifiSAP_Password))
-        {
-            szError = "SAP password field is invalid";
-            goto ERROR;
-        }
-    }
-
-    // If not specified, just ignore
-    cJSON* pWifiSTA = cJSON_GetObjectItemCaseSensitive(pRoot, "wifi_sta");
-    if (pWifiSTA != NULL)
-    {
-        pWifiSTA_IsActive = cJSON_GetObjectItemCaseSensitive(pWifiSTA, "is_active");
-
-        if (pWifiSTA_IsActive == NULL || cJSON_IsNull(pWifiSTA_IsActive))
-            pWifiSTA_IsActive = NULL;
-        else if (!cJSON_IsBool(pWifiSTA_IsActive))
-        {
-            szError = "STA is active field is invalid";
-            goto ERROR;
-        }
-
-        pWifiSTA_SSID = cJSON_GetObjectItemCaseSensitive(pWifiSTA, "ssid");
-        if (pWifiSTA_SSID == NULL || cJSON_IsNull(pWifiSTA_SSID))
-            pWifiSTA_SSID = NULL;
-        else if (!cJSON_IsString(pWifiSTA_SSID))
-        {
-            szError = "STA SSID field is invalid";
-            goto ERROR;
-        }
-
-        pWifiSTA_Password = cJSON_GetObjectItemCaseSensitive(pWifiSTA, "password");
-        if (pWifiSTA_Password == NULL || cJSON_IsNull(pWifiSTA_Password))
-            pWifiSTA_Password = NULL;
-        else if (!cJSON_IsString(pWifiSTA_Password))
-        {
-            szError = "STA password field is invalid";
-            goto ERROR;
-        }
-    }
-
-    // Check if value are valids
-    for(int isDryRun = 1; isDryRun >= 0; isDryRun--)
-    {
-        if (pWifiSAP_Password != NULL)
-            if (NVSJSON_SetValueString(&g_sSettingHandle, SETTINGS_EENTRY_WAPPass, (bool)isDryRun, pWifiSAP_Password->valuestring) != NVSJSON_ESETRET_OK)
-            {
-                szError = "WAP password is invalid";
-                goto ERROR;
-            }
-
-        if (pWifiSTA_IsActive != NULL)
-            if (NVSJSON_SetValueInt32(&g_sSettingHandle, SETTINGS_EENTRY_WSTAIsActive, (bool)isDryRun, pWifiSTA_IsActive->valueint) != NVSJSON_ESETRET_OK)
-            {
-                szError = "STA SSID is invalid";
-                goto ERROR;
-            }
-
-        if (pWifiSTA_SSID != NULL)
-            if (NVSJSON_SetValueString(&g_sSettingHandle, SETTINGS_EENTRY_WSTASSID, (bool)isDryRun, pWifiSTA_SSID->valuestring) != NVSJSON_ESETRET_OK)
-            {
-                szError = "STA SSID is invalid";
-                goto ERROR;
-            }
-
-        if (pWifiSTA_Password != NULL)
-            if (NVSJSON_SetValueString(&g_sSettingHandle, SETTINGS_EENTRY_WSTAPass, (bool)isDryRun, pWifiSTA_Password->valuestring) != NVSJSON_ESETRET_OK)
-            {
-                szError = "STA password is invalid";
-                goto ERROR;
-            }
-    }
-
-    cJSON_Delete(pRoot);
-    return true;
-    ERROR:
-    if (szError != NULL)
-        ESP_LOGE(TAG, "Error: %s", szError);
-    if (pRoot != NULL)
-        cJSON_Delete(pRoot);
-    return false;
-}
-
-static bool HandleAddOrder(const char* szData, uint32_t u32Length)
-{
-    const char* szError = NULL;
-    cJSON* pRoot = cJSON_ParseWithLength(szData, u32Length);
-    if (pRoot == NULL)
-    {
-        szError = "unable to decode json";
-        goto ERROR;
-    }
-
-    cJSON* pOrder_recipeid = cJSON_GetObjectItemCaseSensitive(pRoot, "recipe_id");
-    if (pOrder_recipeid == NULL || !cJSON_IsNumber(pOrder_recipeid))
-    {
-        szError = "recipe_id is missing from json";
-        goto ERROR;
-    }
-
-    CONTROL_SOrder sOrder = {
-        .u32RecipeId = 0,
-        .u32MakerStepCount = 0
-    };
-
-    // Recipe isn't mandatory
-    const cocktaildb_Recipe* pRecipe = NULL;
-    if (pOrder_recipeid->valueint > 0)
-    {
-        pRecipe = COCKTAILEXPLORER_GetRecipe(pOrder_recipeid->valueint);
-        if (pRecipe == NULL)
-        {
-            szError = "cannot find recipe";
-            goto ERROR;
-        }
-    }
-
-    cJSON* pOrder_steps = cJSON_GetObjectItemCaseSensitive(pRoot, "steps");
-    if (pOrder_steps == NULL || !cJSON_IsArray(pOrder_steps))
-    {
-        szError = "steps is missing from json";
-        goto ERROR;
-    }
-
-    sOrder.u32RecipeId = (uint32_t)pOrder_recipeid->valueint;
-    sOrder.u32MakerStepCount = 0;
-
-    const cJSON* pOrder_stepItem = NULL;
-    cJSON_ArrayForEach(pOrder_stepItem, pOrder_steps)
-    {
-        const cJSON* pingredient_id = cJSON_GetObjectItemCaseSensitive(pOrder_stepItem, "ingredient_id");
-        if (pingredient_id == NULL || !cJSON_IsNumber(pingredient_id))
-        {
-            szError = "ingredient_id cannot be found in JSON";
-            goto ERROR;
-        }
-
-        // Find ingredient id and station related to it
-        uint32_t u32StationId = 0;
-        const cocktaildb_Ingredient* pIngredient = COCKTAILEXPLORER_GetAvailableIngredient(pingredient_id->valueint, &u32StationId);
-        if (pIngredient == NULL)
-        {
-            szError = "cannot find the ingredient loaded into an existing station";
-            goto ERROR;
-        }
-
-        const cJSON* pQty_ml = cJSON_GetObjectItemCaseSensitive(pOrder_stepItem, "qty_ml");
-        if (pQty_ml == NULL || !cJSON_IsNumber(pQty_ml))
-        {
-            szError = "qty_ml cannot be found in JSON";
-            goto ERROR;
-        }
-
-        if (pQty_ml->valueint <= 0 || pQty_ml->valueint > 1000)
-        {
-            szError = "quantity (ml) is not valid";
-            goto ERROR;
-        }
-
-        CONTROL_MakerStep* pMakerStep = &sOrder.sMakerSteps[sOrder.u32MakerStepCount];
-        // Find station by ingredient
-        pMakerStep->u32StationID = u32StationId;
-        pMakerStep->u32Qty_ml = pQty_ml->valueint;
-        sOrder.u32MakerStepCount++;
-    }
-
-    if (sOrder.u32MakerStepCount == 0)
-    {
-        szError = "No steps";
-        goto ERROR;
-    }
-
-    if (!CONTROL_QueueOrder(&sOrder))
-    {
-        szError = "Order list is full";
-        goto ERROR;
-    }
-
-    ESP_LOGI(TAG, "Order added to queue");
-
-    cJSON_Delete(pRoot);
-    return true;
-    ERROR:
-    if (szError != NULL)
-        ESP_LOGE(TAG, "Error: %s", szError);
-    if (pRoot != NULL)
-        cJSON_Delete(pRoot);
-    return false;
-}
-
-static void ToHexString(char *dstHexString, const uint8_t* data, uint32_t u32Length)
-{
-    for (uint32_t i = 0; i < u32Length; i++)
-        sprintf(dstHexString + (i * 2), "%02X", data[i]);
-}
-
-static const char* GetESPChipId(esp_chip_model_t eChipid)
-{
-    switch(eChipid)
-    {
-        case CHIP_ESP32:
-            return "ESP32";
-        case CHIP_ESP32S2:
-            return "ESP32-S2";
-        case CHIP_ESP32C3:
-            return "ESP32-C3";
-        case CHIP_ESP32S3:
-            return "ESP32-S3";
-        case CHIP_ESP32H2:
-            return "ESP32-H2";
-    }
-    return "";
 }

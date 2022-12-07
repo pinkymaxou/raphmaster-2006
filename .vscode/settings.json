@@ -11,6 +11,8 @@
         "control.h": "c",
         "hwconfig.h": "c",
         "cocktailapi.h": "c",
-        "embedcocktaildb.h": "c"
+        "embedcocktaildb.h": "c",
+        "productionapi.h": "c",
+        "miscapi.h": "c"
     }
 }

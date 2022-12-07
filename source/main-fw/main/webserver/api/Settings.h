@@ -4,8 +4,18 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-char* COCKTAILEXPLORER_GetStationSettings();
+/* ==========================
+   Station Settings
+   ========================== */
+char* SETTINGSAPI_GetStationSettings();
 
-bool COCKTAILEXPLORER_SetStationSettings(const char* szRequestBuffer, uint32_t u32Length);
+bool SETTINGSAPI_SetStationSettings(const char* szRequestBuffer, uint32_t u32Length);
+
+/* ==========================
+   Network Settings
+   ========================== */
+bool SETTINGSAPI_SetNetworkSettings(const char* szJSON, uint32_t u32Length);
+
+char* SETTINGSAPI_GetNetworkSettings();
 
 #endif

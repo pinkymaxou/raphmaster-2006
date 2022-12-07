@@ -55,7 +55,7 @@ const cocktaildb_RecipeFile* COCKTAILEXPLORER_GetRecipeFile()
     return m_psRecipeFile;
 }
 
-const cocktaildb_Ingredient* COCKTAILEXPLORER_GetIngredient(uint32_t u32ID)
+const cocktaildb_Ingredient* COCKTAILEXPLORER_GetIngredientById(uint32_t u32ID)
 {
     for(int i = 0; i < m_psIngredientFile->ingredient_entries_count; i++)
     {
@@ -67,7 +67,7 @@ const cocktaildb_Ingredient* COCKTAILEXPLORER_GetIngredient(uint32_t u32ID)
     return NULL;
 }
 
-const cocktaildb_Recipe* COCKTAILEXPLORER_GetRecipe(uint32_t u32ID)
+const cocktaildb_Recipe* COCKTAILEXPLORER_GetRecipeById(uint32_t u32ID)
 {
     for(int i = 0; i < m_psRecipeFile->entries_count; i++)
     {
@@ -88,7 +88,7 @@ const cocktaildb_Ingredient* COCKTAILEXPLORER_GetAvailableIngredient(uint32_t in
         if (s32IngredientId != ingredient_id)
             continue;
 
-        const cocktaildb_Ingredient* pIngredient = COCKTAILEXPLORER_GetIngredientFile((uint32_t)s32IngredientId);
+        const cocktaildb_Ingredient* pIngredient = COCKTAILEXPLORER_GetIngredientById((uint32_t)s32IngredientId);
         if (pIngredient == NULL || !COCKTAILEXPLORER_IsIngredientLiquid(pIngredient))
             continue;
 
@@ -113,7 +113,7 @@ uint32_t COCKTAILEXPLORER_GetAvailableIngredients(const cocktaildb_Ingredient* s
         int32_t s32IngredientId = STATIONSETTINGS_GetValue(stationId, STATIONSETTINGS_ESTATIONSET_LoadID);
         if (s32IngredientId == 0)
             continue;
-        const cocktaildb_Ingredient* pIngredient = COCKTAILEXPLORER_GetIngredientFile((uint32_t)s32IngredientId);
+        const cocktaildb_Ingredient* pIngredient = COCKTAILEXPLORER_GetIngredientById((uint32_t)s32IngredientId);
          if (pIngredient == NULL || !COCKTAILEXPLORER_IsIngredientLiquid(pIngredient))
             continue;
         sAvailableIngredientIds[u32Count] = pIngredient;

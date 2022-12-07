@@ -11,9 +11,9 @@ void COCKTAILEXPLORER_Init();
 
 // void COCKTAILEXPLORER_ReleaseLock();
 
-const cocktaildb_Ingredient* COCKTAILEXPLORER_GetIngredient(uint32_t u32ID);
+const cocktaildb_Ingredient* COCKTAILEXPLORER_GetIngredientById(uint32_t u32ID);
 
-const cocktaildb_Recipe* COCKTAILEXPLORER_GetRecipe(uint32_t u32ID);
+const cocktaildb_Recipe* COCKTAILEXPLORER_GetRecipeById(uint32_t u32ID);
 
 const cocktaildb_Ingredient* COCKTAILEXPLORER_GetAvailableIngredient(uint32_t ingredient_id, uint32_t* pu32StationId);
 
