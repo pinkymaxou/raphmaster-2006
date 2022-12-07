@@ -1,5 +1,5 @@
-#ifndef _SETTINGS_H_
-#define _SETTINGS_H_
+#ifndef _SETTINGSAPI_H_
+#define _SETTINGSAPI_H_
 
 #include <stdint.h>
 #include <stdbool.h>

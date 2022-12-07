@@ -18,7 +18,7 @@
 #include "HardwareGPIO.h"
 #include "CocktailExplorer.h"
 #include "api/CocktailApi.h"
-#include "api/Settings.h"
+#include "api/SettingsApi.h"
 #include "api/ProductionApi.h"
 #include "api/MiscApi.h"
 
@@ -137,9 +137,8 @@ static esp_err_t file_get_handler(httpd_req_t *req)
     else {
         pFile = GetFile(req->uri+1, pathlen - 1);
 
-        if (pFile != NULL) {
+        if (pFile != NULL)
             httpd_resp_set_hdr(req, "Cache-Control", "public, max-age=3600");
-        }
     }
 
     if (pFile == NULL)
