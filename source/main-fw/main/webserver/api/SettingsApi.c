@@ -7,7 +7,7 @@
 #include "../../StationSettings.h"
 #include "../../CocktailExplorer.h"
 
-#define TAG "API/Settings"
+#define TAG "API/SettingsApi"
 
 char* SETTINGSAPI_GetStationSettings()
 {
