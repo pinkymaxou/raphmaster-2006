@@ -200,6 +200,10 @@ static esp_err_t file_post_handler(httpd_req_t *req)
     {
         esp_restart();
     }
+    else if (strcmp(req->uri, APIURL_ACTION_POST_CANCEL) == 0)
+    {
+        CONTROL_Cancel();
+    }
     else
     {
         goto ERROR;

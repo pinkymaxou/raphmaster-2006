@@ -19,21 +19,21 @@ typedef struct
 
 typedef enum
 {
-  EFEMBEDWWW_EFILE_INDEX_HTML = 0,    /*!< @brief File: index.html (size: 1.7 KB) */
+  EFEMBEDWWW_EFILE_INDEX_HTML = 0,    /*!< @brief File: index.html (size: 1.8 KB) */
   EFEMBEDWWW_EFILE_CSS_BUTTON_CSS = 1,    /*!< @brief File: css/button.css (size: 2.0 KB) */
   EFEMBEDWWW_EFILE_CSS_CONTENT_CSS = 2,    /*!< @brief File: css/content.css (size: 5.4 KB) */
   EFEMBEDWWW_EFILE_CSS_GENERAL_CSS = 3,    /*!< @brief File: css/general.css (size: 1.6 KB) */
   EFEMBEDWWW_EFILE_JS_VIEWS_ABOUTPAGE_JS = 4,    /*!< @brief File: js/views/AboutPage.js (size: 1.9 KB) */
-  EFEMBEDWWW_EFILE_JS_VIEWS_ABSTRACTVIEW_JS = 5,    /*!< @brief File: js/views/AbstractView.js (size: 249 B) */
-  EFEMBEDWWW_EFILE_JS_APP_JS = 6,    /*!< @brief File: js/app.js (size: 5.2 KB) */
-  EFEMBEDWWW_EFILE_JS_VIEWS_CALIBPAGE_JS = 7,    /*!< @brief File: js/views/CalibPage.js (size: 5.5 KB) */
-  EFEMBEDWWW_EFILE_JS_VIEWS_CUSTOMCOCKTAILPAGE_JS = 8,    /*!< @brief File: js/views/CustomCocktailPage.js (size: 8.0 KB) */
-  EFEMBEDWWW_EFILE_JS_VIEWS_LISTCOCKTAILPAGE_JS = 9,    /*!< @brief File: js/views/ListCocktailPage.js (size: 6.5 KB) */
-  EFEMBEDWWW_EFILE_JS_VIEWS_NETWORKPAGE_JS = 10,    /*!< @brief File: js/views/NetworkPage.js (size: 5.0 KB) */
-  EFEMBEDWWW_EFILE_JS_ROUTER_JS = 11,    /*!< @brief File: js/router.js (size: 2.5 KB) */
-  EFEMBEDWWW_EFILE_JS_VIEWS_STATIONSETTINGSPAGE_JS = 12,    /*!< @brief File: js/views/StationSettingsPage.js (size: 6.4 KB) */
-  EFEMBEDWWW_EFILE_JS_VIEWS_STATUSPAGE_JS = 13,    /*!< @brief File: js/views/StatusPage.js (size: 1.1 KB) */
-  EFEMBEDWWW_EFILE_JS_VUE_MIN_JS = 14,    /*!< @brief File: js/vue.min.js (size: 104.8 KB) */
+  EFEMBEDWWW_EFILE_JS_VIEWS_ABSTRACTVIEW_JS = 5,    /*!< @brief File: js/views/AbstractView.js (size: 284 B) */
+  EFEMBEDWWW_EFILE_JS_APICONST_JS = 6,    /*!< @brief File: js/apiconst.js (size: 1.4 KB) */
+  EFEMBEDWWW_EFILE_JS_APP_JS = 7,    /*!< @brief File: js/app.js (size: 4.0 KB) */
+  EFEMBEDWWW_EFILE_JS_VIEWS_CALIBPAGE_JS = 8,    /*!< @brief File: js/views/CalibPage.js (size: 5.5 KB) */
+  EFEMBEDWWW_EFILE_JS_VIEWS_CUSTOMCOCKTAILPAGE_JS = 9,    /*!< @brief File: js/views/CustomCocktailPage.js (size: 8.0 KB) */
+  EFEMBEDWWW_EFILE_JS_VIEWS_LISTCOCKTAILPAGE_JS = 10,    /*!< @brief File: js/views/ListCocktailPage.js (size: 6.5 KB) */
+  EFEMBEDWWW_EFILE_JS_VIEWS_NETWORKPAGE_JS = 11,    /*!< @brief File: js/views/NetworkPage.js (size: 5.0 KB) */
+  EFEMBEDWWW_EFILE_JS_ROUTER_JS = 12,    /*!< @brief File: js/router.js (size: 2.7 KB) */
+  EFEMBEDWWW_EFILE_JS_VIEWS_STATIONSETTINGSPAGE_JS = 13,    /*!< @brief File: js/views/StationSettingsPage.js (size: 6.4 KB) */
+  EFEMBEDWWW_EFILE_JS_VIEWS_STATUSPAGE_JS = 14,    /*!< @brief File: js/views/StatusPage.js (size: 3.0 KB) */
   EFEMBEDWWW_EFILE_FAVICON_ICO = 15,    /*!< @brief File: favicon.ico (size: 15.0 KB) */
   EFEMBEDWWW_EFILE_IMG_C_AMARETTO_SOUR_JPG = 16,    /*!< @brief File: img/c/amaretto-sour.jpg (size: 3.5 KB) */
   EFEMBEDWWW_EFILE_IMG_C_APEROL_SPRITZ_JPG = 17,    /*!< @brief File: img/c/aperol_spritz.jpg (size: 5.1 KB) */

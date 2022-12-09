@@ -26,6 +26,8 @@ const navigateTo = url => {
 
 window.navigateTo = navigateTo;
 
+let m_currentView = null;
+
 const router = async () => {
     const routes = [
         { path: "/", view: StatusPage },
@@ -57,11 +59,18 @@ const router = async () => {
     }
 
     const view = new match.route.view(getParams(match));
+    if (m_currentView) {
+        if (m_currentView.unloaded) {
+            await m_currentView.unloaded();
+        }
+        m_currentView = null;
+    }
 
     document.querySelector("#app").innerHTML = await view.getHtml();
     if (view.loaded) {
         await view.loaded();
     }
+    m_currentView = view;
 };
 
 window.addEventListener("popstate", router);

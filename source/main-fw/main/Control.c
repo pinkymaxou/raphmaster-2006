@@ -304,9 +304,15 @@ static void ControlThreadRun(void* pParam)
         m_sHandle.eState = CONTROL_ESTATE_IdleWaitingForOrder;
         goto END;
         CANCEL:
+        m_sHandle.dPercent = 1.0d;
         m_sHandle.eState = CONTROL_ESTATE_Cancelled;
         HARDWAREGPIO_EnableAllSteppers(false);
         ESP_LOGE(TAG, "Cancelling order");
+        vTaskDelay(pdMS_TO_TICKS(5000));
+        m_sHandle.bIsCancelRequest = false;
+        m_sHandle.eState = CONTROL_ESTATE_IdleWaitingForOrder;
+        m_sHandle.dPercent = 0.0d;
+        ESP_LOGI(TAG, "Cancel done");
         END:
         // Leave some time, we want the poor idle tasks to have some time
         vTaskDelay(1);

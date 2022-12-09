@@ -11,6 +11,10 @@ export default class {
 
     }
 
+    async unloaded() {
+
+    }
+
     async getHtml() {
         return "test12345";
     }

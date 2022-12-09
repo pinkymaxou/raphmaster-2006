@@ -28,5 +28,6 @@
 #define APIURL_GETSTATUSJSON_URI "/api/getstatus"
 
 #define APIURL_ACTION_POST_REBOOT "/action/reboot"
+#define APIURL_ACTION_POST_CANCEL "/action/cancel"
 
 #endif
