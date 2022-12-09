@@ -163,6 +163,8 @@ function getControlPrettyStepString(controlStep)
     return "-/-"
 }
 
+// const g_eventStatusUpdate = new );
+
 async function timerHandler() {
 
     // Get system informations
@@ -173,12 +175,17 @@ async function timerHandler() {
             }
             return response.json();
         })
-        .then((data) => 
+        .then((data) =>
         {
-            console.log("data", data);
+            //console.log("data", data);
+            document.dispatchEvent(new CustomEvent('status_update', {
+                detail: { status : data },
+                cancelable: true
+              }));
+
             setTimeout(timerHandler, 500);
         })
-        .catch((ex) => 
+        .catch((ex) =>
         {
             setTimeout(timerHandler, 5000);
             console.error('getstatus', ex);
