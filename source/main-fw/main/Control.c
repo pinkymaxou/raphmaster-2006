@@ -304,6 +304,7 @@ static void ControlThreadRun(void* pParam)
         m_sHandle.eState = CONTROL_ESTATE_IdleWaitingForOrder;
         goto END;
         CANCEL:
+        m_sHandle.dPercent = 1.0d;
         m_sHandle.eState = CONTROL_ESTATE_Cancelled;
         HARDWAREGPIO_EnableAllSteppers(false);
         ESP_LOGE(TAG, "Cancelling order");

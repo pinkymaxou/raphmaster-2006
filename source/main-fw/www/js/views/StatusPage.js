@@ -28,6 +28,27 @@ export default class extends AbstractView {
     async loaded() {
         document.addEventListener("status_update", this.onStatusUpdate);
         console.log("status loaded");
+        
+        let idBtCancel = document.querySelector("#idBtCancel");
+        idBtCancel.addEventListener("click", event =>
+        {
+            // Save
+            fetch('/action/cancel', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: "",
+                })
+            .then((data) => {
+                console.log('Success:', data);
+                alert("Success!");
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert("Error ! : " + error);
+            });
+        });
     }
 
     async unloaded() {
@@ -39,7 +60,7 @@ export default class extends AbstractView {
         return `
         <div id="idStatus" class="status_container">
             <div style="display: flex; flex-direction: row;">
-                <div id="idAnimation" class="lds-dual-ring" style="margin-top: 10px;"></div>
+                <div id="idAnimation" class="lds-dual-ring" style="margin-top: 10px; display: none;"></div>
                 <div id="idUserInstruction" class="status_userinstruction">
                     ---
                 </div>
@@ -47,7 +68,7 @@ export default class extends AbstractView {
             <p class="status_cocktailname">Sex on the beach</b></p>
             <div class="status_progress_container">
                 <div class="progress-bar" style="margin-right: 10px;">
-                    <span id="idProgressBar" class="progress-bar-fill" style="width: 0%; display: none"></span>
+                    <span id="idProgressBar" class="progress-bar-fill" style="width: 0%;"></span>
                 </div>
                 <button id="idBtCancel" class="button-cancel" disabled>Cancel</button>
             </div>
