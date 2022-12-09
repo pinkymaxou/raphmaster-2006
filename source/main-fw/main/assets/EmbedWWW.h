@@ -33,7 +33,7 @@ typedef enum
   EFEMBEDWWW_EFILE_JS_VIEWS_NETWORKPAGE_JS = 11,    /*!< @brief File: js/views/NetworkPage.js (size: 5.0 KB) */
   EFEMBEDWWW_EFILE_JS_ROUTER_JS = 12,    /*!< @brief File: js/router.js (size: 2.7 KB) */
   EFEMBEDWWW_EFILE_JS_VIEWS_STATIONSETTINGSPAGE_JS = 13,    /*!< @brief File: js/views/StationSettingsPage.js (size: 6.4 KB) */
-  EFEMBEDWWW_EFILE_JS_VIEWS_STATUSPAGE_JS = 14,    /*!< @brief File: js/views/StatusPage.js (size: 3.1 KB) */
+  EFEMBEDWWW_EFILE_JS_VIEWS_STATUSPAGE_JS = 14,    /*!< @brief File: js/views/StatusPage.js (size: 3.0 KB) */
   EFEMBEDWWW_EFILE_FAVICON_ICO = 15,    /*!< @brief File: favicon.ico (size: 15.0 KB) */
   EFEMBEDWWW_EFILE_IMG_C_AMARETTO_SOUR_JPG = 16,    /*!< @brief File: img/c/amaretto-sour.jpg (size: 3.5 KB) */
   EFEMBEDWWW_EFILE_IMG_C_APEROL_SPRITZ_JPG = 17,    /*!< @brief File: img/c/aperol_spritz.jpg (size: 5.1 KB) */

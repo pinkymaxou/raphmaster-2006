@@ -311,6 +311,7 @@ static void ControlThreadRun(void* pParam)
         vTaskDelay(pdMS_TO_TICKS(5000));
         m_sHandle.bIsCancelRequest = false;
         m_sHandle.eState = CONTROL_ESTATE_IdleWaitingForOrder;
+        m_sHandle.dPercent = 0.0d;
         ESP_LOGI(TAG, "Cancel done");
         END:
         // Leave some time, we want the poor idle tasks to have some time

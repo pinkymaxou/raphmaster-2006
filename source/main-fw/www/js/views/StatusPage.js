@@ -28,7 +28,7 @@ export default class extends AbstractView {
     async loaded() {
         document.addEventListener("status_update", this.onStatusUpdate);
         console.log("status loaded");
-        
+
         let idBtCancel = document.querySelector("#idBtCancel");
         idBtCancel.addEventListener("click", event =>
         {
@@ -42,11 +42,9 @@ export default class extends AbstractView {
                 })
             .then((data) => {
                 console.log('Success:', data);
-                alert("Success!");
             })
             .catch((error) => {
                 console.error('Error:', error);
-                alert("Error ! : " + error);
             });
         });
     }
