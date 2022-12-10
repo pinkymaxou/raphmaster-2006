@@ -815,6 +815,31 @@
     ]
   },
   {
+    "name": "Gin tonic",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Gin",
+        "qty": "2 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "dry gin", "gin" ]
+      },
+      {
+        "name": "Canada Dry",
+        "qty": "6 oz",
+        "type": "liquid_filler",
+        "categories": [ "soda tonic", "tonic" ]
+      },
+      {
+        "name": "Lime wedge",
+        "qty": "1",
+        "type": "fruit_or_vegetable",
+        "is_garnish": true
+      }
+    ]
+  },
+  {
     "name": "French 75",
     "img": "",
     "is_cocktail": true,
@@ -1004,6 +1029,38 @@
     ]
   },
   {
+    "name": "Cosmospolitan",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Vodka",
+        "upc_code": "00627987202564",
+        "qty": "1.5 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "vodka" ]
+      },
+      {
+        "name": "Triple sec",
+        "qty": "1/2 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "citrus juice", "juice" ]
+      },
+      {
+        "name": "Cranberry juice",
+        "qty": "2 oz",
+        "type": "liquid_filler",
+        "categories": [ "cranberry juice", "juice" ]
+      },
+      {
+        "name": "Lemon juice",
+        "qty": "1 oz",
+        "type": "liquid_filler",
+        "categories": [ "juice", "lemon juice" ]
+      }
+    ]
+  },
+  {
     "name": "New-York sour",
     "img": "",
     "is_cocktail": true,
@@ -1048,6 +1105,62 @@
         "qty": "1",
         "type": "fruit_or_vegetable",
         "is_garnish": true
+      }
+    ]
+  },
+  {
+    "name": "Old Fashioned",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Bourbon",
+        "qty": "2 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "bourbon", "whiskey" ]
+      },
+      {
+        "name": "Demerara sugar syrup",
+        "qty": "1 oz",
+        "type": "liquid_filler"
+      },
+      {
+        "name": "Bitters",
+        "qty": "2 drop",
+        "type": "flavoring",
+        "categories": [ "bitter flavor", "flavor" ]
+      },
+      {
+        "name": "Orange wedge",
+        "qty": "2",
+        "type": "fruit_or_vegetable",
+        "is_garnish": true
+      }
+    ]
+  },
+  {
+    "name": "White Russian",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Vodka",
+        "upc_code": "00627987202564",
+        "qty": "1.5 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "vodka" ]
+      },
+      {
+        "name": "Tia Maria",
+        "qty": "0.5 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "coffe liqueur", "liqueur" ]
+      },
+      {
+        "name": "Sweetened Condensed Milk",
+        "qty": "1 oz",
+        "type": "liquid_filler",
+        "categories": [ "sweetened condensed milk", "milk" ]
       }
     ]
   }
