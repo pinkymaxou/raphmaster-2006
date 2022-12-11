@@ -1542,19 +1542,19 @@
       },
       {
         "name": "Lemon juice",
-        "qty": "1 squeeze",
+        "qty": "1 oz",
         "type": "liquid_filler",
         "categories": [ "lemon juice", "juice" ]
       },
       {
         "name": "Grape vodka",
-        "qty": "1 squeeze",
+        "qty": "1 oz",
         "type": "liquid_filler",
         "categories": [ "grape vodka", "vodka" ]
       },
       {
         "name": "Strawberry vodka",
-        "qty": "1 squeeze",
+        "qty": "1 oz",
         "type": "liquid_filler",
         "categories": [ "strawberry vodka", "vodka" ]
       }
