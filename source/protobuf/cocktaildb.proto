@@ -58,7 +58,7 @@ enum EUnit
 	unitary = 1; 	
 	
 	liquidML = 2;	// Milliliter
-	liquidoz = 3;			// Ounce
+	liquidoz = 3;	// Ounce
 	cup = 4;		// Cup
 	
 	pinch = 6;		// Fingertip quantity
@@ -67,6 +67,7 @@ enum EUnit
 	tablespoon = 9;	// 14 ml (1/2 oz)
 	dash = 10;		// 1 ml
 	drop = 11;		// One drop
+	squeeze = 12;	// squeeze
 }
 
 message Qty

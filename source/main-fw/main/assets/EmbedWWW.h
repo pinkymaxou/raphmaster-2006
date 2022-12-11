@@ -25,8 +25,8 @@ typedef enum
   EFEMBEDWWW_EFILE_CSS_GENERAL_CSS = 3,    /*!< @brief File: css/general.css (size: 1.6 KB) */
   EFEMBEDWWW_EFILE_JS_VIEWS_ABOUTPAGE_JS = 4,    /*!< @brief File: js/views/AboutPage.js (size: 1.9 KB) */
   EFEMBEDWWW_EFILE_JS_VIEWS_ABSTRACTVIEW_JS = 5,    /*!< @brief File: js/views/AbstractView.js (size: 284 B) */
-  EFEMBEDWWW_EFILE_JS_APICONST_JS = 6,    /*!< @brief File: js/apiconst.js (size: 1.4 KB) */
-  EFEMBEDWWW_EFILE_JS_APP_JS = 7,    /*!< @brief File: js/app.js (size: 4.0 KB) */
+  EFEMBEDWWW_EFILE_JS_APICONST_JS = 6,    /*!< @brief File: js/apiconst.js (size: 4.7 KB) */
+  EFEMBEDWWW_EFILE_JS_APP_JS = 7,    /*!< @brief File: js/app.js (size: 876 B) */
   EFEMBEDWWW_EFILE_JS_VIEWS_CALIBPAGE_JS = 8,    /*!< @brief File: js/views/CalibPage.js (size: 5.5 KB) */
   EFEMBEDWWW_EFILE_JS_VIEWS_CUSTOMCOCKTAILPAGE_JS = 9,    /*!< @brief File: js/views/CustomCocktailPage.js (size: 8.0 KB) */
   EFEMBEDWWW_EFILE_JS_VIEWS_LISTCOCKTAILPAGE_JS = 10,    /*!< @brief File: js/views/ListCocktailPage.js (size: 6.5 KB) */
