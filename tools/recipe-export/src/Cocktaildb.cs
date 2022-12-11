@@ -45,11 +45,11 @@ namespace Cocktaildb {
             "b2hvbBABEhEKDXJlc2VydmVkXzB4MDIQAhIRCg1saXF1aWRfZmlsbGVyEAMS",
             "BwoDaWNlEAQSCgoGcG93ZGVyEAUSDwoLZW11bHNpZnlpbmcQBhIWChJmcnVp",
             "dF9vcl92ZWdldGFibGUQBxIRCg1sZWFmX29yX3NwcmlnEAgSDQoJZmxhdm9y",
-            "aW5nEAkqJAoJRUxhbmd1YWdlEgsKB2VuZ2xpc2gQABIKCgZmcmVuY2gQASqA",
+            "aW5nEAkqJAoJRUxhbmd1YWdlEgsKB2VuZ2xpc2gQABIKCgZmcmVuY2gQASqN",
             "AQoFRVVuaXQSCAoEbm9uZRAAEgsKB3VuaXRhcnkQARIMCghsaXF1aWRNTBAC",
             "EgwKCGxpcXVpZG96EAMSBwoDY3VwEAQSCQoFcGluY2gQBhIMCgh0ZWFzcG9v",
-            "bhAIEg4KCnRhYmxlc3Bvb24QCRIICgRkYXNoEAoSCAoEZHJvcBALYgZwcm90",
-            "bzM="));
+            "bhAIEg4KCnRhYmxlc3Bvb24QCRIICgRkYXNoEAoSCAoEZHJvcBALEgsKB3Nx",
+            "dWVlemUQDGIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Cocktaildb.EIngredientType), typeof(global::Cocktaildb.ELanguage), typeof(global::Cocktaildb.EUnit), }, new pbr::GeneratedClrTypeInfo[] {
@@ -123,6 +123,10 @@ namespace Cocktaildb {
     /// One drop
     /// </summary>
     [pbr::OriginalName("drop")] Drop = 11,
+    /// <summary>
+    /// squeeze
+    /// </summary>
+    [pbr::OriginalName("squeeze")] Squeeze = 12,
   }
 
   #endregion

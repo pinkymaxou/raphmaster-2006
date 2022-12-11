@@ -942,7 +942,7 @@
     "ingredients": [
       {
         "name": "Kraken rum",
-        "qty": "3/2 oz",
+        "qty": "1/2 oz",
         "type": "liquid_alcohol",
         "categories": [ "spiced rum", "brown rum", "rum" ]
       },
@@ -1419,6 +1419,255 @@
         "qty": "1 oz",
         "type": "liquid_filler",
         "categories": [ "orange juice", "juice" ]
+      }
+    ]
+  },
+  {
+    "name": "Expresso Martini",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Vodka",
+        "upc_code": "00627987202564",
+        "qty": "2 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "vodka" ]
+      },
+      {
+        "name": "Tia Maria",
+        "qty": "1/2 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "coffee liqueur", "liqueur" ]
+      },
+      {
+        "name": "Expresso",
+        "qty": "1 oz",
+        "type": "liquid_filler",
+        "categories": [ "expresso", "coffee" ]
+      },
+      {
+        "name": "Simple syrup",
+        "qty": "1/2 oz",
+        "type": "liquid_filler"
+      },
+      {
+        "name": "Coffee beans",
+        "qty": "0",
+        "type": "fruit_or_vegetable",
+        "is_garnish": true
+      }
+    ]
+  },
+  {
+    "name": "Caribbean Dream",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Orange juice",
+        "qty": "2 oz",
+        "type": "liquid_filler",
+        "categories": [ "orange juice", "juice" ]
+      },
+      {
+        "name": "Peach schnapps",
+        "upc_code": "00088004400545",
+        "qty": "1 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "schnapps" ]
+      },
+      {
+        "name": "Grenadine syrup",
+        "qty": "1 tsp",
+        "type": "liquid_filler",
+        "categories": [ "syrup" ]
+      }
+    ]
+  },
+  {
+    "name": "Cointreau Berry Bizz",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Cointreau",
+        "qty": "2 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "citrus liqueur", "liqueur" ]
+      },
+      {
+        "name": "Lime juice",
+        "qty": "1 oz",
+        "type": "liquid_filler",
+        "categories": [ "lime juice", "juice" ]
+      },
+      {
+        "name": "Backberry",
+        "qty": "2",
+        "type": "fruit_or_vegetable",
+        "is_garnish": true
+      },
+      {
+        "name": "Raspberry",
+        "qty": "2",
+        "type": "fruit_or_vegetable",
+        "is_garnish": true
+      },
+      {
+        "name": "Mint leaves",
+        "qty": "5",
+        "type": "leaf_or_sprig",
+        "is_garnish": true
+      },
+      {
+        "name": "Club soda",
+        "qty": "3 oz",
+        "type": "liquid_filler",
+        "categories": [ "club soda cola", "cola" ]
+      }
+    ]
+  },
+
+  {
+    "name": "Sky High Cocktail",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Raspberry juice",
+        "qty": "5 oz",
+        "type": "liquid_filler",
+        "categories": [ "raspberry juice", "juice" ]
+      },
+      {
+        "name": "Lemon juice",
+        "qty": "1 squeeze",
+        "type": "liquid_filler",
+        "categories": [ "lemon juice", "juice" ]
+      },
+      {
+        "name": "Grape vodka",
+        "qty": "1 squeeze",
+        "type": "liquid_filler",
+        "categories": [ "grape vodka", "vodka" ]
+      },
+      {
+        "name": "Strawberry vodka",
+        "qty": "1 squeeze",
+        "type": "liquid_filler",
+        "categories": [ "strawberry vodka", "vodka" ]
+      }
+    ]
+  },
+  {
+    "name": "Caribbean Sunset",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Pineapple juice",
+        "qty": "1/2 oz",
+        "type": "liquid_filler",
+        "categories": [ "pineapple juice", "juice" ]
+      },
+      {
+        "name": "Coconut rum",
+        "qty": "1/2 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "coconut rum", "rum" ]
+      },
+      {
+        "name": "Lime juice",
+        "qty": "2 tbsp",
+        "type": "liquid_filler",
+        "categories": [ "lime juice", "juice" ]
+      },
+      {
+        "name": "Grenadine syrup",
+        "qty": "2 tbsp",
+        "type": "liquid_filler",
+        "categories": [ "syrup" ]
+      },
+      {
+        "name": "Lemon Lime soda",
+        "qty": "1 cup",
+        "type": "liquid_filler",
+        "categories": [ "syrup" ]
+      },
+      {
+        "name": "Pineapple slice",
+        "qty": "1",
+        "type": "fruit_or_vegetable",
+        "is_garnish": true
+      },
+      {
+        "name": "Lime slice",
+        "qty": "1",
+        "type": "fruit_or_vegetable",
+        "is_garnish": true
+      }
+    ]
+  },
+  {
+    "name": "Mudslide",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Vodka",
+        "upc_code": "00627987202564",
+        "qty": "1/2 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "vodka" ]
+      },
+      {
+        "name": "Tia Maria",
+        "qty": "1/2 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "coffee liqueur", "liqueur" ]
+      },
+      {
+        "name": "Baileys",
+        "qty": "1/2 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "irish cream", "cream" ]
+      },
+      {
+        "name": "Fresh cream",
+        "qty": "1 oz",
+        "type": "liquid_filler"
+      }
+    ]
+  },
+  {
+    "name": "Tequila Sunrise",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Tequila",
+        "qty": "1 1/2 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "tequila" ]
+      },
+      {
+        "name": "Orange juice",
+        "qty": "1 1/2 oz",
+        "type": "liquid_filler",
+        "categories": [ "orange juice", "juice" ]
+      },
+      {
+        "name": "Tia Maria",
+        "qty": "1/2 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "coffee liqueur", "liqueur" ]
+      },
+      {
+        "name": "Grenadine syrup",
+        "qty": "3/4 oz",
+        "type": "liquid_filler",
+        "categories": [ "syrup" ]
       }
     ]
   }
