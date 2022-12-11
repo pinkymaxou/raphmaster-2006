@@ -24,6 +24,7 @@ enum EIngredientType
 	emulsifying = 6;
 	fruit_or_vegetable = 7;
 	leaf_or_sprig = 8;
+	flavoring = 9;
 }
 
 enum ELanguage

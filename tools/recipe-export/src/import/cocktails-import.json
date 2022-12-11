@@ -184,7 +184,7 @@
   },
   {
     "name": "Skittle",
-    "img": "skittle.jpg",
+    "img": "",
     "is_cocktail": true,
     "ingredients": [
       {
@@ -219,7 +219,6 @@
         "qty": "1 oz",
         "type": "liquid_filler",
         "categories": [ "pineapple juice", "juice" ]
-
       }
     ]
   },
@@ -815,6 +814,31 @@
     ]
   },
   {
+    "name": "Gin tonic",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Gin",
+        "qty": "2 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "dry gin", "gin" ]
+      },
+      {
+        "name": "Canada Dry",
+        "qty": "6 oz",
+        "type": "liquid_filler",
+        "categories": [ "soda tonic", "tonic" ]
+      },
+      {
+        "name": "Lime wedge",
+        "qty": "1",
+        "type": "fruit_or_vegetable",
+        "is_garnish": true
+      }
+    ]
+  },
+  {
     "name": "French 75",
     "img": "",
     "is_cocktail": true,
@@ -1004,6 +1028,38 @@
     ]
   },
   {
+    "name": "Cosmospolitan",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Vodka",
+        "upc_code": "00627987202564",
+        "qty": "1 1/2 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "vodka" ]
+      },
+      {
+        "name": "Triple sec",
+        "qty": "1/2 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "citrus juice", "juice" ]
+      },
+      {
+        "name": "Cranberry juice",
+        "qty": "2 oz",
+        "type": "liquid_filler",
+        "categories": [ "cranberry juice", "juice" ]
+      },
+      {
+        "name": "Lemon juice",
+        "qty": "1 oz",
+        "type": "liquid_filler",
+        "categories": [ "juice", "lemon juice" ]
+      }
+    ]
+  },
+  {
     "name": "New-York sour",
     "img": "",
     "is_cocktail": true,
@@ -1048,6 +1104,321 @@
         "qty": "1",
         "type": "fruit_or_vegetable",
         "is_garnish": true
+      }
+    ]
+  },
+  {
+    "name": "Old Fashioned",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Bourbon",
+        "qty": "2 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "bourbon", "whiskey" ]
+      },
+      {
+        "name": "Demerara sugar syrup",
+        "qty": "1 oz",
+        "type": "liquid_filler"
+      },
+      {
+        "name": "Bitters",
+        "qty": "2 drop",
+        "type": "flavoring",
+        "categories": [ "bitter flavor", "flavor" ]
+      },
+      {
+        "name": "Orange wedge",
+        "qty": "2",
+        "type": "fruit_or_vegetable",
+        "is_garnish": true
+      }
+    ]
+  },
+  {
+    "name": "White Russian",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Vodka",
+        "upc_code": "00627987202564",
+        "qty": "1 1/2 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "vodka" ]
+      },
+      {
+        "name": "Tia Maria",
+        "qty": "1/2 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "coffee liqueur", "liqueur" ]
+      },
+      {
+        "name": "Sweetened Condensed Milk",
+        "qty": "1 oz",
+        "type": "liquid_filler",
+        "categories": [ "sweetened condensed milk", "milk" ]
+      }
+    ]
+  },
+  {
+    "name": "Black Russian",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Vodka",
+        "upc_code": "00627987202564",
+        "qty": "2 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "vodka" ]
+      },
+      {
+        "name": "Tia Maria",
+        "qty": "1 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "coffee liqueur", "liqueur" ]
+      }
+    ]
+  },
+  {
+    "name": "Irish Coffee",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Bourbon",
+        "qty": "1 1/2 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "bourbon", "whiskey" ]
+      },
+      {
+        "name": "Orange",
+        "qty": "1/2 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "orange liqueur", "liqueur" ]
+      },
+      {
+        "name": "Hot Coffee",
+        "qty": "5 oz",
+        "type": "liquid_filler",
+        "categories": [ "coffee" ]
+      },
+      {
+        "name": "Whipped cream",
+        "qty": "1 tbsp",
+        "type": "liquid_filler",
+        "categories": [ "whipped cream", "cream" ]
+      }
+    ]
+  },
+  {
+    "name": "Blue Devil",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Ice",
+        "qty": "",
+        "type": "ice"
+      },
+      {
+        "name": "Gin",
+        "qty": "1 1/4 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "dry gin", "gin" ]
+      },
+      {
+        "name": "Blue curaçao",
+        "qty": "3/4 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "citrus liqueur", "liqueur" ]
+      },
+      {
+        "name": "Lemon juice",
+        "qty": "3/4 oz",
+        "type": "liquid_filler",
+        "categories": [ "juice", "lemon juice" ]
+      },
+      {
+        "name": "Simple syrup",
+        "qty": "1/4 oz",
+        "type": "liquid_filler"
+      }
+    ]
+  },
+  {
+    "name": "Screwdriver",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Ice",
+        "qty": "",
+        "type": "ice"
+      },
+      {
+        "name": "Vodka",
+        "upc_code": "00627987202564",
+        "qty": "1 1/2 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "vodka" ]
+      },
+      {
+        "name": "Orange juice",
+        "qty": "4 oz",
+        "type": "liquid_filler",
+        "categories": [ "orange juice", "juice" ]
+      },
+      {
+        "name": "Orange wedge",
+        "qty": "1",
+        "type": "fruit_or_vegetable",
+        "is_garnish": true
+      }
+    ]
+  },
+  {
+    "name": "Mimosa",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Orange juice",
+        "qty": "1 oz",
+        "type": "liquid_filler",
+        "categories": [ "orange juice", "juice" ]
+      },
+      {
+        "name": "Champagne",
+        "qty": "1 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "champagne" ]
+      }
+    ]
+  },
+  {
+    "name": "Whiskey Sour",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Bourbon",
+        "qty": "2 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "bourbon", "whiskey" ]
+      },
+      {
+        "name": "Lemon juice",
+        "qty": "1 oz",
+        "type": "liquid_filler",
+        "categories": [ "lemon juice", "juice" ]
+      },
+      {
+        "name": "Demerara sugar syrup",
+        "qty": "1 oz",
+        "type": "liquid_filler"
+      },
+      {
+        "name": "Egg white",
+        "qty": "2 drop",
+        "type": "emulsifying"
+      }
+    ]
+  },
+  {
+    "name": "Old Cuban",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "White rum",
+        "qty": "2 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "white rum", "rum" ]
+      },
+      {
+        "name": "Lemon juice",
+        "qty": "1 oz",
+        "type": "liquid_filler",
+        "categories": [ "juice", "lemon juice" ]
+      },
+      {
+        "name": "Demerara sugar syrup",
+        "qty": "1 oz",
+        "type": "liquid_filler"
+      },
+      {
+        "name": "Champagne",
+        "qty": "1 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "champagne" ]
+      },
+      {
+        "name": "Mint leaves",
+        "qty": "3",
+        "type": "leaf_or_sprig",
+        "is_garnish": true
+      }
+    ]
+  },
+  {
+    "name": "Pina Colada",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "White rum",
+        "qty": "2 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "white rum", "rum" ]
+      },
+      {
+        "name": "Coconut milk",
+        "qty": "1 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "coconut milk", "milk" ]
+      },
+      {
+        "name": "Pineapple juice",
+        "qty": "1 oz",
+        "type": "liquid_filler",
+        "categories": [ "pineapple juice", "juice" ]
+      },
+      {
+        "name": "Coconut flakes",
+        "qty": "1 pinch",
+        "type": "powder",
+        "is_garnish": true
+      }
+    ]
+  },
+  {
+    "name": "Blue Lagoon",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Vodka",
+        "upc_code": "00627987202564",
+        "qty": "1 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "vodka" ]
+      },
+      {
+        "name": "Curaçao bleu",
+        "qty": "1 oz",
+        "upc_code": "03041311026096",
+        "type": "liquid_alcohol",
+        "categories": [ "citrus liqueur", "liqueur" ]
+      },
+      {
+        "name": "Orange juice",
+        "qty": "1 oz",
+        "type": "liquid_filler",
+        "categories": [ "orange juice", "juice" ]
       }
     ]
   }

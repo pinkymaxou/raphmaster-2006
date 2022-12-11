@@ -19,7 +19,8 @@ typedef enum _cocktaildb_EIngredientType {
     cocktaildb_EIngredientType_powder = 5,
     cocktaildb_EIngredientType_emulsifying = 6,
     cocktaildb_EIngredientType_fruit_or_vegetable = 7,
-    cocktaildb_EIngredientType_leaf_or_sprig = 8
+    cocktaildb_EIngredientType_leaf_or_sprig = 8,
+    cocktaildb_EIngredientType_flavoring = 9
 } cocktaildb_EIngredientType;
 
 typedef enum _cocktaildb_ELanguage {
@@ -101,8 +102,8 @@ typedef struct _cocktaildb_RecipeFile {
 
 /* Helper constants for enums */
 #define _cocktaildb_EIngredientType_MIN cocktaildb_EIngredientType_unspecified
-#define _cocktaildb_EIngredientType_MAX cocktaildb_EIngredientType_leaf_or_sprig
-#define _cocktaildb_EIngredientType_ARRAYSIZE ((cocktaildb_EIngredientType)(cocktaildb_EIngredientType_leaf_or_sprig+1))
+#define _cocktaildb_EIngredientType_MAX cocktaildb_EIngredientType_flavoring
+#define _cocktaildb_EIngredientType_ARRAYSIZE ((cocktaildb_EIngredientType)(cocktaildb_EIngredientType_flavoring+1))
 
 #define _cocktaildb_ELanguage_MIN cocktaildb_ELanguage_english
 #define _cocktaildb_ELanguage_MAX cocktaildb_ELanguage_french

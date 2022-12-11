@@ -40,15 +40,16 @@ namespace Cocktaildb {
             "bGUSMgoSaW5ncmVkaWVudF9lbnRyaWVzGAEgAygLMhYuY29ja3RhaWxkYi5J",
             "bmdyZWRpZW50EkMKG2luZ3JlZGllbnRfY2F0ZWdvcnlfZW50cmllcxgCIAMo",
             "CzIeLmNvY2t0YWlsZGIuSW5ncmVkaWVudENhdGVnb3J5IjEKClJlY2lwZUZp",
-            "bGUSIwoHZW50cmllcxgBIAMoCzISLmNvY2t0YWlsZGIuUmVjaXBlKq0BCg9F",
+            "bGUSIwoHZW50cmllcxgBIAMoCzISLmNvY2t0YWlsZGIuUmVjaXBlKrwBCg9F",
             "SW5ncmVkaWVudFR5cGUSDwoLdW5zcGVjaWZpZWQQABISCg5saXF1aWRfYWxj",
             "b2hvbBABEhEKDXJlc2VydmVkXzB4MDIQAhIRCg1saXF1aWRfZmlsbGVyEAMS",
             "BwoDaWNlEAQSCgoGcG93ZGVyEAUSDwoLZW11bHNpZnlpbmcQBhIWChJmcnVp",
-            "dF9vcl92ZWdldGFibGUQBxIRCg1sZWFmX29yX3NwcmlnEAgqJAoJRUxhbmd1",
-            "YWdlEgsKB2VuZ2xpc2gQABIKCgZmcmVuY2gQASqAAQoFRVVuaXQSCAoEbm9u",
-            "ZRAAEgsKB3VuaXRhcnkQARIMCghsaXF1aWRNTBACEgwKCGxpcXVpZG96EAMS",
-            "BwoDY3VwEAQSCQoFcGluY2gQBhIMCgh0ZWFzcG9vbhAIEg4KCnRhYmxlc3Bv",
-            "b24QCRIICgRkYXNoEAoSCAoEZHJvcBALYgZwcm90bzM="));
+            "dF9vcl92ZWdldGFibGUQBxIRCg1sZWFmX29yX3NwcmlnEAgSDQoJZmxhdm9y",
+            "aW5nEAkqJAoJRUxhbmd1YWdlEgsKB2VuZ2xpc2gQABIKCgZmcmVuY2gQASqA",
+            "AQoFRVVuaXQSCAoEbm9uZRAAEgsKB3VuaXRhcnkQARIMCghsaXF1aWRNTBAC",
+            "EgwKCGxpcXVpZG96EAMSBwoDY3VwEAQSCQoFcGluY2gQBhIMCgh0ZWFzcG9v",
+            "bhAIEg4KCnRhYmxlc3Bvb24QCRIICgRkYXNoEAoSCAoEZHJvcBALYgZwcm90",
+            "bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Cocktaildb.EIngredientType), typeof(global::Cocktaildb.ELanguage), typeof(global::Cocktaildb.EUnit), }, new pbr::GeneratedClrTypeInfo[] {
@@ -76,6 +77,7 @@ namespace Cocktaildb {
     [pbr::OriginalName("emulsifying")] Emulsifying = 6,
     [pbr::OriginalName("fruit_or_vegetable")] FruitOrVegetable = 7,
     [pbr::OriginalName("leaf_or_sprig")] LeafOrSprig = 8,
+    [pbr::OriginalName("flavoring")] Flavoring = 9,
   }
 
   public enum ELanguage {
