@@ -156,12 +156,11 @@
     "is_cocktail": true,
     "ingredients": [
       {
-        "name": "Creme de menthe",
-        "qty": "3/4 oz",
+        "name": "White creme de menthe",
+        "qty": "1 dash",
         "upc_code": "00854745000920",
         "type": "liquid_alcohol",
-        "categories": [ "mint liqueur", "liqueur" ]
-
+        "categories": [ "white mint liqueur", "mint liqueur", "liqueur" ]
       },
       {
         "name": "White creme de cacao",
@@ -1639,6 +1638,76 @@
         "qty": "3/4 oz",
         "type": "liquid_filler",
         "categories": [ "syrup" ]
+      }
+    ]
+  },
+  {
+    "name": "Stinger",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Ice",
+        "qty": "1 cup",
+        "type": "ice"
+      },
+      {
+        "name": "Cognac",
+        "qty": "1 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "cognac" ]
+      },
+      {
+        "name": "White creme de menthe",
+        "qty": "1 oz",
+        "upc_code": "00854745000920",
+        "type": "liquid_alcohol",
+        "categories": [ "white mint liqueur", "mint liqueur", "liqueur" ]
+      }
+    ]
+  },
+  {
+    "name": "American Beauty",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Brandy",
+        "qty": "1/2 oz",
+        "type": "liquid_filler",
+        "categories": [ "brandy" ]
+      },
+      {
+        "name": "Dry vermouth",
+        "qty": "1/2 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "dry vermouth", "vermouth" ]
+      },
+      {
+        "name": "Orange juice",
+        "qty": "1/2 oz",
+        "type": "liquid_filler",
+        "categories": [ "orange juice", "juice" ]
+      },
+      {
+        "name": "Grenadine syrup",
+        "qty": "1/2 oz",
+        "type": "liquid_filler",
+        "categories": [ "syrup" ]
+      },
+      {
+        "name": "White creme de menthe",
+        "qty": "1 dash",
+        "upc_code": "00854745000920",
+        "type": "liquid_alcohol",
+        "categories": [ "white mint liqueur", "mint liqueur", "liqueur" ]
+      },
+      {
+        "name": "Port Wine",
+        "qty": "1 dash",
+        "upc_code": "00854745000920",
+        "type": "liquid_alcohol",
+        "categories": [ "port wine" ]
       }
     ]
   }

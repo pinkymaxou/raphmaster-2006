@@ -208,6 +208,7 @@ char* COCKTAILAPI_GetStatIngredients()
         cJSON* pNewRecipe = cJSON_CreateObject();
         cJSON_AddItemToObject(pNewRecipe, "ingredient_id", cJSON_CreateNumber(pIngredient->id));
         cJSON_AddItemToObject(pNewRecipe, "name", cJSON_CreateString(pIngredient->name));
+        cJSON_AddItemToObject(pNewRecipe, "type", cJSON_CreateNumber(pIngredient->ingredient_type));
         cJSON_AddItemToObject(pNewRecipe, "count", cJSON_CreateNumber(u32Stat));
         cJSON_AddItemToArray(pRoot, pNewRecipe);
     }
