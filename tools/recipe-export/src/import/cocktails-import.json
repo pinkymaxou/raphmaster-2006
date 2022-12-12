@@ -1300,35 +1300,6 @@
     ]
   },
   {
-    "name": "Whiskey Sour",
-    "img": "",
-    "is_cocktail": true,
-    "ingredients": [
-      {
-        "name": "Bourbon",
-        "qty": "2 oz",
-        "type": "liquid_alcohol",
-        "categories": [ "bourbon", "whiskey" ]
-      },
-      {
-        "name": "Lemon juice",
-        "qty": "1 oz",
-        "type": "liquid_filler",
-        "categories": [ "lemon juice", "juice" ]
-      },
-      {
-        "name": "Demerara sugar syrup",
-        "qty": "1 oz",
-        "type": "liquid_filler"
-      },
-      {
-        "name": "Egg white",
-        "qty": "2 drop",
-        "type": "emulsifying"
-      }
-    ]
-  },
-  {
     "name": "Old Cuban",
     "img": "",
     "is_cocktail": true,
