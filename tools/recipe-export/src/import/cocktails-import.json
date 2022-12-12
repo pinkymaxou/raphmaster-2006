@@ -1667,6 +1667,32 @@
     ]
   },
   {
+    "name": "Amaretto Stinger",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Ice",
+        "qty": "1 cup",
+        "type": "ice"
+      },
+      {
+        "name": "Amaretto liqueur",
+        "qty": "1 oz",
+        "upc_code": "06279871658144",
+        "type": "liquid_alcohol",
+        "categories": [ "almond-nut liqueur", "liqueur" ]
+      },
+      {
+        "name": "White creme de menthe",
+        "qty": "1 oz",
+        "upc_code": "00854745000920",
+        "type": "liquid_alcohol",
+        "categories": [ "white mint liqueur", "mint liqueur", "liqueur" ]
+      }
+    ]
+  },
+  {
     "name": "American Beauty",
     "img": "",
     "is_cocktail": true,
@@ -1708,6 +1734,82 @@
         "upc_code": "00854745000920",
         "type": "liquid_alcohol",
         "categories": [ "port wine" ]
+      }
+    ]
+  },
+  {
+    "name": "Irish Stinger",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Ice",
+        "qty": "1 cup",
+        "type": "ice"
+      },
+      {
+        "name": "Baileys",
+        "qty": "1 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "irish cream", "cream" ]
+      },
+      {
+        "name": "White creme de menthe",
+        "qty": "1 oz",
+        "upc_code": "00854745000920",
+        "type": "liquid_alcohol",
+        "categories": [ "white mint liqueur", "mint liqueur", "liqueur" ]
+      }
+    ]
+  },
+  {
+    "name": "White Spider",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Ice",
+        "qty": "1 cup",
+        "type": "ice"
+      },
+      {
+        "name": "Vodka",
+        "upc_code": "00627987202564",
+        "qty": "1 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "vodka" ]
+      },
+      {
+        "name": "White creme de menthe",
+        "qty": "1 oz",
+        "upc_code": "00854745000920",
+        "type": "liquid_alcohol",
+        "categories": [ "white mint liqueur", "mint liqueur", "liqueur" ]
+      }
+    ]
+  },
+  {
+    "name": "White Spider",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Ice",
+        "qty": "1 cup",
+        "type": "ice"
+      },
+      {
+        "name": "Gin",
+        "qty": "1 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "dry gin", "gin" ]
+      },
+      {
+        "name": "White creme de menthe",
+        "qty": "1 oz",
+        "upc_code": "00854745000920",
+        "type": "liquid_alcohol",
+        "categories": [ "white mint liqueur", "mint liqueur", "liqueur" ]
       }
     ]
   }
