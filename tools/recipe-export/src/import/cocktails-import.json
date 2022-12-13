@@ -1867,5 +1867,57 @@
         "categories": [ "citrus liqueur", "liqueur" ]
       }
     ]
+  },
+  {
+    "name": "Amaretto Cruise",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Peach schnapps",
+        "upc_code": "00088004400545",
+        "qty": "1 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "schnapps" ]
+      },
+      {
+        "name": "Orange juice",
+        "qty": "4 oz",
+        "type": "liquid_filler",
+        "categories": [ "orange juice", "juice" ]
+      },
+      {
+        "name": "Cranberry juice",
+        "qty": "4 oz",
+        "type": "liquid_filler",
+        "categories": [ "cranberry juice", "juice" ]
+      },
+      {
+        "name": "White rum",
+        "qty": "1 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "white rum", "rum" ]
+      },
+      {
+        "name": "Amaretto liqueur",
+        "qty": "1 oz",
+        "upc_code": "06279871658144",
+        "type": "liquid_alcohol",
+        "categories": [ "almond-nut liqueur", "liqueur" ]
+      },
+      {
+        "name": "Cream",
+        "qty": "2 oz",
+        "upc_code": "06279871658144",
+        "type": "liquid_filler",
+        "categories": [ "cream" ]
+      },
+      {
+        "name": "Sweet and Sour mix",
+        "qty": "2 oz",
+        "type": "liquid_filler",
+        "categories": [ "sour mix" ]
+      }
+    ]
   }
 ]

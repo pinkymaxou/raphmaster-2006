@@ -59,7 +59,7 @@ export default class extends AbstractView {
 
         // Quantities
         cboSelectQty.appendChild(this.addQty(0, " --- "));
-        for(let oz = 0.5; oz <= 8; oz += 0.25) {
+        for(let oz = 0.5; oz <= 12; oz += 0.25) {
             cboSelectQty.appendChild(this.addQty(oz, getPrettyFraction(oz) +" oz"));
 
             // If near enough ....
