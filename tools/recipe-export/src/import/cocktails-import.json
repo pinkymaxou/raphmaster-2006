@@ -156,6 +156,11 @@
     "is_cocktail": true,
     "ingredients": [
       {
+        "name": "Ice",
+        "qty": "",
+        "type": "ice"
+      },
+      {
         "name": "White creme de menthe",
         "qty": "1 dash",
         "upc_code": "00854745000920",
@@ -173,11 +178,6 @@
         "name": "Heavy cream",
         "qty": "1/4 oz",
         "type": "liquid_filler"
-      },
-      {
-        "name": "Ice",
-        "qty": "1 cup",
-        "type": "ice"
       }
     ]
   },
@@ -752,25 +752,25 @@
       },
       {
         "name": "Pineapple juice",
-        "qty": "1 cup",
+        "qty": "9 oz",
         "type": "liquid_filler",
         "categories": [ "pineapple juice", "juice" ]
       },
       {
         "name": "Blue curaçao",
-        "qty": "1/2 cup",
+        "qty": "4 1/2 oz",
         "type": "liquid_alcohol",
         "categories": [ "citrus liqueur", "liqueur" ]
       },
       {
         "name": "Vodka",
-        "qty": "1/2 cup",
+        "qty": "4 1/2 oz",
         "type": "liquid_alcohol",
         "categories": [ "vodka" ]
       },
       {
         "name": "Coconut cream",
-        "qty": "1/2 cup",
+        "qty": "4 1/2 oz",
         "type": "liquid_filler",
         "category": [ "coconut liqueur", "liqueur", "rum" ]
       },
@@ -1561,7 +1561,7 @@
       },
       {
         "name": "Lemon Lime soda",
-        "qty": "1 cup",
+        "qty": "9 1/2 oz",
         "type": "liquid_filler",
         "categories": [ "syrup" ]
       },
@@ -1648,7 +1648,7 @@
     "ingredients": [
       {
         "name": "Ice",
-        "qty": "1 cup",
+        "qty": "",
         "type": "ice"
       },
       {
@@ -1673,7 +1673,7 @@
     "ingredients": [
       {
         "name": "Ice",
-        "qty": "1 cup",
+        "qty": "",
         "type": "ice"
       },
       {
@@ -1744,7 +1744,7 @@
     "ingredients": [
       {
         "name": "Ice",
-        "qty": "1 cup",
+        "qty": "",
         "type": "ice"
       },
       {
@@ -1769,7 +1769,7 @@
     "ingredients": [
       {
         "name": "Ice",
-        "qty": "1 cup",
+        "qty": "",
         "type": "ice"
       },
       {
@@ -1795,7 +1795,7 @@
     "ingredients": [
       {
         "name": "Ice",
-        "qty": "1 cup",
+        "qty": "",
         "type": "ice"
       },
       {
