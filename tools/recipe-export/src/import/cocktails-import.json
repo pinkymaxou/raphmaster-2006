@@ -119,6 +119,75 @@
     ]
   },
   {
+    "name": "Bloody Cesar",
+    "img": "bloody-mary.jpg",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Celery salt",
+        "qty": "1",
+        "type": "powder",
+        "is_garnish": true
+      },
+      {
+        "name": "Lemon wedge",
+        "qty": "1",
+        "type": "fruit_or_vegetable",
+        "is_garnish": true
+      },
+      {
+        "name": "Vodka",
+        "qty": "2 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "vodka" ]
+      },
+      {
+        "name": "Clamato juice",
+        "qty": "4 oz",
+        "type": "liquid_filler",
+        "categories": [ "tomato juice", "juice" ]
+      },
+      {
+        "name": "Prepared horseradish",
+        "qty": "2 tsp"
+      },
+      {
+        "name": "Tabasco sauce",
+        "qty": "2 dashes"
+      },
+      {
+        "name": "Worcestershire sauce",
+        "qty": "2 dashes"
+      },
+      {
+        "name": "Ground black pepper",
+        "qty": "1 pinch"
+      },
+      {
+        "name": "Smoked paprika",
+        "qty": "1 pinch"
+      },
+      {
+        "name": "Parsley sprig",
+        "qty": "1",
+        "type": "leaf_or_sprig",
+        "is_garnish": true
+      },
+      {
+        "name": "Green olives",
+        "qty": "1",
+        "type": "fruit_or_vegetable",
+        "is_garnish": true
+      },
+      {
+        "name": "Celery stalk",
+        "qty": "1",
+        "type": "fruit_or_vegetable",
+        "is_garnish": true
+      }
+    ]
+  },
+  {
     "name": "Pornstar",
     "img": "pornstar.jpg",
     "is_cocktail": true,
@@ -1960,7 +2029,7 @@
         "name": "Calvados",
         "qty": "1 oz",
         "type": "liquid_alcohol",
-        "categories": [ "calvados" ]
+        "categories": [ "apple brandy" ]
       },
       {
         "name": "Sweet red vermouth",
