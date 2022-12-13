@@ -10,7 +10,8 @@ const EQtyType = Object.freeze({
 	tablespoon: 9,	// 14 ml (1/2 oz)
 	dash: 10,		// 1 ml
 	drop: 11,		// One drop
-    squeeze: 12 	// squeeze
+    squeeze: 12, 	// squeeze
+    top_up: 13 	// top-up
 });
 const EIngredientType = Object.freeze({
 	unspecified: 0,
@@ -93,6 +94,9 @@ function getPrettyQty(qtyValue, unit)
     }
     else if (unit == EQtyType.squeeze) {
         qtyText = getPrettyFraction(qtyValue) + " squeeze";
+    }
+    else if (unit == EQtyType.top_up) {
+        qtyText = getPrettyFraction(qtyValue) + " top-up";
     }
     return qtyText;
 }

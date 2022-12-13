@@ -68,6 +68,7 @@ enum EUnit
 	dash = 10;		// 1 ml
 	drop = 11;		// One drop
 	squeeze = 12;	// squeeze
+	top_up = 13;	// fill until top
 }
 
 message Qty

@@ -144,7 +144,7 @@
       },
       {
         "name": "7-up",
-        "qty": "",
+        "qty": "1 top-up",
         "type": "liquid_filler",
         "categories": [ "clear cola", "cola" ]
       }
@@ -156,12 +156,16 @@
     "is_cocktail": true,
     "ingredients": [
       {
-        "name": "Creme de menthe",
-        "qty": "3/4 oz",
+        "name": "Ice",
+        "qty": "",
+        "type": "ice"
+      },
+      {
+        "name": "White creme de menthe",
+        "qty": "1 dash",
         "upc_code": "00854745000920",
         "type": "liquid_alcohol",
-        "categories": [ "mint liqueur", "liqueur" ]
-
+        "categories": [ "white mint liqueur", "mint liqueur", "liqueur" ]
       },
       {
         "name": "White creme de cacao",
@@ -174,11 +178,6 @@
         "name": "Heavy cream",
         "qty": "1/4 oz",
         "type": "liquid_filler"
-      },
-      {
-        "name": "Ice",
-        "qty": "1 cup",
-        "type": "ice"
       }
     ]
   },
@@ -384,7 +383,7 @@
       },
       {
         "name": "Club soda",
-        "qty": "",
+        "qty": "1 top-up",
         "type": "liquid_filler",
         "categories": [ "club soda cola", "cola" ]
       },
@@ -753,25 +752,25 @@
       },
       {
         "name": "Pineapple juice",
-        "qty": "1 cup",
+        "qty": "9 oz",
         "type": "liquid_filler",
         "categories": [ "pineapple juice", "juice" ]
       },
       {
         "name": "Blue curaçao",
-        "qty": "1/2 cup",
+        "qty": "4 1/2 oz",
         "type": "liquid_alcohol",
         "categories": [ "citrus liqueur", "liqueur" ]
       },
       {
         "name": "Vodka",
-        "qty": "1/2 cup",
+        "qty": "4 1/2 oz",
         "type": "liquid_alcohol",
         "categories": [ "vodka" ]
       },
       {
         "name": "Coconut cream",
-        "qty": "1/2 cup",
+        "qty": "4 1/2 oz",
         "type": "liquid_filler",
         "category": [ "coconut liqueur", "liqueur", "rum" ]
       },
@@ -1300,35 +1299,6 @@
     ]
   },
   {
-    "name": "Whiskey Sour",
-    "img": "",
-    "is_cocktail": true,
-    "ingredients": [
-      {
-        "name": "Bourbon",
-        "qty": "2 oz",
-        "type": "liquid_alcohol",
-        "categories": [ "bourbon", "whiskey" ]
-      },
-      {
-        "name": "Lemon juice",
-        "qty": "1 oz",
-        "type": "liquid_filler",
-        "categories": [ "lemon juice", "juice" ]
-      },
-      {
-        "name": "Demerara sugar syrup",
-        "qty": "1 oz",
-        "type": "liquid_filler"
-      },
-      {
-        "name": "Egg white",
-        "qty": "2 drop",
-        "type": "emulsifying"
-      }
-    ]
-  },
-  {
     "name": "Old Cuban",
     "img": "",
     "is_cocktail": true,
@@ -1542,19 +1512,19 @@
       },
       {
         "name": "Lemon juice",
-        "qty": "1 squeeze",
+        "qty": "1 oz",
         "type": "liquid_filler",
         "categories": [ "lemon juice", "juice" ]
       },
       {
         "name": "Grape vodka",
-        "qty": "1 squeeze",
+        "qty": "1 oz",
         "type": "liquid_filler",
         "categories": [ "grape vodka", "vodka" ]
       },
       {
         "name": "Strawberry vodka",
-        "qty": "1 squeeze",
+        "qty": "1 oz",
         "type": "liquid_filler",
         "categories": [ "strawberry vodka", "vodka" ]
       }
@@ -1591,7 +1561,7 @@
       },
       {
         "name": "Lemon Lime soda",
-        "qty": "1 cup",
+        "qty": "9 1/2 oz",
         "type": "liquid_filler",
         "categories": [ "syrup" ]
       },
@@ -1668,6 +1638,233 @@
         "qty": "3/4 oz",
         "type": "liquid_filler",
         "categories": [ "syrup" ]
+      }
+    ]
+  },
+  {
+    "name": "Stinger",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Ice",
+        "qty": "",
+        "type": "ice"
+      },
+      {
+        "name": "Cognac",
+        "qty": "1 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "cognac" ]
+      },
+      {
+        "name": "White creme de menthe",
+        "qty": "1 oz",
+        "upc_code": "00854745000920",
+        "type": "liquid_alcohol",
+        "categories": [ "white mint liqueur", "mint liqueur", "liqueur" ]
+      }
+    ]
+  },
+  {
+    "name": "Amaretto Stinger",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Ice",
+        "qty": "",
+        "type": "ice"
+      },
+      {
+        "name": "Amaretto liqueur",
+        "qty": "1 oz",
+        "upc_code": "06279871658144",
+        "type": "liquid_alcohol",
+        "categories": [ "almond-nut liqueur", "liqueur" ]
+      },
+      {
+        "name": "White creme de menthe",
+        "qty": "1 oz",
+        "upc_code": "00854745000920",
+        "type": "liquid_alcohol",
+        "categories": [ "white mint liqueur", "mint liqueur", "liqueur" ]
+      }
+    ]
+  },
+  {
+    "name": "American Beauty",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Brandy",
+        "qty": "1/2 oz",
+        "type": "liquid_filler",
+        "categories": [ "brandy" ]
+      },
+      {
+        "name": "Dry vermouth",
+        "qty": "1/2 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "dry vermouth", "vermouth" ]
+      },
+      {
+        "name": "Orange juice",
+        "qty": "1/2 oz",
+        "type": "liquid_filler",
+        "categories": [ "orange juice", "juice" ]
+      },
+      {
+        "name": "Grenadine syrup",
+        "qty": "1/2 oz",
+        "type": "liquid_filler",
+        "categories": [ "syrup" ]
+      },
+      {
+        "name": "White creme de menthe",
+        "qty": "1 dash",
+        "upc_code": "00854745000920",
+        "type": "liquid_alcohol",
+        "categories": [ "white mint liqueur", "mint liqueur", "liqueur" ]
+      },
+      {
+        "name": "Port Wine",
+        "qty": "1 dash",
+        "upc_code": "00854745000920",
+        "type": "liquid_alcohol",
+        "categories": [ "port wine" ]
+      }
+    ]
+  },
+  {
+    "name": "Irish Stinger",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Ice",
+        "qty": "",
+        "type": "ice"
+      },
+      {
+        "name": "Baileys",
+        "qty": "1 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "irish cream", "cream" ]
+      },
+      {
+        "name": "White creme de menthe",
+        "qty": "1 oz",
+        "upc_code": "00854745000920",
+        "type": "liquid_alcohol",
+        "categories": [ "white mint liqueur", "mint liqueur", "liqueur" ]
+      }
+    ]
+  },
+  {
+    "name": "White Spider",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Ice",
+        "qty": "",
+        "type": "ice"
+      },
+      {
+        "name": "Vodka",
+        "upc_code": "00627987202564",
+        "qty": "1 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "vodka" ]
+      },
+      {
+        "name": "White creme de menthe",
+        "qty": "1 oz",
+        "upc_code": "00854745000920",
+        "type": "liquid_alcohol",
+        "categories": [ "white mint liqueur", "mint liqueur", "liqueur" ]
+      }
+    ]
+  },
+  {
+    "name": "White Way Cocktail",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Ice",
+        "qty": "",
+        "type": "ice"
+      },
+      {
+        "name": "Gin",
+        "qty": "1 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "dry gin", "gin" ]
+      },
+      {
+        "name": "White creme de menthe",
+        "qty": "1 oz",
+        "upc_code": "00854745000920",
+        "type": "liquid_alcohol",
+        "categories": [ "white mint liqueur", "mint liqueur", "liqueur" ]
+      }
+    ]
+  },
+  {
+    "name": "Sour Vodka",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Vodka",
+        "upc_code": "00627987202564",
+        "qty": "1 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "vodka" ]
+      },
+      {
+        "name": "Sour Puss",
+        "qty": "1/2 oz",
+        "upc_code": "00087116035003",
+        "type": "liquid_alcohol",
+        "categories": [ "liqueur" ]
+      },
+      {
+        "name": "Ginger Ale",
+        "qty": "1 top-up",
+        "upc_code": "00087116035003",
+        "type": "liquid_filler",
+        "categories": [ "soda tonic", "tonic" ]
+      }
+    ]
+  },
+  {
+    "name": "Blue Heaven",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "7-up",
+        "qty": "1 top-up",
+        "type": "liquid_filler",
+        "categories": [ "clear cola", "cola" ]
+      },
+      {
+        "name": "Sour Puss",
+        "qty": "1 oz",
+        "upc_code": "00087116035003",
+        "type": "liquid_alcohol",
+        "categories": [ "liqueur" ]
+      },
+      {
+        "name": "Curaçao bleu",
+        "qty": "1 oz",
+        "upc_code": "03041311026096",
+        "type": "liquid_alcohol",
+        "categories": [ "citrus liqueur", "liqueur" ]
       }
     ]
   }
