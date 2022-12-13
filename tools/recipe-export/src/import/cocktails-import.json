@@ -144,7 +144,7 @@
       },
       {
         "name": "7-up",
-        "qty": "",
+        "qty": "1 top-up",
         "type": "liquid_filler",
         "categories": [ "clear cola", "cola" ]
       }
@@ -383,7 +383,7 @@
       },
       {
         "name": "Club soda",
-        "qty": "",
+        "qty": "1 top-up",
         "type": "liquid_filler",
         "categories": [ "club soda cola", "cola" ]
       },
