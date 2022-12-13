@@ -40,7 +40,8 @@ typedef enum _cocktaildb_EUnit {
     cocktaildb_EUnit_tablespoon = 9, /* 14 ml (1/2 oz) */
     cocktaildb_EUnit_dash = 10, /* 1 ml */
     cocktaildb_EUnit_drop = 11, /* One drop */
-    cocktaildb_EUnit_squeeze = 12 /* squeeze */
+    cocktaildb_EUnit_squeeze = 12, /* squeeze */
+    cocktaildb_EUnit_top_up = 13 /* fill until top */
 } cocktaildb_EUnit;
 
 /* Struct definitions */
@@ -111,8 +112,8 @@ typedef struct _cocktaildb_RecipeFile {
 #define _cocktaildb_ELanguage_ARRAYSIZE ((cocktaildb_ELanguage)(cocktaildb_ELanguage_french+1))
 
 #define _cocktaildb_EUnit_MIN cocktaildb_EUnit_none
-#define _cocktaildb_EUnit_MAX cocktaildb_EUnit_squeeze
-#define _cocktaildb_EUnit_ARRAYSIZE ((cocktaildb_EUnit)(cocktaildb_EUnit_squeeze+1))
+#define _cocktaildb_EUnit_MAX cocktaildb_EUnit_top_up
+#define _cocktaildb_EUnit_ARRAYSIZE ((cocktaildb_EUnit)(cocktaildb_EUnit_top_up+1))
 
 
 

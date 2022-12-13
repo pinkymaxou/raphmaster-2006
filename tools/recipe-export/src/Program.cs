@@ -235,7 +235,7 @@ namespace recipe_export
 
         private static void DecodeQty(string qtyText, ref Qty newQty)
         {
-            Regex regex = new Regex(@"^(?<scal>((\d+\s+\d+\/\d+)|(\d+\/\d+)|(\d+)))\s*(?<unit>(oz|dash|drop|cup|pinch|tsp|tbsp|ml|squeeze))?", RegexOptions.ExplicitCapture);
+            Regex regex = new Regex(@"^(?<scal>((\d+\s+\d+\/\d+)|(\d+\/\d+)|(\d+)))\s*(?<unit>(oz|dash|drop|cup|pinch|tsp|tbsp|ml|squeeze|top-up))?", RegexOptions.ExplicitCapture);
 
             Match m = regex.Match(qtyText);
             if (!m.Success)
@@ -299,6 +299,10 @@ namespace recipe_export
                 newQty.Type = Cocktaildb.EUnit.Drop;
             }
             else if (unitText == "squeeze")
+            {
+                newQty.Type = Cocktaildb.EUnit.Squeeze;
+            }
+            else if (unitText == "top-up")
             {
                 newQty.Type = Cocktaildb.EUnit.Squeeze;
             }

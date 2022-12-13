@@ -1812,5 +1812,60 @@
         "categories": [ "white mint liqueur", "mint liqueur", "liqueur" ]
       }
     ]
+  },
+  {
+    "name": "Sour Vodka",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Vodka",
+        "upc_code": "00627987202564",
+        "qty": "1 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "vodka" ]
+      },
+      {
+        "name": "Sour Puss",
+        "qty": "1/2 oz",
+        "upc_code": "00087116035003",
+        "type": "liquid_alcohol",
+        "categories": [ "liqueur" ]
+      },
+      {
+        "name": "Ginger Ale",
+        "qty": "1 top-up",
+        "upc_code": "00087116035003",
+        "type": "liquid_filler",
+        "categories": [ "soda tonic", "tonic" ]
+      }
+    ]
+  },
+  {
+    "name": "Blue Heaven",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "7-up",
+        "qty": "",
+        "type": "liquid_filler",
+        "categories": [ "clear cola", "cola" ]
+      },
+      {
+        "name": "Sour Puss",
+        "qty": "1 oz",
+        "upc_code": "00087116035003",
+        "type": "liquid_alcohol",
+        "categories": [ "liqueur" ]
+      },
+      {
+        "name": "Curaçao bleu",
+        "qty": "1 oz",
+        "upc_code": "03041311026096",
+        "type": "liquid_alcohol",
+        "categories": [ "citrus liqueur", "liqueur" ]
+      }
+    ]
   }
 ]
