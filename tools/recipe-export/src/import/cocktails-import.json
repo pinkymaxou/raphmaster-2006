@@ -1848,7 +1848,7 @@
     "ingredients": [
       {
         "name": "7-up",
-        "qty": "",
+        "qty": "1 top-up",
         "type": "liquid_filler",
         "categories": [ "clear cola", "cola" ]
       },

@@ -304,7 +304,7 @@ namespace recipe_export
             }
             else if (unitText == "top-up")
             {
-                newQty.Type = Cocktaildb.EUnit.Squeeze;
+                newQty.Type = Cocktaildb.EUnit.TopUp;
             }
             else if (unitText == "")
             {
