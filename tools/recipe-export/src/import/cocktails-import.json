@@ -1919,5 +1919,90 @@
         "categories": [ "sour mix" ]
       }
     ]
+  },
+  {
+    "name": "Sidecar",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Triple sec",
+        "qty": "3/4 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "citrus juice", "juice" ]
+      },
+      {
+        "name": "Lemon juice",
+        "qty": "3/4 oz",
+        "type": "liquid_filler",
+        "categories": [ "juice", "lemon juice" ]
+      },
+      {
+        "name": "Cognac",
+        "qty": "1 1/2 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "cognac" ]
+      }
+    ]
+  },
+  {
+    "name": "Corpse Reviver",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Cognac",
+        "qty": "2 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "cognac" ]
+      },
+      {
+        "name": "Calvados",
+        "qty": "1 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "calvados" ]
+      },
+      {
+        "name": "Sweet red vermouth",
+        "qty": "1 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "sweet red vermouth", "vermouth" ]
+      }
+    ]
+  },
+  {
+    "name": "Income Tax",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Orange juice",
+        "qty": "1 oz",
+        "type": "liquid_filler",
+        "categories": [ "orange juice", "juice" ]
+      },
+      {
+        "name": "Angostura bitters",
+        "qty": "1 dashes"
+      },
+      {
+        "name": "Dry Gin",
+        "qty": "1 1/2 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "dry gin", "gin" ]
+      },
+      {
+        "name": "Sweet red vermouth",
+        "qty": "1 1/2 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "sweet red vermouth", "vermouth" ]
+      },
+      {
+        "name": "Dry vermouth",
+        "qty": "1 1/2 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "dry vermouth", "vermouth" ]
+      }
+    ]
   }
 ]
