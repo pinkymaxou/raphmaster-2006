@@ -119,6 +119,75 @@
     ]
   },
   {
+    "name": "Bloody Cesar",
+    "img": "bloody-mary.jpg",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Celery salt",
+        "qty": "1",
+        "type": "powder",
+        "is_garnish": true
+      },
+      {
+        "name": "Lemon wedge",
+        "qty": "1",
+        "type": "fruit_or_vegetable",
+        "is_garnish": true
+      },
+      {
+        "name": "Vodka",
+        "qty": "2 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "vodka" ]
+      },
+      {
+        "name": "Clamato juice",
+        "qty": "4 oz",
+        "type": "liquid_filler",
+        "categories": [ "tomato juice", "juice" ]
+      },
+      {
+        "name": "Prepared horseradish",
+        "qty": "2 tsp"
+      },
+      {
+        "name": "Tabasco sauce",
+        "qty": "2 dashes"
+      },
+      {
+        "name": "Worcestershire sauce",
+        "qty": "2 dashes"
+      },
+      {
+        "name": "Ground black pepper",
+        "qty": "1 pinch"
+      },
+      {
+        "name": "Smoked paprika",
+        "qty": "1 pinch"
+      },
+      {
+        "name": "Parsley sprig",
+        "qty": "1",
+        "type": "leaf_or_sprig",
+        "is_garnish": true
+      },
+      {
+        "name": "Green olives",
+        "qty": "1",
+        "type": "fruit_or_vegetable",
+        "is_garnish": true
+      },
+      {
+        "name": "Celery stalk",
+        "qty": "1",
+        "type": "fruit_or_vegetable",
+        "is_garnish": true
+      }
+    ]
+  },
+  {
     "name": "Pornstar",
     "img": "pornstar.jpg",
     "is_cocktail": true,
@@ -408,7 +477,7 @@
     "ingredients": [
       {
         "name": "Amaretto liqueur",
-        "qty": "1 1/2 oz",
+        "qty": "2 oz",
         "upc_code": "06279871658144",
         "type": "liquid_alcohol",
         "categories": [ "almond-nut liqueur", "liqueur" ]
@@ -429,6 +498,53 @@
         "name": "Simple syrup",
         "qty": "1 tsp",
         "type": "liquid_filler"
+      },
+      {
+        "name": "Egg white",
+        "qty": "1/2",
+        "type": "emulsifying"
+      },
+      {
+        "name": "Angostura bitters",
+        "qty": "2 dashes"
+      },
+      {
+        "name": "Lemon twist",
+        "qty": "1",
+        "type": "fruit_or_vegetable",
+        "is_garnish": true
+      },
+      {
+        "name": "Brandied cherries",
+        "qty": "2",
+        "type": "fruit_or_vegetable",
+        "is_garnish": true
+      }
+    ]
+  },
+  {
+    "name": "Amaretto Sour 2",
+    "img": "amaretto-sour.jpg",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Amaretto liqueur",
+        "qty": "1 1/2 oz",
+        "upc_code": "06279871658144",
+        "type": "liquid_alcohol",
+        "categories": [ "almond-nut liqueur", "liqueur" ]
+      },
+      {
+        "name": "Cask-proof bourbon",
+        "qty": "3/4 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "bourbon" ]
+      },
+      {
+        "name": "Lemon juice",
+        "qty": "1 oz",
+        "type": "liquid_filler",
+        "categories": [ "lemon juice", "juice" ]
       },
       {
         "name": "Egg white",
@@ -1089,7 +1205,7 @@
       {
         "name": "Red wine",
         "qty": "1/2 oz",
-        "type": "liquid_filler",
+        "type": "liquid_alcohol",
         "categories": [ "orange juice", "juice" ]
       },
       {
@@ -1700,7 +1816,7 @@
       {
         "name": "Brandy",
         "qty": "1/2 oz",
-        "type": "liquid_filler",
+        "type": "liquid_alcohol",
         "categories": [ "brandy" ]
       },
       {
@@ -1865,6 +1981,443 @@
         "upc_code": "03041311026096",
         "type": "liquid_alcohol",
         "categories": [ "citrus liqueur", "liqueur" ]
+      }
+    ]
+  },
+  {
+    "name": "Amaretto Cruise",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Peach schnapps",
+        "upc_code": "00088004400545",
+        "qty": "1 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "schnapps" ]
+      },
+      {
+        "name": "Orange juice",
+        "qty": "4 oz",
+        "type": "liquid_filler",
+        "categories": [ "orange juice", "juice" ]
+      },
+      {
+        "name": "Cranberry juice",
+        "qty": "4 oz",
+        "type": "liquid_filler",
+        "categories": [ "cranberry juice", "juice" ]
+      },
+      {
+        "name": "White rum",
+        "qty": "1 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "white rum", "rum" ]
+      },
+      {
+        "name": "Amaretto liqueur",
+        "qty": "1 oz",
+        "upc_code": "06279871658144",
+        "type": "liquid_alcohol",
+        "categories": [ "almond-nut liqueur", "liqueur" ]
+      },
+      {
+        "name": "Cream",
+        "qty": "2 oz",
+        "upc_code": "06279871658144",
+        "type": "liquid_filler",
+        "categories": [ "cream" ]
+      },
+      {
+        "name": "Sweet and Sour mix",
+        "qty": "2 oz",
+        "type": "liquid_filler",
+        "categories": [ "sour mix" ]
+      }
+    ]
+  },
+  {
+    "name": "Sidecar",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Triple sec",
+        "qty": "3/4 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "citrus juice", "juice" ]
+      },
+      {
+        "name": "Lemon juice",
+        "qty": "3/4 oz",
+        "type": "liquid_filler",
+        "categories": [ "juice", "lemon juice" ]
+      },
+      {
+        "name": "Cognac",
+        "qty": "1 1/2 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "cognac" ]
+      }
+    ]
+  },
+  {
+    "name": "Corpse Reviver",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Cognac",
+        "qty": "2 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "cognac" ]
+      },
+      {
+        "name": "Calvados",
+        "qty": "1 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "apple brandy" ]
+      },
+      {
+        "name": "Sweet red vermouth",
+        "qty": "1 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "sweet red vermouth", "vermouth" ]
+      }
+    ]
+  },
+  {
+    "name": "Income Tax",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Orange juice",
+        "qty": "1 oz",
+        "type": "liquid_filler",
+        "categories": [ "orange juice", "juice" ]
+      },
+      {
+        "name": "Angostura bitters",
+        "qty": "1 dashes"
+      },
+      {
+        "name": "Dry Gin",
+        "qty": "1 1/2 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "dry gin", "gin" ]
+      },
+      {
+        "name": "Sweet red vermouth",
+        "qty": "1 1/2 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "sweet red vermouth", "vermouth" ]
+      },
+      {
+        "name": "Dry vermouth",
+        "qty": "1 1/2 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "dry vermouth", "vermouth" ]
+      }
+    ]
+  },
+  {
+    "name": "Jager Negroni",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Gin",
+        "qty": "3/4 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "dry gin", "gin" ]
+      },
+      {
+        "name": "Sweet red vermouth",
+        "qty": "3/4 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "sweet red vermouth", "vermouth" ]
+      },
+      {
+        "name": "Jägermeister",
+        "qty": "3/4 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "herb liqueur", "liqueur" ]
+      },
+      {
+        "name": "Campari",
+        "qty": "1/4 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "bitter liqueur", "liqueur" ]
+      },
+      {
+        "name": "Orange wedge",
+        "qty": "1",
+        "type": "fruit_or_vegetable",
+        "is_garnish": true
+      }
+    ]
+  },
+  {
+    "name": "Count Mast",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Gin",
+        "qty": "1 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "dry gin", "gin" ]
+      },
+      {
+        "name": "Jägermeister",
+        "qty": "1 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "herb liqueur", "liqueur" ]
+      },
+      {
+        "name": "Sweet red vermouth",
+        "qty": "1 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "sweet red vermouth", "vermouth" ]
+      },
+      {
+        "name": "Lemon wedge",
+        "qty": "1",
+        "type": "fruit_or_vegetable",
+        "is_garnish": true
+      }
+    ]
+  },
+  {
+    "name": "Hairy Navel",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Vodka",
+        "upc_code": "00627987202564",
+        "qty": "1 1/2 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "vodka" ]
+      },
+      {
+        "name": "Peach schnapps",
+        "upc_code": "00088004400545",
+        "qty": "1 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "schnapps" ]
+      },
+      {
+        "name": "Orange juice",
+        "qty": "3 1/2 oz",
+        "type": "liquid_filler",
+        "categories": [ "orange juice", "juice" ]
+      },
+      {
+        "name": "Orange slice",
+        "qty": "1",
+        "type": "fruit_or_vegetable",
+        "is_garnish": true
+      },
+      {
+        "name": "Cherry",
+        "qty": "1",
+        "type": "fruit_or_vegetable",
+        "is_garnish": true
+      }
+    ]
+  },
+
+  {
+    "name": "Margarita Lemon",
+    "img": "margarita.jpg",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Tequila",
+        "qty": "1 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "tequila" ]
+      },
+      {
+        "name": "Cointreau",
+        "qty": "3/4 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "citrus liqueur", "liqueur" ]
+      },
+      {
+        "name": "Lime juice",
+        "qty": "1/2 oz",
+        "type": "liquid_filler",
+        "categories": [ "lime juice", "juice" ]
+      },
+      {
+        "name": "Lemon juice",
+        "qty": "1/2 oz",
+        "type": "liquid_filler",
+        "categories": [ "lemon juice", "juice" ]
+      },
+      {
+        "name": "Agave syrup",
+        "qty": "1/4 oz",
+        "type": "liquid_filler",
+        "categories": [ "agave syrup", "syrup" ]
+      },
+      {
+        "name": "Salt",
+        "qty": "1 pinch"
+      },
+      {
+        "name": "Lime wedge",
+        "qty": "1",
+        "type": "fruit_or_vegetable",
+        "is_garnish": true
+      }
+    ]
+  },
+  {
+    "name": "Dry Martini",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Dry Gin",
+        "qty": "2 1/4 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "dry gin", "gin" ]
+      },
+      {
+        "name": "Dry vermouth",
+        "qty": "3/4 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "dry vermouth", "vermouth" ]
+      },
+      {
+        "name": "Orange wedge",
+        "qty": "1",
+        "type": "fruit_or_vegetable",
+        "is_garnish": true
+      }
+    ]
+  },
+  {
+    "name": "Rum Cosmo",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Dark rum",
+        "qty": "1 1/4 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "brown rum", "rum" ]
+      },
+      {
+        "name": "Cointreau",
+        "qty": "3/4 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "citrus liqueur", "liqueur" ]
+      },
+      {
+        "name": "Lime juice",
+        "qty": "1/2 oz",
+        "type": "liquid_filler",
+        "categories": [ "lime juice", "juice" ]
+      },
+      {
+        "name": "Cranberry juice",
+        "qty": "1 1/2 oz",
+        "type": "liquid_filler",
+        "categories": [ "cranberry juice", "juice" ]
+      },
+      {
+        "name": "Lime wedge",
+        "qty": "1",
+        "type": "fruit_or_vegetable",
+        "is_garnish": true
+      }
+    ]
+  },
+  {
+    "name": "Jäger Old Fashioned",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Jägermeister",
+        "qty": "1 1/2 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "herb liqueur", "liqueur" ]
+      },
+      {
+        "name": "Bourbon",
+        "qty": "3/4 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "bourbon", "whiskey" ]
+      },
+      {
+        "name": "Maple Syrup",
+        "qty": "1/4 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "maple syrup", "syrup" ]
+      },
+      {
+        "name": "Chocolate bitters",
+        "qty": "3 dashes"
+      },
+      {
+        "name": "Orange wedge",
+        "qty": "1",
+        "type": "fruit_or_vegetable",
+        "is_garnish": true
+      }
+    ]
+  },
+  {
+    "name": "Maple Old Fashioned",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Bourbon",
+        "qty": "2 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "bourbon", "whiskey" ]
+      },
+      {
+        "name": "Maple Syrup",
+        "qty": "1/4 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "maple syrup", "syrup" ]
+      },
+      {
+        "name": "Orange bitters",
+        "qty": "2 dashes"
+      },
+      {
+        "name": "Orange wedge",
+        "qty": "1",
+        "type": "fruit_or_vegetable",
+        "is_garnish": true
+      }
+    ]
+  },
+  {
+    "name": "Jägerbomb",
+    "img": "",
+    "is_cocktail": true,
+    "ingredients": [
+      {
+        "name": "Red Bull Energy drink",
+        "qty": "8 oz",
+        "type": "liquid_filler",
+        "categories": [ "energy drink" ]
+      },
+      {
+        "name": "Jägermeister",
+        "qty": "1 1/2 oz",
+        "type": "liquid_alcohol",
+        "categories": [ "herb liqueur", "liqueur" ]
       }
     ]
   }
