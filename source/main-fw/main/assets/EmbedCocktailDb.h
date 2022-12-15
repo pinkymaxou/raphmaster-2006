@@ -20,7 +20,7 @@ typedef struct
 typedef enum
 {
   EFEMBEDCOCKTAILDB_EFILE_INGREDIENTS_BIN = 0,    /*!< @brief File: ingredients.bin (size: 4.0 KB) */
-  EFEMBEDCOCKTAILDB_EFILE_RECIPES_BIN = 1,    /*!< @brief File: recipes.bin (size: 5.8 KB) */
+  EFEMBEDCOCKTAILDB_EFILE_RECIPES_BIN = 1,    /*!< @brief File: recipes.bin (size: 5.9 KB) */
   EFEMBEDCOCKTAILDB_EFILE_COUNT = 2
 } EFEMBEDCOCKTAILDB_EFILE;
 
