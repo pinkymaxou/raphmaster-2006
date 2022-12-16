@@ -295,7 +295,7 @@ static esp_err_t api_get_handler(httpd_req_t* req)
     esp_err_t err = 0;
     if (pExportJSON == NULL || (err = httpd_resp_send(req, pExportJSON, strlen(pExportJSON))) != ESP_OK)
     {
-        ESP_LOGE(TAG, "Unable to send data, uri: '%s', pointer: %d, err: %d", req->uri, (int)pExportJSON, (int)err);
+        ESP_LOGE(TAG, "Unable to send data, uri: '%s', pointer: %d, err: %d [%s]", req->uri, (int)pExportJSON, (int)err, esp_err_to_name(err));
         httpd_resp_send_err(req, HTTPD_500_INTERNAL_SERVER_ERROR, "Unable to send data");
         goto END;
     }
