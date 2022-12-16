@@ -89,8 +89,8 @@ void WEBSERVER_Init()
     httpd_config_t config = HTTPD_DEFAULT_CONFIG();
     config.lru_purge_enable = true;
     config.uri_match_fn = httpd_uri_match_wildcard;
-    config.max_open_sockets = 13;
-    config.stack_size = 5500;
+    config.max_open_sockets = 9;
+    config.stack_size = 7500;
 
     // Start the httpd server
     ESP_LOGI(TAG, "Starting server on port: '%d'", config.server_port);
@@ -170,7 +170,7 @@ static esp_err_t file_get_handler(httpd_req_t *req)
 
     while(u32Index < pFile->u32Length)
     {
-        const uint32_t n = MIN(pFile->u32Length - u32Index, 2048);
+        const uint32_t n = MIN(pFile->u32Length - u32Index, HTTPSERVER_BUFFERSIZE);
 
         if (n > 0) {
             /* Send the buffer contents as HTTP response m_u8Buffers */
