@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <stddef.h>
-#include "nvs.h"
+#include "nvs_flash.h"
 
 typedef enum
 {
