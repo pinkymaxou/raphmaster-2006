@@ -10,8 +10,7 @@
 #include "esp_wifi.h"
 #include "esp_netif.h"
 #include "esp_mac.h"
-#include <esp_timer.h>
-#include <esp_app_desc.h>
+#include "esp_timer.h"
 #include "cJSON.h"
 #include "Settings.h"
 #include "ApiURL.h"
