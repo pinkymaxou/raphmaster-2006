@@ -1,6 +1,9 @@
 #include "MiscApi.h"
 #include "cJSON.h"
 #include "esp_app_format.h"
+#include "esp_app_desc.h"
+#include "esp_chip_info.h"
+#include "esp_mac.h"
 
 #include "main.h"
 
@@ -97,7 +100,7 @@ char* MISCAPI_GetSysInfo()
     heap_caps_get_info(&heap_infoExt, MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT);
     const uint32_t u32TotalMemoryExt = heap_infoExt.total_free_bytes + heap_infoExt.total_allocated_bytes;
     cJSON_AddItemToObject(pEntryJSON81, "name", cJSON_CreateString("Memory (external)"));
-    sprintf(buff, "%d / %d", /*0*/heap_infoExt.total_allocated_bytes, /*1*/u32TotalMemoryExt);
+    sprintf(buff, "%d / %d", /*0*/(int)heap_infoExt.total_allocated_bytes, /*1*/(int)u32TotalMemoryExt);
     cJSON_AddItemToObject(pEntryJSON81, "value", cJSON_CreateString(buff));
     cJSON_AddItemToArray(pEntries, pEntryJSON81);
 
@@ -148,6 +151,8 @@ static const char* GetESPChipId(esp_chip_model_t eChipid)
             return "ESP32-S3";
         case CHIP_ESP32H2:
             return "ESP32-H2";
+        case CHIP_ESP32C2:
+            return "ESP32-C2";
     }
     return "";
 }

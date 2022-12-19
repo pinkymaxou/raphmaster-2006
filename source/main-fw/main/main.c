@@ -13,10 +13,11 @@
 #include "esp_netif.h"
 #include "esp_wifi.h"
 #include "esp_log.h"
+#include <esp_mac.h>
 #include "driver/gpio.h"
 #include "HardwareGPIO.h"
-#include "mdns.h"
 #include "lwip/apps/netbiosns.h"
+#include "lwip/ip4_addr.h"
 #include "HWConfig.h"
 #include "FWConfig.h"
 #include "webserver/WebServer.h"
@@ -34,8 +35,6 @@ static void wifi_init();
 
 static void wifisoftap_event_handler(void* arg, esp_event_base_t event_base, int32_t event_id, void* event_data);
 static void wifistation_event_handler(void* arg, esp_event_base_t event_base, int32_t event_id, void* event_data);
-
-static void mdns_sn_init();
 
 static void wifi_init()
 {
@@ -153,29 +152,9 @@ void MAIN_GetWiFiSoftAPIP(esp_netif_ip_info_t* ip)
     esp_netif_get_ip_info(m_pWifiSoftAP, ip);
 }
 
-static void mdns_sn_init()
-{
-    ESP_LOGI(TAG, "mdns_sn_init, hostname: '%s', desc: '%s', service: '%s'", FWCONFIG_MDNS_HOSTNAME, FWCONFIG_MDNS_DESCRIPTION, FWCONFIG_MDNS_SERVICENAME);
-
-    mdns_init();
-    mdns_hostname_set(FWCONFIG_MDNS_HOSTNAME);
-    mdns_instance_name_set(FWCONFIG_MDNS_DESCRIPTION);
-
-    mdns_txt_item_t serviceTxtData[] = {
-        {"funct", "cocktail-maker"},
-        {"path", "/"}
-    };
-
-    ESP_ERROR_CHECK(mdns_service_add(FWCONFIG_MDNS_SERVICENAME, "_http", "_tcp", 80, serviceTxtData,
-                                     sizeof(serviceTxtData) / sizeof(serviceTxtData[0])));
-
-    netbiosns_init();
-    netbiosns_set_name(FWCONFIG_MDNS_HOSTNAME);
-}
-
 static void failed_alloc_cb(size_t size, uint32_t caps, const char *function_name)
 {
-    ESP_LOGE("HEAP", "Failed alloc: %d, caps: %d, function: %s", size, caps, function_name);
+    ESP_LOGE("HEAP", "Failed alloc: %d, caps: %d, function: %s", (int)size, (int)caps, function_name);
 }
 
 void app_main(void)
@@ -202,8 +181,6 @@ void app_main(void)
     COCKTAILEXPLORER_Init();
 
     wifi_init();
-
-    mdns_sn_init();
 
     // |WIFI_PROTOCOL_LR
     ESP_ERROR_CHECK( esp_wifi_set_protocol(ESP_IF_WIFI_AP, WIFI_PROTOCOL_11B|WIFI_PROTOCOL_11G|WIFI_PROTOCOL_11N) );
