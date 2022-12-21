@@ -20,7 +20,7 @@ typedef struct
 typedef enum
 {
   EFEMBEDWWW_EFILE_INDEX_HTML = 0,    /*!< @brief File: index.html (size: 1.7 KB) */
-  EFEMBEDWWW_EFILE_CSS_CONTENT_CSS = 1,    /*!< @brief File: css/content.css (size: 5.6 KB) */
+  EFEMBEDWWW_EFILE_CSS_CONTENT_CSS = 1,    /*!< @brief File: css/content.css (size: 5.7 KB) */
   EFEMBEDWWW_EFILE_CSS_GENERAL_CSS = 2,    /*!< @brief File: css/general.css (size: 3.6 KB) */
   EFEMBEDWWW_EFILE_JS_VIEWS_ABOUTPAGE_JS = 3,    /*!< @brief File: js/views/AboutPage.js (size: 1.9 KB) */
   EFEMBEDWWW_EFILE_JS_VIEWS_ABSTRACTVIEW_JS = 4,    /*!< @brief File: js/views/AbstractView.js (size: 284 B) */

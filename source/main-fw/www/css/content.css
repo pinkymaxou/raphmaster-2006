@@ -115,7 +115,10 @@ body {
 }
 
 .colingre_qty {
-    padding: 5px;
+    padding-top: 5px;
+    padding-right: 10px;
+    padding-bottom: 5px;
+    padding-left: 5px;
     white-space: nowrap;
     font-weight: bold;
     color: black;
