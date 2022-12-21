@@ -102,7 +102,7 @@ bool CONTROL_QueueOrder(const CONTROL_SOrder* pSOrder)
         ESP_LOGE(TAG, "Cannot queue order");
         return false;
     }
-    ESP_LOGI(TAG, "Add new order to queue, recipeid: %d, step count: %d", pSOrder->u32RecipeId, pSOrder->u32MakerStepCount);
+    ESP_LOGI(TAG, "Add new order to queue, recipeid: %d, step count: %d", (int)pSOrder->u32RecipeId, (int)pSOrder->u32MakerStepCount);
     return true;
 }
 
@@ -191,7 +191,7 @@ static void ControlThreadRun(void* pParam)
                     continue;
                 }
 
-                ESP_LOGI(TAG, "New order started with recipeid: %d, steps: %d", sQueueInstruction.uArg.sOrder.u32RecipeId, sQueueInstruction.uArg.sOrder.u32MakerStepCount);
+                ESP_LOGI(TAG, "New order started with recipeid: %d, steps: %d", (int)sQueueInstruction.uArg.sOrder.u32RecipeId, (int)sQueueInstruction.uArg.sOrder.u32MakerStepCount);
             }
             memcpy(&m_sHandle.sQueueInstruction, &sQueueInstruction, sizeof(SQueueInstruction));
             m_sHandle.dPercent = 0.0d;
@@ -281,7 +281,7 @@ static void ControlThreadRun(void* pParam)
             int32_t s32X = STATIONSETTINGS_GetValue(sQueueInstruction.uArg.sMoveToStation.u32StationId, STATIONSETTINGS_ESTATIONSET_PosX);
             int32_t s32Z = STATIONSETTINGS_GetValue(sQueueInstruction.uArg.sMoveToStation.u32StationId, STATIONSETTINGS_ESTATIONSET_PosZ);
 
-            ESP_LOGI(TAG, "Executing: CmdMoveToStation, goto coordinate: x: %d, z: %d", s32X, s32Z);
+            ESP_LOGI(TAG, "Executing: CmdMoveToStation, goto coordinate: x: %d, z: %d", (int)s32X, (int)s32Z);
 
             if (MoveToCoordinate(s32X, s32Z))
                 goto CANCEL;
