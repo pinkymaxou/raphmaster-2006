@@ -24,6 +24,21 @@
     font-family: 'robotomono';
 }
 
+body {
+    background-color: black;
+}
+
+
+.general_container {
+    background-color: lightgray;
+    border-color: mintcream;
+    border-style: solid;
+    border-width: 3px;
+    border-radius: 15px;
+
+    padding: 10px;
+}
+
 /* ===============================
     Cocktails list
    =============================== */
@@ -43,11 +58,14 @@
 
     display: inline-block;
 
-    background-color: lightcyan;
-    border-color: mintcream;
+    background-color: lightgray;
+    border-color: black;
     border-style: solid;
-    border-width: 3px;
+    border-width: 0px;
     border-radius: 15px;
+
+    margin-left: 5px;
+    margin-right: 5px;
     margin-bottom: 10px;
 
     align-self: flex-start;
@@ -97,7 +115,10 @@
 }
 
 .colingre_qty {
-    padding: 5px;
+    padding-top: 5px;
+    padding-right: 10px;
+    padding-bottom: 5px;
+    padding-left: 5px;
     white-space: nowrap;
     font-weight: bold;
     color: black;
@@ -109,7 +130,7 @@
 }
 
 .ingredient_row_odd {
-    background-color: #aaffff;
+    background-color: snow;
 }
 
 .cocktail_control {
@@ -122,7 +143,7 @@
     Status
    =============================== */
 .status_container {
-    background-color: lightcyan;
+    background-color: lightgray;
     border-color: mintcream;
     border-style: solid;
     border-width: 3px;
@@ -171,14 +192,6 @@
 .custom-cocktail-grid {
     display: grid;
     grid-template-columns: 5fr 1fr auto;
-
-    background-color: lightcyan;
-    border-color: mintcream;
-    border-style: solid;
-    border-width: 3px;
-    border-radius: 15px;
-
-    padding: 10px;
 
     gap: 5px;
 }
@@ -253,7 +266,7 @@
 .networksetting-container {
     display: flex;
     flex-direction: column;
-    gap: 10px
+    gap: 10px;
 }
 
 .networksetting-2fields-container {
@@ -269,6 +282,8 @@
     width: 24px;
     height: 24px;
     padding: 0;
+    
+    filter: invert(100%) sepia(2%) saturate(7444%) hue-rotate(9deg) brightness(115%) contrast(120%);
 }
 
 .menu-item-img:hover {

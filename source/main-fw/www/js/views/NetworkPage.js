@@ -91,7 +91,7 @@ export default class extends AbstractView {
 
     async getHtml() {
         return `
-        <div class="networksetting-container">
+        <div class="networksetting-container general_container">
             <fieldset>
                 <legend>Wi-Fi (soft access point)</legend>
                 <div class="networksetting-2fields-container">

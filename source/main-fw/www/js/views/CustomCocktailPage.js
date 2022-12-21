@@ -197,7 +197,7 @@ export default class extends AbstractView {
     }
     async getHtml() {
         return `
-        <div>
+        <div class="general_container">
             <div>
                 <p id="idCustomCocktailName" class="custom_cocktail_name_title">Custom drink</p>
             </div>
