@@ -90,7 +90,7 @@ void WEBSERVER_Init()
     httpd_config_t config = HTTPD_DEFAULT_CONFIG();
     config.lru_purge_enable = true;
     config.uri_match_fn = httpd_uri_match_wildcard;
-    config.max_open_sockets = 9;
+    config.max_open_sockets = 2;
     config.stack_size = 7500;
 
     // Start the httpd server
@@ -188,7 +188,7 @@ static esp_err_t file_get_handler(httpd_req_t *req)
         u32Index += n;
     }
 
-    httpd_resp_set_hdr(req, "Connection", "close");
+    //httpd_resp_set_hdr(req, "Connection", "close");
     httpd_resp_send_chunk(req, NULL, 0);
     return ESP_OK;
 }
@@ -210,7 +210,7 @@ static esp_err_t file_post_handler(httpd_req_t *req)
         goto ERROR;
     }
 
-    httpd_resp_set_hdr(req, "Connection", "close");
+    //httpd_resp_set_hdr(req, "Connection", "close");
     httpd_resp_send_chunk(req, NULL, 0);
     return ESP_OK;
     ERROR:
@@ -302,7 +302,7 @@ static esp_err_t api_get_handler(httpd_req_t* req)
     END:
     if (pExportJSON != NULL)
         free(pExportJSON);
-    httpd_resp_set_hdr(req, "Connection", "close");
+    //httpd_resp_set_hdr(req, "Connection", "close");
     httpd_resp_send_chunk(req, NULL, 0);
     return ESP_OK;
 }
@@ -366,14 +366,14 @@ static esp_err_t api_post_handler(httpd_req_t *req)
         httpd_resp_send_err(req, HTTPD_404_NOT_FOUND, "Unknown request");
     }
 
-    httpd_resp_set_hdr(req, "Connection", "close");
+    //httpd_resp_set_hdr(req, "Connection", "close");
     httpd_resp_send_chunk(req, NULL, 0);
     return ESP_OK;
     ERROR:
     if (szError != NULL)
         ESP_LOGE(TAG, "API post error: %s", szError);
 
-    httpd_resp_set_hdr(req, "Connection", "close");
+    //httpd_resp_set_hdr(req, "Connection", "close");
     httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "Error");
     return ESP_OK;
 }
@@ -458,10 +458,10 @@ static esp_err_t file_otauploadpost_handler(httpd_req_t *req)
 
     esp_restart();
 
-    httpd_resp_set_hdr(req, "Connection", "close");
+    //httpd_resp_set_hdr(req, "Connection", "close");
     return ESP_OK;
 ERROR:
-    httpd_resp_set_hdr(req, "Connection", "close");
+    //httpd_resp_set_hdr(req, "Connection", "close");
     httpd_resp_send_err(req, HTTPD_500_INTERNAL_SERVER_ERROR, "Invalid image");
     return ESP_FAIL;
 }
