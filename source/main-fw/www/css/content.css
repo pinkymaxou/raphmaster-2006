@@ -282,7 +282,7 @@ body {
     width: 24px;
     height: 24px;
     padding: 0;
-    
+
     filter: invert(100%) sepia(2%) saturate(7444%) hue-rotate(9deg) brightness(115%) contrast(120%);
 }
 
