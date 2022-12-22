@@ -264,7 +264,7 @@
       {
         "name": "Sweet and sour mix",
         "qty": "1 oz",
-        "type": "liquid_alcohol",
+        "type": "liquid_filler",
         "categories": [ "sweet and sour liqueur", "liqueur" ]
       },
       {
@@ -2029,10 +2029,10 @@
         "categories": [ "cream" ]
       },
       {
-        "name": "Sweet and Sour mix",
-        "qty": "2 oz",
+        "name": "Sweet and sour mix",
+        "qty": "1 oz",
         "type": "liquid_filler",
-        "categories": [ "sour mix" ]
+        "categories": [ "sweet and sour liqueur", "liqueur" ]
       }
     ]
   },

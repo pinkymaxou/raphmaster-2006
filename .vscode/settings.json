@@ -13,6 +13,7 @@
         "cocktailapi.h": "c",
         "embedcocktaildb.h": "c",
         "productionapi.h": "c",
-        "miscapi.h": "c"
+        "miscapi.h": "c",
+        "pb_common.h": "c"
     }
 }
